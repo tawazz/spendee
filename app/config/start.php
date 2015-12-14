@@ -9,7 +9,7 @@
   ]);
   //Middleware
   $app->add(new Before());
-  $app->add(new Csrf());
+  //$app->add(new Csrf());
   require 'app/Middleware/auth_filters.php';
   //views
   $view = $app->view();
@@ -40,7 +40,7 @@
   $app->month = date('m');
   $app->year = date('Y');
   $app->day = date('d');
-  $app->baseUrl = "http://tawazz.net/spendee";
+  $app->baseUrl = "http://localhost:56117";
   $app->view()->appendData([
     "baseUrl"=> $app->baseUrl
   ]);

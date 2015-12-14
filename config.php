@@ -3,8 +3,8 @@
         'mysql' => array(
             'driver'=>'mysql',
             'host' => '127.0.0.1',
-            'username'=> 'root',
-            'password' => '',
+            'username'=> 'tawazzne_admin',
+            'password' => '9lV2TDfJHfet',
             'db'=> 'tawazzne_spender'
         )
     );

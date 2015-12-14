@@ -9,7 +9,7 @@
         }
         require_once $file;
     }
-
+    
     function helpersLoader($class)
     {
         $filename = strtolower($class) . '.php';
@@ -20,6 +20,7 @@
         }
         require_once $file;
     }
+
     spl_autoload_register('databaseLoader');
     spl_autoload_register('helpersLoader');
 

@@ -1,0 +1,24 @@
+Spendee v2.2 22/11/2015
+change log
+
+-knob values centerd and fixed to 2 deceimal places
+-items table list now centered
+-add income and add expense buttons now aligned with other elements
+-removes big unnecessary space on dashboard.
+-staterd keeping track of change log
+
+Spendee v2.1 08/11/2015
+change log
+
+-orange nav bar
+-android web app compability
+-removes mobile keyboard for date inputs
+
+Spendee v2.0 17/09/2015
+change log
+
+-complete rewrite of original spendee
+-now uses slim framework
+-new bootstrap theme
+-new graphs on both expense and income pages
+-brand new dash board 

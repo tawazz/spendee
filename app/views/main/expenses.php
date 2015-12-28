@@ -1,5 +1,14 @@
 {% extends 'templates/default.php' %}
-
+{% block css %}
+<style media="screen">
+  .select2-container .select2-search--inline .select2-search__field{
+    width: 70px;
+  }
+  .select2-container--classic .select2-selection--multiple{
+    height: 60px;
+  }
+</style>
+{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
@@ -107,6 +116,14 @@
             <div class="form-group">
                 <input type="text" class="form-control datepicker" name="date" placeholder="Date" data-provide="datepicker" onfocus="blur();" onkeydown="return false">
             </div>
+            <div class="form-group">
+              <label for="tags">Tags</label>
+              <select class="form-control" name="tag_id" id="tags" multiple="multiple" style="width:100%;height:50px;">
+                {% for tag in tags %}
+                <option value="{{tag.id}}">{{ tag.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
               <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}"/>
               <input type="hidden" name="user_id" value="{{auth.user_id}}"/>
           </form>
@@ -155,5 +172,13 @@ data: [
 ],
 colors:['#CF000F']
 });
+</script>
+<script type="text/javascript">
+    $.fn.select2.defaults.set("theme", "classic");
+    $("#tags").select2({
+      tags: "true",
+      placeholder: "Tags",
+      allowClear: true,
+    });
 </script>
 {% endblock %}

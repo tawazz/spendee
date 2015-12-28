@@ -111,7 +111,7 @@
                   foreach($this->hasOne as $model){
                       $model = new $model();
                       for($i=0;$i<count($result);$i++){
-                          $result[$i]->{$model->table} = $this->db->query($this->qb->table($model->table)->where($model->primary_key,"=",$result[$i]->{$model->primary_key})->get())->first();
+                          $result[$i]->{$model->table} = $this->db->query($this->qb->table($model->table)->where($model->primary_key,"=",$result[$i]->{$this->primary_key})->get())->first();
                       }
                  }
               }
@@ -136,7 +136,7 @@
                 foreach($this->hasOne as $model){
                     $model = new $model();
                     for($i=0;$i<count($result);$i++){
-                        $result->{$model->table} = $this->db->query($this->qb->table($model->table)->where($model->primary_key,"=",$result->{$model->primary_key})->get())->first();
+                        $result->{$model->table} = $this->db->query($this->qb->table($model->table)->where($model->primary_key,"=",$result->{$this->primary_key})->get())->first();
                     }
                 }
             }

@@ -18,6 +18,7 @@
         <link rel="apple-touch-icon" href="/spendee/images/icon.png" />
         <title>Spendee</title>
         {% include "parts/css.php" %}
+        {% block css %}{% endblock%}
         {% include "parts/scripts.php" %}
     </head>
     <body>

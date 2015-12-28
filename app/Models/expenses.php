@@ -3,6 +3,7 @@
 
     protected $table='expenses';
     protected $primary_key ='exp_id';
+    //protected $hasMany =['ExpTags'];
 
     public function totalExp($startDate,$endDate){
         $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<=",$endDate)->get();
@@ -49,8 +50,18 @@
     //all monthly expenses/ incomes
 
     public function allActivity($startDate,$endDate,$type='expenses'){
-        $query = $this->db->query("SELECT lcase(name) as name,Sum(cost) as cost,exp_id as id from $type where user_id= ? and date >= ? and date <= ?  group by name order by cost DESC ",array($this->active_record,$startDate,$endDate));
-        return json_encode($query->result());
+        $query = $this->db->query("SELECT lcase(name) as name,Sum(cost) as cost,exp_id as id from $type where user_id= ? and date >= ? and date <= ?  group by name order by cost DESC ",array($this->active_record,$startDate,$endDate))->result();
+      /*$conditions = array(
+          'where' =>['user_id','=',$this->active_record] ,
+          'andWhere'=>[
+            ["date",">=",$startDate],
+            ["date","<=",$endDate]
+          ],
+          'fields'=>['lcase(name) as name','Sum(cost) as cost']
+        );
+        $query = $this->find('all',$conditions);
+        */
+        return json_encode($query);
     }
 
     public function activity($startDate,$endDate)

@@ -38,6 +38,7 @@
       $app->Inc->read($id)->delete();
       $app->response->redirect($app->urlFor('inc',['name'=>$_POST['name']]));
   });
+  //expenses
 $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
   if(isset($year)&& isset($month) && isset($day) ){
     if($month == 13){
@@ -99,7 +100,9 @@ $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
 $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
 //echo $app->Exp->read(7)->spentOnProduct('ebay',"2014/09/1","2015/09/1")."<br/>";
 //echo $app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->name . " -> ".$app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->max;
-$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav]);
+$tags = $app->Tags->find('all');
+var_dump($itemSpent);
+$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags]);
 })->name('expenses');
     //Incomes
     $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){

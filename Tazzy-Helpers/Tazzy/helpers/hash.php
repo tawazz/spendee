@@ -5,7 +5,6 @@
         }
         public static function check($known,$user){
             if(!function_exists('hash_equals')) {
-              function hash_equals($known, $user) {
                 if(strlen($known) != strlen($user)) {
                   return false;
                 } else {
@@ -14,7 +13,6 @@
                   for($i = strlen($res) - 1; $i >= 0; $i--) $ret |= ord($res[$i]);
                   return !$ret;
                 }
-              }
             }else{
                 return hash_equals($known,$user);
             }

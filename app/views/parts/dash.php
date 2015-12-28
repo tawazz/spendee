@@ -14,7 +14,7 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
-                          <i class="fa fa-usd fa-3x">{{totalExp|number_format(2,'.',',')}}</i>
+                          <i class="fa fa-usd fa-2x">{{totalExp|number_format(2,'.',',')}}</i>
                       </div>
                       <div class="col-xs-9 text-right">
                       </div>
@@ -34,7 +34,7 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
-                          <i class="fa fa-usd fa-3x">{{totalInc|number_format(2,'.',',')}}</i>
+                          <i class="fa fa-usd fa-2x">{{totalInc|number_format(2,'.',',')}}</i>
                       </div>
                       <div class="col-xs-9 text-right">
                       </div>
@@ -54,7 +54,7 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
-                          <i class="fa fa-usd fa-3x">{{(totalInc-totalExp)|number_format(2,'.',',')}}</i>
+                          <i class="fa fa-usd fa-2x">{{(totalInc-totalExp)|number_format(2,'.',',')}}</i>
                       </div>
                       <div class="col-xs-9 text-right">
                       </div>

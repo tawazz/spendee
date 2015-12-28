@@ -9,7 +9,7 @@
   ]);
   //Middleware
   $app->add(new Before());
-  //$app->add(new Csrf());
+  $app->add(new Csrf());
   require 'app/Middleware/auth_filters.php';
   //views
   $view = $app->view();
@@ -24,6 +24,12 @@
   });
   $app->container->set('Inc',function(){
       return new Incomes();
+  });
+  $app->container->set('Tags',function(){
+      return new Tags();
+  });
+  $app->container->set('ExpTags',function(){
+      return new ExpTags();
   });
   //dependancies
   $app->container->singleton('session',function(){
@@ -40,7 +46,7 @@
   $app->month = date('m');
   $app->year = date('Y');
   $app->day = date('d');
-  $app->baseUrl = "http://localhost:56117";
+  $app->baseUrl = "http://localhost/spendee";
   $app->view()->appendData([
     "baseUrl"=> $app->baseUrl
   ]);

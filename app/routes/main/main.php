@@ -101,7 +101,6 @@ $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
 //echo $app->Exp->read(7)->spentOnProduct('ebay',"2014/09/1","2015/09/1")."<br/>";
 //echo $app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->name . " -> ".$app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->max;
 $tags = $app->Tags->find('all');
-var_dump($itemSpent);
 $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags]);
 })->name('expenses');
     //Incomes

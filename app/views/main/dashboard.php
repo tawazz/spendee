@@ -29,8 +29,9 @@
               </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
+            <div class="panel-body" {% if not allExpenses %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                 <div id="morris-line-chart"></div>
+                 {% if not allIncomes %} No Data Available {% endif %}
             </div>
             <!-- /.panel-body -->
         </div>
@@ -46,8 +47,11 @@
               </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div id="morris-bar-income"></div>
+            <div class="panel-body" {% if not allIncomes %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+                <div id="morris-bar-income">
+                     
+                </div>
+               {% if not allIncomes %} No Data Available {% endif %}
             </div>
             <!-- /.panel-body -->
         </div>
@@ -63,8 +67,10 @@
               </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body">
-                <div id="morris-bar-expenses"></div>
+            <div class="panel-body" {% if not allExpenses %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+                <div id="morris-bar-expenses">
+                </div>
+                {% if not allExpenses %} No Data Available {% endif %}
             </div>
             <!-- /.panel-body -->
         </div>
@@ -87,6 +93,7 @@
   resize:true
   });
 
+  {% if allIncomes or allExpenses %}
   new Morris.Line({
   // ID of the element in which to draw the chart.
   element: 'morris-line-chart',
@@ -111,7 +118,9 @@
   xLabelFormat:function (x) { return moment(x).format("MMM"); },
   resize:true
   });
+  {% endif %}
 
+  {% if allIncomes%}
   Morris.Bar({
   element: 'morris-bar-income',
   data: [
@@ -126,6 +135,9 @@
   preUnits:'$',
   resize:true
   });
+  {% endif %}
+
+  {% if allExpenses %}
   Morris.Bar({
   element: 'morris-bar-expenses',
   data: [
@@ -140,5 +152,6 @@
   barColors: ['#e74c3c'],
   resize:true
   });
+{% endif %}
 </script>
 {% endblock %}

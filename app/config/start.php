@@ -42,14 +42,19 @@
   require'app/routes/routes.php';
 
  //variables
+ $app->debug =FALSE;
   $app->auth = false;
   $app->month = date('m');
   $app->year = date('Y');
   $app->day = date('d');
-  $app->baseUrl = "http://localhost/spendee";
+  $app->baseUrl = "http://localhost:8080/spendee";
   $app->view()->appendData([
     "baseUrl"=> $app->baseUrl
   ]);
   $app->run();
-  //var_dump($app->auth);
+
+  if($app->debug){
+      var_dump($app->auth);
+  }
+  
  ?>

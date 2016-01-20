@@ -1,11 +1,27 @@
 <?php
 
   $app->post('/expenses/add',$require_login(),function() use($app){
-    $app->Exp->save($_POST);
+
+      $data = [
+        'name'=> $_POST['name'],
+        'cost'=> $_POST['cost'],
+        'date'=> $_POST['date'],
+        'user_id'=> $app->auth->user_id
+      ];
+
+      $exp_id = $app->Exp->save($data);
+      foreach ($_POST['tags'] as $tag_id) {
+          $tags_data = [
+            'exp_id' => $exp_id,
+            'tag_id' => $tag_id
+          ];
+          $app->ExpTags->save($tags_data);
+      }
+
       $app->response->redirect($app->urlFor('expenses'));
   });
   $app->post('/incomes/add',$require_login(),function() use($app){
-    $app->Inc->save($_POST);
+      $app->Inc->save($_POST);
       $app->response->redirect($app->urlFor('incomes'));
   });
   $app->post('/expense/update',$require_login(),function() use($app){
@@ -101,8 +117,8 @@ $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
 //echo $app->Exp->read(7)->spentOnProduct('ebay',"2014/09/1","2015/09/1")."<br/>";
 //echo $app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->name . " -> ".$app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->max;
 $tags = $app->Tags->find('all');
-var_dump($itemSpent);
-$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags]);
+var_dump($allExpenses[0]);
+//$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags]);
 })->name('expenses');
     //Incomes
     $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){

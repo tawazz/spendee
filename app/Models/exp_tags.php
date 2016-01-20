@@ -3,6 +3,6 @@
 
     protected $table='exp_tags';
     protected $primary_key ='id';
-
+    protected $hasOne =['Tags'];
   }
  ?>

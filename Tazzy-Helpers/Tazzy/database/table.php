@@ -100,20 +100,10 @@
           if(!$this->db->find($this->table,$conditions)){
               $result = $this->db->result();
               if(isset($this->hasMany)){
-                  foreach($this->hasMany as $model){
-                      $model = new $model();
-                      for($i=0;$i<count($result);$i++){
-                          $result[$i]->{$model->table} = $this->db->query($this->qb->table($model->table)->where($this->primary_key,"=",$result[$i]->{$this->primary_key})->get())->result();
-                      }
-                 }
+                $result = $this->execHasMany($result);
               }
               if(isset($this->hasOne)){
-                  foreach($this->hasOne as $model){
-                      $model = new $model();
-                      for($i=0;$i<count($result);$i++){
-                          $result[$i]->{$model->table} = $this->db->query($this->qb->table($model->table)->where($model->primary_key,"=",$result[$i]->{$this->primary_key})->get())->first();
-                      }
-                 }
+                $result = $this->execHasOne($result);
               }
 
               return $result;
@@ -180,7 +170,101 @@
       $this->db->delete($this->table,[1,'=',1]);
       $this->db->query("ALTER TABLE ".$this->table." AUTO_INCREMENT = 1");
     }
+    private function getModelData($result,$model,$relationship='hasMany'){
+      switch ($relationship) {
+        case 'hasOne':
+          return $this->db->query($this->qb->table($model->table)->where($model->primary_key,"=",$result->{$result->primary_key})->get())->first();
+          break;
+        case 'hasMany':
+            return $this->db->query($this->qb->table($model->table)->where($this->primary_key,"=",$result->{$this->primary_key})->get())->result();
+          break;
 
+        default:
+          return false;
+          break;
+      }
+      return False;
+    }
+    /*
+    private function execHasMany($result){
+
+        foreach($this->hasMany as $model){
+            $model = new $model();
+            for($i=0;$i<count($result);$i++){
+                $modelData = $this->getModelData($result[$i],$model);
+                $model->{$this->primary_key} = $result[$i]->{$this->primary_key};
+                if(isset($model->hasMany)) {
+                    foreach($model->hasMany as $relModel){
+                        $relModel = new $relModel();
+                        $model->{$relModel->table} = $this->getModelData($model,$relModel,'hasMany');
+                        if (isset($relModel->hasOne)) {
+                            foreach($relModel->hasOne as $Model){
+                                $Model = new $Model();
+                                $relModel->{$model->primary_key} = $model->{$this->primary_key};
+                                $relModel->{$Model->table} = $this->getModelData($relModel,$Model,'hasOne');
+                            }
+                        }
+                }
+                $model->$modelData;
+                var_dump($model);
+                $result[$i]->{$model->table} = $model;
+              }
+            }
+        }
+
+        return $result;
+    }
+*/
+    private function execHasMany($result){
+      foreach($this->hasMany as $model){
+          $model = new $model();
+          for($i=0;$i<count($result);$i++){
+              $modelData = $this->getModelData($result[$i],$model);
+              if (isset($model->hasMany)) {
+                foreach($this->hasMany as $relModel){
+                    $relModel = new $relModel();
+                    $model->{$this->primary_key} = $result[$i]->{$this->primary_key};
+                    $model->{$relModel->table} = $this->getModelData($model,$relModel,'hasMany');
+                    //var_dump($model);
+                }
+              }
+              if (isset($model->hasOne)) {
+                foreach($this->hasOne as $relModel){
+                    $relModel = new $relModel();
+                    $model->{$this->primary_key} = $result[$i]->{$this->primary_key};
+                    $model->{$relModel->table} = $this->getModelData($model,$relModel,'hasOne');
+                }
+              }
+              $result[$i]->{$model->table} = $model;
+          }
+
+          return $result;
+      }
+    }
+    private function execHasOne($result){
+      foreach($this->hasOne as $model){
+          $model = new $model();
+          for($i=0;$i<count($result);$i++){
+              $model = $this->getModelData($result[$i],$model,'hasOne');
+              if (isset($model->hasMany)) {
+                foreach($this->hasMany as $relModel){
+                    $relModel = new $relModel();
+                    $model->{$this->primary_key} = $result[$i]->{$this->primary_key};
+                    $model->{$relModel->table} = $this->getModelData($model,$relModel);
+                }
+              }
+              if (isset($model->hasOne)) {
+                foreach($this->hasOne as $relModel){
+                    $relModel = new $relModel();
+                    $model->{$this->primary_key} = $result[$i]->{$this->primary_key};
+                    $model->{$relModel->table} = $this->getModelData($model,$relModel,'hasOne');
+                }
+              }
+              $result[$i]->{$model->table} = $model;
+          }
+     }
+     return $result;
+    }
     public function validate($source,$rules=[]){
       $this->errors = null;
       $validate = new Validate();

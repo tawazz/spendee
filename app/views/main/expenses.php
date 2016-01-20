@@ -118,7 +118,7 @@
             </div>
             <div class="form-group">
               <label for="tags">Tags</label>
-              <select class="form-control" name="tag_id" id="tags" multiple="multiple" style="width:100%;height:50px;">
+              <select class="form-control" name="tags[]" id="tags" multiple="multiple" style="width:100%;height:50px;">
                 {% for tag in tags %}
                 <option value="{{tag.id}}">{{ tag.name }}</option>
                 {% endfor %}

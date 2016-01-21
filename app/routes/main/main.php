@@ -1,7 +1,22 @@
 <?php
 
   $app->post('/expenses/add',$require_login(),function() use($app){
-    $app->Exp->save($_POST);
+    $data = [
+        'name'=> $_POST['name'],
+        'cost'=> $_POST['cost'],
+        'date'=> $_POST['date'],
+        'user_id'=> $app->auth->user_id
+      ];
+
+      $exp_id = $app->Exp->save($data);
+      foreach ($_POST['tags'] as $tag_id) {
+          $tags_data = [
+            'exp_id' => $exp_id,
+            'tag_id' => $tag_id
+          ];
+          $app->ExpTags->save($tags_data);
+      }
+
       $app->response->redirect($app->urlFor('expenses'));
   });
   $app->post('/incomes/add',$require_login(),function() use($app){

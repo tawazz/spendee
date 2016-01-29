@@ -82,9 +82,9 @@
                     {{date}} Earnings Pattern
                 </div>
                 <!-- /.panel-heading -->
-                <div class="panel-body"{% if not items %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+                <div class="panel-body"{% if not totals %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                     <div id="morris-line-chart"></div>
-                    {% if not items %} No Data Available {% endif %}
+                    {% if not totals %} No Data Available {% endif %}
                 </div>
                 <!-- /.panel-body -->
             </div>

@@ -24,6 +24,13 @@ display: inline-block;
     background-color: #f5f5f5;
     color: #60677A;
 }
+.panel-orange{
+  border-color:  #FF7043;
+}
+.panel-orange > .panel-heading{
+  background-color: #FF7043;
+  border-color:  #FF7043;
+}
 .panel-danger > .panel-heading{
     background-color: #F16C63;
     border-color: #F16C63;
@@ -50,6 +57,9 @@ display: inline-block;
 .panel-default a{
   color: #60677A;
 }
+.panel-orange a{
+  color:#FF7043
+}
 .panel-border{
     background-color: #f5f5f5;
     color: #60677A;
@@ -59,6 +69,7 @@ display: inline-block;
     background-color: #60677A;
     color: #fff;
 }
+
 .navbar-default{
     background-color: #FF3D00;
     color: #fff;

@@ -113,8 +113,9 @@
                   {{date}} Tags
               </div>
               <!-- /.panel-heading -->
-              <div class="panel-body">
+              <div class="panel-body" {% if not exptags %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                   <div id="morris-pie-chart-tags">
+                    {% if not exptags %} No Data Available {% endif %}
                   </div>
               </div>
               <!-- /.panel-body -->

@@ -188,8 +188,9 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
     }
     $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
     $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
-    $allIncomes = $app->Inc->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
-    $allExpenses = $app->Exp->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
+    $allIncomes = json_decode($app->Inc->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1"));
+    $allExpenses = json_decode($app->Exp->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1"));
+
     $earned=[];
     $itemSpent =[];
     for($i=1;$i<=12;$i++){
@@ -198,6 +199,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
     }
     $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
+    $exptags = $app->ExpTags->expTagsData($allExpenses);
     $date = new DateTime($year."-1-1");
     $date = $date->format('Y');
     $nav['prev'] = "dashboard/".($year-1);
@@ -206,11 +208,12 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
       'totalExp'=>$totalexp,
       'totalInc'=>$totalinc,
       'date'=>$date,
-      'allIncomes'=>json_decode($allIncomes),
-      'allExpenses'=>json_decode($allExpenses),
+      'allIncomes'=>$allIncomes,
+      'allExpenses'=>$allExpenses,
       'nav'=>$nav,
       'earned'=>$earned,
-      'spent'=>$itemSpent
+      'spent'=>$itemSpent,
+      'exptags'=>$exptags
     ]);
   })->name('dashboard');
 

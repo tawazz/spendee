@@ -1,8 +1,7 @@
 <?php
 
   $app->post('/expenses/add',$require_login(),function() use($app){
-
-      $data = [
+    $data = [
         'name'=> $_POST['name'],
         'cost'=> $_POST['cost'],
         'date'=> $_POST['date'],

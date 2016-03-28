@@ -14,6 +14,7 @@
   </div>
 </div>
 <div class="row">
+{%if allIncomes %}
 <div class="col-xs-12 col-sm-6">
   {% set dates =[] %}
   {% set totals =[] %}
@@ -63,6 +64,16 @@
     {% set totals = totals|merge({(key):periodTot}) %}
   {% endfor %}
 </div>
+{% else %}
+    <div class="col-xs-12 col-sm-6">
+        <!-- /.row -->
+        <div class="row" >
+                <div class="col-lg-12">
+                    <img src="{{baseUrl()}}/images/inc.png" class="img-responsive" alt="no data available" style="margin-left: auto;margin-right: auto;" />
+                </div>
+        </div>
+    </div>
+{% endif %}
 <div class="col-xs-12 col-sm-6">
     <div class="row">
         <div class="col-lg-12">
@@ -71,8 +82,9 @@
                     {{date}} Earnings Pattern
                 </div>
                 <!-- /.panel-heading -->
-                <div class="panel-body">
+                <div class="panel-body"{% if not totals %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                     <div id="morris-line-chart"></div>
+                    {% if not totals %} No Data Available {% endif %}
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -84,8 +96,9 @@
                     {{date}} Sources Of Incomes
                 </div>
                 <!-- /.panel-heading -->
-                <div class="panel-body">
+                <div class="panel-body"{% if not totals %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                     <div id="morris-pie-chart"></div>
+                    {% if not totals %} No Data Available {% endif %}
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -124,6 +137,7 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script type="text/javascript">
+{% if totals is not empty %}
 new Morris.Line({
 // ID of the element in which to draw the chart.
 element: 'morris-line-chart',
@@ -149,6 +163,7 @@ lineColors:['#47C9AF'],
 goalLineColors:['#d9edf7'],
 resize:true
 });
+{% endif %}
 </script>
 <script type="text/javascript">
 Morris.Donut({

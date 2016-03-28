@@ -28,13 +28,14 @@
 
       foreach ($exptags as $exptag) {
         foreach ($exptag as $tag) {
-          if(isset($DATA[$tag->tags->name])){
-            $DATA[$tag->tags->name]+= (int) $EXP->read($tag->exp_id)->get()->cost;
+          if(isset($tag->tags)){
+            if(isset($DATA[$tag->tags->name])){
+              $DATA[$tag->tags->name]+= (int) $EXP->read($tag->exp_id)->get()->cost;
+            }
+            else{
+              $DATA[$tag->tags->name] = (int) $EXP->read($tag->exp_id)->get()->cost;
+            }
           }
-          else{
-            $DATA[$tag->tags->name] = (int) $EXP->read($tag->exp_id)->get()->cost;
-          }
-
         }
       }
 

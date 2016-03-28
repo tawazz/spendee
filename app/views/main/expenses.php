@@ -94,6 +94,23 @@
           </div>
           <!-- /.panel -->
       </div>
+      <div class="col-lg-12">
+          <div class="panel panel-info">
+              <div class="panel-heading">
+                  {{date}} Tags
+              </div>
+              <!-- /.panel-heading -->
+              <div class="panel-body">
+                  <div id="morris-pie-chart-tags">
+                      {% for tag in tags %}
+                      hello {{ tag.id }}
+                      {% endfor%}
+                  </div>
+              </div>
+              <!-- /.panel-body -->
+          </div>
+          <!-- /.panel -->
+      </div>
   </div>
   <!-- /.row -->
 </div>

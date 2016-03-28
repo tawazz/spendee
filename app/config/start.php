@@ -5,7 +5,8 @@
   use Slim\Slim;
 
   $app = new Slim([
-    'view'=> new \Slim\Views\Twig()
+    'view'=> new \Slim\Views\Twig(),
+    'debug'=>true,
   ]);
   //Middleware
   $app->add(new Before());
@@ -14,7 +15,10 @@
   //views
   $view = $app->view();
   $view->setTemplatesDirectory('app/views');
-  $view->parserExtensions = [new \Slim\Views\TwigExtension()];
+  $view->parserExtensions = [
+    new \Slim\Views\TwigExtension(),
+    new \Twig_Extension_Debug()
+  ];
   //models
   $app->container->set('User',function(){
       return new User();

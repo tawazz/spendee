@@ -114,11 +114,11 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
 }
 $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
 $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
-//echo $app->Exp->read(7)->spentOnProduct('ebay',"2014/09/1","2015/09/1")."<br/>";
-//echo $app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->name . " -> ".$app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->max;
-$tags = $app->Tags->find('all');
-var_dump($allExpenses[0]);
-//$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags]);
+foreach ($allExpenses as $expense) {
+  $tags[] = $app->ExpTags->findExpTagsById($expense->exp_id);
+}
+var_dump($tags);
+$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags]);
 })->name('expenses');
     //Incomes
     $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){

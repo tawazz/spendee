@@ -97,15 +97,24 @@
       switch ($type) {
         case 'all':
 
-          if(!$this->db->find($this->table,$conditions)){
-              $result = $this->db->result();
-              if(isset($this->hasMany)){
-                $result = $this->execHasMany($result);
-              }
-              if(isset($this->hasOne)){
-                $result = $this->execHasOne($result);
-              }
-
+        if(!$this->db->find($this->table,$conditions)){
+            $result = $this->db->result();
+            if(isset($this->hasMany)){
+                foreach($this->hasMany as $model){
+                    $model = new $model();
+                    for($i=0;$i<count($result);$i++){
+                        $result[$i]->{$model->table} = $this->db->query($this->qb->table($model->table)->where($this->primary_key,"=",$result[$i]->{$this->primary_key})->get())->result();
+                    }
+               }
+            }
+            if(isset($this->hasOne)){
+                foreach($this->hasOne as $model){
+                    $model = new $model();
+                    for($i=0;$i<count($result);$i++){
+                        $result[$i]->{$model->table} = $this->db->query($this->qb->table($model->table)->where($model->primary_key,"=",$result[$i]->{$this->primary_key})->get())->first();
+                    }
+               }
+            }
               return $result;
 
           }else{
@@ -236,6 +245,7 @@
                 }
               }
               $result[$i]->{$model->table} = $model;
+              //var_dump($result[$i]);
           }
 
           return $result;
@@ -245,24 +255,9 @@
       foreach($this->hasOne as $model){
           $model = new $model();
           for($i=0;$i<count($result);$i++){
-              $model = $this->getModelData($result[$i],$model,'hasOne');
-              if (isset($model->hasMany)) {
-                foreach($this->hasMany as $relModel){
-                    $relModel = new $relModel();
-                    $model->{$this->primary_key} = $result[$i]->{$this->primary_key};
-                    $model->{$relModel->table} = $this->getModelData($model,$relModel);
-                }
-              }
-              if (isset($model->hasOne)) {
-                foreach($this->hasOne as $relModel){
-                    $relModel = new $relModel();
-                    $model->{$this->primary_key} = $result[$i]->{$this->primary_key};
-                    $model->{$relModel->table} = $this->getModelData($model,$relModel,'hasOne');
-                }
-              }
-              $result[$i]->{$model->table} = $model;
+              $result->{$model->table} = $this->db->query($this->qb->table($model->table)->where($model->primary_key,"=",$result->{$this->primary_key})->get())->first();
           }
-     }
+      }
      return $result;
     }
     public function validate($source,$rules=[]){

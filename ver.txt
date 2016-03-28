@@ -1,3 +1,8 @@
+Spendee v2.4 28/03/2016
+change log
+
+-introduce expenses tag cloud
+
 Spendee v2.3 20/01/2016
 change log
 

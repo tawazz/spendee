@@ -51,7 +51,7 @@
   $app->month = date('m');
   $app->year = date('Y');
   $app->day = date('d');
-  $app->baseUrl = "http://localhost:8080/spendee";
+  $app->baseUrl = "http://localhost/spendee";
   $app->view()->appendData([
     "baseUrl"=> $app->baseUrl
   ]);
@@ -60,5 +60,5 @@
   if($app->debug){
       var_dump($app->auth);
   }
-  
+
  ?>

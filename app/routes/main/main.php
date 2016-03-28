@@ -113,11 +113,9 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
 }
 $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
 $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
-foreach ($allExpenses as $expense) {
-  $tags[] = $app->ExpTags->findExpTagsById($expense->exp_id);
-}
-var_dump($tags);
-$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags]);
+$tags = $app->Tags->find('all');
+$exptags = $app->ExpTags->expTagsData($allExpenses);
+$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags,'exptags'=>$exptags]);
 })->name('expenses');
     //Incomes
     $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){

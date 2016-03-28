@@ -115,9 +115,6 @@
               <!-- /.panel-heading -->
               <div class="panel-body">
                   <div id="morris-pie-chart-tags">
-                      {% for tag in tags %}
-                      hello {{ tag.id }}
-                      {% endfor%}
                   </div>
               </div>
               <!-- /.panel-body -->
@@ -204,6 +201,16 @@ data: [
 ],
 colors:['#CF000F']
 });
+
+Morris.Donut({
+element: 'morris-pie-chart-tags',
+data: [
+  {% for tag,cost in exptags %}
+      {label: "{{tag|raw}}", value:{{cost}} },
+  {% endfor%}
+],
+colors:['#FF3D00']
+});
 </script>
 <script type="text/javascript">
     $.fn.select2.defaults.set("theme", "classic");
@@ -213,4 +220,8 @@ colors:['#CF000F']
       allowClear: true,
     });
 </script>
+
+{% for tag,cost in exptags %}
+  {{tag }} => {{cost}}
+{% endfor%}
 {% endblock %}

@@ -222,7 +222,4 @@ colors:['#FF3D00']
     });
 </script>
 
-{% for tag,cost in exptags %}
-  {{tag }} => {{cost}}
-{% endfor%}
 {% endblock %}

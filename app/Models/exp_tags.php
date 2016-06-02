@@ -17,29 +17,21 @@
       return $result;
     }
 
-    public function expTagsData($allExpenses)
+    public function expTagsData($startDate,$endDate)
     {
       $EXP = new Expenses();
-      $DATA = [];
+      $Tags = new Tags();
       $exptags= [];
-      foreach ($allExpenses as $expense) {
-        $exptags[] = $this->findExpTagsById($expense->exp_id);
-      }
 
-      foreach ($exptags as $exptag) {
-        foreach ($exptag as $tag) {
-          if(isset($tag->tags)){
-            if(isset($DATA[$tag->tags->name])){
-              $DATA[$tag->tags->name]+= (int) $EXP->read($tag->exp_id)->get()->cost;
-            }
-            else{
-              $DATA[$tag->tags->name] = (int) $EXP->read($tag->exp_id)->get()->cost;
-            }
-          }
+      $allTags = $Tags->find('all');
+
+      foreach ($allTags as $tag) {
+        $amount = (int) $this->db->query("SELECT Sum(exp.cost ) as total FROM exp_tags as tag,expenses as exp where tag_id = ? and exp.exp_id = tag.exp_id and  exp.date >= ? and exp.date <= ? ",[$tag->id,$startDate,$endDate])->first()->total;
+        if($amount > 0){
+          $exptags[$tag->name] =  $amount;
         }
       }
-
-      return $DATA;
+      return $exptags;
     }
 
 

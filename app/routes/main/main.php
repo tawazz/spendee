@@ -85,6 +85,7 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
   $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
   $allExpenses = $app->Exp->read($app->auth->user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
   $itemSpent = $app->Exp->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
+  $exptags = $app->ExpTags->expTagsData($year."-".$month."-1",$year."-".($month+1)."-1");
   $date = new DateTime($year."-".$month."-1");
   $date = $date->format('F/Y');
   $nav['prev'] = "expenses/".$year."/".($month-1);
@@ -94,6 +95,7 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
   $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
   $allExpenses = $app->Exp->read($app->auth->user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
   $itemSpent= $app->Exp->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
+  $exptags = $app->ExpTags->expTagsData($year."-"."1"."-1",($year+1)."-1-1");
   $date = new DateTime($year."-1-1");
   $date = $date->format('Y');
   $nav['prev'] = "expenses/".($year-1);
@@ -106,6 +108,7 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
     $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
     $allExpenses = $app->Exp->read($app->auth->user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
     $itemSpent = $app->Exp->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
+    $exptags = $app->ExpTags->expTagsData($year."-".$month."-1",$year."-".($month+1)."-1");
     $date = new DateTime($year."-".$month."-".$day);
     $date = $date->format('F/Y');
     $nav['prev'] = "expenses/".$year."/".($month-1);
@@ -114,7 +117,7 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
 $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
 $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
 $tags = $app->Tags->find('all');
-$exptags = $app->ExpTags->expTagsData($allExpenses);
+
 $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags,'exptags'=>$exptags]);
 })->name('expenses');
     //Incomes
@@ -199,7 +202,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
     }
     $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
-    $exptags = $app->ExpTags->expTagsData($allExpenses);
+    $exptags = $app->ExpTags->expTagsData($year."-"."1"."-1",($year+1)."-1-1");
     $date = new DateTime($year."-1-1");
     $date = $date->format('Y');
     $nav['prev'] = "dashboard/".($year-1);

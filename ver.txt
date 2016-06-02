@@ -1,3 +1,8 @@
+Spendee v2.4.2 03/06/2016
+change log
+
+-bug fix display correct tags values
+
 Spendee v2.4 28/03/2016
 change log
 
@@ -32,4 +37,4 @@ change log
 -now uses slim framework
 -new bootstrap theme
 -new graphs on both expense and income pages
--brand new dash board 
+-brand new dash board

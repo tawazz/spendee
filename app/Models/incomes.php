@@ -5,14 +5,14 @@
     protected $primary_key ='inc_id';
 
     public function totalInc($startDate,$endDate){
-        $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<=",$endDate)->get();
+        $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<",$endDate)->get();
         return $this->db->query($sql)->first();
     }
 
      // get total cost of an expense/income between 2 dates
 
     public function spentOnProduct($name,$startDate,$endDate){
-            $query = $this->db->query("select Sum(cost) AS cost from $this->table where user_id = ? and name LIKE ? and date >= ? and date <= ? ",array($this->active_record,$name,$startDate,$endDate));
+            $query = $this->db->query("select Sum(cost) AS cost from $this->table where user_id = ? and name LIKE ? and date >= ? and date < ? ",array($this->active_record,$name,$startDate,$endDate));
             $query->first()->name = $name;
             return $query->first();
     }
@@ -27,7 +27,7 @@
 
     public function biggest($startDate,$endDate,$type='expenses'){
         if($this->active_record){
-            $query = $this->db->query("select MAX(total) as max, name from (SELECT lcase(name) as name,Sum(cost) as total from $type where user_id= ? AND date >= ? and date <= ? group by name order by total DESC ) cost",array($this->active_record,$startDate,$endDate));
+            $query = $this->db->query("select MAX(total) as max, name from (SELECT lcase(name) as name,Sum(cost) as total from $type where user_id= ? AND date >= ? and date < ? group by name order by total DESC ) cost",array($this->active_record,$startDate,$endDate));
             return $query->first();
         }else{
             return 0;
@@ -49,7 +49,7 @@
     //all monthly expenses/ incomes
 
     public function allActivity($startDate,$endDate){
-        $query = $this->db->query("SELECT lcase(name) as name,Sum(cost) as cost from $this->table where user_id= ? and date >= ? and date <= ?  group by name order by cost DESC ",array($this->active_record,$startDate,$endDate));
+        $query = $this->db->query("SELECT lcase(name) as name,Sum(cost) as cost from $this->table where user_id= ? and date >= ? and date < ?  group by name order by cost DESC ",array($this->active_record,$startDate,$endDate));
         return json_encode($query->result());
     }
     public function activity($startDate,$endDate)

@@ -21,18 +21,20 @@ class Csrf extends Middleware{
       $session->put($this->key,$hash->make($hash->salt(10)));
     }
     $token = $session->get($this->key);
+    if (strpos($this->app->request()->getPath(), 'api') === false) {
 
-    if (in_array($this->app->request()->getMethod(),['POST','PUT','DELETE'])) {
-      $submited_token = $this->app->request()->post($this->key) ? : "";
-      if (!$hash->check($token,$submited_token)) {
-         throw new Exception("CSRF token mismatch ");
+      if (in_array($this->app->request()->getMethod(),['POST','PUT','DELETE'])) {
+        $submited_token = $this->app->request()->post($this->key) ? : "";
+        if (!$hash->check($token,$submited_token)) {
+           throw new Exception("CSRF token mismatch ");
+        }
       }
+      unset($_POST[$this->key]);
+      $this->app->view()->appendData([
+        'csrf_key'=>$this->key,
+        'csrf_token'=>$token
+      ]);
     }
-    unset($_POST[$this->key]);
-    $this->app->view()->appendData([
-      'csrf_key'=>$this->key,
-      'csrf_token'=>$token
-    ]);
   }
 
 }

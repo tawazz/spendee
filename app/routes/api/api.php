@@ -117,13 +117,54 @@ $app->response->setBody(json_encode($response));
 
 $app->post('/api/expenses/add',function() use($app){
     $body = $app->request->getBody();
-    $body = json_decode($body);
+    $body = json_decode($body,true);
+
+    $exp_id = $app->Exp->save($body["item"]);
+    if(isset($body["tags"])){
+
+      foreach ($body['tags'] as $tag) {
+          $tags_data = [
+            'exp_id' => $exp_id,
+            'tag_id' => $tag["tag_id"]
+          ];
+          var_dump($tags_data);
+          $app->ExpTags->save($tags_data);
+      }
+
+    }
+
+    $response = [
+      "added" => true
+    ];
+
+    $app->response->headers->set('Content-Type', 'application/json');
+    $app->response->setBody(json_encode($response));
 
 });
 
 $app->post('/api/incomes/add',function() use($app){
-    $body = $app->request->getBody();
-    $body = json_decode($body);
+  $body = $app->request->getBody();
+  $body = json_decode($body,true);
+
+  $inc_id = $app->Inc->save($body["item"]);
+  if(isset($body["tags"])){
+
+    foreach ($body['tags'] as $tag) {
+        $tags_data = [
+          'inc_id' => $inc_id,
+          'tag_id' => $tag["tag_id"]
+        ];
+        $app->IncTags->save($tags_data);
+    }
+
+  }
+
+  $response = [
+    "added" => true
+  ];
+
+  $app->response->headers->set('Content-Type', 'application/json');
+  $app->response->setBody(json_encode($response));
 
 });
 

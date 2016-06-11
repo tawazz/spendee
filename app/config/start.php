@@ -35,6 +35,9 @@
   $app->container->set('ExpTags',function(){
       return new ExpTags();
   });
+  $app->container->set('IncTags',function(){
+      return new IncTags();
+  });
   //dependancies
   $app->container->singleton('session',function(){
     return  new Session();
@@ -51,7 +54,7 @@
   $app->month = date('m');
   $app->year = date('Y');
   $app->day = date('d');
-  $app->baseUrl = "http://localhost/spendee";
+  $app->baseUrl = "http://localhost:8080/spendee";
   $app->view()->appendData([
     "baseUrl"=> $app->baseUrl
   ]);

@@ -1,3 +1,8 @@
+Spendee v2.5 12/06/2016
+change log
+
+-Includes Api to support android app
+
 Spendee v2.4.2 03/06/2016
 change log
 

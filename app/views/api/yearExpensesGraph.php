@@ -4,15 +4,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-      <div class="panel panel-danger">
-          <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-12">
-                    <span class="tx-2x">{{date}} Expenses</span>
-                </div>
-            </div>
-          </div>
-          <!-- /.panel-heading -->
+      <div class="panel panel-default">
           <div class="panel-body" {% if not allExpenses %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
               <div id="morris-bar-expenses">
               </div>
@@ -26,19 +18,16 @@
 
   <script type="text/javascript">
       {% if allExpenses %}
-        Morris.Bar({
+        Morris.Donut({
         element: 'morris-bar-expenses',
         data: [
           {%for exp in allExpenses %}
-              { exp : '{{ exp.name }}', cost : {{exp.cost}} },
+              { label : '{{ exp.name }}', value: {{exp.cost}} },
           {%endfor%}
         ],
-        xkey: 'exp',
-        ykeys: ['cost'],
-        labels: ['Expense'],
-        preUnits:'$',
-        barColors: ['#e74c3c'],
-        resize:true
+        colors: ['#e74c3c'],
+        formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+        resize:false
         });
     {% endif %}
     </script>

@@ -4,15 +4,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-      <div class="panel panel-primary">
-          <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-12">
-                    <span class="tx-2x">{{date}} savings</span>
-                </div>
-            </div>
-          </div>
-          <!-- /.panel-heading -->
+      <div class="panel panel-default">
           <div class="panel-body" {% if not allExpenses %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
               <div id="morris-line-chart"></div>
                {% if not allIncomes %} No Data Available {% endif %}
@@ -47,7 +39,7 @@
       dateFormat: function (x) { return moment(x).format(" MMMM YYYY"); },
       preUnits:'$',
       xLabelFormat:function (x) { return moment(x).format("MMM"); },
-      resize:true
+      resize:false
       });
   {% endif %}
     </script>

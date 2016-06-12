@@ -4,15 +4,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-      <div class="panel panel-orange">
-          <div class="panel-heading">
-            <div class="row">
-                <div class="col-xs-12">
-                    <span class="tx-2x">{{date}} Tags</span>
-                </div>
-            </div>
-          </div>
-          <!-- /.panel-heading -->
+      <div class="panel panel-default">
           <div class="panel-body" {% if not exptags %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
               <div id="morris-bar-tags">
               </div>
@@ -26,19 +18,16 @@
 
   <script type="text/javascript">
   {% if exptags %}
-    Morris.Bar({
+    Morris.Donut({
     element: 'morris-bar-tags',
     data: [
       {% for tag,cost in exptags %}
-          {tag: "{{tag|raw}}", cost:{{ cost }} },
+          {label: "{{tag|raw}}", value:{{ cost }} },
       {% endfor%}
     ],
-    xkey: 'tag',
-    ykeys: ['cost'],
-    labels: ['spent'],
-    barColors: ['#FF7043'],
-    preUnits:'$',
-    resize:true
+    colors: ['#FF7043'],
+    formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+    resize:false
     });
   {% endif %}
     </script>

@@ -34,7 +34,7 @@ $app->post('/api/data/:user(/:year(/:month(/:day)))',function($user_id,$year = N
     $allExpenses = $app->Exp->read($user_id)->activity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
     $allIncomes= $app->Inc->read($user_id)->activity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
     $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-    $exptags = $app->ExpTags->expTagsData($year."-".$month."-1",$year."-".$month."-".($day+1));
+    $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".$month."-".($day+1));
 }else if(isset($year)&& isset($month) ){
 
   $totalexp = $app->Exp->read($user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
@@ -42,7 +42,7 @@ $app->post('/api/data/:user(/:year(/:month(/:day)))',function($user_id,$year = N
   $allExpenses = $app->Exp->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
   $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
   $allIncomes = $app->Inc->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
-  $exptags = $app->ExpTags->expTagsData($year."-".$month."-1",$year."-".($month+1)."-1");
+  $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
 
 }else if(isset($year)){
   $totalexp = $app->Exp->read($user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
@@ -50,7 +50,7 @@ $app->post('/api/data/:user(/:year(/:month(/:day)))',function($user_id,$year = N
   $allExpenses = $app->Exp->read($user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
   $allIncomes = $app->Inc->read($user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
   $itemSpent= $app->Exp->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
-  $exptags = $app->ExpTags->expTagsData($year."-"."1"."-1",($year+1)."-1-1");
+  $exptags = $app->ExpTags->expTagsData($user_id,$year."-"."1"."-1",($year+1)."-1-1");
 
 }else{
     $month= date('m');
@@ -61,7 +61,7 @@ $app->post('/api/data/:user(/:year(/:month(/:day)))',function($user_id,$year = N
     $allExpenses = $app->Exp->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
     $allIncomes= $app->Inc->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
     $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
-    $exptags = $app->ExpTags->expTagsData($year."-".$month."-1",$year."-".($month+1)."-1");
+    $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
 
 }
 
@@ -127,7 +127,6 @@ $app->post('/api/expenses/add',function() use($app){
             'exp_id' => $exp_id,
             'tag_id' => $tag["tag_id"]
           ];
-          var_dump($tags_data);
           $app->ExpTags->save($tags_data);
       }
 
@@ -210,7 +209,7 @@ $app->get('/api/graph/:type/:user(/:year)',function($type,$user_id,$year = NULL,
     }
     $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
-    $exptags = $app->ExpTags->expTagsData($year."-"."1"."-1",($year+1)."-1-1");
+    $exptags = $app->ExpTags->expTagsData($user_id,$year."-"."1"."-1",($year+1)."-1-1");
     $date = new DateTime($year."-1-1");
     $date = $date->format('Y');
 

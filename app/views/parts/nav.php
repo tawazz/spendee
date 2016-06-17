@@ -10,9 +10,9 @@
             <span class="icon-bar"></span>
           </button>
           {%if not auth %}
-          <a class="navbar-brand" href="{{urlFor("home")}}"><img src="{{baseUrl}}/images/icon.png" alt="logo" style=" max-width:40px;margin-top: -7px;">Spendee</a>
+          <a class="navbar-brand" href="{{urlFor("home")}}"><img src="{{baseUrl}}/images/icon.png" alt="logo" style=" max-width:40px;margin-top: -7px;">pendee</a>
           {%else%}
-          <a class="navbar-brand" href="{{urlFor("expenses")}}"><img src="{{baseUrl}}/images/icon.png" alt="logo" style="max-width:40px; margin-top: -7px;">Spendee</a>
+          <a class="navbar-brand" href="{{urlFor("expenses")}}"><img src="{{baseUrl}}/images/icon.png" alt="logo" style="max-width:40px; margin-top: -7px;">pendee</a>
           {%endif%}
         </div>
 
@@ -25,7 +25,7 @@
             <li class="dropdown">
             <a href="{{urlFor('about')}}" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">About Us</span><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="{{urlFor('about')}}">About Us</a></li>
+                <li><a href="{{urlFor('about')}}">About</a></li>
                 <li><a href="{{urlFor('contact')}}">Contact Us</a></li>
                 <li class="divider"></li>
                 <li><a href="{{urlFor('help')}}">Help</a></li>

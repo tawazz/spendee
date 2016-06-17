@@ -38,6 +38,9 @@
   $app->container->set('IncTags',function(){
       return new IncTags();
   });
+  $app->container->set('Remember',function(){
+      return new Remember();
+  });
   //dependancies
   $app->container->singleton('session',function(){
     return  new Session();
@@ -45,6 +48,7 @@
   $app->container->singleton('hash',function(){
     return  new Hash();
   });
+
   //routes
   require'app/routes/routes.php';
 

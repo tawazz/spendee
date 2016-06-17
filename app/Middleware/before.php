@@ -28,16 +28,21 @@ class Before extends Middleware{
   {
     if ($this->app->getCookie('remember') && !$this->app->auth) {
       $hash = $this->app->getCookie('remember');
-      $remember = new Remember();
-      $id = $remember->find('first',['where'=>['hash','=',$hash]])->user_id;
-      $user = $this->app->User->find('first',[
-          'where'=>['user_id','=',$id]
-      ]);
-      if($user){
-          $this->app->session->put('id',$user->user_id);
-          $this->app->auth = $user;
-      }else {
-        $this->app->User->removeRemember($user->user_id);
+      $exist = $this->app->Remember->find('first',['where'=>['hash','=',$hash]]);
+      if(isset($exist))
+      {
+        $id = $exist->user_id;
+        $user = $this->app->User->find('first',[
+            'where'=>['user_id','=',$id]
+        ]);
+        if($user){
+            $this->app->session->put('id',$user->user_id);
+            $this->app->auth = $user;
+        }else {
+          $this->app->User->removeRemember($user->user_id);
+        }
+      }else{
+        $this->app->deleteCookie('remember');
       }
     }
   }

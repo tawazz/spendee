@@ -1,3 +1,14 @@
+Spendee v2.6 18/06/2016
+change log
+-improved welcome page
+-navigation and footer fixes
+   - new social media links
+   - new site map links
+- update to new app logo
+- updated login and registration pages
+-bug fixes
+    - fix remember me bug
+
 Spendee v2.5 12/06/2016
 change log
 

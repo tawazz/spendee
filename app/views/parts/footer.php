@@ -6,7 +6,12 @@
                     <div class="row">
                         <div class="footer-col col-sm-4">
                             <h3>Contact Us!</h3>
-                            <address>{{ address|raw }}</address>
+                            <address>
+                              {{ address|raw }}
+                              </br>
+                              <span><a href="{{ urlFor('contact')}}">Contact</a></span>
+                            </address>
+
                               <span><i class="fa fa-fw fa-envelope"></i></span> {{ email|raw }}
                         </div>
                         <div class="footer-col col-sm-4">
@@ -31,17 +36,17 @@
                             <h3>Site Links</h3>
                             <ul style="list-style-type: none;">
                               {% if auth %}
-                                <li><a href="{{baseUrl}}/">Home</i></a></li>
-                                <li><a href="{{baseUrl}}/expenses">Expenses</i></a></li>
-                                <li><a href="{{baseUrl}}/incomes">Incomes</i></a></li>
-                                <li><a href="{{baseUrl}}/dashboard">DashBoard</i></a></li>
-                                <li><a href="{{baseUrl}}/account">Account</i></a></li>
+                                <li><a href="{{baseUrl}}/">Home</a></li>
+                                <li><a href="{{baseUrl}}/expenses">Expenses</a></li>
+                                <li><a href="{{baseUrl}}/incomes">Incomes</a></li>
+                                <li><a href="{{baseUrl}}/dashboard">DashBoard</a></li>
+                                <li><a href="{{baseUrl}}/account">Account</a></li>
                               {% else %}
-                                <li><a href="{{ urlFor('home')}}">Home</i></a></li>
-                                <li><a href="{{ urlFor('login')}}">Login</i></a></li>
-                                <li><a href="{{ urlFor('register')}}">Register</i></a></li>
-                                <li><a href="{{ urlFor('about')}}">About</i></a></li>
-                                <li><a href="{{ urlFor('contact')}}">Contact</i></a></li>
+                                <li><a href="{{ urlFor('home')}}">Home</a></li>
+                                <li><a href="{{ urlFor('login')}}">Login</a></li>
+                                <li><a href="{{ urlFor('register')}}">Register</a></li>
+                                <li><a href="{{ urlFor('about')}}">About</a></li>
+                                <li><a href="{{ urlFor('contact')}}">Contact</a></li>
                               {% endif %}
                             </ul>
                         </div>

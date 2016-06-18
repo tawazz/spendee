@@ -23,7 +23,7 @@ use Carbon\Carbon;
         $app->response->redirect($app->urlFor('login'));
 
     }else{
-      $app->render('auth/register.php',['errors'=>$user->errors()]);
+      $app->render('auth/register.php',['errors'=>$user->errors(),'values'=>$_POST]);
     }
   })->name('post.register');
 

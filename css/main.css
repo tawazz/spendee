@@ -105,7 +105,9 @@ background-color: #FF3D00;
 .navbar-default .navbar-nav .open .dropdown-menu > li > a{
   color:#fff;
 }
-
+.dropdown-menu{
+  background-color: #ff5722;
+}
 .list-group-item-warning a {
 color: #fff;
 }
@@ -178,4 +180,47 @@ background-color: #47C9AF;
 
 .brand-font{
   font-family: 'Lobster Two', cursive;
+}
+
+.text-primary{
+  color:#ff5722;
+}
+
+.bg-primary{
+  background-color: #ff5722;
+}
+header {
+    position: relative;
+    width: 100%;
+    min-height:400px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-position:center;
+    background-image: url('../images/header.jpg');
+    background-attachment: fixed;
+    text-align: center;
+    color: white;
+}
+.app-gallery img{
+  max-height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px)
+header .header-content {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding: 0 50px;
+}
+header .header-content {
+    position: relative;
+    text-align: center;
+    padding: 100px 15px 100px;
+    width: 100%;
 }

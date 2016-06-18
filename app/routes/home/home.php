@@ -4,7 +4,7 @@
       $app->response->redirect($app->urlFor('expenses'));
       return 0;
     }
-    $app->render('auth/login.php');
+    $app->render('home/about.php');
   })->name('home');
 
   $app->get('/about',function() use ($app){

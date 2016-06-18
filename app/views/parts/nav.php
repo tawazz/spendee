@@ -23,12 +23,12 @@
             <li><a href="{{urlFor('login')}}">Login</a></li>
             <li><a href="{{urlFor('register')}}">Register</a></li>
             <li class="dropdown">
-            <a href="{{urlFor('about')}}" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">About Us</span><span class="caret"></span></a>
+            <a href="{{urlFor('about')}}" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">About</span><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="{{urlFor('about')}}">About</a></li>
                 <li><a href="{{urlFor('contact')}}">Contact Us</a></li>
-                <li class="divider"></li>
-                <li><a href="{{urlFor('help')}}">Help</a></li>
+                <!--li class="divider"></li>
+                <li><a href="{{urlFor('help')}}">Help</a></li-->
             </ul>
             {%else%}
             <li><a href="{{urlFor('expenses')}}">Expenses</a></li>

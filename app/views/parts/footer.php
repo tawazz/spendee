@@ -1,4 +1,4 @@
-<div class="row">     
+<div class="row">
 <!-- Footer -->
         <footer class="text-center">
             <div class="footer-above">
@@ -7,7 +7,6 @@
                         <div class="footer-col col-sm-4">
                             <h3>Contact Us!</h3>
                             <address>{{ address|raw }}</address>
-                              <span><i class="fa fa-fw fa-phone"></i></span>{{phone|raw }}<br>
                               <span><i class="fa fa-fw fa-envelope"></i></span> {{ email|raw }}
                         </div>
                         <div class="footer-col col-sm-4">
@@ -40,7 +39,7 @@
             <div class="footer-below">
                 <div class="container">
                     <div class="col-sm-6">
-                        Copyright &copy; {{ brand }}  2015
+                        Copyright &copy; {{ brand }}  {{ "now"|date("Y") }}
                     </div>
                     <div class="col-sm-6">
                         Website design by talented web developer<br> <a class="text-primary"href="http://www.tawazz.net/me">Tawanda Nyakudjga</a>

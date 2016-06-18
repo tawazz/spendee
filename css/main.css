@@ -102,6 +102,10 @@ background-color: #FF3D00;
     background-color: transparent;
 }
 
+.navbar-default .navbar-nav .open .dropdown-menu > li > a{
+  color:#fff;
+}
+
 .list-group-item-warning a {
 color: #fff;
 }

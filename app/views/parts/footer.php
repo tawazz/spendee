@@ -21,6 +21,10 @@
                                 <li>
                                     <a href="https://twitter.com/tawazz" class="btn-social btn-outline"><i class="fa fa-4x fa-twitter wow tada"></i></a>
                                 </li>
+                                <li>
+                                    <a href="https://github.com/tawazz" class="btn-social btn-outline"><i class="fa fa-4x fa-code-fork wow tada"></i></a>
+                                </li>
+
                             </ul>
                         </div>
                         <div class="footer-col col-sm-4" >

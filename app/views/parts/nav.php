@@ -10,9 +10,9 @@
             <span class="icon-bar"></span>
           </button>
           {%if not auth %}
-          <a class="navbar-brand brand-font" href="{{urlFor("home")}}"><img src="{{baseUrl}}/images/icon.png" alt="logo" style=" max-width:40px;margin-top: -7px;">pendee</a>
+          <a class="navbar-brand brand-font" href="{{urlFor("home")}}"><img src="{{baseUrl}}/images/navicon.png" alt="logo" style=" max-width:40px;margin-top: -7px;">pendee</a>
           {%else%}
-          <a class="navbar-brand brand-font" href="{{urlFor("expenses")}}"><img src="{{baseUrl}}/images/icon.png" alt="logo" style="max-width:40px; margin-top: -7px;">pendee</a>
+          <a class="navbar-brand brand-font" href="{{urlFor("expenses")}}"><img src="{{baseUrl}}/images/navicon.png" alt="logo" style="max-width:40px; margin-top: -7px;">pendee</a>
           {%endif%}
         </div>
 

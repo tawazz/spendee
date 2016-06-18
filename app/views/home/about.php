@@ -17,7 +17,7 @@
        <div class="container">
            <div class="row">
                <div class="col-lg-12 text-center">
-                   <h2 class="section-heading">Cut your Spending Meaningfully</h2>
+                   <h2 class="section-heading">Know where your money is going.</h2>
                    <hr class="primary">
                </div>
            </div>
@@ -96,7 +96,7 @@
                  <img src="images/web_macbook.png" height="400" class="img-responsive" alt="">
            </div>
            <div class="col-lg-6 col-sm-12 text-center">
-              <h3 class="section-heading">Know where your money is going.</h3>
+              <h3 class="section-heading">Cut your Spending Meaningfully.</h3>
              <p>
                Tracking spending is important! If you don't know where your money is going, you can't make intelligent choices about how to divert it for maximum benefit.
                The beautifully designed web interface helps you to track and analize your expenses with a record of your transactions, easy to analize inforgraphics that

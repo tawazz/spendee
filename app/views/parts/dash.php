@@ -1,4 +1,6 @@
 <div class="row">
+
+<div class="row">
     <div class="col-xs-12">
       <div class="btn-group" role="group" aria-label="...">
         <a href="{{baseUrl}}/{{nav.prev}}" class="btn"><img src="{{baseUrl}}/images/left.png"/></a>
@@ -20,7 +22,7 @@
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('expenses')}}">
+              <a href="{{urlFor('expenses',{year:nav.current.year,month:nav.current.month})}}">
                   <div class="panel-footer">
                       <span class="pull-left">View Expenses</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -40,7 +42,7 @@
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('incomes')}}">
+              <a href="{{urlFor('incomes',{year:nav.current.year,month:nav.current.month})}}">
                   <div class="panel-footer">
                       <span class="pull-left">View Incomes</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -54,13 +56,17 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
+                        {% if totalInc-totalExp >= 0 %}
                           <i class="fa fa-usd fa-2x">{{(totalInc-totalExp)|number_format(2,'.',',')}}</i>
+                        {% else %}
+                          <i class="fa fa-2x">-<i class="fa-usd">{{(totalInc-totalExp)*-1|number_format(2,'.',',')}}</i></i>
+                        {% endif %}
                       </div>
                       <div class="col-xs-9 text-right">
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('dashboard')}}">
+              <a href="{{urlFor('dashboard',{year:nav.current.year})}}">
                   <div class="panel-footer">
                       <span class="pull-left">Balance</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -70,4 +76,6 @@
           </div>
       </div>
     </div>
+</div>
+
 </div>

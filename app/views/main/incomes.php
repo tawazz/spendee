@@ -173,6 +173,7 @@ data: [
   {label: "{{item.name|raw}}", value:{{item.cost}} },
   {%endfor%}
 ],
+formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
 colors:['#2ecc71','#1abc9c','#16a085','#27ae60']
 });
 </script>

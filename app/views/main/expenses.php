@@ -200,7 +200,8 @@ data: [
   {label: "{{item.name|raw}}", value:{{item.cost}} },
   {%endfor%}
 ],
-colors:['#CF000F']
+formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+colors:["#F16C63"],
 });
 
 Morris.Donut({
@@ -210,6 +211,7 @@ data: [
       {label: "{{tag|raw}}", value:{{cost}} },
   {% endfor%}
 ],
+formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
 colors:['#FF3D00']
 });
 </script>

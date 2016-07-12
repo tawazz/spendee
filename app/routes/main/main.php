@@ -245,7 +245,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
     $nav['prev'] = "expense/".$name."/".($year-1);
     $nav['next'] = "expense/".$name."/".($year+1);
-    $nav['current']=['year'=>$year];
+    $nav['current']=['year'=>$year,'month'=> date('m')];
     $exp_monthly = [];
     $exp = isset($app->Exp->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year+1)."1-1")->cost)?$app->Exp->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost:0;
     for($i=1;$i<=12;$i++){
@@ -276,7 +276,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
     $nav['prev'] = "income/".$name."/".($year-1);
     $nav['next'] = "income/".$name."/".($year+1);
-    $nav['current']=['year'=>$year];
+    $nav['current']=['year'=>$year,'month'=> date('m')];
     $inc_monthly = [];
     $inc = isset($app->Inc->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost)?$app->Inc->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost:0;
     for($i=1;$i<=12;$i++){

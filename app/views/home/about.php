@@ -24,7 +24,7 @@
        </div>
        <div class="container">
            <div class="row">
-               <div class="col-lg-4 col-md-6 text-center">
+               <div class="col-sm-4 text-center">
                    <div class="service-box">
                        <i class="fa fa-4x fa-line-chart text-primary sr-icons"></i>
                        <h3>Track your expenses</h3>
@@ -32,14 +32,14 @@
                          </p>
                    </div>
                </div>
-               <div class="col-lg-4 col-md-6 text-center">
+               <div class="col-sm-4 text-center">
                    <div class="service-box">
                        <i class="fa fa-4x fa-pie-chart text-primary sr-icons"></i>
                        <h3>Detailed Overview</h3>
                        <p class="text-muted">With the help of detailed inforgraphics of your expenditure you will begin to notice where to make appropriate cuts, good places to shift your resources and other goals you might want to make.</p>
                    </div>
                </div>
-               <div class="col-lg-4 col-md-6 text-center">
+               <div class="col-sm-4 text-center">
                    <div class="service-box">
                        <i class="fa fa-4x fa-cloud text-primary sr-icons"></i>
                        <h3>Cloud</h3>
@@ -59,17 +59,17 @@
           </div>
       </div>
         <div class="row app-gallery">
-            <div class="col-lg-4 col-sm-6">
+            <div class="col-lg-4 col-sm-4">
                 <a href="images/app_main_screen.png" class="portfolio-box">
                     <img src="images/app_main_screen.png" class="img-responsive" alt="">
                 </a>
             </div>
-            <div class="col-lg-4 col-sm-6">
+            <div class="col-lg-4 col-sm-4">
                 <a href="images/app_add_inc.png" class="portfolio-box">
                     <img src="images/app_add_inc.png" class="img-responsive" alt="">
                 </a>
             </div>
-            <div class="col-lg-4 col-sm-6">
+            <div class="col-lg-4 col-sm-4">
                 <a href="images/app_graph.png" class="portfolio-box">
                     <img src="images/app_graph.png" class="img-responsive" alt="">
                 </a>

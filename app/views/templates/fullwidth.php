@@ -27,9 +27,6 @@
         <div class="container-fluid" style="margin-top:-5px;">
           <div class="row">
             {% include "parts/flash.php" %}
-            {% if auth %}
-            {% include "parts/dash.php" %}
-            {%endif%}
             {% block content %}{% endblock %}
             {% include "parts/footer.php" %}
           </div>

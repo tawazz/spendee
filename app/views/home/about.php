@@ -79,7 +79,7 @@
              <div class="container text-center">
                  <div class="call-to-action">
                      <h2>Free Download</h2>
-                     <a href="https://github.com/tawazz/Spendee-Android/releases/download/v1.0/Spendee.apk" class="btn btn-default btn-xl sr-button">Download Now!</a>
+                     <a href="https://github.com/tawazz/Spendee-Android/releases/download/v1.0.1/Spendee.apk" class="btn btn-default btn-xl sr-button">Download Now!</a>
                  </div>
              </div>
          </aside>

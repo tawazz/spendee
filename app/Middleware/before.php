@@ -38,6 +38,9 @@ class Before extends Middleware{
         if($user){
             $this->app->session->put('id',$user->user_id);
             $this->app->auth = $user;
+            $this->app->view()->appendData([
+                "auth"=>$this->app->auth
+            ]);
         }else {
           $this->app->User->removeRemember($user->user_id);
         }

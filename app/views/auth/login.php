@@ -1,4 +1,4 @@
-{% extends 'templates/default.php' %}
+{% extends 'templates/plain.php' %}
 
 {% block content %}
 <div class="row" style="margin-top:10px;">

@@ -12,7 +12,10 @@ $(document).ready(function () {
         if (itmName.length > 0 & date.length > 0 & parseFloat(amount) > 0.0) {
             document.getElementById("addForm").submit();
         } else {
-            alert("enter all data");
+          comfirmBox({
+            icon:"<i class='fa fa-exclamation-triangle fa-2x text-warning' aria-hidden='true'></i>",
+            message:"Fill in all fields",
+          });
         }
 
     });
@@ -24,7 +27,10 @@ $(document).ready(function () {
         if (itmName.length > 0 & date.length > 0 & parseFloat(amount) > 0.0) {
             document.getElementById("addForm").submit();
         } else {
-            alert("enter all data");
+          comfirmBox({
+            icon:"<i class='fa fa-exclamation-triangle fa-2x text-warning' aria-hidden='true'></i>",
+            message:"Fill in all fields",
+          });
         }
 
     });
@@ -228,3 +234,14 @@ function validate(form) {
         return false;
     }
 }
+
+Number.prototype.formatMoney = function(c, d, t){
+var n = this,
+  c = isNaN(c = Math.abs(c)) ? 2 : c,
+  d = d == undefined ? "." : d,
+  t = t == undefined ? "," : t,
+  s = n < 0 ? "-" : "",
+  i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+  j = (j = i.length) > 3 ? j % 3 : 0;
+ return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+};

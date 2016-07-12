@@ -1,3 +1,10 @@
+Spendee v2.6.1 12/07/2016
+change log
+- ui and navigation improvements
+- proper negative balance shown
+- fix major bug of entering costs more than 1000
+- responsive fixes on landing page
+- fix contact page email issues
 Spendee v2.6 18/06/2016
 change log
 -improved welcome page

@@ -3,7 +3,7 @@
   $app->post('/expenses/add',$require_login(),function() use($app){
     $data = [
         'name'=> $_POST['name'],
-        'cost'=> $_POST['cost'],
+        'cost'=> str_replace( ',', '',$_POST['cost'] ),
         'date'=> $_POST['date'],
         'user_id'=> $app->auth->user_id
       ];
@@ -27,7 +27,7 @@
       $exp_id = $_POST['exp_id'];
       $data = [
         'name'=> $_POST['name'],
-        'cost'=> $_POST['cost'],
+        'cost'=> str_replace( ',', '',$_POST['cost'] ),
         'date'=> $_POST['date'],
       ];
       $app->Exp->read($exp_id)->set($data);
@@ -73,6 +73,7 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
     $date = $date->format('d/F/Y');
     $nav['next'] = "expenses/".$year."/".$month."/".($day+1);
     $nav['prev'] = "expenses/".$year."/".$month."/".($day-1);
+    $nav['current']=['year'=>$year,'month'=>$month];
 }else if(isset($year)&& isset($month) ){
   if($month == 13){
       $month=1;
@@ -91,6 +92,7 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
   $date = $date->format('F/Y');
   $nav['prev'] = "expenses/".$year."/".($month-1);
   $nav['next'] = "expenses/".$year."/".($month+1);
+  $nav['current']=['year'=>$year,'month'=>$month];
 }else if(isset($year)){
   $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
   $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
@@ -101,6 +103,7 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
   $date = $date->format('Y');
   $nav['prev'] = "expenses/".($year-1);
   $nav['next'] = "expenses/".($year+1);
+  $nav['current']=['year'=>$year];
 }else{
     $month= date('m');
     $year= date('Y');
@@ -114,6 +117,7 @@ $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = 
     $date = $date->format('F/Y');
     $nav['prev'] = "expenses/".$year."/".($month-1);
     $nav['next'] = "expenses/".$year."/".($month+1);
+    $nav['current']=['year'=>$year,'month'=>$month];
 }
 $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
 $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
@@ -140,6 +144,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
         $date = $date->format('d/F/Y');
         $nav['next'] = "incomes/".$year."/".$month."/".($day+1);
         $nav['prev'] = "incomes/".$year."/".$month."/".($day-1);
+        $nav['current']=['year'=>$year,'month'=>$month];
     }else if(isset($year)&& isset($month) ){
       if($month == 13){
           $month=1;
@@ -157,6 +162,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
       $date = $date->format('F/Y');
       $nav['prev'] = "incomes/".$year."/".($month-1);
       $nav['next'] = "incomes/".$year."/".($month+1);
+      $nav['current']=['year'=>$year,'month'=>$month];
     }else if(isset($year)){
       $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
       $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
@@ -166,6 +172,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
       $date = $date->format('Y');
       $nav['prev'] = "incomes/".($year-1);
       $nav['next'] = "incomes/".($year+1);
+      $nav['current']=['year'=>$year];
     }else{
         $month= date('m');
         $year= date('Y');
@@ -178,6 +185,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
         $date = $date->format('F/Y');
         $nav['prev'] = "incomes/".$year."/".($month-1);
         $nav['next'] = "incomes/".$year."/".($month+1);
+        $nav['current']=['year'=>$year,'month'=>$month];
     }
     $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
@@ -208,6 +216,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
     $date = $date->format('Y');
     $nav['prev'] = "dashboard/".($year-1);
     $nav['next'] = "dashboard/".($year+1);
+    $nav['current']=['year'=>$year,'month'=> date('m')];
     $app->render('main/dashboard.php',[
       'totalExp'=>$totalexp,
       'totalInc'=>$totalinc,
@@ -236,6 +245,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
     $nav['prev'] = "expense/".$name."/".($year-1);
     $nav['next'] = "expense/".$name."/".($year+1);
+    $nav['current']=['year'=>$year];
     $exp_monthly = [];
     $exp = isset($app->Exp->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year+1)."1-1")->cost)?$app->Exp->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost:0;
     for($i=1;$i<=12;$i++){
@@ -266,6 +276,7 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
     $nav['prev'] = "income/".$name."/".($year-1);
     $nav['next'] = "income/".$name."/".($year+1);
+    $nav['current']=['year'=>$year];
     $inc_monthly = [];
     $inc = isset($app->Inc->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost)?$app->Inc->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost:0;
     for($i=1;$i<=12;$i++){

@@ -163,6 +163,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{% include 'parts/confirmbox.php'%}
 <script type="text/javascript">
 {% if totals is not empty %}
 new Morris.Line({
@@ -200,7 +201,8 @@ data: [
   {label: "{{item.name|raw}}", value:{{item.cost}} },
   {%endfor%}
 ],
-colors:['#CF000F']
+formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+colors:["#F16C63"],
 });
 
 Morris.Donut({
@@ -210,6 +212,7 @@ data: [
       {label: "{{tag|raw}}", value:{{cost}} },
   {% endfor%}
 ],
+formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
 colors:['#FF3D00']
 });
 </script>

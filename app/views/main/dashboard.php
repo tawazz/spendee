@@ -130,7 +130,7 @@
   // Labels for the ykeys -- will be displayed when you hover over the
   // chart.
   labels: ['earned','spent','saved'],
-  lineColors:['#47C9AF','red','black'],
+  lineColors:['#47C9AF','#F16C63','#333333'],
   goalLineColors:['#d9edf7'],
   dateFormat: function (x) { return moment(x).format(" MMMM YYYY"); },
   preUnits:'$',

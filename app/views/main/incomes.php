@@ -136,6 +136,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{% include 'parts/confirmbox.php'%}
 <script type="text/javascript">
 {% if totals is not empty %}
 new Morris.Line({
@@ -173,6 +174,7 @@ data: [
   {label: "{{item.name|raw}}", value:{{item.cost}} },
   {%endfor%}
 ],
+formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
 colors:['#2ecc71','#1abc9c','#16a085','#27ae60']
 });
 </script>

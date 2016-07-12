@@ -2,7 +2,7 @@
 {% set address = "Perth<br> Australia" %}
 {% set phone = "+61 401 234 567" %}
 {% set email = "admin@tawazz.net" %}
-{% set ver = "v2.6.1-dev" %}
+{% set ver = "v2.6.1" %}
 <!DOCTYPE html>
 <html lang="en">
     <head>

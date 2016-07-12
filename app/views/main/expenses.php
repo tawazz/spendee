@@ -163,6 +163,7 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+{% include 'parts/confirmbox.php'%}
 <script type="text/javascript">
 {% if totals is not empty %}
 new Morris.Line({

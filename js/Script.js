@@ -12,7 +12,10 @@ $(document).ready(function () {
         if (itmName.length > 0 & date.length > 0 & parseFloat(amount) > 0.0) {
             document.getElementById("addForm").submit();
         } else {
-            alert("enter all data");
+          comfirmBox({
+            icon:"<i class='fa fa-exclamation-triangle fa-2x text-warning' aria-hidden='true'></i>",
+            message:"Fill in all fields",
+          });
         }
 
     });
@@ -24,7 +27,10 @@ $(document).ready(function () {
         if (itmName.length > 0 & date.length > 0 & parseFloat(amount) > 0.0) {
             document.getElementById("addForm").submit();
         } else {
-            alert("enter all data");
+          comfirmBox({
+            icon:"<i class='fa fa-exclamation-triangle fa-2x text-warning' aria-hidden='true'></i>",
+            message:"Fill in all fields",
+          });
         }
 
     });

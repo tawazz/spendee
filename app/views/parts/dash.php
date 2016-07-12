@@ -55,14 +55,12 @@
           <div class="panel panel-default">
               <div class="panel-heading">
                   <div class="row">
-                      <div class="col-xs-3">
+                      <div class="col-xs-12">
                         {% if totalInc-totalExp >= 0 %}
                           <i class="fa fa-usd fa-2x">{{(totalInc-totalExp)|number_format(2,'.',',')}}</i>
                         {% else %}
-                          <i class="fa fa-2x">-<i class="fa-usd">{{(totalInc-totalExp)*-1|number_format(2,'.',',')}}</i></i>
+                          <i class="fa fa-2x">-<i class="fa fa-usd">{{(totalInc-totalExp)*-1|number_format(2,'.',',')}}</i></i>
                         {% endif %}
-                      </div>
-                      <div class="col-xs-9 text-right">
                       </div>
                   </div>
               </div>

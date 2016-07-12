@@ -3,7 +3,7 @@
   $app->post('/expenses/add',$require_login(),function() use($app){
     $data = [
         'name'=> $_POST['name'],
-        'cost'=> $_POST['cost'],
+        'cost'=> str_replace( ',', '',$_POST['cost'] ),
         'date'=> $_POST['date'],
         'user_id'=> $app->auth->user_id
       ];
@@ -27,7 +27,7 @@
       $exp_id = $_POST['exp_id'];
       $data = [
         'name'=> $_POST['name'],
-        'cost'=> $_POST['cost'],
+        'cost'=> str_replace( ',', '',$_POST['cost'] ),
         'date'=> $_POST['date'],
       ];
       $app->Exp->read($exp_id)->set($data);

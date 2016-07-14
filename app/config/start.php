@@ -2,7 +2,6 @@
   session_start();
   require 'vendor/autoload.php';
   require 'Tazzy-Helpers/autoload.php';
-  require 'app/config/settings.php';
   use Slim\Slim;
 
   $app = new Slim([
@@ -11,7 +10,7 @@
   ]);
   //Middleware
   $app->add(new Before());
-  $app->add(new Csrf());
+  $app->add(new Csrf())
   require 'app/Middleware/auth_filters.php';
   //views
   $view = $app->view();

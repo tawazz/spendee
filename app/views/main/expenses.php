@@ -47,7 +47,7 @@
           {%for exp in allExpenses%}
             {% if date == exp.date %}
             {% set total = total+exp.cost %}
-            <a href="{{baseUrl}}/expense/{{exp.name}}">
+            <a href="{{ baseUrl() }}/expense/{{exp.name}}">
                 <div class="panel-footer">
                     <span class="pull-left">{{exp.name}}</span>
                     <span class="pull-right"><i class="fa fa-usd">{{exp.cost}}</i></span>
@@ -134,7 +134,7 @@
         <h4 class="modal-title text-capitalize">Add Expense </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{baseUrl}}/expenses/add">
+          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/expenses/add">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>

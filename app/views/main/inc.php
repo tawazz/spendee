@@ -82,7 +82,7 @@
         <h4 class="modal-title text-capitalize">Edit Income </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{baseUrl}}/income/update">
+          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/income/update">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>
@@ -115,7 +115,7 @@
 
         <h3 class="text-capitalize text-center">Are You Sure You want to Delete!!!</h3>
         <div class="modal-footer">
-          <form name="deleteForm" action="{{baseUrl}}/income/delete" method="post">
+          <form name="deleteForm" action="{{ baseUrl() }}/income/delete" method="post">
             <input type="hidden" name="inc_id">
             <input type="hidden" name="name" value="{{products.0.name}}">
             <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}"/>
@@ -126,7 +126,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="{{baseUrl}}/js/knob.js"></script>
+<script type="text/javascript" src="{{ baseUrl() }}/js/knob.js"></script>
 <script>
     $(".knob").knob({
       'min':0,

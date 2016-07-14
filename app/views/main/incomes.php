@@ -38,7 +38,7 @@
           {%for inc in allIncomes%}
             {% if date == inc.date %}
             {% set total = total+inc.cost %}
-            <a href="{{baseUrl}}/income/{{inc.name}}">
+            <a href="{{ baseUrl() }}/income/{{inc.name}}">
                 <div class="panel-footer">
                     <span class="pull-left">{{inc.name}}</span>
                     <span class="pull-right"><i class="fa fa-usd">{{inc.cost}}</i></span>
@@ -115,7 +115,7 @@
         <h4 class="modal-title text-capitalize">Add Income </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{baseUrl}}/incomes/add">
+          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/incomes/add">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>

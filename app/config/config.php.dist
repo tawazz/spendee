@@ -11,6 +11,13 @@
           'username' => 'root',
           'password' => 'password',
           'db'       => 'spendee_database'
+      ],
+      'ver'          => 'v2.6.2',
+      'locale'       => [
+          "brand"    => "tawazz.net",
+          "address"  => "Perth<br> Australia",
+          "phone"    => "+61 401 234 567",
+          "email"    => "admin@tawazz.net",
       ]
   ];
  ?>

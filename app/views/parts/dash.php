@@ -3,9 +3,9 @@
 <div class="row">
     <div class="col-xs-12">
       <div class="btn-group" role="group" aria-label="...">
-        <a href="{{baseUrl}}/{{nav.prev}}" class="btn"><img src="{{baseUrl}}/images/left.png"/></a>
+        <a href="{{ baseUrl() }}/{{nav.prev}}" class="btn"><img src="{{ baseUrl() }}/images/left.png"/></a>
         <span class="btn text-default" style="margin-top:7px;">{{date}}</span>
-        <a href="{{baseUrl}}/{{nav.next}}" class="btn"><img src="{{baseUrl}}/images/right.png"/></a>
+        <a href="{{ baseUrl() }}/{{nav.next}}" class="btn"><img src="{{ baseUrl() }}/images/right.png"/></a>
       </div>
     </div>
 </div>

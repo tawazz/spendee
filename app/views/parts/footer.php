@@ -1,4 +1,4 @@
-<div class="row">
+
 <!-- Footer -->
         <footer class="text-center">
             <div class="footer-above">
@@ -36,11 +36,11 @@
                             <h3>Site Links</h3>
                             <ul style="list-style-type: none;">
                               {% if auth %}
-                                <li><a href="{{baseUrl}}/">Home</a></li>
-                                <li><a href="{{baseUrl}}/expenses">Expenses</a></li>
-                                <li><a href="{{baseUrl}}/incomes">Incomes</a></li>
-                                <li><a href="{{baseUrl}}/dashboard">DashBoard</a></li>
-                                <li><a href="{{baseUrl}}/account">Account</a></li>
+                                <li><a href="{{ baseUrl() }}/">Home</a></li>
+                                <li><a href="{{ baseUrl() }}/expenses">Expenses</a></li>
+                                <li><a href="{{ baseUrl() }}/incomes">Incomes</a></li>
+                                <li><a href="{{ baseUrl() }}/dashboard">DashBoard</a></li>
+                                <li><a href="{{ baseUrl() }}/account">Account</a></li>
                               {% else %}
                                 <li><a href="{{ urlFor('home')}}">Home</a></li>
                                 <li><a href="{{ urlFor('login')}}">Login</a></li>
@@ -56,10 +56,9 @@
             <div class="footer-below">
                 <div class="container">
                     <div class="col-sm-12 text-center">
-                      <span class="brand-font">Spendee</span> <span>{{ver}}</span>
+                      <span class="brand-font">{{brand}}</span> <span>{{ver}}</span>
                         <span>Copyright &copy; <a class="text-primary"href="http://www.tawazz.net/me">Tawanda Nyakudjga</a> {{ "now"|date("Y") }}</span>
                     </div>
                 </div>
             </div>
         </footer>
-</div>

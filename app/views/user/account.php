@@ -4,7 +4,7 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="col-md-4">
-        <img src="{{baseUrl}}/images/user.png" class="img-rounded img-responsive" />
+        <img src="{{ baseUrl() }}/images/user.png" class="img-rounded img-responsive" />
         <br/>
         <br/>
         <form action="update/user" method="post" enctype="multipart/form-data">

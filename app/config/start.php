@@ -60,7 +60,12 @@
   $app->day = date('d');
   $app->baseUrl = Settings::get('urls.baseUrl');
   $app->view()->appendData([
-    "baseUrl"=> $app->baseUrl
+    "baseUrl" => $app->baseUrl,
+    "ver"     => Settings::get('ver'),
+    "brand"    => Settings::get('locale.brand'),
+    "address"  => Settings::get('locale.address'),
+    "phone"    => Settings::get('locale.phone'),
+    "email"    => Settings::get('locale.email'),
   ]);
   $app->run();
 

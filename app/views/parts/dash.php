@@ -1,6 +1,4 @@
 <div class="row">
-
-<div class="row">
     <div class="col-xs-12">
       <div class="btn-group" role="group" aria-label="...">
         <a href="{{ baseUrl() }}/{{nav.prev}}" class="btn"><img src="{{ baseUrl() }}/images/left.png"/></a>
@@ -74,6 +72,4 @@
           </div>
       </div>
     </div>
-</div>
-
 </div>

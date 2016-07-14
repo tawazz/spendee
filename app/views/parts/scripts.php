@@ -14,6 +14,7 @@
 <script src="{{ baseUrl() }}/js/raphael-min.js"></script>
 <script src="{{ baseUrl() }}/js/morris.min.js"></script>
 <script src="{{ baseUrl() }}/js/select2.min.js"></script>
+<script src="{{ baseUrl() }}/js/sparkline.min.js"></script>
 
 <!--javascript-->
 <script type="text/javascript" src="{{ baseUrl() }}/js/Script.js"></script>

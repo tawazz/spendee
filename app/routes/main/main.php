@@ -1,5 +1,5 @@
 <?php
-
+require 'helper.php';
   $app->post('/expenses/add',$require_login(),function() use($app){
     $data = [
         'name'=> $_POST['name'],
@@ -54,98 +54,21 @@
       $app->response->redirect($app->urlFor('inc',['name'=>$_POST['name']]));
   });
   //expenses
-$app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
-  if(isset($year)&& isset($month) && isset($day) ){
-    if($month == 13){
-        $month=1;
-        $year +=1;
-    }
-    if($month == 0){
-        $month=12;
-        $year -=1;
-    }
-    $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-    $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-    $allExpenses = $app->Exp->read($app->auth->user_id)->activity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-    $itemSpent = $app->Exp->read($app->auth->user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-    $exptags = $app->ExpTags->expTagsData($app->auth->user_id,$year."-".$month."-".$day,$year."-".$month."-".($day+1));
-    $date = new DateTime($year."-".$month."-".$day);
-    $date = $date->format('d/F/Y');
-    $nav['next'] = "expenses/".$year."/".$month."/".($day+1);
-    $nav['prev'] = "expenses/".$year."/".$month."/".($day-1);
-    $nav['current']=['year'=>$year,'month'=>$month];
-}else if(isset($year)&& isset($month) ){
-  if($month == 13){
-      $month=1;
-      $year +=1;
-  }
-  if($month == 0){
-      $month=12;
-      $year -=1;
-  }
-  $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
-  $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
-  $allExpenses = $app->Exp->read($app->auth->user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
-  $itemSpent = $app->Exp->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
-  $exptags = $app->ExpTags->expTagsData($app->auth->user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
-  $date = new DateTime($year."-".$month."-1");
-  $date = $date->format('F/Y');
-  $nav['prev'] = "expenses/".$year."/".($month-1);
-  $nav['next'] = "expenses/".$year."/".($month+1);
-  $nav['current']=['year'=>$year,'month'=>$month];
-}else if(isset($year)){
-  $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
-  $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
-  $allExpenses = $app->Exp->read($app->auth->user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
-  $itemSpent= $app->Exp->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
-  $exptags = $app->ExpTags->expTagsData($app->auth->user_id,$year."-"."1"."-1",($year+1)."-1-1");
-  $date = new DateTime($year."-1-1");
-  $date = $date->format('Y');
-  $nav['prev'] = "expenses/".($year-1);
-  $nav['next'] = "expenses/".($year+1);
-  $nav['current']=['year'=>$year];
-}else{
-    $month= date('m');
-    $year= date('Y');
-    $day = date('d');
-    $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
-    $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
-    $allExpenses = $app->Exp->read($app->auth->user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
-    $itemSpent = $app->Exp->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
-    $exptags = $app->ExpTags->expTagsData($app->auth->user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
-    $date = new DateTime($year."-".$month."-".$day);
-    $date = $date->format('F/Y');
-    $nav['prev'] = "expenses/".$year."/".($month-1);
-    $nav['next'] = "expenses/".$year."/".($month+1);
-    $nav['current']=['year'=>$year,'month'=>$month];
-}
-$totalinc = isset($totalinc->sum)?$totalinc->sum:0;
-$totalexp = isset($totalexp->sum)?$totalexp->sum:0;
-$tags = $app->Tags->find('all');
+  $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
 
-$app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allExpenses'=>$allExpenses,'items'=>json_decode($itemSpent),'nav'=>$nav,'tags'=>$tags,'exptags'=>$exptags]);
-})->name('expenses');
-    //Incomes
-    $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
-      if(isset($year)&& isset($month) && isset($day) ){
-        if($month == 13){
-            $month=1;
-            $year +=1;
-        }
-        if($month == 0){
-            $month=12;
-            $year -=1;
-        }
-        $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-        $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-        $allIncomes= $app->Inc->read($app->auth->user_id)->activity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-        $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-        $date = new DateTime($year."-".$month."-".$day);
-        $date = $date->format('d/F/Y');
-        $nav['next'] = "incomes/".$year."/".$month."/".($day+1);
-        $nav['prev'] = "incomes/".$year."/".$month."/".($day-1);
-        $nav['current']=['year'=>$year,'month'=>$month];
-    }else if(isset($year)&& isset($month) ){
+      $data = getData($app,$app->auth->user_id,$year,$month,$day);
+      if($app->debug){
+        var_dump($data);
+      }
+      $app->render('main/expenses.php',[
+        'appData' => $data,
+        'page'    => 'expenses',
+        'totals'  => []
+      ]);
+  })->name('expenses');
+  //Incomes
+  $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
+    if(isset($year)&& isset($month) && isset($day) ){
       if($month == 13){
           $month=1;
           $year +=1;
@@ -154,44 +77,62 @@ $app->render('main/expenses.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'d
           $month=12;
           $year -=1;
       }
+      $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-".$month."-".$day,$year."-".$month."-".($day+1));
+      $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-".$day,$year."-".$month."-".($day+1));
+      $allIncomes= $app->Inc->read($app->auth->user_id)->activity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
+      $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
+      $date = new DateTime($year."-".$month."-".$day);
+      $date = $date->format('d/F/Y');
+      $nav['next'] = "incomes/".$year."/".$month."/".($day+1);
+      $nav['prev'] = "incomes/".$year."/".$month."/".($day-1);
+      $nav['current']=['year'=>$year,'month'=>$month];
+  }else if(isset($year)&& isset($month) ){
+    if($month == 13){
+        $month=1;
+        $year +=1;
+    }
+    if($month == 0){
+        $month=12;
+        $year -=1;
+    }
+    $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
+    $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
+    $allIncomes = $app->Inc->read($app->auth->user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
+    $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
+    $date = new DateTime($year."-".$month."-1");
+    $date = $date->format('F/Y');
+    $nav['prev'] = "incomes/".$year."/".($month-1);
+    $nav['next'] = "incomes/".$year."/".($month+1);
+    $nav['current']=['year'=>$year,'month'=>$month];
+  }else if(isset($year)){
+    $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
+    $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
+    $allIncomes = $app->Inc->read($app->auth->user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
+    $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
+    $date = new DateTime($year."-1-1");
+    $date = $date->format('Y');
+    $nav['prev'] = "incomes/".($year-1);
+    $nav['next'] = "incomes/".($year+1);
+    $nav['current']=['year'=>$year];
+  }else{
+      $month= date('m');
+      $year= date('Y');
+      $day = date('d');
       $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
       $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
-      $allIncomes = $app->Inc->read($app->auth->user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
+      $allIncomes= $app->Inc->read($app->auth->user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
       $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
-      $date = new DateTime($year."-".$month."-1");
+      $date = new DateTime($year."-".$month."-".$day);
       $date = $date->format('F/Y');
       $nav['prev'] = "incomes/".$year."/".($month-1);
       $nav['next'] = "incomes/".$year."/".($month+1);
       $nav['current']=['year'=>$year,'month'=>$month];
-    }else if(isset($year)){
-      $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
-      $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
-      $allIncomes = $app->Inc->read($app->auth->user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
-      $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
-      $date = new DateTime($year."-1-1");
-      $date = $date->format('Y');
-      $nav['prev'] = "incomes/".($year-1);
-      $nav['next'] = "incomes/".($year+1);
-      $nav['current']=['year'=>$year];
-    }else{
-        $month= date('m');
-        $year= date('Y');
-        $day = date('d');
-        $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
-        $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
-        $allIncomes= $app->Inc->read($app->auth->user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
-        $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
-        $date = new DateTime($year."-".$month."-".$day);
-        $date = $date->format('F/Y');
-        $nav['prev'] = "incomes/".$year."/".($month-1);
-        $nav['next'] = "incomes/".$year."/".($month+1);
-        $nav['current']=['year'=>$year,'month'=>$month];
-    }
-    $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
-    $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
-    //echo $app->Exp->read(7)->spentOnProduct('ebay',"2014/09/1","2015/09/1")."<br/>";
-    //echo $app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->name . " -> ".$app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->max;
-    $app->render('main/incomes.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allIncomes'=>$allIncomes,'nav'=>$nav,'earned'=>json_decode($earned)]);
+  }
+  $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
+  $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
+  //echo $app->Exp->read(7)->spentOnProduct('ebay',"2014/09/1","2015/09/1")."<br/>";
+  //echo $app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->name . " -> ".$app->Exp->read(7)->biggest("2014/08/1","2015/09/1")->max;
+  $app->render('main/incomes.php',['totalExp'=>$totalexp,'totalInc'=>$totalinc,'date'=>$date,'allIncomes'=>$allIncomes,'nav'=>$nav,'earned'=>json_decode($earned)]);
   })->name('incomes');
 
   $app->get('/dashboard(/:year)',$require_login(),function($year=NULL ) use($app){

@@ -25,6 +25,7 @@
         {%endif%}
         {% block content %}{% endblock %}
         {% include "parts/footer.php" %}
+        {% block js %}{% endblock%}
         </div>
     </body>
 </html>

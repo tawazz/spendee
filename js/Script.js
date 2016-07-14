@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    jQuery.noConflict();
     $('#addItem').click(function () {
         $('#addExp').modal('show');
     });
@@ -36,6 +35,11 @@ $(document).ready(function () {
     });
 
 });
+
+$(function() {
+    var $ = jQuery.noConflict();
+   $('.inlinesparkline').sparkline('html', {type: 'bar', barColor: 'white'});
+ });
 
 $(function($){
   var cfgCulture = 'en-AU';

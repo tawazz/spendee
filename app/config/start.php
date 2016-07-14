@@ -49,19 +49,22 @@
     return  new Hash();
   });
 
+  $app->container->singleton('Config',function(){
+    return  new Settings();
+  });
   //routes
   require'app/routes/routes.php';
 
  //variables
- $app->debug =Settings::get('debug');
-  $app->auth = false;
+  $app->debug = $app->Config->get('debug');
+  $app->auth  = false;
   $app->month = date('m');
-  $app->year = date('Y');
-  $app->day = date('d');
-  $app->baseUrl = Settings::get('urls.baseUrl');
+  $app->year  = date('Y');
+  $app->day   = date('d');
+  $app->baseUrl = $app->Config->get('urls.baseUrl');
   $app->view()->appendData([
-    "baseUrl" => $app->baseUrl,
-    "ver"     => Settings::get('ver'),
+    "baseUrl"  => $app->baseUrl,
+    "ver"      => Settings::get('ver'),
     "brand"    => Settings::get('locale.brand'),
     "address"  => Settings::get('locale.address'),
     "phone"    => Settings::get('locale.phone'),

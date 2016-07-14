@@ -1,0 +1,16 @@
+<?php
+  $GLOBALS['config'] = [
+
+      'urls'         => [
+          'baseUrl'  => 'http://localhost/spendee',
+      ],
+      'debug'        => true,
+      'mysql'        => [
+          'driver'   => 'mysql',
+          'host'     => '127.0.0.1',
+          'username' => 'root',
+          'password' => 'password',
+          'db'       => 'spendee_database'
+      ]
+  ];
+ ?>

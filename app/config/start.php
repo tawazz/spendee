@@ -2,11 +2,12 @@
   session_start();
   require 'vendor/autoload.php';
   require 'Tazzy-Helpers/autoload.php';
+  require 'app/config/settings.php';
   use Slim\Slim;
 
   $app = new Slim([
     'view'=> new \Slim\Views\Twig(),
-    'debug'=>true,
+    'debug'=> Settings::get('debug'),
   ]);
   //Middleware
   $app->add(new Before());
@@ -53,18 +54,19 @@
   require'app/routes/routes.php';
 
  //variables
- $app->debug =FALSE;
+ $app->debug =Settings::get('debug');
   $app->auth = false;
   $app->month = date('m');
   $app->year = date('Y');
   $app->day = date('d');
-  $app->baseUrl = "http://localhost/spendee";
+  $app->baseUrl = Settings::get('urls.baseUrl');
   $app->view()->appendData([
     "baseUrl"=> $app->baseUrl
   ]);
   $app->run();
 
   if($app->debug){
+      echo "User </br>";
       var_dump($app->auth);
   }
 

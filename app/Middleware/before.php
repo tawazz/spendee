@@ -28,6 +28,10 @@ class Before extends Middleware{
   {
     if ($this->app->getCookie('remember') && !$this->app->auth) {
       $hash = $this->app->getCookie('remember');
+      if($this->app->debug){
+          echo "Remember Cookie </br>";
+          var_dump($hash);
+      }
       $exist = $this->app->Remember->find('first',['where'=>['hash','=',$hash]]);
       if(isset($exist))
       {

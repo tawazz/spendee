@@ -10,7 +10,7 @@
   ]);
   //Middleware
   $app->add(new Before());
-  $app->add(new Csrf())
+  $app->add(new Csrf());
   require 'app/Middleware/auth_filters.php';
   //views
   $view = $app->view();

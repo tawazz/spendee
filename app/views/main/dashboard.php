@@ -7,7 +7,7 @@
             <div class="panel-heading">
               <div class="row">
                   <div class="col-xs-12">
-                      <span class="tx-2x">{{date}} Earnings & Spendings</span>
+                      <span class="tx-2x">{{ appData.nav.display }} Earnings & Spendings</span>
                   </div>
               </div>
             </div>
@@ -24,14 +24,14 @@
             <div class="panel-heading">
               <div class="row">
                   <div class="col-xs-12">
-                      <span class="tx-2x">{{date}} savings</span>
+                      <span class="tx-2x">{{ appData.nav.display }} savings</span>
                   </div>
               </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body" {% if not allExpenses %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+            <div class="panel-body" {% if not appData.exp_data %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                 <div id="morris-line-chart"></div>
-                 {% if not allIncomes %} No Data Available {% endif %}
+                 {% if not appData.exp_data %} No Data Available {% endif %}
             </div>
             <!-- /.panel-body -->
         </div>
@@ -42,16 +42,16 @@
             <div class="panel-heading">
               <div class="row">
                   <div class="col-xs-12">
-                      <span class="tx-2x">{{date}} Incomes</span>
+                      <span class="tx-2x">{{ appData.nav.display }} Incomes</span>
                   </div>
               </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body" {% if not allIncomes %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+            <div class="panel-body" {% if not appData.inc_data %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                 <div id="morris-bar-income">
 
                 </div>
-               {% if not allIncomes %} No Data Available {% endif %}
+               {% if not appData.inc_data %} No Data Available {% endif %}
             </div>
             <!-- /.panel-body -->
         </div>
@@ -62,15 +62,15 @@
             <div class="panel-heading">
               <div class="row">
                   <div class="col-xs-12">
-                      <span class="tx-2x">{{date}} Expenses</span>
+                      <span class="tx-2x">{{ appData.nav.display }} Expenses</span>
                   </div>
               </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body" {% if not allExpenses %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+            <div class="panel-body" {% if not appData.exp_data %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                 <div id="morris-bar-expenses">
                 </div>
-                {% if not allExpenses %} No Data Available {% endif %}
+                {% if not appData.exp_data %} No Data Available {% endif %}
             </div>
             <!-- /.panel-body -->
         </div>
@@ -81,15 +81,15 @@
             <div class="panel-heading">
               <div class="row">
                   <div class="col-xs-12">
-                      <span class="tx-2x">{{date}} Tags</span>
+                      <span class="tx-2x">{{ appData.nav.display }} Tags</span>
                   </div>
               </div>
             </div>
             <!-- /.panel-heading -->
-            <div class="panel-body" {% if not exptags %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+            <div class="panel-body" {% if not appData.exp_tags %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                 <div id="morris-bar-tags">
                 </div>
-                {% if not exptags %} No Data Available {% endif %}
+                {% if not appData.exp_tags %} No Data Available {% endif %}
             </div>
             <!-- /.panel-body -->
         </div>
@@ -101,7 +101,7 @@
   element: 'morris-bar-chart',
   data: [
     {%for key,val in earned%}
-        { d: '{{(date ~'-'~key~'-1')|date('M')}}', a: {{val}}, b: {{spent[key]}}, c: {{val - spent[key] }} },
+        { d: '{{(appData.nav.current.year ~'-'~key~'-1')|date('M')}}', a: {{val}}, b: {{spent[key]}}, c: {{val - spent[key] }} },
     {%endfor%}
   ],
   xkey: 'd',
@@ -119,8 +119,8 @@
   // Chart data records -- each entry in this array corresponds to a point on
   // the chart.
   data: [
-    {%for key,val in earned%}
-          { d: '{{(date ~'-'~key~'-1')}}', a: {{val}}, b: {{spent[key]}}, c: {{val - spent[key] }} },
+    {%for key,val in earned %}
+          { d: '{{(appData.nav.current.year ~'-'~key~'-1')}}', a: {{val}}, b: {{spent[key]}}, c: {{val - spent[key] }} },
     {%endfor%}
   ],
   // The name of the data record attribute that contains x-values.
@@ -173,11 +173,11 @@
   });
 {% endif %}
 
-{% if exptags %}
+{% if appData.exp_tags %}
 Morris.Bar({
 element: 'morris-bar-tags',
 data: [
-  {% for tag,cost in exptags %}
+  {% for tag,cost in appData.exp_tags %}
       {tag: "{{tag|raw}}", cost:{{ cost }} },
   {% endfor%}
 ],

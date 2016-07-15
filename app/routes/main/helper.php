@@ -15,7 +15,7 @@
       $allExpenses = $app->Exp->read($user_id)->activity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
       $allIncomes= $app->Inc->read($user_id)->activity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
       $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
-      $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
+      $earned= $app->Inc->read($user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
       $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".$month."-".($day+1));
 
       $date = new DateTime($year."-".$month."-".$day);
@@ -40,7 +40,7 @@
     $totalinc = $app->Inc->read($user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
     $allExpenses = $app->Exp->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
     $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
-    $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
+    $earned= $app->Inc->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
     $allIncomes = $app->Inc->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
     $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
 
@@ -57,7 +57,7 @@
     $allExpenses = $app->Exp->read($user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
     $allIncomes = $app->Inc->read($user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
     $itemSpent= $app->Exp->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
-    $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
+    $earned= $app->Inc->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
     $exptags = $app->ExpTags->expTagsData($user_id,$year."-"."1"."-1",($year+1)."-1-1");
 
     $date = new DateTime($year."-1-1");
@@ -65,7 +65,7 @@
     $nav['display'] = $date;
     $nav['prev'] = ($year-1);
     $nav['next'] = ($year+1);
-    $nav['current']=['year'=>$year];
+    $nav['current']=['year'=>$year,'month'=>date('m')];
 
     }else{
       $month= date('m');
@@ -76,7 +76,7 @@
       $allExpenses = $app->Exp->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
       $allIncomes= $app->Inc->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
       $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
-      $earned= $app->Inc->read($app->auth->user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
+      $earned= $app->Inc->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
       $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
 
       $date = new DateTime($year."-".$month."-".$day);
@@ -141,5 +141,32 @@
 
     return (object) $response;
 
+  }
+  function yearOverView($app,$user_id,$year)
+  {
+    $totalexp = $app->Exp->read($user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
+    $totalinc = $app->Inc->read($user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
+    $allIncomes = json_decode($app->Inc->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1"));
+    $allExpenses = json_decode($app->Exp->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1"));
+
+    $earned=[];
+    $itemSpent =[];
+    for($i=1;$i<=12;$i++){
+      $earned[$i] = isset($app->Inc->read($user_id)->totalInc($year."-".$i."-1",$year."-".($i+1)."-1")->sum) ? $app->Inc->read($user_id)->totalInc($year."-".$i."-1",$year."-".($i+1)."-1")->sum :0 ;
+      $itemSpent[$i] = isset($app->Exp->read($user_id)->totalExp($year."-".$i."-1",$year."-".($i+1)."-1")->sum) ? $app->Exp->read($user_id)->totalExp($year."-".$i."-1",$year."-".($i+1)."-1")->sum : 0;
+    }
+    $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
+    $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
+
+    $response = [
+      'totalExp'=>$totalexp,
+      'totalInc'=>$totalinc,
+      'allIncomes'=>$allIncomes,
+      'allExpenses'=>$allExpenses,
+      'earned'=>$earned,
+      'spent'=>$itemSpent,
+    ];
+
+    return $response;
   }
  ?>

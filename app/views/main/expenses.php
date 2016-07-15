@@ -43,7 +43,7 @@
             <a href="{{ baseUrl() }}/expense/{{exp.name}}">
                 <div class="panel-footer">
                     <span class="pull-left">{{exp.name}}</span>
-                    <span class="pull-right"><i class="fa fa-usd">{{exp.cost}}</i></span>
+                    <span class="pull-right"><i class="fa fa-usd">{{exp.cost|number_format(2, '.')}}</i></span>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -77,7 +77,7 @@
                   {{appData.nav.display }} Spending Pattern
               </div>
               <!-- /.panel-heading -->
-              <div class="panel-body" {% if not items %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+              <div class="panel-body" {% if not appData.expenses %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                   <div id="morris-line-chart"></div>
                   {% if not appData.expenses %} No Data Available {% endif %}
               </div>
@@ -105,7 +105,7 @@
                   {{date}} Tags
               </div>
               <!-- /.panel-heading -->
-              <div class="panel-body" {% if not exptags %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+              <div class="panel-body" {% if not appData.exp_tags %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                   <div id="morris-pie-chart-tags">
                     {% if not appData.exp_tags %} No Data Available {% endif %}
                   </div>
@@ -200,6 +200,7 @@
   ],
   formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
   colors:["#F16C63"],
+  resize:true
   });
 
   Morris.Donut({
@@ -210,7 +211,8 @@
     {% endfor%}
   ],
   formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
-  colors:['#FF3D00']
+  colors:['#FF3D00'],
+  resize:true
   });
 
   $.fn.select2.defaults.set("theme", "classic");

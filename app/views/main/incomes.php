@@ -14,15 +14,11 @@
   </div>
 </div>
 <div class="row">
-{%if allIncomes %}
+{%if appData.inc_data %}
 <div class="col-xs-12 col-sm-6">
-  {% set dates =[] %}
   {% set totals =[] %}
-  {%for inc in allIncomes %}
-    {% set dates = dates|merge({(inc.date):NULL}) %}
-  {% endfor %}
-{% set periodTot = 0%}
-  {% for date in dates|keys %}
+  {% set periodTot = 0 %}
+  {% for date, incomes in appData.inc_data %}
     {% set total = 0%}
   <div class="col-sm-12">
       <div class="panel panel-success">
@@ -35,8 +31,7 @@
                   </div>
               </div>
           </div>
-          {%for inc in allIncomes%}
-            {% if date == inc.date %}
+          {%for inc in incomes %}
             {% set total = total+inc.cost %}
             <a href="{{ baseUrl() }}/income/{{inc.name}}">
                 <div class="panel-footer">
@@ -45,7 +40,6 @@
                     <div class="clearfix"></div>
                 </div>
             </a>
-            {% endif %}
           {% endfor %}
           <div class="panel-footer">
               <span class="pull-left">Total</span>
@@ -55,11 +49,9 @@
       </div>
   </div>
   {% endfor %}
-  {%for key,val in dates|reverse(true) %}
-    {% for inc in allIncomes %}
-      {%if key == inc.date %}
+  {%for key,val in appData.inc_data|reverse(true) %}
+    {% for inc in val %}
         {% set periodTot = periodTot +inc.cost %}
-      {% endif %}
     {% endfor %}
     {% set totals = totals|merge({(key):periodTot}) %}
   {% endfor %}
@@ -79,7 +71,7 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    {{date}} Earnings Pattern
+                    {{appData.nav.display}} Earnings Pattern
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body"{% if not totals %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
@@ -93,7 +85,7 @@
         <div class="col-lg-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    {{date}} Sources Of Incomes
+                    {{appData.nav.display}} Sources Of Incomes
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body"{% if not totals %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
@@ -170,12 +162,13 @@ resize:true
 Morris.Donut({
 element: 'morris-pie-chart',
 data: [
-  {% for item in earned %}
+  {% for item in appData.incomes %}
   {label: "{{item.name|raw}}", value:{{item.cost}} },
   {%endfor%}
 ],
 formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
-colors:['#2ecc71','#1abc9c','#16a085','#27ae60']
+colors:['#2ecc71','#1abc9c','#16a085','#27ae60'],
+resize:true
 });
 </script>
 {% endblock %}

@@ -16,14 +16,10 @@
                       <div class="col-xs-3">
                           <i class="fa fa-usd fa-2x">{{appData.exp_total|number_format(2,'.',',')}}</i>
                       </div>
-                      <div class="col-xs-9 text-right">
-                        <span class="fa fa-2x inlinesparkline">
-                          10, 9,8,6,7,8,11
-                        </span>
-                      </div>
+                      <div class="col-xs-9 text-right"></div>
                   </div>
               </div>
-              <a href="{{urlFor('expenses',{year:nav.current.year,month:nav.current.month})}}">
+              <a href="{{urlFor('expenses',{year:appData.nav.current.year,month:appData.nav.current.month})}}">
                   <div class="panel-footer">
                       <span class="pull-left">View Expenses</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -43,7 +39,7 @@
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('incomes',{year:nav.current.year,month:nav.current.month})}}">
+              <a href="{{urlFor('incomes',{year:appData.nav.current.year,month:appData.nav.current.month})}}">
                   <div class="panel-footer">
                       <span class="pull-left">View Incomes</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -65,7 +61,7 @@
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('dashboard',{year:nav.current.year})}}">
+              <a href="{{urlFor('dashboard',{year:appData.nav.current.year})}}">
                   <div class="panel-footer">
                       <span class="pull-left">Balance</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

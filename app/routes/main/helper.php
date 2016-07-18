@@ -107,7 +107,7 @@
     $response = [
     "exp_total" => $totalexp,
     "inc_total" => $totalinc,
-    "balance"   => $totalinc - $totalexp,
+    "balance"   => round($totalinc - $totalexp,2,PHP_ROUND_HALF_UP),
     "exp_data"  => $expDates,
     "inc_data"  => $incDates,
     "expenses"  => json_decode($itemSpent),

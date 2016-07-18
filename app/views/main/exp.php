@@ -147,7 +147,7 @@
     element: 'morris-bar-chart',
     data: [
       {%for key,val in monthly_exp%}
-          { d: '{{(date ~'-'~key~'-1')|date('M')}}', a: {{val}} },
+          { d: '{{(appData.nav.display ~'-'~key~'-1')|date('M')}}', a: {{val}} },
       {%endfor%}
     ],
     xkey: 'd',

@@ -23,15 +23,9 @@
   </div>
 </div>
 <div class="row">
-    {%if allExpenses %}
+    {%if appData.exp_data %}
 <div class="col-xs-12 col-sm-6">
-  {% set dates =[] %}
-  {% set totals =[] %}
-  {%for exp in allExpenses %}
-    {% set dates = dates|merge({(exp.date):NULL}) %}
-  {% endfor %}
-
-  {% for date in dates|keys %}
+  {% for date,expenses in appData.exp_data %}
     {% set total = 0 %}
   <div class="col-sm-12">
       <div class="panel panel-danger">
@@ -44,17 +38,15 @@
                   </div>
               </div>
           </div>
-          {%for exp in allExpenses%}
-            {% if date == exp.date %}
+          {%for exp in expenses %}
             {% set total = total+exp.cost %}
-            <a href="{{baseUrl}}/expense/{{exp.name}}">
+            <a href="{{ baseUrl() }}/expense/{{exp.name}}">
                 <div class="panel-footer">
                     <span class="pull-left">{{exp.name}}</span>
-                    <span class="pull-right"><i class="fa fa-usd">{{exp.cost}}</i></span>
+                    <span class="pull-right"><i class="fa fa-usd">{{exp.cost|number_format(2, '.')}}</i></span>
                     <div class="clearfix"></div>
                 </div>
             </a>
-            {% endif %}
           {% endfor %}
             {% set totals = totals|merge({(date):total}) %}
           <div class="panel-footer">
@@ -82,12 +74,12 @@
       <div class="col-lg-12">
           <div class="panel panel-info">
               <div class="panel-heading">
-                  {{date}} Spending Pattern
+                  {{appData.nav.display }} Spending Pattern
               </div>
               <!-- /.panel-heading -->
-              <div class="panel-body" {% if not items %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+              <div class="panel-body" {% if not appData.expenses %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                   <div id="morris-line-chart"></div>
-                  {% if not items %} No Data Available {% endif %}
+                  {% if not appData.expenses %} No Data Available {% endif %}
               </div>
               <!-- /.panel-body -->
           </div>
@@ -96,12 +88,12 @@
       <div class="col-lg-12">
           <div class="panel panel-info">
               <div class="panel-heading">
-                  {{date}} Spending on Items
+                  {{appData.nav.display}} Spending on Items
               </div>
               <!-- /.panel-heading -->
               <div class="panel-body" {% if not totals %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                   <div id="morris-pie-chart"></div>
-                   {% if not totals %} No Data Available {% endif %}
+                   {% if not appData.exp_data %} No Data Available {% endif %}
               </div>
               <!-- /.panel-body -->
           </div>
@@ -113,9 +105,9 @@
                   {{date}} Tags
               </div>
               <!-- /.panel-heading -->
-              <div class="panel-body" {% if not exptags %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+              <div class="panel-body" {% if not appData.exp_tags %} style="min-height: 370px;display: flex;justify-content: center; align-items: center;" {% endif %}>
                   <div id="morris-pie-chart-tags">
-                    {% if not exptags %} No Data Available {% endif %}
+                    {% if not appData.exp_tags %} No Data Available {% endif %}
                   </div>
               </div>
               <!-- /.panel-body -->
@@ -134,7 +126,7 @@
         <h4 class="modal-title text-capitalize">Add Expense </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{baseUrl}}/expenses/add">
+          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/expenses/add">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>
@@ -147,7 +139,7 @@
             <div class="form-group">
               <label for="tags">Tags</label>
               <select class="form-control" name="tags[]" id="tags" multiple="multiple" style="width:100%;height:50px;">
-                {% for tag in tags %}
+                {% for tag in appData.tags %}
                 <option value="{{tag.id}}">{{ tag.name }}</option>
                 {% endfor %}
               </select>
@@ -165,64 +157,70 @@
 </div><!-- /.modal -->
 {% include 'parts/confirmbox.php'%}
 <script type="text/javascript">
-{% if totals is not empty %}
-new Morris.Line({
-// ID of the element in which to draw the chart.
-element: 'morris-line-chart',
-// Chart data records -- each entry in this array corresponds to a point on
-// the chart.
-data: [
-  {% for D, tot in totals %}
-    { day: '{{ D|date("Y-m-d") }}', value: {{tot}} },
-  {% endfor %}
-],
-// The name of the data record attribute that contains x-values.
-xkey: 'day',
-// A list of names of data record attributes that contain y-values.
-ykeys: ['value'],
-// Labels for the ykeys -- will be displayed when you hover over the
-// chart.
-labels: ['Spent'],
-yLabelFormart: function (y) { return "$"+y.toString(); },
-dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
-preUnits:'$',
-xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
-lineColors:['#F16C63'],
-goalLineColors:['#d9edf7'],
-resize:true
-});
-{% endif %}
+  {% if totals is not empty %}
+  new Morris.Line({
+  // ID of the element in which to draw the chart.
+  element: 'morris-line-chart',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+    {% for D, tot in totals %}
+      { day: '{{ D|date("Y-m-d") }}', value: {{tot}} },
+    {% endfor %}
+  ],
+  // The name of the data record attribute that contains x-values.
+  xkey: 'day',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Spent'],
+  yLabelFormart: function (y) { return "$"+y.toString(); },
+  dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
+  preUnits:'$',
+  xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
+  lineColors:['#F16C63'],
+  goalLineColors:['#d9edf7'],
+  resize:true
+  });
+  {% endif %}
 </script>
-<script type="text/javascript">
-Morris.Donut({
-element: 'morris-pie-chart',
-data: [
-  {% for item in items %}
-  {label: "{{item.name|raw}}", value:{{item.cost}} },
-  {%endfor%}
-],
-formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
-colors:["#F16C63"],
-});
+{% endblock %}
 
-Morris.Donut({
-element: 'morris-pie-chart-tags',
-data: [
-  {% for tag,cost in exptags %}
-      {label: "{{tag|raw}}", value:{{cost}} },
-  {% endfor%}
-],
-formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
-colors:['#FF3D00']
-});
-</script>
-<script type="text/javascript">
-    $.fn.select2.defaults.set("theme", "classic");
-    $("#tags").select2({
-      tags: "true",
-      placeholder: "Tags",
-      allowClear: true,
-    });
-</script>
+{% block js %}
+  <script type="text/javascript">
 
+
+  Morris.Donut({
+  element: 'morris-pie-chart',
+  data: [
+    {% for item in appData.expenses %}
+    {label: "{{item.name|raw}}", value:{{item.cost}} },
+    {%endfor%}
+  ],
+  formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+  colors:["#F16C63"],
+  resize:true
+  });
+
+  Morris.Donut({
+  element: 'morris-pie-chart-tags',
+  data: [
+    {% for tag,cost in appData.exp_tags %}
+        {label: "{{tag|raw}}", value:{{cost}} },
+    {% endfor%}
+  ],
+  formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+  colors:['#FF3D00'],
+  resize:true
+  });
+
+  $.fn.select2.defaults.set("theme", "classic");
+  $("#tags").select2({
+    tags: "true",
+    placeholder: "Tags",
+    allowClear: true,
+  });
+
+  </script>
 {% endblock %}

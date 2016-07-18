@@ -6,7 +6,7 @@
 
   $app = new Slim([
     'view'=> new \Slim\Views\Twig(),
-    'debug'=>true,
+    'debug'=> Settings::get('debug'),
   ]);
   //Middleware
   $app->add(new Before());
@@ -49,22 +49,31 @@
     return  new Hash();
   });
 
+  $app->container->singleton('Config',function(){
+    return  new Settings();
+  });
   //routes
   require'app/routes/routes.php';
 
  //variables
- $app->debug =FALSE;
-  $app->auth = false;
+  $app->debug = $app->Config->get('debug');
+  $app->auth  = false;
   $app->month = date('m');
-  $app->year = date('Y');
-  $app->day = date('d');
-  $app->baseUrl = "http://localhost/spendee";
+  $app->year  = date('Y');
+  $app->day   = date('d');
+  $app->baseUrl = $app->Config->get('urls.baseUrl');
   $app->view()->appendData([
-    "baseUrl"=> $app->baseUrl
+    "baseUrl"  => $app->baseUrl,
+    "ver"      => Settings::get('ver'),
+    "brand"    => Settings::get('locale.brand'),
+    "address"  => Settings::get('locale.address'),
+    "phone"    => Settings::get('locale.phone'),
+    "email"    => Settings::get('locale.email'),
   ]);
   $app->run();
 
   if($app->debug){
+      echo "User </br>";
       var_dump($app->auth);
   }
 

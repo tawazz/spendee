@@ -1,13 +1,4 @@
 <?php
-    $GLOBALS['config'] = array(
-        'mysql' => array(
-            'driver'=>'mysql',
-            'host' => '127.0.0.1',
-            'username'=> 'root',
-            'password' => '',
-            'db'=> 'tawazzne_spender'
-        )
-    );
 
     class Config{
         public static function get($path=NULL){

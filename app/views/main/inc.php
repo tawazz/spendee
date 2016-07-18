@@ -3,14 +3,14 @@
 {% block content %}
 <div class="row">
   <div class="col-sm-12 text-center text-capitalize">
-      <h1>{{name}}</h1>
+      <h1>Income from {{name}} in {{appData.nav.display}}</h1>
   </div>
   <div class="col-sm-4">
     <div class="panel panel-success">
       <div class="panel-heading">
-       <h3 class="panel-title text-center">Total Income in {{date}}</h3>
+       <h3 class="panel-title text-center">Total Income </h3>
      </div>
-      <div class="panel-body">
+      <div class="panel-body" style="display: flex;justify-content: center; align-items: center;min-height:400px;">
         <div class="row">
           <div class="col-xs-12 text-center">
             <input type="text" value="{{inc}}" class="knob">
@@ -23,8 +23,8 @@
     <div class="panel panel-info">
         <div class="panel-heading">
           <div class="row">
-              <div class="col-xs-12">
-                  <span class="tx-2x">Monthly Incomes in {{date}}</span>
+              <div class="col-xs-12 text-center">
+                  <span class="tx-2x">Monthly Incomes</span>
               </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
   <div class="col-sm-12">
     <div class="panel panel-success">
       <div class="panel-heading">
-       <h3 class="panel-title text-center">Income From {{name}} in {{date}}</h3>
+       <h3 class="panel-title text-center">Incomes From {{name}} </h3>
      </div>
       <div class="panel-body">
         <div class="row">
@@ -82,7 +82,7 @@
         <h4 class="modal-title text-capitalize">Edit Income </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{baseUrl}}/income/update">
+          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/income/update">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>
@@ -115,7 +115,7 @@
 
         <h3 class="text-capitalize text-center">Are You Sure You want to Delete!!!</h3>
         <div class="modal-footer">
-          <form name="deleteForm" action="{{baseUrl}}/income/delete" method="post">
+          <form name="deleteForm" action="{{ baseUrl() }}/income/delete" method="post">
             <input type="hidden" name="inc_id">
             <input type="hidden" name="name" value="{{products.0.name}}">
             <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}"/>
@@ -126,7 +126,8 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="{{baseUrl}}/js/knob.js"></script>
+{% include 'parts/confirmbox.php'%}
+<script type="text/javascript" src="{{ baseUrl() }}/js/knob.js"></script>
 <script>
     $(".knob").knob({
       'min':0,

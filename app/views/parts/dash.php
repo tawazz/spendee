@@ -1,11 +1,9 @@
 <div class="row">
-
-<div class="row">
     <div class="col-xs-12">
       <div class="btn-group" role="group" aria-label="...">
-        <a href="{{baseUrl}}/{{nav.prev}}" class="btn"><img src="{{baseUrl}}/images/left.png"/></a>
-        <span class="btn text-default" style="margin-top:7px;">{{date}}</span>
-        <a href="{{baseUrl}}/{{nav.next}}" class="btn"><img src="{{baseUrl}}/images/right.png"/></a>
+        <a href="{{ baseUrl() }}/{{page}}/{{appData.nav.prev}}" class="btn"><img src="{{ baseUrl() }}/images/left.png"/></a>
+        <span class="btn text-default" style="margin-top:7px;">{{appData.nav.display}}</span>
+        <a href="{{ baseUrl() }}/{{page}}/{{appData.nav.next}}" class="btn"><img src="{{ baseUrl() }}/images/right.png"/></a>
       </div>
     </div>
 </div>
@@ -16,13 +14,12 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
-                          <i class="fa fa-usd fa-2x">{{totalExp|number_format(2,'.',',')}}</i>
+                          <i class="fa fa-usd fa-2x">{{appData.exp_total|number_format(2,'.',',')}}</i>
                       </div>
-                      <div class="col-xs-9 text-right">
-                      </div>
+                      <div class="col-xs-9 text-right"></div>
                   </div>
               </div>
-              <a href="{{urlFor('expenses',{year:nav.current.year,month:nav.current.month})}}">
+              <a href="{{urlFor('expenses',{year:appData.nav.current.year,month:appData.nav.current.month})}}">
                   <div class="panel-footer">
                       <span class="pull-left">View Expenses</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -36,13 +33,13 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-3">
-                          <i class="fa fa-usd fa-2x">{{totalInc|number_format(2,'.',',')}}</i>
+                          <i class="fa fa-usd fa-2x">{{appData.inc_total|number_format(2,'.',',')}}</i>
                       </div>
                       <div class="col-xs-9 text-right">
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('incomes',{year:nav.current.year,month:nav.current.month})}}">
+              <a href="{{urlFor('incomes',{year:appData.nav.current.year,month:appData.nav.current.month})}}">
                   <div class="panel-footer">
                       <span class="pull-left">View Incomes</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -56,15 +53,15 @@
               <div class="panel-heading">
                   <div class="row">
                       <div class="col-xs-12">
-                        {% if totalInc-totalExp >= 0 %}
-                          <i class="fa fa-usd fa-2x">{{(totalInc-totalExp)|number_format(2,'.',',')}}</i>
+                        {% if appData.balance >= 0 %}
+                          <i class="fa fa-usd fa-2x">{{appData.balance|number_format(2,'.',',')}}</i>
                         {% else %}
-                          <i class="fa fa-2x">-<i class="fa fa-usd">{{(totalInc-totalExp)*-1|number_format(2,'.',',')}}</i></i>
+                          <i class="fa fa-2x">-<i class="fa fa-usd">{{appData.balance*-1|number_format(2,'.',',')}}</i></i>
                         {% endif %}
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('dashboard',{year:nav.current.year})}}">
+              <a href="{{urlFor('dashboard',{year:appData.nav.current.year})}}">
                   <div class="panel-footer">
                       <span class="pull-left">Balance</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -74,6 +71,4 @@
           </div>
       </div>
     </div>
-</div>
-
 </div>

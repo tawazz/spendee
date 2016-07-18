@@ -1,8 +1,3 @@
-{% set brand="tawazz.net" %}
-{% set address = "Perth<br> Australia" %}
-{% set phone = "+61 401 234 567" %}
-{% set email = "admin@tawazz.net" %}
-{% set ver = "v2.6.1" %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,9 +8,9 @@
         <meta name="author" content="">
         <meta name="description" content="personal money management webapp"/>
         <meta name="msapplication-navbutton-color" content="#ec5959"/>
-        <link rel="shortcut icon" href="/spendee-v2/images/icon.png"/>
-        <link rel="apple-touch-icon" href="/spendee-v2//images/icon.png" />
-        <title></title>
+        <link rel="shortcut icon" href="{{ baseUrl() }}/images/icon.png"/>
+        <link rel="apple-touch-icon" href="{{ baseUrl() }}/images/icon.png" />
+        <title>{{ brand }}</title>
         {% include "parts/css.php" %}
         {% include "parts/scripts.php" %}
     </head>

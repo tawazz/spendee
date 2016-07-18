@@ -9,7 +9,7 @@
   $require_login = function() use($app){
     return function() use($app){
       if(!$app->auth && TRUE){
-        $app->flash('global','Login required to acces the resource');
+        $app->flash('global','Login required to access the resource');
         $app->redirect($app->urlFor('login'));
       }
     };

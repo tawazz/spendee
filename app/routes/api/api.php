@@ -118,7 +118,7 @@ $app->response->setBody(json_encode($response));
 $app->post('/api/expenses/add',function() use($app){
     $body = $app->request->getBody();
     $body = json_decode($body,true);
-
+    $body["item"]['cost'] = str_replace( ',', '',$body["item"]['cost'] );
     $exp_id = $app->Exp->save($body["item"]);
     if(isset($body["tags"])){
 
@@ -144,7 +144,7 @@ $app->post('/api/expenses/add',function() use($app){
 $app->post('/api/incomes/add',function() use($app){
   $body = $app->request->getBody();
   $body = json_decode($body,true);
-
+  $body["item"]['cost'] = str_replace( ',', '',$body["item"]['cost'] );
   $inc_id = $app->Inc->save($body["item"]);
   if(isset($body["tags"])){
 

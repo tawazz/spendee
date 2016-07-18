@@ -1,3 +1,10 @@
+Spendee v2.6.2 18/07/2016
+change log
+- more modular code for easy upgrading in future
+- ui fixes
+- bug fix on adding cost of more than $1000
+- easy configuration settings
+
 Spendee v2.6.1 12/07/2016
 change log
 - ui and navigation improvements

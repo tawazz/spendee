@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
   <div class="col-sm-12 text-center text-capitalize">
-      <h1>Expenses on {{name}}</h1>
+      <h1>Expenses on {{name}} in {{appData.nav.display}}</h1>
   </div>
 </div>
 <div class="row">
@@ -11,9 +11,9 @@
   <div class="col-sm-4">
     <div class="panel panel-danger">
       <div class="panel-heading">
-       <h3 class="panel-title text-center">Total Spending in {{date}}</h3>
+       <h3 class="panel-title text-center">Total Spending </h3>
      </div>
-      <div class="panel-body">
+      <div class="panel-body" style="display: flex;justify-content: center; align-items: center;min-height:400px;">
         <div class="row">
           <div class="col-xs-12 text-center">
             <input type="text" value="{{exp}}" class="knob">
@@ -27,7 +27,7 @@
         <div class="panel-heading">
           <div class="row">
               <div class="col-xs-12">
-                  <span class="tx-2x">Monthly Spendings in {{date}}</span>
+                  <span class="tx-2x">Monthly Spending</span>
               </div>
           </div>
         </div>
@@ -42,7 +42,7 @@
   <div class="col-sm-12">
     <div class="panel panel-danger">
       <div class="panel-heading">
-       <h3 class="panel-title text-center">Expenses of {{name}} in {{date}}</h3>
+       <h3 class="panel-title text-center">Expenses on {{name}}</h3>
      </div>
       <div class="panel-body">
         <div class="row">
@@ -130,6 +130,7 @@
     </div>
   </div>
 </div>
+{% include 'parts/confirmbox.php'%}
 <script type="text/javascript" src="{{ baseUrl() }}/js/knob.js"></script>
 <script>
     $(".knob").knob({

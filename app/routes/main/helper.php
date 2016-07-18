@@ -17,13 +17,7 @@
       $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
       $earned= $app->Inc->read($user_id)->allActivity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
       $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".$month."-".($day+1));
-
-      $date = new DateTime($year."-".$month."-".$day);
-      $date = $date->format('d/F/Y');
-      $nav['display'] = $date;
-      $nav['next'] = $year."/".$month."/".($day+1);
-      $nav['prev'] = $year."/".$month."/".($day-1);
-      $nav['current']=['year'=>$year,'month'=>$month];
+      $nav = getNav($year,$month,$day);
 
     }else if(isset($year)&& isset($month) ){
 
@@ -43,15 +37,10 @@
     $earned= $app->Inc->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
     $allIncomes = $app->Inc->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
     $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
-
-    $date = new DateTime($year."-".$month."-1");
-    $date = $date->format('F/Y');
-    $nav['display'] = $date;
-    $nav['prev'] = $year."/".($month-1);
-    $nav['next'] = $year."/".($month+1);
-    $nav['current']=['year'=>$year,'month'=>$month];
+    $nav = getNav($year,$month);
 
     }else if(isset($year)){
+
     $totalexp = $app->Exp->read($user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
     $totalinc = $app->Inc->read($user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
     $allExpenses = $app->Exp->read($user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
@@ -59,15 +48,10 @@
     $itemSpent= $app->Exp->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
     $earned= $app->Inc->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
     $exptags = $app->ExpTags->expTagsData($user_id,$year."-"."1"."-1",($year+1)."-1-1");
-
-    $date = new DateTime($year."-1-1");
-    $date = $date->format('Y');
-    $nav['display'] = $date;
-    $nav['prev'] = ($year-1);
-    $nav['next'] = ($year+1);
-    $nav['current']=['year'=>$year,'month'=>date('m')];
+    $nav = getNav($year);
 
     }else{
+
       $month= date('m');
       $year= date('Y');
       $day = date('d');
@@ -78,13 +62,7 @@
       $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
       $earned= $app->Inc->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
       $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
-
-      $date = new DateTime($year."-".$month."-".$day);
-      $date = $date->format('F/Y');
-      $nav['display'] = $date;
-      $nav['prev'] = $year."/".($month-1);
-      $nav['next'] = $year."/".($month+1);
-      $nav['current']=['year'=>$year,'month'=>$month];
+      $nav = getNav($year,$month,$day);
 
     }
 
@@ -168,5 +146,67 @@
     ];
 
     return $response;
+  }
+
+  function getNav($year=null,$month=null,$day=null)
+  {
+    if(isset($year)&& isset($month) && isset($day) ){
+      if($month == 13){
+          $month=1;
+          $year +=1;
+      }
+      if($month == 0){
+          $month=12;
+          $year -=1;
+      }
+      $date = new DateTime($year."-".$month."-".$day);
+      $date = $date->format('d/F/Y');
+      $nav['display'] = $date;
+      $nav['next'] = $year."/".$month."/".($day+1);
+      $nav['prev'] = $year."/".$month."/".($day-1);
+      $nav['current']=['year'=>$year,'month'=>$month];
+
+    }else if(isset($year)&& isset($month) ){
+
+      if($month == 13){
+          $month=1;
+          $year +=1;
+      }
+      if($month == 0){
+          $month=12;
+          $year -=1;
+      }
+
+    $date = new DateTime($year."-".$month."-1");
+    $date = $date->format('F/Y');
+    $nav['display'] = $date;
+    $nav['prev'] = $year."/".($month-1);
+    $nav['next'] = $year."/".($month+1);
+    $nav['current']=['year'=>$year,'month'=>$month];
+
+    }else if(isset($year)){
+
+    $date = new DateTime($year."-1-1");
+    $date = $date->format('Y');
+    $nav['display'] = $date;
+    $nav['prev'] = ($year-1);
+    $nav['next'] = ($year+1);
+    $nav['current']=['year'=>$year,'month'=>date('m')];
+
+    }else{
+      $month= date('m');
+      $year= date('Y');
+      $day = date('d');
+
+      $date = new DateTime($year."-".$month."-".$day);
+      $date = $date->format('F/Y');
+      $nav['display'] = $date;
+      $nav['prev'] = $year."/".($month-1);
+      $nav['next'] = $year."/".($month+1);
+      $nav['current']=['year'=>$year,'month'=>$month];
+
+    }
+
+    return $nav;
   }
  ?>

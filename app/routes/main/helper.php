@@ -54,7 +54,6 @@
 
       $month= date('m');
       $year= date('Y');
-      $day = date('d');
       $totalexp = $app->Exp->read($user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
       $totalinc = $app->Inc->read($user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
       $allExpenses = $app->Exp->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
@@ -62,7 +61,7 @@
       $itemSpent = $app->Exp->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
       $earned= $app->Inc->read($user_id)->allActivity($year."-".$month."-1",$year."-".($month+1)."-1");
       $exptags = $app->ExpTags->expTagsData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
-      $nav = getNav($year,$month,$day);
+      $nav = getNav($year,$month);
 
     }
 
@@ -107,7 +106,7 @@
     $response = [
     "exp_total" => $totalexp,
     "inc_total" => $totalinc,
-    "balance"   => $totalinc - $totalexp,
+    "balance"   => round($totalinc - $totalexp,2,PHP_ROUND_HALF_UP),
     "exp_data"  => $expDates,
     "inc_data"  => $incDates,
     "expenses"  => json_decode($itemSpent),

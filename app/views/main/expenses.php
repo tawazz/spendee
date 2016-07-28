@@ -158,7 +158,7 @@
 {% include 'parts/confirmbox.php'%}
 <script type="text/javascript">
   {% if totals is not empty %}
-  new Morris.Line({
+  new Morris.Area({
   // ID of the element in which to draw the chart.
   element: 'morris-line-chart',
   // Chart data records -- each entry in this array corresponds to a point on

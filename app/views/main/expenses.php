@@ -16,7 +16,7 @@
             <h2>Expenses</h2>
         </div>
         <div class="col-sm-12">
-            <button style="margin-bottom: 20px;" type="button" id="addItem" class="btn btn-info" data-toggle="modal" data-target="#addUser">
+            <button style="margin-bottom: 20px;" type="button" id="addItem" class="btn btn-info btn-raised" data-toggle="modal" data-target="#addUser">
                 <i class="fa fa-plus"></i> Add Expenses
             </button>
         </div>
@@ -179,7 +179,7 @@
   dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
   preUnits:'$',
   xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
-  lineColors:['#F16C63'],
+  lineColors:['#fd1100'],
   goalLineColors:['#d9edf7'],
   resize:true
   });
@@ -199,7 +199,7 @@
     {%endfor%}
   ],
   formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
-  colors:["#F16C63"],
+  colors:["#f44336"],
   resize:true
   });
 

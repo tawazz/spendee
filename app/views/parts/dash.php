@@ -2,7 +2,7 @@
     <div class="col-xs-12">
       <div class="btn-group" role="group" aria-label="...">
         <a href="{{ baseUrl() }}/{{page}}/{{appData.nav.prev}}" class="btn"><img src="{{ baseUrl() }}/images/left.png"/></a>
-        <span class="btn text-default" style="margin-top:7px;">{{appData.nav.display}}</span>
+        <span class="btn text-default" style="margin-top:7px;text-transform: capitalize;">{{appData.nav.display}}</span>
         <a href="{{ baseUrl() }}/{{page}}/{{appData.nav.next}}" class="btn"><img src="{{ baseUrl() }}/images/right.png"/></a>
       </div>
     </div>

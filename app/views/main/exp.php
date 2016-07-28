@@ -64,8 +64,8 @@
                   <td>{{prod.date|date('d F Y')}}</td>
                   <td>{{prod.name}}</td>
                   <td>{{prod.cost}}</td>
-                  <td id="{{prod.exp_id}}"><a style="color:#fff;" href="#" class="btn btn-primary" data-show-modal="#updateExp" data-exp-name="{{prod.name}}" data-exp-cost="{{prod.cost}}" data-exp-date="{{prod.date|date('Y/m/d')}}" data-exp-id="{{prod.exp_id}}" >Edit</a></td>
-                  <td><a style="color:#fff;" href="#" class="btn btn-danger" data-exp-delete="#deleteModal" data-exp-id="{{prod.exp_id}}" >Delete</a></td>
+                  <td id="{{prod.exp_id}}"><a style="color:#fff;" href="#" class="btn btn-info btn-raised" data-show-modal="#updateExp" data-exp-name="{{prod.name}}" data-exp-cost="{{prod.cost}}" data-exp-date="{{prod.date|date('Y/m/d')}}" data-exp-id="{{prod.exp_id}}" >Edit</a></td>
+                  <td><a style="color:#fff;" href="#" class="btn btn-danger btn-raised" data-exp-delete="#deleteModal" data-exp-id="{{prod.exp_id}}" >Delete</a></td>
                 </tr>
                 {%endfor%}
               </tbody>

@@ -7,7 +7,7 @@
             <h2>Incomes</h2>
         </div>
         <div class="col-sm-12">
-            <button style="margin-bottom: 20px;" type="button" id="addItem" class="btn btn-info" data-toggle="modal" data-target="#addInc">
+            <button style="margin-bottom: 20px;" type="button" id="addItem" class="btn btn-info btn-raised" data-toggle="modal" data-target="#addInc">
                 <i class="fa fa-plus"></i> Add Incomes
             </button>
         </div>
@@ -152,7 +152,7 @@ yLabelFormart: function (y) { return "$"+y.toString(); },
 dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
 preUnits:'$',
 xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
-lineColors:['#47C9AF'],
+lineColors:['#00E676'],
 goalLineColors:['#d9edf7'],
 resize:true
 });
@@ -167,7 +167,7 @@ data: [
   {%endfor%}
 ],
 formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
-colors:['#2ecc71','#1abc9c','#16a085','#27ae60'],
+colors:['#00E676','#1abc9c','#16a085','#27ae60'],
 resize:true
 });
 </script>

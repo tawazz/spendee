@@ -1,8 +1,12 @@
 <!-- jQuery -->
 <script src="{{ baseUrl() }}/js/jquery.js"></script>
 <script src="{{ baseUrl() }}/js/modernizr-2.6.2.min.js"></script>
+<script src="{{ baseUrl() }}/js/tether.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="{{ baseUrl() }}/js/bootstrap.js"></script>
+<script type="text/javascript" src="{{ baseUrl() }}/js/material.js"></script>\
+<script type="text/javascript" src="{{ baseUrl() }}/js/ripples.js"></script>
+
 <!-- Plugin JavaScript -->
 <script src="{{ baseUrl() }}/js/wow.min.js"></script>
 <script src="{{ baseUrl() }}/js/moment.js"></script>

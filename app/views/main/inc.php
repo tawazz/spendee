@@ -61,8 +61,8 @@
                   <td>{{prod.date|date('d F Y')}}</td>
                   <td>{{prod.name}}</td>
                   <td>{{prod.cost}}</td>
-                  <td id="{{prod.inc_id}}"><a style="color:#fff;" href="#" class="btn btn-primary" data-show-modal="#updateInc" data-inc-name="{{prod.name}}" data-inc-cost="{{prod.cost}}" data-inc-date="{{prod.date|date('Y/m/d')}}" data-inc-id="{{prod.inc_id}}" >Edit</a></td>
-                  <td><a style="color:#fff;" href="#" class="btn btn-danger" data-inc-delete="#deleteModal" data-inc-id="{{prod.inc_id}}" >Delete</a></td>
+                  <td id="{{prod.inc_id}}"><a style="color:#fff;" href="#" class="btn btn-info btn-raised" data-show-modal="#updateInc" data-inc-name="{{prod.name}}" data-inc-cost="{{prod.cost}}" data-inc-date="{{prod.date|date('Y/m/d')}}" data-inc-id="{{prod.inc_id}}" >Edit</a></td>
+                  <td><a style="color:#fff;" href="#" class="btn btn-danger btn-raised" data-inc-delete="#deleteModal" data-inc-id="{{prod.inc_id}}" >Delete</a></td>
                 </tr>
                 {%endfor%}
               </tbody>
@@ -150,7 +150,7 @@
     xkey: 'd',
     ykeys: ['a'],
     labels: ['Incomes'],
-    barColors: ['#3fad46'],
+    barColors: ['#00E676'],
     preUnits:'$',
     resize:true
     });

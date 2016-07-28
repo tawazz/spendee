@@ -13,10 +13,9 @@
           <div class="panel panel-danger">
               <div class="panel-heading">
                   <div class="row">
-                      <div class="col-xs-3">
+                      <div class="col-xs-12">
                           <i class="fa fa-usd fa-2x">{{appData.exp_total|number_format(2,'.',',')}}</i>
                       </div>
-                      <div class="col-xs-9 text-right"></div>
                   </div>
               </div>
               <a href="{{urlFor('expenses',{year:appData.nav.current.year,month:appData.nav.current.month})}}">
@@ -32,10 +31,8 @@
           <div class="panel panel-success">
               <div class="panel-heading">
                   <div class="row">
-                      <div class="col-xs-3">
+                      <div class="col-xs-12">
                           <i class="fa fa-usd fa-2x">{{appData.inc_total|number_format(2,'.',',')}}</i>
-                      </div>
-                      <div class="col-xs-9 text-right">
                       </div>
                   </div>
               </div>

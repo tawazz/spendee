@@ -61,10 +61,8 @@ use Carbon\Carbon;
                 }else{
                   $app->setCookie('remember',"{$fetch_user->session->hash}",Carbon::parse('+1 week')->timestamp);
                 }
-                $app->flash("global","welcome ". $fetch_user->username);
                 $app->response->redirect($app->urlFor('expenses'));
               }else{
-                $app->flash("global","Logged in {$fetch_user->username}");
                 $app->response->redirect($app->urlFor('expenses'));
               }
         }else {

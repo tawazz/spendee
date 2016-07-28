@@ -130,7 +130,7 @@ require 'helper.php';
     $appData = [
       'exp_total' => $totalexp,
       'inc_total' => $totalinc,
-      'balance'   => $totalexp - $totalinc,
+      'balance'   => $totalinc - $totalexp,
       'nav'=>$nav,
     ];
     $app->render('main/exp.php',[
@@ -163,7 +163,7 @@ require 'helper.php';
     $appData = [
       'exp_total' => $totalexp,
       'inc_total' => $totalinc,
-      'balance'   => $totalexp - $totalinc,
+      'balance'   => $totalinc - $totalexp,
       'nav'=>$nav,
     ];
     $app->render('main/inc.php',[

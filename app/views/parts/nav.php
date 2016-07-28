@@ -33,7 +33,7 @@
             {%else%}
             <li><a href="{{urlFor('expenses')}}">Expenses</a></li>
             <li><a href="{{urlFor('incomes')}}">Incomes</a></li>
-            <li><a href="{{urlFor('dashboard')}}">Dashboard</a></li>
+            <li><a href="{{urlFor('overview')}}">Overview</a></li>
             <li class="dropdown">
             <a href="{{urlFor('account')}}" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">{{auth.username}}</span><span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">

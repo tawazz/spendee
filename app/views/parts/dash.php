@@ -58,7 +58,7 @@
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('dashboard',{year:appData.nav.current.year})}}">
+              <a href="{{urlFor('overview',{year:appData.nav.current.year})}}">
                   <div class="panel-footer">
                       <span class="pull-left">Balance</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

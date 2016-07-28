@@ -86,7 +86,7 @@ require 'helper.php';
     ]);
   })->name('incomes');
 
-  $app->get('/dashboard(/:year)',$require_login(),function($year=NULL ) use($app){
+  $app->get('/overview(/:year)',$require_login(),function($year=NULL ) use($app){
     if(!isset($year)){
       $year = $year= date('Y');
     }
@@ -101,10 +101,10 @@ require 'helper.php';
       'earned'=>$overviewData['earned'],
       'spent'=>$overviewData['spent'],
       'appData' => $data,
-      'page'    => 'dashboard',
+      'page'    => 'overview',
       'totals'  => []
     ]);
-  })->name('dashboard');
+  })->name('overview');
 
   $app->get('/account',$require_login(),function() use($app){
       $app->render('user/account.php');

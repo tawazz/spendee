@@ -64,9 +64,6 @@ require 'helper.php';
   $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
 
       $data = getData($app,$app->auth->user_id,$year,$month,$day);
-      if($app->debug){
-        var_dump($data);
-      }
       $app->render('main/expenses.php',[
         'appData' => $data,
         'page'    => 'expenses',
@@ -76,9 +73,6 @@ require 'helper.php';
   //Incomes
   $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
     $data = getData($app,$app->auth->user_id,$year,$month,$day);
-    if($app->debug){
-      var_dump($data);
-    }
     $app->render('main/incomes.php',[
       'appData' => $data,
       'page'    => 'incomes',

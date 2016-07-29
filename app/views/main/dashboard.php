@@ -77,7 +77,7 @@
         <!-- /.panel -->
     </div>
     <div class="col-lg-12">
-        <div class="panel panel-orange">
+        <div class="panel panel-info">
             <div class="panel-heading">
               <div class="row">
                   <div class="col-xs-12">

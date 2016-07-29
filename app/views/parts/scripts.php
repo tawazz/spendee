@@ -4,7 +4,7 @@
 <script src="{{ baseUrl() }}/js/tether.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="{{ baseUrl() }}/js/bootstrap.js"></script>
-<script type="text/javascript" src="{{ baseUrl() }}/js/material.js"></script>\
+<script type="text/javascript" src="{{ baseUrl() }}/js/material.js"></script>
 <script type="text/javascript" src="{{ baseUrl() }}/js/ripples.js"></script>
 
 <!-- Plugin JavaScript -->

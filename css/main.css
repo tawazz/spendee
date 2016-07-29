@@ -268,3 +268,14 @@ a{
 .btn, .input-group-btn .btn{
   padding: 8px 20px;
 }
+.checkbox input[type=checkbox]:checked + .checkbox-material .check:before, label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:before {
+    color: #03a9f4;
+  }
+
+  .checkbox input[type=checkbox]:checked + .checkbox-material .check, label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check{
+    color: #03a9f4;
+    border-color:#03a9f4;
+  }
+  .form-group label.control-label{
+    font-size: 16px;
+  }

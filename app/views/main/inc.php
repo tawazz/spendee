@@ -10,11 +10,9 @@
       <div class="panel-heading">
        <h3 class="panel-title text-center">Total Income </h3>
      </div>
-      <div class="panel-body" style="display: flex;justify-content: center; align-items: center;min-height:400px;">
-        <div class="row">
-          <div class="col-xs-12 text-center">
-            <input type="text" value="{{inc}}" class="knob">
-          </div>
+      <div class="panel-body" {% if not inc %} style="min-height: 400px;display: flex;justify-content: center; align-items: center;" {% endif %}">
+        <div id="morris-pie-chart-inc">
+          {% if not inc %} No Data Available {% endif %}
         </div>
       </div>
     </div>
@@ -127,19 +125,20 @@
   </div>
 </div>
 {% include 'parts/confirmbox.php'%}
-<script type="text/javascript" src="{{ baseUrl() }}/js/knob.js"></script>
-<script>
-    $(".knob").knob({
-      'min':0,
-      'max':{{inc}},
-      'fgColor':'#3fad46',
-      'readOnly':true,
-      'step':1000,
-      'format':function(v){return(v == Math.round(v))?"$"+v:"$"+v.toFixed(2);},
-      'width':200,
-      'thickness':.1,
-    });
-
+{% endblock %}
+{% block js %}
+  <script type="text/javascript">
+  {% if inc %}
+  Morris.Donut({
+  element: 'morris-pie-chart-inc',
+  data: [
+    {label: "{{name|raw}}", value:{{inc}} },
+  ],
+  formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+  colors:["#00E676"],
+  resize:true
+  });
+{% endif %}
     Morris.Bar({
     element: 'morris-bar-chart',
     data: [

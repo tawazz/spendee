@@ -10,11 +10,9 @@
       <div class="panel-heading">
        <h3 class="panel-title text-center">Total Income </h3>
      </div>
-      <div class="panel-body" style="display: flex;justify-content: center; align-items: center;min-height:400px;">
-        <div class="row">
-          <div class="col-xs-12 text-center">
-            <input type="text" value="{{inc}}" class="knob">
-          </div>
+      <div class="panel-body" {% if not inc %} style="min-height: 400px;display: flex;justify-content: center; align-items: center;" {% endif %}">
+        <div id="morris-pie-chart-inc">
+          {% if not inc %} No Data Available {% endif %}
         </div>
       </div>
     </div>
@@ -61,8 +59,8 @@
                   <td>{{prod.date|date('d F Y')}}</td>
                   <td>{{prod.name}}</td>
                   <td>{{prod.cost}}</td>
-                  <td id="{{prod.inc_id}}"><a style="color:#fff;" href="#" class="btn btn-primary" data-show-modal="#updateInc" data-inc-name="{{prod.name}}" data-inc-cost="{{prod.cost}}" data-inc-date="{{prod.date|date('Y/m/d')}}" data-inc-id="{{prod.inc_id}}" >Edit</a></td>
-                  <td><a style="color:#fff;" href="#" class="btn btn-danger" data-inc-delete="#deleteModal" data-inc-id="{{prod.inc_id}}" >Delete</a></td>
+                  <td id="{{prod.inc_id}}"><a style="color:#fff;" href="#" class="btn btn-info btn-raised" data-show-modal="#updateInc" data-inc-name="{{prod.name}}" data-inc-cost="{{prod.cost}}" data-inc-date="{{prod.date|date('Y/m/d')}}" data-inc-id="{{prod.inc_id}}" >Edit</a></td>
+                  <td><a style="color:#fff;" href="#" class="btn btn-danger btn-raised" data-inc-delete="#deleteModal" data-inc-id="{{prod.inc_id}}" >Delete</a></td>
                 </tr>
                 {%endfor%}
               </tbody>
@@ -127,19 +125,20 @@
   </div>
 </div>
 {% include 'parts/confirmbox.php'%}
-<script type="text/javascript" src="{{ baseUrl() }}/js/knob.js"></script>
-<script>
-    $(".knob").knob({
-      'min':0,
-      'max':{{inc}},
-      'fgColor':'#3fad46',
-      'readOnly':true,
-      'step':1000,
-      'format':function(v){return(v == Math.round(v))?"$"+v:"$"+v.toFixed(2);},
-      'width':200,
-      'thickness':.1,
-    });
-
+{% endblock %}
+{% block js %}
+  <script type="text/javascript">
+  {% if inc %}
+  Morris.Donut({
+  element: 'morris-pie-chart-inc',
+  data: [
+    {label: "{{name|raw}}", value:{{inc}} },
+  ],
+  formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+  colors:["#00E676"],
+  resize:true
+  });
+{% endif %}
     Morris.Bar({
     element: 'morris-bar-chart',
     data: [
@@ -150,7 +149,7 @@
     xkey: 'd',
     ykeys: ['a'],
     labels: ['Incomes'],
-    barColors: ['#3fad46'],
+    barColors: ['#00E676'],
     preUnits:'$',
     resize:true
     });

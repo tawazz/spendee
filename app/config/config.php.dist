@@ -12,7 +12,7 @@
           'password' => 'password',
           'db'       => 'spendee_database'
       ],
-      'ver'          => 'v2.6.3',
+      'ver'          => 'v2.7',
       'locale'       => [
           "brand"    => "tawazz.net",
           "address"  => "Perth<br> Australia",

@@ -8,7 +8,7 @@
               <img src="{{baseUrl()}}/images/icon.png" height="100" alt="logo" />
               <h1 class="brand-font">Spendee</h1>
               <p>Track your spending and other aspects of your finances effortlessly.</p>
-              <a href="{{urlFor('login')}}" class="btn btn-primary btn-xl">Login</a>
+              <a href="{{urlFor('login')}}" class="btn btn-info btn-raised btn-xl">Login</a>
           </div>
       </div>
     </div>
@@ -79,7 +79,7 @@
              <div class="container text-center">
                  <div class="call-to-action">
                      <h2>Free Download</h2>
-                     <a href="https://github.com/tawazz/Spendee-Android/releases/download/v1.0.1/Spendee.apk" class="btn btn-default btn-xl sr-button">Download Now!</a>
+                     <a href="https://github.com/tawazz/Spendee-Android/releases/download/v1.0.1/Spendee.apk" class="btn btn-default btn-raised btn-xl sr-button">Download Now!</a>
                  </div>
              </div>
          </aside>
@@ -102,8 +102,8 @@
                The beautifully designed web interface helps you to track and analize your expenses with a record of your transactions, easy to analize inforgraphics that
                helps you to make inteligent decisions on where to cut your spending.
              </p>
-               <a href="{{urlFor('login')}}" class="btn btn-primary btn-xl">Log in</a>
-               <a href="{{urlFor('register')}}" class="btn btn-primary btn-xl">Register</a>
+               <a href="{{urlFor('login')}}" class="btn btn-info btn-raised btn-xl">Log in</a>
+               <a href="{{urlFor('register')}}" class="btn btn-info btn-raised btn-xl">Register</a>
            </div>
        </div>
    </div>

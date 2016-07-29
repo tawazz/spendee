@@ -39,7 +39,7 @@
                                 <li><a href="{{ baseUrl() }}/">Home</a></li>
                                 <li><a href="{{ baseUrl() }}/expenses">Expenses</a></li>
                                 <li><a href="{{ baseUrl() }}/incomes">Incomes</a></li>
-                                <li><a href="{{ baseUrl() }}/dashboard">DashBoard</a></li>
+                                <li><a href="{{ baseUrl() }}/overview">Overview</a></li>
                                 <li><a href="{{ baseUrl() }}/account">Account</a></li>
                               {% else %}
                                 <li><a href="{{ urlFor('home')}}">Home</a></li>

@@ -13,11 +13,9 @@
       <div class="panel-heading">
        <h3 class="panel-title text-center">Total Spending </h3>
      </div>
-      <div class="panel-body" style="display: flex;justify-content: center; align-items: center;min-height:400px;">
-        <div class="row">
-          <div class="col-xs-12 text-center">
-            <input type="text" value="{{exp}}" class="knob">
-          </div>
+      <div class="panel-body"  {% if not exp %} style="min-height: 400px;display: flex;justify-content: center; align-items: center;" {% endif %}>
+        <div id="morris-pie-chart-exp">
+          {% if not exp %} No Data Available {% endif %}
         </div>
       </div>
     </div>
@@ -64,8 +62,8 @@
                   <td>{{prod.date|date('d F Y')}}</td>
                   <td>{{prod.name}}</td>
                   <td>{{prod.cost}}</td>
-                  <td id="{{prod.exp_id}}"><a style="color:#fff;" href="#" class="btn btn-primary" data-show-modal="#updateExp" data-exp-name="{{prod.name}}" data-exp-cost="{{prod.cost}}" data-exp-date="{{prod.date|date('Y/m/d')}}" data-exp-id="{{prod.exp_id}}" >Edit</a></td>
-                  <td><a style="color:#fff;" href="#" class="btn btn-danger" data-exp-delete="#deleteModal" data-exp-id="{{prod.exp_id}}" >Delete</a></td>
+                  <td id="{{prod.exp_id}}"><a style="color:#fff;" href="#" class="btn btn-info btn-raised" data-show-modal="#updateExp" data-exp-name="{{prod.name}}" data-exp-cost="{{prod.cost}}" data-exp-date="{{prod.date|date('Y/m/d')}}" data-exp-id="{{prod.exp_id}}" >Edit</a></td>
+                  <td><a style="color:#fff;" href="#" class="btn btn-danger btn-raised" data-exp-delete="#deleteModal" data-exp-id="{{prod.exp_id}}" >Delete</a></td>
                 </tr>
                 {%endfor%}
               </tbody>
@@ -131,18 +129,22 @@
   </div>
 </div>
 {% include 'parts/confirmbox.php'%}
-<script type="text/javascript" src="{{ baseUrl() }}/js/knob.js"></script>
-<script>
-    $(".knob").knob({
-      'min':0,
-      'max':{{exp}},
-      'fgColor':'#F16C63',
-      'readOnly':true,
-      'format':function(v){return(v == Math.round(v))?"$"+v:"$"+v.toFixed(2);},
-      'width':200,
-      'thickness':.1,
-    });
+{% endblock %}
 
+{% block js %}
+  <script type="text/javascript" src="{{ baseUrl() }}/js/knob.js"></script>
+  <script type="text/javascript">
+  {% if exp %}
+  Morris.Donut({
+  element: 'morris-pie-chart-exp',
+  data: [
+    {label: "{{name|raw}}", value:{{exp}} },
+  ],
+  formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
+  colors:["#f44336"],
+  resize:true
+  });
+{% endif %}
     Morris.Bar({
     element: 'morris-bar-chart',
     data: [

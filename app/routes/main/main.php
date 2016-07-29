@@ -64,9 +64,6 @@ require 'helper.php';
   $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
 
       $data = getData($app,$app->auth->user_id,$year,$month,$day);
-      if($app->debug){
-        var_dump($data);
-      }
       $app->render('main/expenses.php',[
         'appData' => $data,
         'page'    => 'expenses',
@@ -76,9 +73,6 @@ require 'helper.php';
   //Incomes
   $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
     $data = getData($app,$app->auth->user_id,$year,$month,$day);
-    if($app->debug){
-      var_dump($data);
-    }
     $app->render('main/incomes.php',[
       'appData' => $data,
       'page'    => 'incomes',
@@ -86,7 +80,7 @@ require 'helper.php';
     ]);
   })->name('incomes');
 
-  $app->get('/dashboard(/:year)',$require_login(),function($year=NULL ) use($app){
+  $app->get('/overview(/:year)',$require_login(),function($year=NULL ) use($app){
     if(!isset($year)){
       $year = $year= date('Y');
     }
@@ -101,10 +95,10 @@ require 'helper.php';
       'earned'=>$overviewData['earned'],
       'spent'=>$overviewData['spent'],
       'appData' => $data,
-      'page'    => 'dashboard',
+      'page'    => 'overview',
       'totals'  => []
     ]);
-  })->name('dashboard');
+  })->name('overview');
 
   $app->get('/account',$require_login(),function() use($app){
       $app->render('user/account.php');
@@ -130,7 +124,7 @@ require 'helper.php';
     $appData = [
       'exp_total' => $totalexp,
       'inc_total' => $totalinc,
-      'balance'   => $totalexp - $totalinc,
+      'balance'   => $totalinc - $totalexp,
       'nav'=>$nav,
     ];
     $app->render('main/exp.php',[
@@ -163,7 +157,7 @@ require 'helper.php';
     $appData = [
       'exp_total' => $totalexp,
       'inc_total' => $totalinc,
-      'balance'   => $totalexp - $totalinc,
+      'balance'   => $totalinc - $totalexp,
       'nav'=>$nav,
     ];
     $app->render('main/inc.php',[

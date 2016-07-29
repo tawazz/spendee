@@ -14,7 +14,7 @@
             <input type="email" class="form-control" placeholder="{{auth.email}}" name="email">
             <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}">
             <br>
-            <button type="submit" class="btn btn-primary">Update Details</button>
+            <button type="submit" class="btn btn-info btn-raised">Update Details</button>
             <br/><br/>
         </form>
     </div>
@@ -31,7 +31,7 @@
                 <input type="password" class="form-control"  name="repeat_password" />
                 <br>
                 <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}">
-                <button type="submit" class="btn btn-primary">Change Password</button>
+                <button type="submit" class="btn btn-info btn-raised">Change Password</button>
             </form>
         </div>
     </div>

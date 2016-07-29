@@ -2,7 +2,7 @@
     <div class="col-xs-12">
       <div class="btn-group" role="group" aria-label="...">
         <a href="{{ baseUrl() }}/{{page}}/{{appData.nav.prev}}" class="btn"><img src="{{ baseUrl() }}/images/left.png"/></a>
-        <span class="btn text-default" style="margin-top:7px;">{{appData.nav.display}}</span>
+        <span class="btn text-default" style="margin-top:7px;text-transform: capitalize;">{{appData.nav.display}}</span>
         <a href="{{ baseUrl() }}/{{page}}/{{appData.nav.next}}" class="btn"><img src="{{ baseUrl() }}/images/right.png"/></a>
       </div>
     </div>
@@ -13,10 +13,9 @@
           <div class="panel panel-danger">
               <div class="panel-heading">
                   <div class="row">
-                      <div class="col-xs-3">
+                      <div class="col-xs-12">
                           <i class="fa fa-usd fa-2x">{{appData.exp_total|number_format(2,'.',',')}}</i>
                       </div>
-                      <div class="col-xs-9 text-right"></div>
                   </div>
               </div>
               <a href="{{urlFor('expenses',{year:appData.nav.current.year,month:appData.nav.current.month})}}">
@@ -32,10 +31,8 @@
           <div class="panel panel-success">
               <div class="panel-heading">
                   <div class="row">
-                      <div class="col-xs-3">
+                      <div class="col-xs-12">
                           <i class="fa fa-usd fa-2x">{{appData.inc_total|number_format(2,'.',',')}}</i>
-                      </div>
-                      <div class="col-xs-9 text-right">
                       </div>
                   </div>
               </div>
@@ -61,7 +58,7 @@
                       </div>
                   </div>
               </div>
-              <a href="{{urlFor('dashboard',{year:appData.nav.current.year})}}">
+              <a href="{{urlFor('overview',{year:appData.nav.current.year})}}">
                   <div class="panel-footer">
                       <span class="pull-left">Balance</span>
                       <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

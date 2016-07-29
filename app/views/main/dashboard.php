@@ -77,7 +77,7 @@
         <!-- /.panel -->
     </div>
     <div class="col-lg-12">
-        <div class="panel panel-orange">
+        <div class="panel panel-info">
             <div class="panel-heading">
               <div class="row">
                   <div class="col-xs-12">
@@ -107,7 +107,7 @@
   xkey: 'd',
   ykeys: ['a', 'b' ,'c'],
   labels: ['Incomes', 'Expenses' , 'Balance'],
-  barColors: ['#2ecc71','#e74c3c','#60677A'],
+  barColors: ['#00E676','#e74c3c','#60677A'],
   preUnits:'$',
   resize:true
   });
@@ -130,7 +130,7 @@
   // Labels for the ykeys -- will be displayed when you hover over the
   // chart.
   labels: ['earned','spent','saved'],
-  lineColors:['#47C9AF','#F16C63','#333333'],
+  lineColors:['#00E676','#F16C63','#333333'],
   goalLineColors:['#d9edf7'],
   dateFormat: function (x) { return moment(x).format(" MMMM YYYY"); },
   preUnits:'$',
@@ -150,7 +150,7 @@
   xkey: 'inc',
   ykeys: ['cost'],
   labels: ['Income'],
-  barColors: ['#2ecc71'],
+  barColors: ['#00E676'],
   preUnits:'$',
   resize:true
   });

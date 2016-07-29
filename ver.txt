@@ -1,3 +1,9 @@
+Spendee v2.7 18/07/2016
+change log
+-update to new material theme
+-rename dashboard to overview
+-bug fixes
+
 Spendee v2.6.2 18/07/2016
 change log
 - more modular code for easy upgrading in future

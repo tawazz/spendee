@@ -18,13 +18,7 @@
                             <h3>Around the Web</h3>
                             <ul class="list-inline">
                                 <li>
-                                    <a href="https://www.facebook.com/tnyakudjga" class="btn-social btn-outline"><i class="fa fa-4x fa-facebook wow tada"></i></a>
-                                </li>
-                                <li>
                                     <a href="https://au.linkedin.com/in/tawanda-nyakudya-545050a2" class="btn-social btn-outline"><i class="fa fa-4x fa-linkedin-square wow tada"></i></a>
-                                </li>
-                                <li>
-                                    <a href="https://twitter.com/tawazz" class="btn-social btn-outline"><i class="fa fa-4x fa-twitter wow tada"></i></a>
                                 </li>
                                 <li>
                                     <a href="https://github.com/tawazz" class="btn-social btn-outline"><i class="fa fa-4x fa-code-fork wow tada"></i></a>
@@ -39,6 +33,7 @@
                                 <li><a href="{{ baseUrl() }}/">Home</a></li>
                                 <li><a href="{{ baseUrl() }}/expenses">Expenses</a></li>
                                 <li><a href="{{ baseUrl() }}/incomes">Incomes</a></li>
+                                <li><a href="{{urlFor('budget.home')}}">Budgets</a></li>
                                 <li><a href="{{ baseUrl() }}/overview">Overview</a></li>
                                 <li><a href="{{ baseUrl() }}/account">Account</a></li>
                               {% else %}

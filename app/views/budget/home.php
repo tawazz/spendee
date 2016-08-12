@@ -12,6 +12,7 @@
     </div>
 </div>
 <div class="row">
+  {% for i in 1..3 %}
     <div class="col-xs-12 col-sm-6">
       <div class="panel panel-info">
           <div class="panel-heading">
@@ -35,30 +36,26 @@
               You can keep spending
             </p>
             <p class="fa-2x">
-              $60.00
+              ${{60*(i+1)}}.00
             </p>
             <p>
               each day!
             </p>
-            <div class="progress budget-progress">
-              <div class="progress-bar progress-bar-success" style="width: 20%">20%</div>
+            <div class="progress progress-striped budget-progress">
+              <div class="progress-bar progress-bar-success" style="width:{{20*i}}%">{{20*i}}%</div>
             </div>
           </div>
           <!-- /.panel-body -->
           <div class="panel-footer">
             <h2>Tags</h2>
-            <div class="panel-body">
-                <div id="morris-pie-chart-tags">
-                  {% if not appData.exp_tags %} No Data Available {% endif %}
-                </div>
-            </div>
+              <div id="morris-pie-chart-tags-{{ i }}">
+                {% if not appData.exp_tags %} No Data Available {% endif %}
+              </div>
           </div>
       </div>
       <!-- /.panel -->
     </div>
-    <div class="col-xs-12 col-sm-6 ">
-      <h1>side 2</h1>
-    </div>
+    {% endfor %}
 </div>
 <div class="modal fade" id="addBudget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -102,8 +99,9 @@
 
 {% block js %}
   <script type="text/javascript">
+{% for i in 1..3 %}
   Morris.Donut({
-  element: 'morris-pie-chart-tags',
+  element: 'morris-pie-chart-tags-{{ i }}',
   data: [
     {% for tag,cost in appData.exp_tags %}
         {label: "{{tag|raw}}", value:{{cost}} },
@@ -120,5 +118,6 @@
     placeholder: "Tags",
     allowClear: true,
   });
+  {% endfor %}
   </script>
 {% endblock %}

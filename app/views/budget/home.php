@@ -36,7 +36,7 @@
               You can keep spending
             </p>
             <p class="fa-2x">
-              ${{60*(i+1)}}.00
+              ${{60/(i+1)}}.00
             </p>
             <p>
               each day!
@@ -47,7 +47,7 @@
           </div>
           <!-- /.panel-body -->
           <div class="panel-footer">
-            <h2>Tags</h2>
+            <h2 class="text-center">Budgeted Tags</h2>
               <div id="morris-pie-chart-tags-{{ i }}">
                 {% if not appData.exp_tags %} No Data Available {% endif %}
               </div>
@@ -55,29 +55,28 @@
       </div>
       <!-- /.panel -->
     </div>
-    {% endfor %}
+  {% endfor %}
 </div>
 <div class="modal fade" id="addBudget" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title text-capitalize">Add Expense </h4>
+        <h4 class="modal-title text-capitalize">Add Budget </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/expenses/add">
+          <form name="addForm" id="addForm" method="post" action="{{ urlFor('budget.add') }}">
             <div class="form-group">
-                <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
+                <input type="text" class="form-control" name="name" placeholder="Budget Name">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="cost" id="money" placeholder="Enter Amount">
+                <input type="text" class="form-control" name="budgeted" id="money" placeholder="Budgeted Amount">
             </div>
+            <input type="hidden" class="form-control" name="date" value="{{appData.nav.current.year}}/{{appData.nav.current.month}}/1">
             <div class="form-group">
-                <input type="text" class="form-control datepicker" name="date" placeholder="Date" data-provide="datepicker" onfocus="blur();" onkeydown="return false">
-            </div>
-            <div class="form-group">
-              <label for="tags">Tags</label>
+              <label for="tags">Budgeted For </label>
               <select class="form-control" name="tags[]" id="tags" multiple="multiple" style="width:100%;height:50px;">
+                <option value="*">All Tags</option>
                 {% for tag in appData.tags %}
                 <option value="{{tag.id}}">{{ tag.name }}</option>
                 {% endfor %}
@@ -89,7 +88,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" id="save" class="btn btn-primary" >Save</button>
+        <button type="button" id="addBudget" class="btn btn-primary" >Save</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -111,13 +110,24 @@
   colors:['#FF3D00'],
   resize:true
   });
-
+  {% endfor %}
   $.fn.select2.defaults.set("theme", "classic");
   $("#tags").select2({
     tags: "true",
     placeholder: "Tags",
     allowClear: true,
+    createTag: function (params) {
+      // Don't offset to create a tag if there is no @ symbol
+      if (params.term.indexOf('@') === -1) {
+        // Return null to disable tag creation
+        return null;
+      }
+
+      return {
+        id: params.term,
+        text: params.term
+      }
+  }
   });
-  {% endfor %}
   </script>
 {% endblock %}

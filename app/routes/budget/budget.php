@@ -10,6 +10,10 @@
         ]);
       })->name('budget.home');
 
+      $app->post('/add',function() use ($app){
+
+      })->name('budget.add');
+
     });
 
 ?>

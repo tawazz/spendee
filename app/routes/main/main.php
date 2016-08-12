@@ -1,5 +1,4 @@
 <?php
-require 'helper.php';
   $app->post('/expenses/add',$require_login(),function() use($app){
     $data = [
         'name'=> $_POST['name'],

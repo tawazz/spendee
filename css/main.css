@@ -286,3 +286,11 @@ a:hover, a:focus {
 .modal-content {
     padding: 20px;
 }
+
+.alert p{
+  margin: 0;
+}
+
+.budget-progress{
+  height: 22px;
+}

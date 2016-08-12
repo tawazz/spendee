@@ -5,4 +5,5 @@
   require 'api/api.php';
   require 'budget/budget.php';
   require 'errors/errors.php';
+  require 'main/helper.php';
  ?>

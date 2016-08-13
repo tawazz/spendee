@@ -36,6 +36,9 @@
         case 'insert':
           $this->query ="INSERT into ".$table;
           break;
+        case 'custom':
+          $this->query = $table;
+        break;
         default:
         $this->query ="SELECT * FROM ".$table;
           break;

@@ -7,6 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Before' => $baseDir . '/app/Middleware/before.php',
+    'Budget' => $baseDir . '/app/Models/budget.php',
+    'BudgetTag' => $baseDir . '/app/Models/bud_tag.php',
     'Carbon\\Carbon' => $vendorDir . '/nesbot/carbon/src/Carbon/Carbon.php',
     'Carbon\\CarbonInterval' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
     'Csrf' => $baseDir . '/app/Middleware/csrf.php',

@@ -41,6 +41,12 @@
   $app->container->set('Remember',function(){
       return new Remember();
   });
+  $app->container->set('Budget',function(){
+      return new Budget();
+  });
+  $app->container->set('BudgetTag',function(){
+      return new BudgetTag();
+  });
   //dependancies
   $app->container->singleton('session',function(){
     return  new Session();
@@ -72,7 +78,7 @@
   ]);
   $app->run();
 
-  if($app->debug){
+  if(!$app->debug){
       echo "User </br>";
       var_dump($app->auth);
   }

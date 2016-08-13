@@ -12,43 +12,59 @@
     </div>
 </div>
 <div class="row">
-  {% for i in 1..3 %}
+  {% for budget in budgets %}
     <div class="col-xs-12 col-sm-6">
       <div class="panel panel-info">
           <div class="panel-heading">
-              <h2>Food Budget</h2>
+              <h2>{{budget.name}}</h2>
           </div>
           <div class="alert alert-info">
             <div class="row">
               <div class="col-xs-6">
                 <h4>Spent</h4>
-                <p>$200</p>
+                <p>${{budget.spent}}</p>
               </div>
               <div class="col-xs-6">
                 <h4>Budgeted</h4>
-                <p>$1000</p>
+                <p>${{budget.amount}}</p>
               </div>
             </div>
           </div>
           <!-- /.panel-heading -->
           <div class="panel-body" >
+            {% if budget.spendingLeft >= 0 %}
             <p>
               You can keep spending
             </p>
             <p class="fa-2x">
-              ${{60/(i+1)}}.00
+              ${{budget.spendingLeft}}
             </p>
             <p>
               each day!
             </p>
             <div class="progress progress-striped budget-progress">
-              <div class="progress-bar progress-bar-success" style="width:{{20*i}}%">{{20*i}}%</div>
+              <div class="progress-bar progress-bar-success" style="width:{{budget.spentPercentage}}%">{{budget.spentPercentage}}%</div>
             </div>
+            {% else %}
+            <p>
+              Opps! you went over budget by
+            </p>
+            <p class="fa-2x text-danger">
+              ${{budget.spent - budget.amount}}
+            </p>
+            <p>
+              spend carefully!!!
+            </p>
+            <div class="progress progress-striped budget-progress">
+              <div class="progress-bar progress-bar-danger" style="width:{{100}}%">{{budget.spentPercentage}}%</div>
+            </div>
+            {% endif %}
+
           </div>
           <!-- /.panel-body -->
           <div class="panel-footer">
             <h2 class="text-center">Budgeted Tags</h2>
-              <div id="morris-pie-chart-tags-{{ i }}">
+              <div id="morris-pie-chart-tags-{{ budget.id }}">
                 {% if not appData.exp_tags %} No Data Available {% endif %}
               </div>
           </div>
@@ -70,13 +86,13 @@
                 <input type="text" class="form-control" name="name" placeholder="Budget Name">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="budgeted" id="money" placeholder="Budgeted Amount">
+                <input type="text" class="form-control" name="amount" id="money" placeholder="Budgeted Amount">
             </div>
             <input type="hidden" class="form-control" name="date" value="{{appData.nav.current.year}}/{{appData.nav.current.month}}/1">
             <div class="form-group">
               <label for="tags">Budgeted For </label>
               <select class="form-control" name="tags[]" id="tags" multiple="multiple" style="width:100%;height:50px;">
-                <option value="*">All Tags</option>
+                <option value="0">All Tags</option>
                 {% for tag in appData.tags %}
                 <option value="{{tag.id}}">{{ tag.name }}</option>
                 {% endfor %}
@@ -88,23 +104,23 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" id="addBudget" class="btn btn-primary" >Save</button>
+        <button type="button" id="saveBudget" class="btn btn-primary" >Save</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
+{% include 'parts/confirmbox.php'%}
 {% endblock %}
 
 {% block js %}
   <script type="text/javascript">
-{% for i in 1..3 %}
+{% for budget in budgets %}
   Morris.Donut({
-  element: 'morris-pie-chart-tags-{{ i }}',
+  element: 'morris-pie-chart-tags-{{ budget.id }}',
   data: [
-    {% for tag,cost in appData.exp_tags %}
-        {label: "{{tag|raw}}", value:{{cost}} },
-    {% endfor%}
+      {% for tag,cost in budget.tags %}
+          {label: "{{tag|raw}}", value:{{cost}} },
+      {% endfor%}
   ],
   formatter:function (y, data) { return '$'+(y).formatMoney(2,'.',','); } ,
   colors:['#FF3D00'],

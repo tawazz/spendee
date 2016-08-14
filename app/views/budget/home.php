@@ -16,7 +16,7 @@
     <div class="col-xs-12 col-sm-6">
       <div class="panel panel-info">
           <div class="panel-heading">
-              <h2>{{budget.name}}</h2>
+              <h2 style="text-transform:capitalize">{{budget.name}}</h2>
           </div>
           <div class="alert alert-info">
             <div class="row">

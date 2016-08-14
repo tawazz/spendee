@@ -22,27 +22,25 @@ class Budget extends Table
         ]);
         $tags = [];
         foreach ($budgetTags as $tag) {
-          $tags[] = $app->Tags->find('all',[
+          $tags[]= $app->Tags->find('all',[
             "where" => ["id","=",$tag->tag_id]
           ]);
         }
+        $spent =  $app->ExpTags->expTagsTotalSpent($app->auth->user_id,$startDate,$endDate,$tags);
         $exptags= [];
-        $spent = 0;
-        //$spentQuery = "SELECT tag.tag_id, SUM(exp.cost) AS tot FROM expenses as exp,exp_tags as tag where exp.exp_id = tag.exp_id AND exp.user_id = '7' AND exp.date >= '2016/7/1' AND exp.date < '2016/8/1' GROUP BY tag.tag_id"
-        //$this->db->query($spentQuery);
         foreach ($tags as $tagone) {
           foreach ($tagone as $tag) {
+            $tagInfo = $app->Tags->find();
             $amount = (int) $this->db->query("SELECT Sum(exp.cost ) as total FROM exp_tags as tag,expenses as exp where tag_id = ? and exp.exp_id = tag.exp_id and  exp.date >= ? and exp.date < ? and exp.user_id = ?",[$tag->id,$startDate,$endDate,$app->auth->user_id])->first()->total;
             if($amount > 0){
               $exptags[$tag->name] =  $amount;
-              $spent = $spent + $amount;
             }
           }
         }
         $budget->tags = $exptags;
         $budget->spent = $spent;
         $budget->spentPercentage = number_format( ($spent/$budget->amount)*100,2,'.',',');
-        $budget->spendingLeft = number_format( ($budget->amount - $spent)/cal_days_in_month(CAL_GREGORIAN,$month, $year),2,'.',',' );
+        $budget->spendingLeft = number_format( ($budget->amount - $spent)/(cal_days_in_month(CAL_GREGORIAN,$month, $year)-(int)date('j')),2,'.',',' );
       }
 
       return $budgets;

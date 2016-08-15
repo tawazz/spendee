@@ -54,8 +54,7 @@ $(document).ready(function () {
 $(function($){
   var cfgCulture = 'en-AU';
   $.preferCulture(cfgCulture);
-
-  $('#money').maskMoney();
+  $('.money').maskMoney();
 });
 
 $(function () {

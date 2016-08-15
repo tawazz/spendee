@@ -112,7 +112,7 @@
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="cost" id="money" placeholder="Enter Amount">
+                <input type="text" class="form-control money" name="cost" placeholder="Enter Amount">
             </div>
             <div class="form-group">
                 <input type="text" class="form-control datepicker" name="date" placeholder="Date" data-provide="datepicker" onfocus="blur();" onkeydown="return false">

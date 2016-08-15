@@ -9,7 +9,6 @@ class Budget extends Table
 {
   protected $table='budget';
   protected $primary_key ='id';
-  protected $hasMany =['BudgetTag'];
 
   public function getBudgetData($app,$year=2016,$month=8)
   {

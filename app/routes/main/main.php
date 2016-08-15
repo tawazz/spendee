@@ -112,7 +112,7 @@
     $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
     $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
-    $nav = getNav($year);
+    $nav = $app->Helper->getNav($year);
     $exp_monthly = [];
     $exp = isset($app->Exp->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year+1)."1-1")->cost)?$app->Exp->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost:0;
     for($i=1;$i<=12;$i++){
@@ -145,7 +145,7 @@
     $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
     $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
     $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
-    $nav = getNav($year);
+    $nav = $app->Helper->getNav($year);
     $inc_monthly = [];
     $inc = isset($app->Inc->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost)?$app->Inc->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost:0;
     for($i=1;$i<=12;$i++){

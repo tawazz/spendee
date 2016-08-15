@@ -73,6 +73,7 @@ class ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1
         'Csrf' => __DIR__ . '/../..' . '/app/Middleware/csrf.php',
         'ExpTags' => __DIR__ . '/../..' . '/app/Models/exp_tags.php',
         'Expenses' => __DIR__ . '/../..' . '/app/Models/expenses.php',
+        'Helper' => __DIR__ . '/../..' . '/app/Models/helper.php',
         'IncTags' => __DIR__ . '/../..' . '/app/Models/inc_tags.php',
         'Incomes' => __DIR__ . '/../..' . '/app/Models/incomes.php',
         'Monolog\\ErrorHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ErrorHandler.php',

@@ -82,22 +82,21 @@
 
       $app->get('/edit/:id',function($id) use ($app){
 
-        $app->Budget->read($id)->delete();
-        return 0;
+        echo ($app->Budget->read($id)->delete());
       })->name("budget.delete");
 
-      $app->get('(/:year(/:month))',function($year=NULL,$month=NULL) use ($app){
-        $data = getData($app,$app->auth->user_id,$year,$month,NULL);
-        $budgets = $app->Budget->getBudgetData($app,$data->nav['current']['year'],$data->nav['current']['month']);
-        $app->render('budget/home.php',[
-          'appData' => $data,
-          'budgets' => $budgets,
-          'page'    => 'budget',
-          'totals'  => []
-        ]);
-      })->name('budget.home');
-
-
     });
+
+    $app->get('/budget(/:year(/:month(/:day)))',function($year=NULL,$month=NULL) use ($app){
+
+      $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,NULL);
+      $budgets = $app->Budget->getBudgetData($app,$data->nav['current']['year'],$data->nav['current']['month']);
+      $app->render('budget/home.php',[
+        'appData' => $data,
+        'budgets' => $budgets,
+        'page'    => 'budget',
+        'totals'  => []
+      ]);
+    })->name('budget.home');
 
 ?>

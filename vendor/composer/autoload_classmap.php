@@ -14,6 +14,7 @@ return array(
     'Csrf' => $baseDir . '/app/Middleware/csrf.php',
     'ExpTags' => $baseDir . '/app/Models/exp_tags.php',
     'Expenses' => $baseDir . '/app/Models/expenses.php',
+    'Helper' => $baseDir . '/app/Models/helper.php',
     'IncTags' => $baseDir . '/app/Models/inc_tags.php',
     'Incomes' => $baseDir . '/app/Models/incomes.php',
     'Monolog\\ErrorHandler' => $vendorDir . '/monolog/monolog/src/Monolog/ErrorHandler.php',

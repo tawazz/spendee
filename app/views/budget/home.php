@@ -207,9 +207,11 @@ $(document).ready(function(){
     event.preventDefault();
     var budgetId = $(this).attr('data-budget-id');
     var modal = $(this).attr('data-show-modal');
+    var url = "{{ urlFor('budget.data',{'id':'__URL__'}) }}";
+    url = url.replace('__URL__',budgetId);
     $.ajax({
       method: "GET",
-      url: "{{baseUrl()}}/budget/data/"+budgetId,
+      url: url 
     })
     .done(function( data ) {
       var obj = JSON.parse(data);
@@ -244,10 +246,11 @@ $(document).ready(function(){
 });
 
 function deleteBudget(id){
-
+  var url = "{{ urlFor('budget.delete',{'id':'__URL__'}) }}";
+  url = url.replace('__URL__',id);
   $.ajax({
     method: "GET",
-    url: "{{baseUrl()}}/budget/delete/"+id,
+    url: url
   }).done(function( data ) {
     location.reload();
   });

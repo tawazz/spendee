@@ -58,6 +58,10 @@
   $app->container->singleton('Config',function(){
     return  new Settings();
   });
+
+  $app->container->singleton('Helper',function(){
+    return  new Helper();
+  });
   //routes
   require'app/routes/routes.php';
 

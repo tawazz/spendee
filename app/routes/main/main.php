@@ -62,7 +62,7 @@
   //expenses
   $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
 
-      $data = getData($app,$app->auth->user_id,$year,$month,$day);
+      $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,$day);
       $app->render('main/expenses.php',[
         'appData' => $data,
         'page'    => 'expenses',
@@ -71,7 +71,7 @@
   })->name('expenses');
   //Incomes
   $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
-    $data = getData($app,$app->auth->user_id,$year,$month,$day);
+    $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,$day);
     $app->render('main/incomes.php',[
       'appData' => $data,
       'page'    => 'incomes',
@@ -83,8 +83,8 @@
     if(!isset($year)){
       $year = $year= date('Y');
     }
-    $data = getData($app,$app->auth->user_id,$year);
-    $overviewData = yearOverView($app,$app->auth->user_id,$year);
+    $data = $app->Helper->getData($app,$app->auth->user_id,$year);
+    $overviewData = $app->Helper->yearOverView($app,$app->auth->user_id,$year);
 
     $app->render('main/dashboard.php',[
       'totalExp'=>$overviewData['totalExp'],

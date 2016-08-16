@@ -5,6 +5,7 @@
  *13/08/2016
  *
  */
+ use Carbon\Carbon;
 class Budget extends Table
 {
   protected $table='budget';
@@ -36,10 +37,13 @@ class Budget extends Table
             }
           }
         }
+        $budgetDate = new Carbon($budget->start_date,'Australia/Perth'); //perth time zone
         $budget->tags = $exptags;
         $budget->spent = $spent;
         $budget->spentPercentage = number_format( ($spent/$budget->amount)*100,2,'.',',');
         $budget->spendingLeft = number_format( ($budget->amount - $spent)/(cal_days_in_month(CAL_GREGORIAN,$month, $year)-(int)date('j')),2,'.',',' );
+        $budget->expired = Carbon::now('Australia/Perth')->gt($budgetDate->addMonth());
+        $budget->saved =  ($budget->amount - $spent > 0) ? number_format( ($budget->amount - $spent),2,'.',',' ) : number_format( ( $spent - $budget->amount ),2,'.',',' );
       }
 
       return $budgets;

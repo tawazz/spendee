@@ -48,7 +48,7 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
     public function trans($id, array $parameters = array(), $domain = null, $locale = null)
     {
         $trans = $this->translator->trans($id, $parameters, $domain, $locale);
-        $this->collectMessage($locale, $domain, $id, $trans);
+        $this->collectMessage($locale, $domain, $id, $trans, $parameters);
 
         return $trans;
     }
@@ -59,15 +59,13 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
     public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
     {
         $trans = $this->translator->transChoice($id, $number, $parameters, $domain, $locale);
-        $this->collectMessage($locale, $domain, $id, $trans);
+        $this->collectMessage($locale, $domain, $id, $trans, $parameters, $number);
 
         return $trans;
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      */
     public function setLocale($locale)
     {
@@ -76,8 +74,6 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      */
     public function getLocale()
     {
@@ -112,9 +108,11 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
      * @param string|null $locale
      * @param string|null $domain
      * @param string      $id
-     * @param string      $trans
+     * @param string      $translation
+     * @param array|null  $parameters
+     * @param int|null    $number
      */
-    private function collectMessage($locale, $domain, $id, $translation)
+    private function collectMessage($locale, $domain, $id, $translation, $parameters = array(), $number = null)
     {
         if (null === $domain) {
             $domain = 'messages';
@@ -128,14 +126,14 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
         } elseif ($catalogue->has($id, $domain)) {
             $state = self::MESSAGE_EQUALS_FALLBACK;
 
-            $fallbackCatalogue = $catalogue->getFallBackCatalogue();
+            $fallbackCatalogue = $catalogue->getFallbackCatalogue();
             while ($fallbackCatalogue) {
                 if ($fallbackCatalogue->defines($id, $domain)) {
                     $locale = $fallbackCatalogue->getLocale();
                     break;
                 }
 
-                $fallbackCatalogue = $fallbackCatalogue->getFallBackCatalogue();
+                $fallbackCatalogue = $fallbackCatalogue->getFallbackCatalogue();
             }
         } else {
             $state = self::MESSAGE_MISSING;
@@ -146,6 +144,8 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
             'domain' => $domain,
             'id' => $id,
             'translation' => $translation,
+            'parameters' => $parameters,
+            'transChoiceNumber' => $number,
             'state' => $state,
         );
     }

@@ -3,6 +3,7 @@
   require 'vendor/autoload.php';
   require 'Tazzy-Helpers/autoload.php';
   use Slim\Slim;
+  use Carbon\Carbon;
 
   $app = new Slim([
     'view'=> new \Slim\Views\Twig(),

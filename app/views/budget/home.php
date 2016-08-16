@@ -32,34 +32,63 @@
           </div>
           <!-- /.panel-heading -->
           <div class="panel-body" >
-            {% if budget.spendingLeft >= 0 %}
-            <p>
-              You can keep spending
-            </p>
-            <p class="fa-2x">
-              ${{budget.spendingLeft}}
-            </p>
-            <p>
-              each day!
-            </p>
-            <div class="progress progress-striped budget-progress">
-              <div class="progress-bar progress-bar-success" style="width:{{budget.spentPercentage}}%">{{budget.spentPercentage}}%</div>
-            </div>
+            {% if budget.expired %}
+                {% if budget.amount >= budget.spent  %}
+                <p>
+                  You Saved
+                </p>
+                <p class="fa-2x text-success">
+                  ${{budget.saved}}
+                </p>
+                <p>
+                  this month!
+                </p>
+                <div class="progress progress-striped budget-progress">
+                  <div class="progress-bar progress-bar-success" style="width:{{budget.spentPercentage}}%">{{budget.spentPercentage}}%</div>
+                </div>
+                {% else %}
+                <p>
+                  You over spent by
+                </p>
+                <p class="fa-2x text-danger">
+                  ${{budget.saved}}
+                </p>
+                <p>
+                  this month!
+                </p>
+                <div class="progress progress-striped budget-progress">
+                  <div class="progress-bar progress-bar-danger" style="width:{{100}}%">{{budget.spentPercentage}}%</div>
+                </div>
+                {% endif %}
             {% else %}
-            <p>
-              Opps! you went over budget by
-            </p>
-            <p class="fa-2x text-danger">
-              ${{budget.spent - budget.amount}}
-            </p>
-            <p>
-              spend carefully!!!
-            </p>
-            <div class="progress progress-striped budget-progress">
-              <div class="progress-bar progress-bar-danger" style="width:{{100}}%">{{budget.spentPercentage}}%</div>
-            </div>
+              {% if budget.spendingLeft >= 0 %}
+              <p>
+                You can keep spending
+              </p>
+              <p class="fa-2x text-success">
+                ${{budget.spendingLeft}}
+              </p>
+              <p>
+                each day!
+              </p>
+              <div class="progress progress-striped budget-progress">
+                <div class="progress-bar progress-bar-success" style="width:{{budget.spentPercentage}}%">{{budget.spentPercentage}}%</div>
+              </div>
+              {% else %}
+              <p>
+                Opps! you went over budget by
+              </p>
+              <p class="fa-2x text-danger">
+                ${{budget.spent - budget.amount}}
+              </p>
+              <p>
+                spend carefully!!!
+              </p>
+              <div class="progress progress-striped budget-progress">
+                <div class="progress-bar progress-bar-danger" style="width:{{100}}%">{{budget.spentPercentage}}%</div>
+              </div>
+              {% endif %}
             {% endif %}
-
           </div>
           <!-- /.panel-body -->
           <div class="panel-footer">
@@ -211,7 +240,7 @@ $(document).ready(function(){
     url = url.replace('__URL__',budgetId);
     $.ajax({
       method: "GET",
-      url: url 
+      url: url
     })
     .done(function( data ) {
       var obj = JSON.parse(data);

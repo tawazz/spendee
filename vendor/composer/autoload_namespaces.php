@@ -9,5 +9,4 @@ return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Slim' => array($vendorDir . '/slim/slim'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
-    'Carbon' => array($vendorDir . '/nesbot/carbon/src'),
 );

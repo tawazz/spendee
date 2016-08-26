@@ -93,8 +93,12 @@
           <!-- /.panel-body -->
           <div class="panel-footer">
             <h2 class="text-center">Budgeted Tags</h2>
-              <div id="morris-pie-chart-tags-{{ budget.id }}">
-                {% if not appData.exp_tags %} No Data Available {% endif %}
+              <div id="morris-pie-chart-tags-{{ budget.id }}" class="text-center" {% if not appData.exp_tags %}style="padding:20% 0;"{% endif %}>
+                {% if not appData.exp_tags %}
+                <p>
+                  No Data Available
+                </p>
+                {% endif %}
               </div>
           </div>
           <div class="panel-footer">

@@ -83,7 +83,7 @@
   ]);
   $app->run();
 
-  if(!$app->debug){
+  if($app->debug){
       echo "User </br>";
       var_dump($app->auth);
   }

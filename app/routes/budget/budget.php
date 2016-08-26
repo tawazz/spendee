@@ -4,7 +4,8 @@
       $app->get('/data/:id',function($id) use ($app)
       {
         $budget = $app->Budget->find("first",[
-          "where" => ["id","=",$id]
+          "where" => ["id","=",$id],
+          "andWhere" =>["user_id","=",$app->auth->user_id]
           ]);
         $budgetTags = $app->BudgetTag->find("all",[
           "fields" => ["tag_id"],
@@ -20,6 +21,7 @@
           "name"       => $_POST['name'],
           "amount"     => str_replace( ',', '',$_POST['amount'] ),
           "start_date" => $_POST['date'],
+          "user_id"    => $app->auth->user_id
         ];
 
         $bud_id = $app->Budget->save($data);

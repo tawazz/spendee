@@ -12,7 +12,7 @@ require_once __DIR__ . '../../../config.php';
         private function __construct(){
             $this->qb = new QueryBuilder();
             try{
-                $this->_pdo = new PDO(Config::get('mysql.driver').":Host=". Config::get('mysql.host').";dbname=".Config::get('mysql.db'),Config::get('mysql.username'),Config::get('mysql.password'));
+                $this->_pdo = new PDO(Config::get('mysql.driver').":host=". Config::get('mysql.host').";dbname=".Config::get('mysql.db'),Config::get('mysql.username'),Config::get('mysql.password'));
             }catch(PDOException $e){
                 die($e->getMessage());
             }

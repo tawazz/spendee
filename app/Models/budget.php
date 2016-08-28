@@ -41,7 +41,8 @@ class Budget extends Table
         $budget->tags = $exptags;
         $budget->spent = $spent;
         $budget->spentPercentage = number_format( ($spent/$budget->amount)*100,2,'.',',');
-        $budget->spendingLeft = number_format( ($budget->amount - $spent)/(cal_days_in_month(CAL_GREGORIAN,$month, $year)-(int)date('j')),2,'.',',' );
+        $budget->future = Carbon::now('Australia/Perth')->lt($budgetDate);
+        $budget->spendingLeft = ($budget->future == true ) ? (($budget->amount - $spent)/ (cal_days_in_month(CAL_GREGORIAN,$month, $year)) ): number_format( ($budget->amount - $spent)/(cal_days_in_month(CAL_GREGORIAN,$month, $year)-(int)date('j')),2,'.',',' );
         $budget->expired = Carbon::now('Australia/Perth')->gt($budgetDate->addMonth());
         $budget->saved =  ($budget->amount - $spent > 0) ? number_format( ($budget->amount - $spent),2,'.',',' ) : number_format( ( $spent - $budget->amount ),2,'.',',' );
       }

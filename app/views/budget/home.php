@@ -22,11 +22,11 @@
             <div class="row">
               <div class="col-xs-6">
                 <h4>Spent</h4>
-                <p>${{budget.spent}}</p>
+                <p>${{budget.spent|number_format(2, '.', ',')}}</p>
               </div>
               <div class="col-xs-6">
                 <h4>Budgeted</h4>
-                <p>${{budget.amount}}</p>
+                <p>${{budget.amount|number_format(2, '.', ',')}}</p>
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
                   You Saved
                 </p>
                 <p class="fa-2x text-success">
-                  ${{budget.saved}}
+                  ${{budget.saved|number_format(2, '.', ',')}}
                 </p>
                 <p>
                   this month!
@@ -51,7 +51,7 @@
                   You over spent by
                 </p>
                 <p class="fa-2x text-danger">
-                  ${{budget.saved}}
+                  ${{budget.saved|number_format(2, '.', ',')}}
                 </p>
                 <p>
                   this month!
@@ -66,7 +66,7 @@
                 You can keep spending
               </p>
               <p class="fa-2x text-success">
-                ${{budget.spendingLeft}}
+                ${{budget.spendingLeft|number_format(2, '.', ',')}}
               </p>
               <p>
                 each day!
@@ -79,7 +79,7 @@
                 Opps! you went over budget by
               </p>
               <p class="fa-2x text-danger">
-                ${{budget.spent - budget.amount}}
+                ${{(budget.spent - budget.amount)|number_format(2, '.', ',')}}
               </p>
               <p>
                 spend carefully!!!

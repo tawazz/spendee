@@ -34,6 +34,37 @@
       return $exptags;
     }
 
+    public function expTagsTotalSpent($user_id,$startDate,$endDate,$tags)
+    {
+      $EXP = new Expenses();
+      $TAGS = new Tags();
+      $exptags= [];
+
+
+      $allExps = $this->db->query("Select DISTINCT exp.exp_id, exp.cost,tag.tag_id from expenses as exp left join exp_tags as tag on exp.exp_id = tag.exp_id where exp.user_id = ? AND exp.date >= ? AND exp.date < ? ",[$user_id,$startDate,$endDate])->result();
+
+      $addedExp = [];
+      $spent = 0;
+      foreach ($allExps as $exp)
+      {
+        foreach ($tags as $tag)
+        {
+          foreach ($tag as $tagData) {
+            if($exp->tag_id == $tagData->id)
+            {
+              if (!in_array($exp->exp_id,$addedExp))
+               {
+                 $spent = $spent+$exp->cost;
+                 array_push($addedExp,$exp->exp_id);
+               }
+            }
+          }
+        }
+
+      }
+      return $spent;
+    }
+
 
   }
  ?>

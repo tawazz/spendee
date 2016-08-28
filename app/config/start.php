@@ -3,6 +3,7 @@
   require 'vendor/autoload.php';
   require 'Tazzy-Helpers/autoload.php';
   use Slim\Slim;
+  use Carbon\Carbon;
 
   $app = new Slim([
     'view'=> new \Slim\Views\Twig(),
@@ -41,6 +42,12 @@
   $app->container->set('Remember',function(){
       return new Remember();
   });
+  $app->container->set('Budget',function(){
+      return new Budget();
+  });
+  $app->container->set('BudgetTag',function(){
+      return new BudgetTag();
+  });
   //dependancies
   $app->container->singleton('session',function(){
     return  new Session();
@@ -51,6 +58,10 @@
 
   $app->container->singleton('Config',function(){
     return  new Settings();
+  });
+
+  $app->container->singleton('Helper',function(){
+    return  new Helper();
   });
   //routes
   require'app/routes/routes.php';

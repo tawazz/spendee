@@ -27,8 +27,13 @@ class Twig_Tests_ExpressionParserTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array('{% set false = "foo" %}'),
+            array('{% set FALSE = "foo" %}'),
             array('{% set true = "foo" %}'),
+            array('{% set TRUE = "foo" %}'),
             array('{% set none = "foo" %}'),
+            array('{% set NONE = "foo" %}'),
+            array('{% set null = "foo" %}'),
+            array('{% set NULL = "foo" %}'),
             array('{% set 3 = "foo" %}'),
             array('{% set 1 + 2 = "foo" %}'),
             array('{% set "bar" = "foo" %}'),
@@ -239,7 +244,7 @@ class Twig_Tests_ExpressionParserTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException        Twig_Error_Syntax
-     * @expectedExceptionMessage An argument must be a name. Unexpected token "string" of value "a" ("name" expected) in "index" at line 1
+     * @expectedExceptionMessage An argument must be a name. Unexpected token "string" of value "a" ("name" expected) in "index" at line 1.
      */
     public function testMacroDefinitionDoesNotSupportNonNameVariableName()
     {
@@ -296,7 +301,7 @@ class Twig_Tests_ExpressionParserTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException        Twig_Error_Syntax
-     * @expectedExceptionMessage The function "cycl" does not exist. Did you mean "cycle" in "index" at line 1
+     * @expectedExceptionMessage Unknown "cycl" function. Did you mean "cycle" in "index" at line 1?
      */
     public function testUnknownFunction()
     {
@@ -308,7 +313,19 @@ class Twig_Tests_ExpressionParserTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException        Twig_Error_Syntax
-     * @expectedExceptionMessage The filter "lowe" does not exist. Did you mean "lower" in "index" at line 1
+     * @expectedExceptionMessage Unknown "foobar" function in "index" at line 1.
+     */
+    public function testUnknownFunctionWithoutSuggestions()
+    {
+        $env = new Twig_Environment($this->getMock('Twig_LoaderInterface'), array('cache' => false, 'autoescape' => false));
+        $parser = new Twig_Parser($env);
+
+        $parser->parse($env->tokenize('{{ foobar() }}', 'index'));
+    }
+
+    /**
+     * @expectedException        Twig_Error_Syntax
+     * @expectedExceptionMessage Unknown "lowe" filter. Did you mean "lower" in "index" at line 1?
      */
     public function testUnknownFilter()
     {
@@ -320,7 +337,19 @@ class Twig_Tests_ExpressionParserTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException        Twig_Error_Syntax
-     * @expectedExceptionMessage The test "nul" does not exist. Did you mean "null" in "index" at line 1
+     * @expectedExceptionMessage Unknown "foobar" filter in "index" at line 1.
+     */
+    public function testUnknownFilterWithoutSuggestions()
+    {
+        $env = new Twig_Environment($this->getMock('Twig_LoaderInterface'), array('cache' => false, 'autoescape' => false));
+        $parser = new Twig_Parser($env);
+
+        $parser->parse($env->tokenize('{{ 1|foobar }}', 'index'));
+    }
+
+    /**
+     * @expectedException        Twig_Error_Syntax
+     * @expectedExceptionMessage Unknown "nul" test. Did you mean "null" in "index" at line 1
      */
     public function testUnknownTest()
     {
@@ -328,5 +357,17 @@ class Twig_Tests_ExpressionParserTest extends PHPUnit_Framework_TestCase
         $parser = new Twig_Parser($env);
 
         $parser->parse($env->tokenize('{{ 1 is nul }}', 'index'));
+    }
+
+    /**
+     * @expectedException        Twig_Error_Syntax
+     * @expectedExceptionMessage Unknown "foobar" test in "index" at line 1.
+     */
+    public function testUnknownTestWithoutSuggestions()
+    {
+        $env = new Twig_Environment($this->getMock('Twig_LoaderInterface'), array('cache' => false, 'autoescape' => false));
+        $parser = new Twig_Parser($env);
+
+        $parser->parse($env->tokenize('{{ 1 is foobar }}', 'index'));
     }
 }

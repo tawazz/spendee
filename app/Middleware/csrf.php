@@ -30,12 +30,6 @@ class Csrf extends Middleware{
         }
       }
       unset($_POST[$this->key]);
-      if($this->app->debug){
-          echo "CSRF </br> csrf_key </br>";
-          var_dump($this->key);
-          echo "csrf_token </br>";
-          var_dump($token);
-      }
       $this->app->view()->appendData([
         'csrf_key'=>$this->key,
         'csrf_token'=>$token

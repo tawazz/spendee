@@ -18,6 +18,21 @@ $(document).ready(function () {
         }
 
     });
+    $('#saveBudget').click(function () {
+
+        var itmName = document.addForm.name.value;
+        var amount = document.addForm.amount.value;
+        var date = document.addForm.date.value;
+        if (itmName.length > 0  & parseFloat(amount) > 0.0) {
+            document.getElementById("addForm").submit();
+        } else {
+          comfirmBox({
+            icon:"<i class='fa fa-exclamation-triangle fa-2x text-warning' aria-hidden='true'></i>",
+            message:"Fill in all fields",
+          });
+        }
+
+    });
     $('#saveInc').click(function () {
 
         var itmName = document.addForm.name.value;
@@ -36,16 +51,10 @@ $(document).ready(function () {
 
 });
 
-$(function() {
-    var $ = jQuery.noConflict();
-   $('.inlinesparkline').sparkline('html', {type: 'bar', barColor: 'white'});
- });
-
 $(function($){
   var cfgCulture = 'en-AU';
   $.preferCulture(cfgCulture);
-
-  $('#money').maskMoney();
+  $('.money').maskMoney();
 });
 
 $(function () {

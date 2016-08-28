@@ -53,7 +53,7 @@
                         {% if appData.balance >= 0 %}
                           <i class="fa fa-usd fa-2x">{{appData.balance|number_format(2,'.',',')}}</i>
                         {% else %}
-                          <i class="fa fa-2x">-<i class="fa fa-usd">{{appData.balance*-1|number_format(2,'.',',')}}</i></i>
+                          <i class="fa fa-2x">-<i class="fa fa-usd">{{(appData.balance*-1)|number_format(2,'.',',')}}</i></i>
                         {% endif %}
                       </div>
                   </div>

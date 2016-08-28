@@ -247,7 +247,7 @@ $(document).ready(function(){
       url: url
     })
     .done(function( data ) {
-      var obj = JSON.parse(data);
+      var obj = data;
       console.log(obj);
       document.editForm.name.value = obj.name;
       document.editForm.amount.value = obj.amount;

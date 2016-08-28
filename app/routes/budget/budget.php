@@ -3,16 +3,14 @@
 
       $app->get('/data/:id',function($id) use ($app)
       {
-        $budget = $app->Budget->find("first",[
-          "where" => ["id","=",$id],
-          "andWhere" =>["user_id","=",$app->auth->user_id]
-          ]);
+        $budget = $app->Budget->read($id)->get();
         $budgetTags = $app->BudgetTag->find("all",[
           "fields" => ["tag_id"],
           "where"=>["bud_id","=",$budget->id]
         ]);
         $budget->tags = $budgetTags;
-        echo json_encode($budget);
+        $app->response->headers->set('Content-Type', 'application/json');
+        $app->response->setBody(json_encode($budget));
       })->name("budget.data");
 
       $app->post('/add',function() use ($app){

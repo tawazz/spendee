@@ -10,7 +10,7 @@
     return function() use($app){
       if(!$app->auth && TRUE){
         $app->flash('global','Login required to access the resource');
-        $app->redirect($app->Config->get("auth.server")."/authorize?redirect_url=http://crm/authorize&response=code");
+        $app->redirect($app->urlFor('login'));
       }
     };
   };

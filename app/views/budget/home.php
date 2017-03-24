@@ -1,17 +1,42 @@
 {% extends 'templates/default.php' %}
 
+{% block css %}
+   <style >
+      .empty-content{
+         font-size: 28px;
+         color:#ccc;
+      }
+   </style>
+{% endblock %}
+
 {% block content %}
 <div class="row">
     <div class="col-sm-12">
         <h2>Budgets</h2>
     </div>
     <div class="col-sm-12">
+      {% set currYear = "now"|date('Y') %}
+      {% set currMonth = "now"|date('m') %}
+      {% if appData.nav.current.year == currYear and appData.nav.current.month == currMonth %}
         <button style="margin-bottom: 20px;" type="button" id="addItem" class="btn btn-info btn-raised" data-toggle="modal" data-target="#addBudget">
             <i class="fa fa-plus"></i> Add Budget
         </button>
+     {% endif %}
     </div>
 </div>
 <div class="row">
+   {% if budgets|length < 1 %}
+   <div class="col-xs-12">
+     <div class="panel panel-info">
+         <div class="panel-heading">
+             <h2 class="text-center" style="text-transform:capitalize">No Budget Data Available</h2>
+         </div>
+         <div class="panel-body" style="height:300px;display: flex;justify-content: center; align-items: center;" >
+             <h4 class="empty-content">Its Lonely Out here</h4>
+         </div>
+      </div>
+   </div>
+   {% endif %}
   {% for budget in budgets %}
     <div class="col-xs-12 col-sm-6">
       <div class="panel panel-info">

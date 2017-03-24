@@ -205,7 +205,7 @@ class InitialSetUp extends Migration
          ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
          INSERT INTO `users` (`user_id`, `firstname`, `lastname`, `username`, `password`, `email`) VALUES
-         (7, 'Admin', 'Admin', 'admin', '057d6ab44a20179a4bb213682beff1ddb9e60f4413e03f0e0df4d84b7b057459', 'root@example.com'),
+         (1, 'admin', 'admin', 'admin', 'c2ab2a55505bc76299187f4155e000767f3f1b9b4f82bcfa77208a16a71db9e6', 'admin@example.com');
 
          --
          -- Constraints for dumped tables

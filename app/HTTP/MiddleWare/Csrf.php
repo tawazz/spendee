@@ -1,4 +1,5 @@
 <?php
+namespace HTTP\Middleware;
 use Slim\Middleware;
 
 /**
@@ -30,6 +31,12 @@ class Csrf extends Middleware{
         }
       }
       unset($_POST[$this->key]);
+      if($this->app->debug){
+          echo "CSRF </br> csrf_key </br>";
+          dump($this->key);
+          echo "csrf_token </br>";
+          dump($token);
+      }
       $this->app->view()->appendData([
         'csrf_key'=>$this->key,
         'csrf_token'=>$token

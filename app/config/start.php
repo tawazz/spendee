@@ -4,15 +4,17 @@
   require 'Tazzy-Helpers/autoload.php';
   use Slim\Slim;
   use Carbon\Carbon;
+  use HTTP\MiddleWare\{Before,Dump,Csrf};
 
   $app = new Slim([
     'view'=> new \Slim\Views\Twig(),
     'debug'=> Settings::get('debug'),
   ]);
   //Middleware
+  $app->add(new Dump());
   $app->add(new Before());
   $app->add(new Csrf());
-  require 'app/Middleware/auth_filters.php';
+  require 'app/HTTP/MiddleWare/auth_filters.php';
   //views
   $view = $app->view();
   $view->setTemplatesDirectory('app/views');
@@ -85,7 +87,7 @@
 
   if($app->debug){
       echo "User </br>";
-      var_dump($app->auth);
+      dump($app->auth);
   }
 
  ?>

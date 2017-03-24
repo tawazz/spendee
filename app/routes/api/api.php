@@ -25,7 +25,7 @@ $app->post('/api/auth',function() use($app){
     $app->response->setBody(json_encode($response));
 });
 
-$app->post('/api/data/:user(/:year(/:month(/:day)))',function($user_id,$year = NULL,$month = NULL,$day=NULL) use($app){
+$app->get('/api/data/:user(/:year(/:month(/:day)))',function($user_id,$year = NULL,$month = NULL,$day=NULL) use($app){
 
   if(isset($year)&& isset($month) && isset($day) ){
 

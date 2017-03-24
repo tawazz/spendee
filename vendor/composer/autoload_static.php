@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1
+class ComposerStaticInit12d46294bc344508b2449d13f08a9a7d
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -46,6 +46,10 @@ class ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1
         'H' => 
         array (
             'HTTP\\' => 5,
+        ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
         ),
         'C' => 
         array (
@@ -126,6 +130,10 @@ class ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1
         array (
             0 => __DIR__ . '/../..' . '/app/HTTP',
         ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
+        ),
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
@@ -173,10 +181,10 @@ class ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit989eb2c1c8e4970188ce871b711aa8e1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit12d46294bc344508b2449d13f08a9a7d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit12d46294bc344508b2449d13f08a9a7d::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit12d46294bc344508b2449d13f08a9a7d::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit12d46294bc344508b2449d13f08a9a7d::$classMap;
 
         }, null, ClassLoader::class);
     }

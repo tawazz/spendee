@@ -4,6 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+    "hash": "9c643dd57056371a8b49b7530f43f98d",
     "content-hash": "5ce857da98ffa8e7477499fe066e0f5a",
     "packages": [
         {
@@ -71,7 +72,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06T14:35:42+00:00"
+            "time": "2015-11-06 14:35:42"
         },
         {
             "name": "fzaninotto/faker",
@@ -119,7 +120,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29T12:21:54+00:00"
+            "time": "2016-04-29 12:21:54"
         },
         {
             "name": "illuminate/container",
@@ -162,7 +163,7 @@
             ],
             "description": "The Illuminate Container package.",
             "homepage": "https://laravel.com",
-            "time": "2017-01-28T17:55:54+00:00"
+            "time": "2017-01-28 17:55:54"
         },
         {
             "name": "illuminate/contracts",
@@ -204,7 +205,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2017-02-21T14:21:59+00:00"
+            "time": "2017-02-21 14:21:59"
         },
         {
             "name": "illuminate/database",
@@ -264,7 +265,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2017-02-22T14:16:49+00:00"
+            "time": "2017-02-22 14:16:49"
         },
         {
             "name": "illuminate/events",
@@ -309,7 +310,7 @@
             ],
             "description": "The Illuminate Events package.",
             "homepage": "https://laravel.com",
-            "time": "2017-02-10T21:05:38+00:00"
+            "time": "2017-02-10 21:05:38"
         },
         {
             "name": "illuminate/support",
@@ -366,7 +367,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2017-02-15T19:29:24+00:00"
+            "time": "2017-02-15 19:29:24"
         },
         {
             "name": "monolog/monolog",
@@ -444,7 +445,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2017-03-13T07:08:03+00:00"
+            "time": "2017-03-13 07:08:03"
         },
         {
             "name": "nesbot/carbon",
@@ -497,7 +498,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2017-01-16T07:55:07+00:00"
+            "time": "2017-01-16 07:55:07"
         },
         {
             "name": "paragonie/random_compat",
@@ -545,7 +546,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-03-13T16:27:32+00:00"
+            "time": "2017-03-13 16:27:32"
         },
         {
             "name": "psr/log",
@@ -592,7 +593,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10T12:19:37+00:00"
+            "time": "2016-10-10 12:19:37"
         },
         {
             "name": "robmorgan/phinx",
@@ -658,7 +659,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2017-01-23T08:53:20+00:00"
+            "time": "2017-01-23 08:53:20"
         },
         {
             "name": "slim/slim",
@@ -705,7 +706,7 @@
                 "rest",
                 "router"
             ],
-            "time": "2017-01-07T12:21:41+00:00"
+            "time": "2017-01-07 12:21:41"
         },
         {
             "name": "slim/slim-skeleton",
@@ -747,7 +748,7 @@
                 "rest",
                 "router"
             ],
-            "time": "2013-09-30T18:15:25+00:00"
+            "time": "2013-09-30 18:15:25"
         },
         {
             "name": "slim/views",
@@ -800,7 +801,7 @@
                 "slimphp",
                 "templating"
             ],
-            "time": "2014-12-09T23:48:51+00:00"
+            "time": "2014-12-09 23:48:51"
         },
         {
             "name": "symfony/config",
@@ -856,7 +857,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-01T18:18:25+00:00"
+            "time": "2017-03-01 18:18:25"
         },
         {
             "name": "symfony/console",
@@ -919,7 +920,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-06T19:30:27+00:00"
+            "time": "2017-03-06 19:30:27"
         },
         {
             "name": "symfony/debug",
@@ -976,7 +977,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-18T17:28:00+00:00"
+            "time": "2017-02-18 17:28:00"
         },
         {
             "name": "symfony/filesystem",
@@ -1025,7 +1026,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-06T19:30:27+00:00"
+            "time": "2017-03-06 19:30:27"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1084,7 +1085,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14T01:06:16+00:00"
+            "time": "2016-11-14 01:06:16"
         },
         {
             "name": "symfony/translation",
@@ -1148,7 +1149,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-04T12:23:14+00:00"
+            "time": "2017-03-04 12:23:14"
         },
         {
             "name": "symfony/var-dumper",
@@ -1214,7 +1215,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2017-02-20T13:45:48+00:00"
+            "time": "2017-02-20 13:45:48"
         },
         {
             "name": "symfony/yaml",
@@ -1269,7 +1270,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-07T16:47:02+00:00"
+            "time": "2017-03-07 16:47:02"
         },
         {
             "name": "twig/twig",
@@ -1331,7 +1332,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-03-22T15:40:09+00:00"
+            "time": "2017-03-22 15:40:09"
         }
     ],
     "packages-dev": [],

@@ -15,6 +15,13 @@
     };
   };
 
+  $require_admin = function() use($app){
+     $require_login;
+     if($app->auth->role->name != "Admin"){
+        $app->response->setStatus(403);
+        $app->render('home/forbiden.php');
+     }
+  };
 
   $guest = function() use($authCheck){
     return $authCheck(false);

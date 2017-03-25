@@ -6,10 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Before' => $baseDir . '/app/Middleware/before.php',
     'Budget' => $baseDir . '/app/Models/budget.php',
     'BudgetTag' => $baseDir . '/app/Models/bud_tag.php',
-    'Csrf' => $baseDir . '/app/Middleware/csrf.php',
     'ExpTags' => $baseDir . '/app/Models/exp_tags.php',
     'Expenses' => $baseDir . '/app/Models/expenses.php',
     'Helper' => $baseDir . '/app/Models/helper.php',

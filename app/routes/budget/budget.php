@@ -87,7 +87,7 @@
 
     });
 
-    $app->get('/budget(/:year(/:month(/:day)))',function($year=NULL,$month=NULL) use ($app){
+    $app->get('/budget(/:year(/:month(/:day)))',$require_login(),function($year=NULL,$month=NULL) use ($app){
 
       $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,NULL);
       $budgets = $app->Budget->getBudgetData($app,$data->nav['current']['year'],$data->nav['current']['month']);

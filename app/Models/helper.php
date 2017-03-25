@@ -151,7 +151,6 @@
 
         return $response;
       }
-
       public static function getNav($year=null,$month=null,$day=null)
       {
         if(isset($year)&& isset($month) && isset($day) ){
@@ -214,5 +213,16 @@
         return $nav;
       }
 
+      public static function getTags()
+      {
+         $tags = new Tags();
+         return $tags->find('all');
+      }
+
+      public static function JsonResponse($app,$value='')
+      {
+         $app->response->headers->set('Content-Type', 'application/json');
+         $app->response->setBody($value);
+      }
     }
  ?>

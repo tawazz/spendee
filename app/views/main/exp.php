@@ -94,6 +94,14 @@
             <div class="form-group">
                 <input type="text" class="form-control datepicker" name="date" placeholder="Date" data-provide="datepicker">
             </div>
+            <div class="form-group">
+              <label for="tags">Tags</label>
+              <select class="form-control" name="tags[]" id="tags" multiple="multiple" style="width:100%;height:50px;">
+                {% for tag in tags %}
+                <option value="{{tag.id}}">{{ tag.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
               <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}"/>
               <input type="hidden" name="user_id" value="{{auth.user_id}}"/>
               <input type="hidden" name="exp_id" />
@@ -160,13 +168,36 @@
     resize:true
     });
 
+    $.fn.select2.defaults.set("theme", "classic");
+     var selectTags = $("#tags").select2({
+        tags: "true",
+        placeholder: "Tags",
+        allowClear: true,
+     });
+
+
+
     $("a[data-show-modal]").on("click",function(event){
       event.preventDefault();
       document.addForm.name.value = $(this).attr('data-exp-name');
       document.addForm.cost.value = $(this).attr('data-exp-cost');
       document.addForm.date.value = $(this).attr('data-exp-date');
       document.addForm.exp_id.value = $(this).attr('data-exp-id');
+
+      $.ajax({
+         method: "GET",
+         url: "/api/expenses/"+$(this).attr('data-exp-id')
+     }).done(function( data ) {
+         var obj = data;
+         $("#tags option").prop('selected', false);
+         $.each( obj.exp_tags, function( key, value ) {
+            $("#tags option[value='"+value.tag_id+"']").prop('selected', true);
+            selectTags.trigger("change");
+         });
+     });
+
       $($(this).attr('data-show-modal')).modal('show');
+
     });
     $("a[data-exp-delete]").on("click",function(event){
       event.preventDefault();
@@ -174,5 +205,6 @@
       document.deleteForm.exp_id.value = exp;
       $($(this).attr('data-exp-delete')).modal('show');
     });
+
 </script>
 {% endblock %}

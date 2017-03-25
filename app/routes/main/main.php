@@ -37,6 +37,21 @@
         'date'=> $_POST['date'],
       ];
       $app->Exp->read($exp_id)->set($data);
+      $exp_tags = $app->ExpTags->find("all",[
+         "where"=>["exp_id", "=" ,$exp_id]
+      ]);
+      foreach ($exp_tags as $tag) {
+          $app->ExpTags->read($tag->id)->delete();
+      }
+      if (isset($_POST['tags'])) {
+         foreach ($_POST['tags'] as $tag_id) {
+             $tags_data = [
+               'exp_id' => $exp_id,
+               'tag_id' => $tag_id
+             ];
+             $app->ExpTags->save($tags_data);
+         }
+      }
       $app->response->redirect($app->urlFor('exp',['name'=>$_POST['name']."#".$exp_id]));
   });
   $app->post('/expense/delete',$require_login(),function() use($app){
@@ -132,7 +147,8 @@
       'name'=>$name,
       'appData'=>$appData,
       'page'=>'expense/'.$name,
-      'products'=>$product
+      'products'=>$product,
+      'tags'=> $app->Helper->getTags()
     ]);
   })->name('exp');
 

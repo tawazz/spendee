@@ -247,4 +247,11 @@ $app->get('/api/graph/:type/:user(/:year)',function($type,$user_id,$year = NULL,
 
 });
 
+// get routes
+$app->get('/api/expenses/:id',function($id) use($app){
+
+   $app->Helper->JsonResponse($app,json_encode($app->Exp->read($id)->get()));
+
+});
+
 ?>

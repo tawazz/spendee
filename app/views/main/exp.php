@@ -183,13 +183,14 @@
       document.addForm.cost.value = $(this).attr('data-exp-cost');
       document.addForm.date.value = $(this).attr('data-exp-date');
       document.addForm.exp_id.value = $(this).attr('data-exp-id');
-
+      $("#tags").val('');
+      selectTags.trigger("change");
       $.ajax({
          method: "GET",
          url: "/api/expenses/"+$(this).attr('data-exp-id')
      }).done(function( data ) {
          var obj = data;
-         $("#tags option").prop('selected', false);
+
          $.each( obj.exp_tags, function( key, value ) {
             $("#tags option[value='"+value.tag_id+"']").prop('selected', true);
             selectTags.trigger("change");

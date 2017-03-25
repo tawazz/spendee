@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="{{ baseUrl() }}/css/morris.css">
 <!-- Fonts -->
 <link href="{{ baseUrl() }}/css/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-<link href='http://fonts.googleapis.com/css?family=Lobster+Two:400,200italic,700' rel='stylesheet' type='text/css'>
+<link href='//fonts.googleapis.com/css?family=Lobster+Two:400,200italic,700' rel='stylesheet' type='text/css'>
 <!-- Bootstrap Material Design -->
-<link rel="stylesheet" href="http://fezvrasta.github.io/bootstrap-material-design/dist/css/ripples.min.css" media="screen" title="no title" charset="utf-8">
-<link rel="stylesheet" href="http://fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" media="screen" title="no title" charset="utf-8">
+<link rel="stylesheet" href="//fezvrasta.github.io/bootstrap-material-design/dist/css/ripples.min.css" media="screen" title="no title" charset="utf-8">
+<link rel="stylesheet" href="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" media="screen" title="no title" charset="utf-8">

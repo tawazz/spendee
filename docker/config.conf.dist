@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+    ServerAdmin tawanda.nyakudjga@gmail.com
+    ServerName spendee.dev
+    ServerAlias spendee.dev
+    DocumentRoot /app
+    <Directory /app>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+  	ErrorLog ${APACHE_LOG_DIR}/error_spendee.log
+    CustomLog ${APACHE_LOG_DIR}/access_spendee.log combined
+</VirtualHost>

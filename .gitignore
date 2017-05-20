@@ -2,3 +2,5 @@
 /Tazzy-Helpers/config.php
 app/config/config.php
 vendor/*
+docker/config.php
+docker/config.conf

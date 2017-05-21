@@ -87,8 +87,8 @@ display: inline-block;
 color: #FFF;
 }
 .navbar .navbar-nav > li > a{
-  padding-top: 10px;
-  padding-bottom: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: #CCC;

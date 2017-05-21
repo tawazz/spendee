@@ -4,3 +4,4 @@ app/config/config.php
 vendor/*
 docker/config.php
 docker/config.conf
+web/node_modules

@@ -2,13 +2,23 @@
     ServerAdmin tawanda.nyakudjga@gmail.com
     ServerName spendee.dev
     ServerAlias spendee.dev
-    DocumentRoot /app
-    <Directory /app>
-        Options Indexes FollowSymLinks MultiViews
-        AllowOverride All
-        Order allow,deny
-        allow from all
+    DocumentRoot /app/
+    RewriteEngine On
+    DirectoryIndex index.php
+
+    <Directory /app/>
+       Options FollowSymLinks
+       AllowOverride All
+       Require all granted
     </Directory>
-  	ErrorLog ${APACHE_LOG_DIR}/error_spendee.log
-    CustomLog ${APACHE_LOG_DIR}/access_spendee.log combined
+
+    LogLevel info
+    ErrorLog /var/log/apache2/myapp-error.log
+    CustomLog /var/log/apache2/myapp-access.log combined
+
 </VirtualHost>
+
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>
+

@@ -1,0 +1,23 @@
+<VirtualHost *:80>
+    ServerAdmin tawanda.nyakudjga@gmail.com
+    ServerName spendee.dev
+    ServerAlias spendee.dev
+    DocumentRoot /app/
+    RewriteEngine On
+    DirectoryIndex index.php
+
+    <Directory /app/>
+       Options FollowSymLinks
+       AllowOverride All
+       Require all granted
+    </Directory>
+
+    LogLevel info
+    ErrorLog /var/log/apache2/spendee_error.log
+    CustomLog /var/log/apache2/spendee_access.log combined
+
+</VirtualHost>
+
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php
+</FilesMatch>

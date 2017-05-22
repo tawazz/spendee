@@ -126,10 +126,12 @@
                 {% endif %}
               </div>
           </div>
+          {% if not budget.expired %}
           <div class="panel-footer">
               <a class="btn btn-info" href="#" data-budget-id ="{{ budget.id }}" data-show-modal="#editModal" data-toggle="modal" data-target="#editBudget" >Edit</a>
               <a class="btn btn-danger" href="#" data-budget-delete ="{{ budget.id }}">Delete</a>
           </div>
+          {% endif %}
       </div>
       <!-- /.panel -->
     </div>

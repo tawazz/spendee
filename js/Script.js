@@ -58,7 +58,6 @@ $(function($){
 });
 
 $(function () {
-  jQuery.noConflict();
   $('.datepicker').datetimepicker({ //end time picker
     pickTime: false,
     format: 'YYYY/MM/DD',

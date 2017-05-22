@@ -47,14 +47,6 @@ class InitialSetUp extends Migration
          /*!40101 SET NAMES utf8mb4 */;
 
          --
-         -- Database: `tawazzne_spender`
-         --
-         CREATE DATABASE IF NOT EXISTS `tawazzne_spender` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-         USE `tawazzne_spender`;
-
-         -- --------------------------------------------------------
-
-         --
          -- Table structure for table `budget`
          --
 
@@ -67,7 +59,7 @@ class InitialSetUp extends Migration
            `start_date` date NOT NULL,
            PRIMARY KEY (`id`),
            KEY `user_id` (`user_id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          -- --------------------------------------------------------
 
@@ -82,7 +74,7 @@ class InitialSetUp extends Migration
            `tag_id` int(11) NOT NULL,
            PRIMARY KEY (`id`),
            KEY `bud_id` (`bud_id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=346 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          -- --------------------------------------------------------
 
@@ -98,7 +90,7 @@ class InitialSetUp extends Migration
            `date` date DEFAULT NULL,
            `exp_id` int(8) NOT NULL AUTO_INCREMENT,
            PRIMARY KEY (`exp_id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=1732 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          -- --------------------------------------------------------
 
@@ -114,7 +106,7 @@ class InitialSetUp extends Migration
            PRIMARY KEY (`id`),
            KEY `exp_id` (`exp_id`),
            KEY `tag_id` (`tag_id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=520 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          -- --------------------------------------------------------
 
@@ -130,7 +122,7 @@ class InitialSetUp extends Migration
            `date` date DEFAULT NULL,
            `inc_id` int(8) NOT NULL AUTO_INCREMENT,
            PRIMARY KEY (`inc_id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          -- --------------------------------------------------------
 
@@ -145,7 +137,7 @@ class InitialSetUp extends Migration
            `tag_id` int(11) NOT NULL,
            PRIMARY KEY (`id`),
            KEY `inc_id` (`inc_id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          -- --------------------------------------------------------
 
@@ -172,7 +164,7 @@ class InitialSetUp extends Migration
            `user_id` int(11) NOT NULL,
            `hash` varchar(120) NOT NULL,
            PRIMARY KEY (`id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          -- --------------------------------------------------------
 
@@ -185,7 +177,7 @@ class InitialSetUp extends Migration
            `id` int(11) NOT NULL AUTO_INCREMENT,
            `name` varchar(255) NOT NULL DEFAULT '',
            PRIMARY KEY (`id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          -- --------------------------------------------------------
 
@@ -202,7 +194,7 @@ class InitialSetUp extends Migration
            `password` varchar(128) NOT NULL,
            `email` varchar(90) NOT NULL,
            PRIMARY KEY (`user_id`)
-         ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
          INSERT INTO `users` (`user_id`, `firstname`, `lastname`, `username`, `password`, `email`) VALUES
          (20, 'admin', 'admin', 'admin', '057d6ab44a20179a4bb213682beff1ddb9e60f4413e03f0e0df4d84b7b057459', 'admin@example.com');

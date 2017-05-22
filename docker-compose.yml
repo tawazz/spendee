@@ -1,0 +1,14 @@
+version: "3"
+services:
+  web:
+    image: spendee_app
+    deploy:
+      replicas: 4
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8001:80"
+    networks:
+      - webnet
+networks:
+  webnet:

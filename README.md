@@ -8,6 +8,38 @@ and PHP and MySQL with Json REST API for webservices at the backend.
 
 # Set Up
 
+# install docker
+```
+ wget -qO- https://get.docker.com/ | sh
+
+ ```
+
+ # Edit configs
+
+ ```
+ cp app/config/config.php.dist app/config/config.php
+
+ ```
+ * Edit your database settings
+
+ ```
+ cp docker/config.conf.dist docker config.conf
+ ```
+ * edit your ServerAlias to match your domain name
+
+
+# Build image
+
+```
+ docker build -t spendee_app .
+```
+
+# Run app
+
+```
+docker run -d -p 8080:80 spendee_app
+```
+
 # Migrations commands
 
 ## create migration

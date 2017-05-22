@@ -1,18 +1,16 @@
 <?php
   $GLOBALS['config'] = [
 
-      'urls'         => [
-          'baseUrl'  => 'http://localhost/spendee',
-      ],
-      'debug'        => true,
+      'debug'        => false,
       'mysql'        => [
           'driver'   => 'mysql',
           'host'     => '127.0.0.1',
           'username' => 'root',
           'password' => 'password',
-          'db'       => 'spendee_database'
+          'db'       => 'spendee_database',
+          'prefix'   => ''
       ],
-      'ver'          => 'v2.7',
+      'ver'          => 'v2.7.3',
       'locale'       => [
           "brand"    => "tawazz.net",
           "address"  => "Perth<br> Australia",

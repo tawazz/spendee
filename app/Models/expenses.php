@@ -13,7 +13,7 @@
      // get total cost of an expense/income between 2 dates
 
     public function spentOnProduct($name,$startDate,$endDate){
-            $query = $this->db->query("select Sum(cost) AS cost,name from $this->table where user_id = ? and name LIKE ? and date >= ? and date < ? ",array($this->active_record,$name,$startDate,$endDate));
+            $query = $this->db->query("select Sum(cost) AS cost from $this->table where user_id = ? and name LIKE ? and date >= ? and date < ? ",array($this->active_record,$name,$startDate,$endDate));
             $query->first()->name = $name;
             return $query->first();
     }

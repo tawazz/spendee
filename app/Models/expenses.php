@@ -50,7 +50,7 @@
     //all monthly expenses/ incomes
 
     public function allActivity($startDate,$endDate,$type='expenses'){
-        $query = $this->db->query("SELECT lcase(name) as name,Sum(cost) as cost,exp_id as exp_id from $type where user_id= ? and date >= ? and date < ?  group by name order by cost DESC ",array($this->active_record,$startDate,$endDate))->result();
+        $query = $this->db->query("SELECT lcase(name) as name,Sum(cost) as cost from $type where user_id= ? and date >= ? and date < ?  group by name order by cost DESC ",array($this->active_record,$startDate,$endDate))->result();
       /*$conditions = array(
           'where' =>['user_id','=',$this->active_record] ,
           'andWhere'=>[

@@ -17,7 +17,7 @@
     <div class="col-sm-12">
       {% set currYear = "now"|date('Y') %}
       {% set currMonth = "now"|date('m') %}
-      {% if not budget.expired %}
+      {% if appData.nav.current.year == currYear and appData.nav.current.month == currMonth %}
         <button style="margin-bottom: 20px;" type="button" id="addItem" class="btn btn-info btn-raised" data-toggle="modal" data-target="#addBudget">
             <i class="fa fa-plus"></i> Add Budget
         </button>

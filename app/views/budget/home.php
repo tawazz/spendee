@@ -17,7 +17,7 @@
     <div class="col-sm-12">
       {% set currYear = "now"|date('Y') %}
       {% set currMonth = "now"|date('m') %}
-      {% if appData.nav.current.year == currYear and appData.nav.current.month == currMonth %}
+      {% if not budget.expired %}
         <button style="margin-bottom: 20px;" type="button" id="addItem" class="btn btn-info btn-raised" data-toggle="modal" data-target="#addBudget">
             <i class="fa fa-plus"></i> Add Budget
         </button>
@@ -126,10 +126,12 @@
                 {% endif %}
               </div>
           </div>
+          {% if not budget.expired %}
           <div class="panel-footer">
               <a class="btn btn-info" href="#" data-budget-id ="{{ budget.id }}" data-show-modal="#editModal" data-toggle="modal" data-target="#editBudget" >Edit</a>
               <a class="btn btn-danger" href="#" data-budget-delete ="{{ budget.id }}">Delete</a>
           </div>
+          {% endif %}
       </div>
       <!-- /.panel -->
     </div>

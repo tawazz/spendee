@@ -1,13 +1,13 @@
 version: "3"
 services:
   web:
-    image: tich.us:5000/spendee_app
+    image: spendee_app
     deploy:
       replicas: 4
       restart_policy:
         condition: on-failure
     ports:
-      - "8005:80"
+      - "8001:80"
     networks:
       - webnet
 networks:

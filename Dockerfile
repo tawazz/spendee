@@ -6,7 +6,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install nodejs npm -y
 RUN git clone https://github.com/tawazz/spendee.git .
-RUN git checkout dev
+RUN git checkout master
 COPY app/config/config.php /app/app/config/
 RUN composer install
 

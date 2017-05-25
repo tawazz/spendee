@@ -40,7 +40,7 @@
           </div>
           {%for exp in expenses %}
             {% set total = total+exp.cost %}
-            <a href="">
+            <a href="/expense/{{exp.name}}">
                 <div class="panel-footer">
                     <span class="pull-left">{{exp.name}}</span>
                     <span class="pull-right"><i class="fa fa-usd">{{exp.cost|number_format(2, '.')}}</i></span>

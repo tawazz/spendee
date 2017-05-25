@@ -33,7 +33,7 @@
           </div>
           {%for inc in incomes %}
             {% set total = total+inc.cost %}
-            <a href="">
+            <a href="/income/{{inc.name}}">
                 <div class="panel-footer">
                     <span class="pull-left">{{inc.name}}</span>
                     <span class="pull-right"><i class="fa fa-usd">{{inc.cost}}</i></span>

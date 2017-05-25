@@ -126,7 +126,7 @@
         <h4 class="modal-title text-capitalize">Add Expense </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/expenses/add">
+          <form name="addForm" id="addForm" method="post" action="/expenses/add">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>

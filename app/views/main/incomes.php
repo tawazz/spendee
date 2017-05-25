@@ -61,7 +61,7 @@
         <!-- /.row -->
         <div class="row" >
                 <div class="col-lg-12">
-                    <img src="{{baseUrl()}}/images/inc.png" class="img-responsive" alt="no data available" style="margin-left: auto;margin-right: auto;" />
+                    <img src="/images/inc.png" class="img-responsive" alt="no data available" style="margin-left: auto;margin-right: auto;" />
                 </div>
         </div>
     </div>
@@ -107,7 +107,7 @@
         <h4 class="modal-title text-capitalize">Add Income </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/incomes/add">
+          <form name="addForm" id="addForm" method="post" action="/incomes/add">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>

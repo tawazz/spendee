@@ -40,7 +40,7 @@
           </div>
           {%for exp in expenses %}
             {% set total = total+exp.cost %}
-            <a href="{{ baseUrl() }}/expense/{{exp.name}}">
+            <a href="">
                 <div class="panel-footer">
                     <span class="pull-left">{{exp.name}}</span>
                     <span class="pull-right"><i class="fa fa-usd">{{exp.cost|number_format(2, '.')}}</i></span>
@@ -63,7 +63,7 @@
           <!-- /.row -->
             <div class="row" >
                   <div class="col-lg-12">
-                        <img src="{{baseUrl()}}/images/exp.png" class="img-responsive" alt="no data available" style="margin-left: auto;margin-right: auto;" />
+                        <img src="/images/exp.png" class="img-responsive" alt="no data available" style="margin-left: auto;margin-right: auto;" />
                   </div>
             </div>
         </div>

@@ -84,7 +84,7 @@
         <h4 class="modal-title text-capitalize">Edit Expense </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{ baseUrl() }}/expense/update">
+          <form name="addForm" id="addForm" method="post" action="/expense/update">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Enter Item Name">
             </div>
@@ -125,7 +125,7 @@
 
         <h3 class="text-capitalize text-center">Are You Sure You want to Delete!!!</h3>
         <div class="modal-footer">
-          <form name="deleteForm" action="{{ baseUrl() }}/expense/delete" method="post">
+          <form name="deleteForm" action="/expense/delete" method="post">
             <input type="hidden" name="exp_id">
             <input type="hidden" name="name" value="{{products.0.name}}">
             <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}"/>
@@ -140,7 +140,7 @@
 {% endblock %}
 
 {% block js %}
-  <script type="text/javascript" src="{{ baseUrl() }}/js/knob.js"></script>
+  <script type="text/javascript" src="/js/knob.js"></script>
   <script type="text/javascript">
   {% if exp %}
   Morris.Donut({

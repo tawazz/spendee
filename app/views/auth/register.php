@@ -5,7 +5,7 @@
 <div class="col-xs-12 col-sm-6 col-sm-offset-3">
     <div class="panel panel-default">
         <div class="panel-body">
-          <div class="text-center img-responsive"><img src="{{ baseUrl() }}/images/icon.png" height="100" alt="logo" /></div>
+          <div class="text-center img-responsive"><img src="/images/icon.png" height="100" alt="logo" /></div>
           <h3 class="brand-font text-center">Spendee</h3>
             <div class="page-header text-center"><h2>Register Your Details </h2></div>
                 <form action="{{urlFor('post.register')}}" method="post" name="reg" onsubmit="return checkReg()">

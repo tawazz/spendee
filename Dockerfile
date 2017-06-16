@@ -10,6 +10,12 @@ RUN git checkout master
 COPY app/config/config.php /app/app/config/
 RUN composer install
 
+WORKDIR /app/web
+RUN npm install -g grunt 
+RUN grunt
+
+WORKDIR /app
+
 
 EXPOSE 80
 CMD ["apache2ctl", "-D", "FOREGROUND"]

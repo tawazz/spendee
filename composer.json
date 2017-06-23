@@ -1,8 +1,9 @@
 {
     "require": {
-        "slim/slim": "2.*",
-        "slim/slim-skeleton": "2.1",
-        "slim/views": "0.1.*",
+        "slim/slim": "3.*",
+        "slim/slim-skeleton": "3.*",
+        "slim/twig-view": "2.*",
+        "slim/csrf":"0.8.*",
         "symfony/var-dumper": "^3.2",
         "nesbot/carbon": "^1.20",
         "illuminate/database": "^5.3",

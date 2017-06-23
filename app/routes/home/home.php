@@ -1,23 +1,23 @@
 <?php
-  $app->get('/',function() use ($app){
-    if($app->auth){
-      $app->response->redirect($app->urlFor('expenses'));
+  $app->get('/',function($req,$res,$args) use ($app){
+    /*if($app->auth){
+      $res->redirect($app->urlFor('expenses'));
       return 0;
-    }
-    $app->render('home/about.php');
-  })->name('home');
+    }*/
+    return $this->view->render($res,'home/about.php');
+  })->setName('home');
 
   $app->get('/about',function() use ($app){
     $app->render('home/about.php');
-  })->name('about');
+  })->setName('about');
 
   $app->get('/contact',function() use ($app){
     $app->render('home/contact.php');
-  })->name('contact');
+  })->setName('contact');
 
   $app->get('/help',function() use ($app){
     $app->render('home/help.php');
-  })->name('help');
+  })->setName('help');
 
   $app->post('/contact', function() use ($app){
     if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['phone']) ){
@@ -31,6 +31,6 @@
     }
       $app->flash("global","your message was sent");
       $app->response->redirect($app->urlFor('contact'));
-  })->name('post.contact');
+  })->setName('post.contact');
 
  ?>

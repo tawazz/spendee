@@ -16,6 +16,10 @@
           "address"  => "Perth<br> Australia",
           "phone"    => "+61 401 234 567",
           "email"    => "admin@tawazz.net",
+      ],
+      'views'        => [
+        'cache'      => 'app/views/cache',
+        'dir'        => 'app/views'
       ]
   ];
  ?>

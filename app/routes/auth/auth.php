@@ -2,7 +2,7 @@
 use Carbon\Carbon;
   $app->get('/register',$guest(),function() use ($app){
     $app->render('auth/register.php');
-  })->name('register');
+  })->setName('register');
 
 
 
@@ -25,11 +25,11 @@ use Carbon\Carbon;
     }else{
       $app->render('auth/register.php',['errors'=>$user->errors(),'values'=>$_POST]);
     }
-  })->name('post.register');
+  })->setName('post.register');
 
   $app->get('/login',$guest(),function() use ($app){
     $app->render('auth/login.php');
-  })->name('login');
+  })->setName('login');
 
   $app->post('/login',$guest(),function() use ($app){
     $user = $app->User;
@@ -76,7 +76,7 @@ use Carbon\Carbon;
     $app->render('auth/login.php',['errors'=>$user->errors()]);
   }
 
-})->name('post.login');
+})->setName('post.login');
 
 $app->get('/logout', function() use($app){
 
@@ -88,7 +88,7 @@ $app->get('/logout', function() use($app){
   $app->session->delete('id');
   $app->auth = false;
   $app->response->redirect($app->urlFor('login'));
-})->name('logout');
+})->setName('logout');
 
 $app->post('/update/user',$require_login(), function() use($app){
     if (empty($_POST['email'])) {

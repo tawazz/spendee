@@ -83,7 +83,7 @@
         'page'    => 'expenses',
         'totals'  => []
       ]);
-  })->name('expenses');
+  })->setName('expenses');
   //Incomes
   $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
     $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,$day);
@@ -92,7 +92,7 @@
       'page'    => 'incomes',
       'totals'  => []
     ]);
-  })->name('incomes');
+  })->setName('incomes');
 
   $app->get('/overview(/:year)',$require_login(),function($year=NULL ) use($app){
     if(!isset($year)){
@@ -112,11 +112,11 @@
       'page'    => 'overview',
       'totals'  => []
     ]);
-  })->name('overview');
+  })->setName('overview');
 
   $app->get('/account',$require_login(),function() use($app){
       $app->render('user/account.php');
-  })->name('account');
+  })->setName('account');
 
   $app->get('/expense/:name(/:year)',$require_login(),function($name=NULL,$year=NULL) use($app){
     if(!isset($year)){
@@ -150,7 +150,7 @@
       'products'=>$product,
       'tags'=> $app->Helper->getTags()
     ]);
-  })->name('exp');
+  })->setName('exp');
 
   $app->get('/income/:name(/:year)',$require_login(),function($name=NULL,$year=NULL) use($app){
     if(!isset($year)){
@@ -183,6 +183,6 @@
       'name'=>$name,
       'products'=>$product
     ]);
-  })->name('inc');
+  })->setName('inc');
 
  ?>

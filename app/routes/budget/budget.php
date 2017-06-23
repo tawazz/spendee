@@ -11,7 +11,7 @@
         $budget->tags = $budgetTags;
         $app->response->headers->set('Content-Type', 'application/json');
         $app->response->setBody(json_encode($budget));
-      })->name("budget.data");
+      })->setName("budget.data");
 
       $app->post('/add',function() use ($app){
 
@@ -45,7 +45,7 @@
           }
         }
         $app->redirect($app->urlFor('budget.home'));
-      })->name('budget.add');
+      })->setName('budget.add');
 
       $app->post('/edit',function() use ($app){
 
@@ -78,12 +78,12 @@
           }
         }
         $app->redirect($app->urlFor('budget.home'));
-      })->name('budget.edit');
+      })->setName('budget.edit');
 
       $app->get('/edit/:id',function($id) use ($app){
 
         echo ($app->Budget->read($id)->delete());
-      })->name("budget.delete");
+      })->setName("budget.delete");
 
     });
 
@@ -97,6 +97,6 @@
         'page'    => 'budget',
         'totals'  => []
       ]);
-    })->name('budget.home');
+    })->setName('budget.home');
 
 ?>

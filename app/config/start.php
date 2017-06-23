@@ -2,80 +2,91 @@
   session_start();
   require 'vendor/autoload.php';
   require 'Tazzy-Helpers/autoload.php';
-  use Slim\Slim;
+  use Slim\App;
   use Carbon\Carbon;
   use HTTP\MiddleWare\{Before,Dump,Csrf};
 
-  $app = new Slim([
-    'view'=> new \Slim\Views\Twig(),
-    'debug'=> Settings::get('debug'),
-  ]);
+  $app = new App(
+    new \Slim\Container([
+      'settings' => [
+        'displayErrorDetails'=> Settings::get('debug'),
+      ]
+    ])
+  );
+  $container = $app->getContainer();
   //Middleware
-  $app->add(new Dump());
-  $app->add(new Before());
-  $app->add(new Csrf());
+  #$app->add(new Dump());
+  #$app->add(new Before());
+  #$app->add(new Csrf());
   require 'app/HTTP/MiddleWare/auth_filters.php';
   //views
-  $view = $app->view();
-  $view->setTemplatesDirectory('app/views');
-  $view->parserExtensions = [
-    new \Slim\Views\TwigExtension(),
-    new \Twig_Extension_Debug()
-  ];
+  $container["view"] = function($c){
+    $view = new HTTP\Helpers\Twig(Settings::get('views.dir'), [
+        'cache' => Settings::get('views.cache')
+    ]);
+    // Instantiate and add Slim specific extension
+    $basePath = rtrim(str_ireplace('index.php', '', $c['request']->getUri()->getBasePath()), '/');
+    $view->addExtension(new HTTP\Helpers\TwigExtension($c['router'], $basePath));
+    $view->addExtension(new \Twig_Extension_Debug());
+
+    return $view;
+  };
+  $app->view = $container->view;
   //models
-  $app->container->set('User',function(){
+  $container['User'] = function(){
       return new User();
-  });
-  $app->container->set('Exp',function(){
+  };
+  $container['Exp'] = function(){
       return new Expenses();
-  });
-  $app->container->set('Inc',function(){
+  };
+  $container['Inc'] = function(){
       return new Incomes();
-  });
-  $app->container->set('Tags',function(){
+  };
+  $container['Tags'] = function(){
       return new Tags();
-  });
-  $app->container->set('ExpTags',function(){
+  };
+  $container['ExpTags'] = function(){
       return new ExpTags();
-  });
-  $app->container->set('IncTags',function(){
+  };
+  $container['IncTags'] = function(){
       return new IncTags();
-  });
-  $app->container->set('Remember',function(){
+  };
+  $container['Remember'] = function(){
       return new Remember();
-  });
-  $app->container->set('Budget',function(){
+  };
+  $container['Budget'] = function(){
       return new Budget();
-  });
-  $app->container->set('BudgetTag',function(){
+  };
+  $container['BudgetTag'] = function(){
       return new BudgetTag();
-  });
+  };
   //dependancies
-  $app->container->singleton('session',function(){
+  $container['session'] = function(){
     return  new Session();
-  });
-  $app->container->singleton('hash',function(){
+  };
+  $container['hash'] = function(){
     return  new Hash();
-  });
+  };
 
-  $app->container->singleton('Config',function(){
+  $container['Config'] = function(){
     return  new Settings();
-  });
+  };
 
-  $app->container->singleton('Helper',function(){
+  $container['Helper'] = function(){
     return  new Helper();
-  });
-  //routes
-  require'app/routes/routes.php';
+  };
 
  //variables
-  $app->debug = $app->Config->get('debug');
+  $app->debug = Settings::get('debug');
   $app->auth  = false;
   $app->month = date('m');
   $app->year  = date('Y');
   $app->day   = date('d');
-  $app->baseUrl = $app->Config->get('urls.baseUrl');
-  $app->view()->appendData([
+  $app->baseUrl = Settings::get('urls.baseUrl');
+  $app->urlFor = function ($name,$params=[]){
+    return $container->router->pathFor($name,$params);
+  };
+  $app->view->appendData([
     "baseUrl"  => $app->baseUrl,
     "ver"      => Settings::get('ver'),
     "brand"    => Settings::get('locale.brand'),
@@ -83,6 +94,9 @@
     "phone"    => Settings::get('locale.phone'),
     "email"    => Settings::get('locale.email'),
   ]);
+  //routes
+  require'app/routes/routes.php';
+
   $app->run();
 
   if($app->debug){

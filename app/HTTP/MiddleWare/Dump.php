@@ -1,15 +1,16 @@
 <?php
 namespace HTTP\Middleware;
-use Slim\Middleware;
+use \HTTP\Middleware\BaseMiddleware as Middleware;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\{HtmlDumper,CliDumper};
 
 class Dump extends Middleware{
 
-    public function call (){
-        $this->app->hook('slim.before',[$this,'run']);
-        $this->next->call();
+    public function __invoke ($req,$resp,$next){
+        $this->run();
+        $resp = $next($req,$resp);
+        return $resp;
     }
 
     public function run(){

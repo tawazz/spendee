@@ -1,11 +1,7 @@
 <?php
-  $app->get('/',function($req,$res,$args) use ($app){
-    /*if($app->auth){
-      $res->redirect($app->urlFor('expenses'));
-      return 0;
-    }*/
-    return $this->view->render($res,'home/about.php');
-  })->setName('home');
+  use \HTTP\Controllers\Home\HomeController;
+
+  $app->get('/',HomeController::class)->setName('home');
 
   $app->get('/about',function() use ($app){
     $app->render('home/about.php');

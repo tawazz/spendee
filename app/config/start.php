@@ -4,7 +4,7 @@
   require 'Tazzy-Helpers/autoload.php';
   use Slim\App;
   use Carbon\Carbon;
-  use HTTP\MiddleWare\{Before,Dump,Csrf};
+  use HTTP\Middleware\{Before,Dump,Csrf};
 
   $app = new App(
     new \Slim\Container([
@@ -15,10 +15,10 @@
   );
   $container = $app->getContainer();
   //Middleware
-  #$app->add(new Dump());
-  #$app->add(new Before());
+  $app->add(new Dump($container));
+  $app->add(new Before($container));
   #$app->add(new Csrf());
-  require 'app/HTTP/MiddleWare/auth_filters.php';
+  require 'app/HTTP/Middleware/auth_filters.php';
   //views
   $container["view"] = function($c){
     $view = new HTTP\Helpers\Twig(Settings::get('views.dir'), [
@@ -77,17 +77,18 @@
   };
 
  //variables
-  $app->debug = Settings::get('debug');
-  $app->auth  = false;
-  $app->month = date('m');
-  $app->year  = date('Y');
-  $app->day   = date('d');
-  $app->baseUrl = Settings::get('urls.baseUrl');
-  $app->urlFor = function ($name,$params=[]){
+  $container['debug'] = Settings::get('debug');
+  $container['auth']  = false;
+  $container['month'] = date('m');
+  $container['year'] = date('Y');
+  $container['day']   = date('d');
+  $container['baseUrl'] = Settings::get('urls.baseUrl');
+  $container['urlFor'] = function ($name,$params=[]){
     return $container->router->pathFor($name,$params);
   };
-  $app->view->appendData([
-    "baseUrl"  => $app->baseUrl,
+  $app->auth = false;
+  $container->view->appendData([
+    "baseUrl"  => $container->baseUrl,
     "ver"      => Settings::get('ver'),
     "brand"    => Settings::get('locale.brand'),
     "address"  => Settings::get('locale.address'),
@@ -99,7 +100,7 @@
 
   $app->run();
 
-  if($app->debug){
+  if($container->debug){
       echo "User </br>";
       dump($app->auth);
   }

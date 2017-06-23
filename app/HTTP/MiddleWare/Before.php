@@ -1,29 +1,30 @@
 <?php
 namespace HTTP\Middleware;
-use Slim\Middleware;
 use GuzzleHttp\Exception\RequestException;
 
 /**
  *
  */
-    class Before extends Middleware{
+    class Before extends \HTTP\Middleware\BaseMiddleware {
 
-      public function call (){
-        $this->app->hook('slim.before',[$this,'run']);
-        $this->next->call();
+      public function __invoke($req,$resp,$next){
+        $this->run();
+        $resp = $next($req,$resp);
+        return $resp;
       }
 
       public function run(){
-        if($this->app->session->exists('id')){
-          $user = $this->app->User;
-          if($user->read($this->app->session->get('id'))){
-            $this->app->auth = $user->get();
+        $app = $this->container;
+        if($app->session->exists('id')){
+          $user = $app->User;
+          if($user->read($app->session->get('id'))){
+            $app->auth = $user->get();
           }
-          $this->app->view()->appendData([
-              "auth"=>$this->app->auth
+          $app->view->appendData([
+              "auth"=>$app->auth
           ]);
         }
-        $this->rememberMe();
+        #$this->rememberMe();
       }
 
       protected function rememberMe()

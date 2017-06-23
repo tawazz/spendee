@@ -75,15 +75,7 @@
       $app->response->redirect($app->urlFor('inc',['name'=>$_POST['name']]));
   });
   //expenses
-  $app->get('/expenses(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
-
-      $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,$day);
-      $app->render('main/expenses.php',[
-        'appData' => $data,
-        'page'    => 'expenses',
-        'totals'  => []
-      ]);
-  })->setName('expenses');
+  $app->get('/expenses[/{year}[/{month}[/{day}]]]',\HTTP\Controllers\Home\HomeController::class.':expensesView')->setName('expenses');
   //Incomes
   $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
     $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,$day);

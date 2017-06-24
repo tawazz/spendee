@@ -94,9 +94,7 @@
   $container['redirect'] = function($resp,$url,$status=302){
     return $resp->withStatus($status)->withHeader('Location', $url);
   };
-  $app->auth = false;
   $container->view->appendData([
-    "baseUrl"  => $container->baseUrl,
     "ver"      => Settings::get('ver'),
     "brand"    => Settings::get('locale.brand'),
     "address"  => Settings::get('locale.address'),

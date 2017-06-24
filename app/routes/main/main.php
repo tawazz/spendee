@@ -1,6 +1,6 @@
 <?php
   use HTTP\Middleware\AuthMiddleware;
-   
+
   $app->group('',function() use($app){
     //expenses
     $app->get('/expenses[/{year}[/{month}[/{day}]]]',\HTTP\Controllers\Home\HomeController::class.':expensesView')->setName('expenses');

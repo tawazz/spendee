@@ -8,16 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
 
   public function __invoke($req,$resp,$next){
-    /*
-    if (!$this->auth && !$this->session->get('id')){
-      $this->session->flash('global','Login required to access the resource');
-      return $resp->withRedirect('/login');
-    }
-    if ($this->session->get('id')) {
-        //dump($this->container);
-        die('auth middleware');
-    }*/
-    $this->run($req,$resp);
+    $resp = $this->run($req,$resp);
     $resp = $next($req,$resp);
     return $resp;
   }
@@ -27,18 +18,20 @@ class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
     if($app->session->exists('id')){
       $user = $app->User;
       if($user->read($app->session->get('id'))){
-        $app->auth = $user->get();
+        $app['auth'] = $user->get();
       }
       $app->view->appendData([
           "auth"=>$app->auth
       ]);
+    }else{
+      $resp = $this->rememberMe($req,$resp);
     }
-    $this->rememberMe($req,$resp);
+    return $resp;
   }
 
   protected function rememberMe($req,$resp)
   {
-    if ($this->Cookie->getCookie($req,'remember') && !$this->auth) {
+    if ($this->Cookie->getCookie($req,'remember')->getValue() !== Null && !$this->container->auth) {
       $cookie = $this->Cookie->getCookie($req,'remember');
       $hash = $cookie->getValue();
       $exist = $this->Remember->find('first',['where'=>['hash','=',$hash]]);
@@ -58,13 +51,15 @@ class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
           $this->User->removeRemember($user->user_id);
         }
       }else{
-        $this->Cookie->deleteCookie($resp,'remember');
+        return $this->Cookie->deleteCookie($resp,'remember');
       }
     }
     else{
       $this->session->flash('global','Login required to access the resource');
-      return $resp->withStatus(302)->withHeader('Location','/login');
+      $resp = $resp->withStatus(302)->withHeader('Location','/login');
+
     }
+    return $resp;
   }
 
 

@@ -4,7 +4,7 @@
   require 'Tazzy-Helpers/autoload.php';
   use Slim\App;
   use Carbon\Carbon;
-  use HTTP\Middleware\{Before,Dump,Csrf};
+  use HTTP\Middleware\{Before,Dump,Csrf,AuthMiddleware};
 
   $app = new App(
     new \Slim\Container([
@@ -16,8 +16,9 @@
   $container = $app->getContainer();
   //Middleware
   $app->add(new Dump($container));
-  $app->add(new Before($container));
+  #$app->add(new Before($container));
   $app->add(new Csrf($container));
+  #$app->add(new AuthMiddleware($container));
   require 'app/HTTP/Middleware/auth_filters.php';
   //views
   $container["view"] = function($c){
@@ -76,6 +77,10 @@
     return  new Helper();
   };
 
+  $container['Cookie'] = function(){
+    return  new HTTP\Helpers\Cookie();
+  };
+
  //variables
   $container['debug'] = Settings::get('debug');
   $container['auth']  = false;
@@ -85,6 +90,9 @@
   $container['baseUrl'] = Settings::get('urls.baseUrl');
   $container['urlFor'] = function ($name,$params=[]){
     return $container->router->pathFor($name,$params);
+  };
+  $container['redirect'] = function($resp,$url,$status=302){
+    return $resp->withStatus($status)->withHeader('Location', $url);
   };
   $app->auth = false;
   $container->view->appendData([

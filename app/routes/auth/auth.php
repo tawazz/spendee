@@ -1,25 +1,15 @@
 <?php
-use Carbon\Carbon;
-use HTTP\Controllers\Auth\AuthController;
+  use Carbon\Carbon;
+  use HTTP\Controllers\Auth\AuthController;
+  $auth = AuthController::class;
 
-  $app->get('/login',AuthController::class.':loginView')->setName('login');
-  $app->post('/login',AuthController::class.':login')->setName('post.login');
-  $app->get('/register',AuthController::class.':registerView')->setName('register');
-  $app->post('/register',AuthController::class.':register')->setName('post.register');
+  $app->get('/login',$auth.':loginView')->setName('login');
+  $app->post('/login',$auth.':login')->setName('post.login');
+  $app->get('/register',$auth.':registerView')->setName('register');
+  $app->post('/register',$auth.':register')->setName('post.register');
+  $app->get('/logout',$auth.':logout')->setName('logout');
 
-$app->get('/logout', function() use($app){
-
-  if ($app->getCookie('remember')) {
-      $app->User->removeRemember($app->auth->user_id);
-      $app->deleteCookie('remember');
-  }
-
-  $app->session->delete('id');
-  $app->auth = false;
-  $app->response->redirect($app->urlFor('login'));
-})->setName('logout');
-
-$app->post('/update/user',$require_login(), function() use($app){
+$app->post('/update/user', function() use($app){
     if (empty($_POST['email'])) {
       $app->flash("global","fill in all details");
       $app->response->redirect($app->urlFor('account'));
@@ -29,7 +19,7 @@ $app->post('/update/user',$require_login(), function() use($app){
       $app->response->redirect($app->urlFor('account'));
     }
 });
-$app->post('/update/password',$require_login(), function() use($app){
+$app->post('/update/password', function() use($app){
     if ($app->hash->make($app->request->post('old_password'),$app->auth->username) == $app->auth->password) {
       $new_pass= $app->request->post('new_password');
       $rep_pass= $app->request->post('repeat_password');

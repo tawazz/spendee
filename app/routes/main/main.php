@@ -1,5 +1,13 @@
 <?php
-  $app->post('/expenses/add',$require_login(),function() use($app){
+  use HTTP\Middleware\AuthMiddleware;
+   
+  $app->group('',function() use($app){
+    //expenses
+    $app->get('/expenses[/{year}[/{month}[/{day}]]]',\HTTP\Controllers\Home\HomeController::class.':expensesView')->setName('expenses');
+
+  })->add(new AuthMiddleware($container));
+
+  $app->post('/expenses/add',function() use($app){
     $data = [
         'name'=> $_POST['name'],
         'cost'=> str_replace( ',', '',$_POST['cost'] ),
@@ -18,7 +26,7 @@
 
       $app->response->redirect($app->urlFor('expenses'));
   });
-  $app->post('/incomes/add',$require_login(),function() use($app){
+  $app->post('/incomes/add',function() use($app){
 
       $data = [
           'name'=> $_POST['name'],
@@ -29,7 +37,7 @@
       $app->Inc->save($data);
       $app->response->redirect($app->urlFor('incomes'));
   });
-  $app->post('/expense/update',$require_login(),function() use($app){
+  $app->post('/expense/update',function() use($app){
       $exp_id = $_POST['exp_id'];
       $data = [
         'name'=> $_POST['name'],
@@ -54,12 +62,12 @@
       }
       $app->response->redirect($app->urlFor('exp',['name'=>$_POST['name']."#".$exp_id]));
   });
-  $app->post('/expense/delete',$require_login(),function() use($app){
+  $app->post('/expense/delete',function() use($app){
       $exp_id = $_POST['exp_id'];
       $app->Exp->read($exp_id)->delete();
       $app->response->redirect($app->urlFor('exp',['name'=>$_POST['name']]));
   });
-  $app->post('/income/update',$require_login(),function() use($app){
+  $app->post('/income/update',function() use($app){
       $id = $_POST['inc_id'];
       $data = [
         'name'=> $_POST['name'],
@@ -69,15 +77,14 @@
       $app->Inc->read($id)->set($data);
       $app->response->redirect($app->urlFor('inc',['name'=>$_POST['name']."#".$id]));
   });
-  $app->post('/income/delete',$require_login(),function() use($app){
+  $app->post('/income/delete',function() use($app){
       $id = $_POST['inc_id'];
       $app->Inc->read($id)->delete();
       $app->response->redirect($app->urlFor('inc',['name'=>$_POST['name']]));
   });
-  //expenses
-  $app->get('/expenses[/{year}[/{month}[/{day}]]]',\HTTP\Controllers\Home\HomeController::class.':expensesView')->setName('expenses');
+
   //Incomes
-  $app->get('/incomes(/:year(/:month(/:day)))',$require_login(),function($year = NULL,$month = NULL,$day=NULL) use ($app){
+  $app->get('/incomes(/:year(/:month(/:day)))',function($year = NULL,$month = NULL,$day=NULL) use ($app){
     $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,$day);
     $app->render('main/incomes.php',[
       'appData' => $data,
@@ -86,7 +93,7 @@
     ]);
   })->setName('incomes');
 
-  $app->get('/overview(/:year)',$require_login(),function($year=NULL ) use($app){
+  $app->get('/overview(/:year)',function($year=NULL ) use($app){
     if(!isset($year)){
       $year = $year= date('Y');
     }
@@ -106,11 +113,11 @@
     ]);
   })->setName('overview');
 
-  $app->get('/account',$require_login(),function() use($app){
+  $app->get('/account',function() use($app){
       $app->render('user/account.php');
   })->setName('account');
 
-  $app->get('/expense/:name(/:year)',$require_login(),function($name=NULL,$year=NULL) use($app){
+  $app->get('/expense/:name(/:year)',function($name=NULL,$year=NULL) use($app){
     if(!isset($year)){
       $year = $year= date('Y');
     }
@@ -144,7 +151,7 @@
     ]);
   })->setName('exp');
 
-  $app->get('/income/:name(/:year)',$require_login(),function($name=NULL,$year=NULL) use($app){
+  $app->get('/income/:name(/:year)',function($name=NULL,$year=NULL) use($app){
     if(!isset($year)){
       $year = $year= date('Y');
     }

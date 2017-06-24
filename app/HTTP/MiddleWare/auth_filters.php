@@ -6,13 +6,14 @@
       }
     };
   };
-  $require_login = function() use($app){
-    return function() use($app){
-      if(!$app->auth && TRUE){
-        #$app->flash('global','Login required to access the resource');
-        #$app->redirect($app->urlFor('login'));
+  $require_login = function($req,$resp,$next) use($container){
+
+      if ($container->Cookie->getCookie($req,'remember') !== Null && !$container->auth) {
+        $container->session->flash('global','Login required to access the resource');
+        
       }
-    };
+      $resp = $next($req,$resp);
+      return $resp;
   };
 
   $require_admin = function() use($app){

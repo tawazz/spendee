@@ -20,6 +20,7 @@
 
     public function login($req, $resp,$args)
     {
+      $app = $this->container;
       $user = $this->container->User;
       $rules = [
         'password'=> [
@@ -43,10 +44,10 @@
               if (!$fetch_user->session) {
                 $remember_hash = $app->hash->make($app->hash->salt(10));
                 $user->remember($fetch_user->user_id,$remember_hash);
-                $app->setCookie('remember',"{$remember_hash}",Carbon::parse('+1 week')->timestamp);
+                $resp = $app->Cookie->setCookie($resp,'remember',"{$remember_hash}",Carbon::parse('+4 weeks')->timestamp);
 
               }else{
-                $app->setCookie('remember',"{$fetch_user->session->hash}",Carbon::parse('+1 week')->timestamp);
+                $resp = $app->Cookie->setCookie($resp,'remember',"{$fetch_user->session->hash}",Carbon::parse('+4 weeks')->timestamp);
               }
               return $this->redirect($resp,$this->urlFor('expenses'));
             }else{
@@ -92,6 +93,18 @@
         $this->view->render($resp,'auth/register.php');
     }
 
+    public function logout($req,$resp,$args)
+    {
+      $app = $this->container;
+      if ($app->Cookie->getCookie($req,'remember')) {
+          $app->User->removeRemember($app->auth->user_id);
+          $app->Cookie->deleteCookie($resp,'remember');
+      }
+
+      $app->session->delete('id');
+      $app->auth = false;
+      return $this->redirect($resp,$this->urlFor('login'));
+    }
 
   }
 

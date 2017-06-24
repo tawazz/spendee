@@ -91,7 +91,7 @@
   $container['year'] = date('Y');
   $container['day']   = date('d');
   $container['baseUrl'] = Settings::get('urls.baseUrl');
-  $container['urlFor'] = function ($name,$params=[]){
+  $container['urlFor'] = function ($name,$params=[]) use($container){
     return $container->router->pathFor($name,$params);
   };
   $container['redirect'] = function($resp,$url,$status=302){

@@ -1,7 +1,10 @@
 <?php
   use \HTTP\Controllers\Home\HomeController;
+  use \HTTP\Middleware\Guest;
+  $app->group('',function(){
+      $this->get('/',HomeController::class)->setName('home');
+  })->add(new Guest($container));
 
-  $app->get('/',HomeController::class)->setName('home');
 
   $app->get('/about',function() use ($app){
     $app->render('home/about.php');

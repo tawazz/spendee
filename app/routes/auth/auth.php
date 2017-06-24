@@ -1,13 +1,16 @@
 <?php
   use Carbon\Carbon;
   use HTTP\Controllers\Auth\AuthController;
+  use \HTTP\Middleware\Guest;
   $auth = AuthController::class;
 
-  $app->get('/login',$auth.':loginView')->setName('login');
-  $app->post('/login',$auth.':login')->setName('post.login');
-  $app->get('/register',$auth.':registerView')->setName('register');
-  $app->post('/register',$auth.':register')->setName('post.register');
-  $app->get('/logout',$auth.':logout')->setName('logout');
+  $app->group('',function() use($auth) {
+      $this->get('/login',$auth.':loginView')->setName('login');
+      $this->post('/login',$auth.':login')->setName('post.login');
+      $this->get('/register',$auth.':registerView')->setName('register');
+      $this->post('/register',$auth.':register')->setName('post.register');
+      $this->get('/logout',$auth.':logout')->setName('logout');
+  })->add(new Guest($container));
 
 $app->post('/update/user', function() use($app){
     if (empty($_POST['email'])) {

@@ -17,7 +17,7 @@
   //Middleware
   $app->add(new Dump($container));
   $app->add(new Before($container));
-  #$app->add(new Csrf());
+  $app->add(new Csrf($container));
   require 'app/HTTP/Middleware/auth_filters.php';
   //views
   $container["view"] = function($c){
@@ -99,10 +99,5 @@
   require'app/routes/routes.php';
 
   $app->run();
-
-  if($container->debug){
-      echo "User </br>";
-      dump($app->auth);
-  }
 
  ?>

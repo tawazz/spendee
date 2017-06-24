@@ -17,9 +17,19 @@
        $this->session = new \Session();
     }
 
+    public function __get($prop)
+    {
+        if ($this->{$prop}) {
+            return $this->{$prop};
+        }
+
+        if ($this->container->{$prop}) {
+            return $this->container->{$prop};
+        }
+    }
+
     public function redirect($resp,$url,$status=302)
     {
-      $url = '/expenses';
       return $resp->withStatus($status)->withHeader('Location', $url);
     }
 

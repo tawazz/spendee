@@ -1,43 +1,39 @@
 <?php
 namespace HTTP\Middleware;
-use Slim\Middleware;
+use HTTP\Middleware\BaseMiddleware;
 
 /**
  *
  */
-class Csrf extends Middleware{
+class Csrf extends BaseMiddleware {
   protected $key;
 
-  public function call (){
+  public function __invoke($req,$resp,$next){
 
     $this->key = "csrf_token";
-    $this->app->hook('slim.before',[$this,'check']);
-    $this->next->call();
+    $this->check($req);
+    $resp = $next($req,$resp);
+    return $resp;
   }
 
-  public function check(){
-    $session = $this->app->session;
-    $hash = $this->app->hash;
+  public function check($req){
+    $session = $this->session;
+    $hash = $this->hash;
+
     if (!$session->exists($this->key)) {
       $session->put($this->key,$hash->make($hash->salt(10)));
     }
     $token = $session->get($this->key);
-    if (strpos($this->app->request()->getPath(), 'api') === false) {
+    if (strpos($req->getUri()->getPath(), 'api') === false) {
 
-      if (in_array($this->app->request()->getMethod(),['POST','PUT','DELETE'])) {
-        $submited_token = $this->app->request()->post($this->key) ? : "";
+      if (in_array($req->getMethod(),['POST','PUT','DELETE'])) {
+        $submited_token = $req->getParam($this->key) ? : "";
         if (!$hash->check($token,$submited_token)) {
            throw new Exception("CSRF token mismatch ");
         }
       }
       unset($_POST[$this->key]);
-      if($this->app->debug){
-          echo "CSRF </br> csrf_key </br>";
-          dump($this->key);
-          echo "csrf_token </br>";
-          dump($token);
-      }
-      $this->app->view()->appendData([
+      $this->view->appendData([
         'csrf_key'=>$this->key,
         'csrf_token'=>$token
       ]);

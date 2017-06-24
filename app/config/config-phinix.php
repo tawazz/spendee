@@ -10,12 +10,12 @@ return [
     'default_migration_table' => 'phinxlog',
     'default_database' => 'dev',
     'dev' => [
-      'name'      => Settings::get('mysql.db'),
-      'adapter'   => Settings::get('mysql.driver'),
-      'host'      => Settings::get('mysql.host'),
-      'user'  => Settings::get('mysql.username'),
-      'pass'  => Settings::get('mysql.password'),
-      'table_prefix' => Settings::get('mysql.prefix')
+      'name'      => Settings::get('db.db'),
+      'adapter'   => Settings::get('db.driver'),
+      'host'      => Settings::get('db.host'),
+      'user'  => Settings::get('db.username'),
+      'pass'  => Settings::get('db.password'),
+      'table_prefix' => Settings::get('db.prefix')
     ]
   ]
 ];

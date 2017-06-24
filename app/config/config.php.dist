@@ -2,7 +2,7 @@
   $GLOBALS['config'] = [
 
       'debug'        => false,
-      'mysql'        => [
+      'db'        => [
           'driver'   => 'mysql',
           'host'     => '127.0.0.1',
           'username' => 'root',

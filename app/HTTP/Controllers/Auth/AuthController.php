@@ -48,13 +48,13 @@
               }else{
                 $app->setCookie('remember',"{$fetch_user->session->hash}",Carbon::parse('+1 week')->timestamp);
               }
-              $this->redirect($resp,$this->urlFor('expenses'));
+              return $this->redirect($resp,$this->urlFor('expenses'));
             }else{
-              $this->redirect($resp,$this->urlFor('expenses'),301);
+              return $this->redirect($resp,$this->urlFor('expenses'));
             }
           }else {
             $this->flash("global","wrong username or password");
-            $this->redirect($resp,$this->urlFor('login'));
+            return $this->redirect($resp,$this->urlFor('login'));
           }
         }else{
           $this->view->render($resp,'auth/login.php',['errors'=>['login'=>"wrong username or password"]]);

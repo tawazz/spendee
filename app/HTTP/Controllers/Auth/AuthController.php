@@ -54,13 +54,15 @@
               return $this->redirect($resp,$this->urlFor('expenses'));
             }
           }else {
-            $this->flash("global","wrong username or password");
+            $this->flash->addMessage("global","wrong username or password");
             return $this->redirect($resp,$this->urlFor('login'));
           }
         }else{
+          $this->flash->addMessage("global","wrong username or password");
           $this->view->render($resp,'auth/login.php',['errors'=>['login'=>"wrong username or password"]]);
         }
       }else{
+        $this->flash->addMessage("global","fill in all details");
         $this->view->render($resp,'auth/login.php',['errors'=>$user->errors()]);
       }
     }

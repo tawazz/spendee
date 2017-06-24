@@ -80,6 +80,9 @@
   $container['Cookie'] = function(){
     return  new HTTP\Helpers\Cookie();
   };
+  $container['flash'] = function () {
+    return new \Slim\Flash\Messages();
+  };
 
  //variables
   $container['debug'] = Settings::get('debug');
@@ -100,6 +103,7 @@
     "address"  => Settings::get('locale.address'),
     "phone"    => Settings::get('locale.phone'),
     "email"    => Settings::get('locale.email'),
+    "flash"    => $container->flash
   ]);
   //routes
   require'app/routes/routes.php';

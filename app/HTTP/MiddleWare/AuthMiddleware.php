@@ -55,7 +55,7 @@ class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
       }
     }
     else{
-      $this->session->flash('global','Login required to access the resource');
+      $this->flash->addMessage('global','Login required to access the resource');
       $resp = $resp->withStatus(302)->withHeader('Location','/login');
 
     }

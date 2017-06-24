@@ -36,12 +36,6 @@
       return ($host) ? "http://".$_SERVER['HTTP_HOST'].$this->baseUrl()."/public/".$path : $this->baseUrl()."/public/".$path ;
     }
 
-    public function flash($key)
-    {
-      $session = new \Session();
-      return $session->flash($key);
-    }
-
   }
 
  ?>

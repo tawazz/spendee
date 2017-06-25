@@ -1,5 +1,5 @@
 <?php
-  #require 'expenses/index.php';
+  require 'expenses/index.php';
   require 'incomes/index.php';
   require 'dashboard/index.php';
   require 'budget/index.php';

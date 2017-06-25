@@ -87,14 +87,14 @@
         'date'=> $_POST['date'],
       ];
       $app->Inc->read($id)->set($data);
-      return $this->redirect($resp,$app->urlFor('inc',['name'=>$_POST['name']."#".$id]));
+      return $this->redirect($resp,$app->urlFor('income.retrieve',['name'=>$_POST['name']."#".$id]));
     }
     public function delete($req, $resp,$args)
     {
       $app = $this;
       $id = $args['id'];
       $app->Inc->read($id)->delete();
-      return $this->redirect($resp,$app->urlFor('inc',['name'=>$_POST['name']]));
+      return $this->redirect($resp,$app->urlFor('income.retrieve',['name'=>$_POST['name']]));
     }
   }
 

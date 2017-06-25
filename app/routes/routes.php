@@ -12,8 +12,8 @@
     require 'main/main.php';
   })->add(new AuthMiddleware($container));
 
+  //Vissible by all users
   require 'auth/auth.php';
-  #require 'api/api.php';
-  #require 'main/budget/index.php';
+  require 'api/api.php';
   require 'errors/errors.php';
  ?>

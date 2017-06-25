@@ -1,11 +1,9 @@
 <?php
 namespace HTTP\Middleware;
-use GuzzleHttp\Exception\RequestException;
-
 /**
- *
+ * Remember
  */
-    class Before extends \HTTP\Middleware\BaseMiddleware {
+    class Remember extends \HTTP\Middleware\BaseMiddleware {
 
       public function __invoke($req,$resp,$next){
         $this->run($req,$resp);

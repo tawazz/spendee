@@ -4,7 +4,7 @@
   require 'Tazzy-Helpers/autoload.php';
   use Slim\App;
   use Carbon\Carbon;
-  use HTTP\Middleware\{Before,Dump,Csrf,AuthMiddleware};
+  use HTTP\Middleware\{Error,Dump,Csrf};
 
   $app = new App(
     new \Slim\Container([
@@ -16,9 +16,8 @@
   $container = $app->getContainer();
   //Middleware
   $app->add(new Dump($container));
-  #$app->add(new Before($container));
+  $app->add(new Error($container));
   $app->add(new Csrf($container));
-  #$app->add(new AuthMiddleware($container));
   require 'app/HTTP/Middleware/auth_filters.php';
   //views
   $container["view"] = function($c){

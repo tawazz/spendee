@@ -1,4 +1,5 @@
 <?php
+  namespace HTTP\Models;
     /**
      * Helper class
      */

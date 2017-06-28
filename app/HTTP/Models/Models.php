@@ -1,15 +1,30 @@
 <?php
 
-  $app->container->set('Customer',function(){
-    return new HTTP\Models\Customer();
-  });
-  $app->container->set('Service',function(){
-    return new HTTP\Models\Service();
-  });
-  $app->container->set('Vault',function(){
-    return new HTTP\Models\Vault();
-  });
-  $app->container->set('Billing',function(){
-    return new HTTP\Models\Billing();
-  });
+  $container['User'] = function(){
+      return new HTTP\Models\User();
+  };
+  $container['Exp'] = function(){
+      return new HTTP\Models\Expense();
+  };
+  $container['Inc'] = function(){
+      return new HTTP\Models\Income();
+  };
+  $container['Tags'] = function(){
+      return new HTTP\Models\Tag();
+  };
+  $container['ExpTags'] = function(){
+      return new HTTP\Models\ExpenseTag();
+  };
+  $container['IncTags'] = function(){
+      return new HTTP\Models\IncomeTag();
+  };
+  $container['Remember'] = function(){
+      return new HTTP\Models\Remember();
+  };
+  $container['Budget'] = function(){
+      return new HTTP\Models\Budget();
+  };
+  $container['BudgetTag'] = function(){
+      return new HTTP\Models\BudgetTag();
+  };
  ?>

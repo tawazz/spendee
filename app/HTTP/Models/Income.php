@@ -1,5 +1,7 @@
 <?php
-  class Incomes extends Table{
+  namespace HTTP\Models;
+
+  class Income extends \Table{
 
     protected $table='incomes';
     protected $primary_key ='inc_id';

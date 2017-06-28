@@ -1,5 +1,6 @@
 <?php
-  class IncTags extends Table{
+  namespace HTTP\Models;
+  class IncomeTag extends \Table{
 
     protected $table='inc_tags';
     protected $primary_key ='id';

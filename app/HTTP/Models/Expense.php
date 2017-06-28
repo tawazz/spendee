@@ -1,5 +1,7 @@
 <?php
-  class Expenses extends Table{
+  namespace HTTP\Models;
+
+  class Expense extends \Table{
 
     protected $table='expenses';
     protected $primary_key ='exp_id';

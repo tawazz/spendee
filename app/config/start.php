@@ -33,33 +33,7 @@
   };
   $app->view = $container->view;
   //models
-  $container['User'] = function(){
-      return new User();
-  };
-  $container['Exp'] = function(){
-      return new Expenses();
-  };
-  $container['Inc'] = function(){
-      return new Incomes();
-  };
-  $container['Tags'] = function(){
-      return new Tags();
-  };
-  $container['ExpTags'] = function(){
-      return new ExpTags();
-  };
-  $container['IncTags'] = function(){
-      return new IncTags();
-  };
-  $container['Remember'] = function(){
-      return new Remember();
-  };
-  $container['Budget'] = function(){
-      return new Budget();
-  };
-  $container['BudgetTag'] = function(){
-      return new BudgetTag();
-  };
+  require 'app/HTTP/Models/Models.php';
   //dependancies
   $container['session'] = function(){
     return  new Session();

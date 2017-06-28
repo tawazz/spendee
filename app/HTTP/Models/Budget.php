@@ -1,12 +1,12 @@
 <?php
-
+namespace HTTP\Models;
 /**
  * Model for budget
  *13/08/2016
  *
  */
  use Carbon\Carbon;
-class Budget extends Table
+class Budget extends \Table
 {
   protected $table='budget';
   protected $primary_key ='id';

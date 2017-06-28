@@ -8,6 +8,7 @@ use \Settings;
    */
   class BaseModel extends Model
   {
+    protected $guarded = array();
 
     public static function getPossbileEnumValues($name){
       $instance = new static; // create an instance of the model to be able to get the table name

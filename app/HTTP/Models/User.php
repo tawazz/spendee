@@ -1,17 +1,6 @@
 <?php
-  /**
-   *
-   */
-   /**
-    *
-    */
-   class Remember extends Table
-   {
-     protected $table = 'session';
-     protected $primary_key ='id';
-   }
 
-  class User extends Table
+  class User extends \Table
   {
     protected $table = 'users';
     protected $primary_key ='user_id';

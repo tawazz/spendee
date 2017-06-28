@@ -1,5 +1,5 @@
 <?php
-
+namespace HTTP\Models;
 /**
  * Model for budget
  *13/08/2016

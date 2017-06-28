@@ -47,7 +47,7 @@
   };
 
   $container['Helper'] = function(){
-    return  new Helper();
+    return  new HTTP\Models\Helper();
   };
 
   $container['Cookie'] = function(){

@@ -1,10 +1,10 @@
 <?php
-
+  namespace HTTP\Models;
   class User extends \Table
   {
     protected $table = 'users';
     protected $primary_key ='user_id';
-    protected $hasOne = ['Remember'];
+    protected $hasOne = ['\HTTP\Models\Remember'];
     protected $validate = [
       'firstname'=> array(
           'min'=> 2,

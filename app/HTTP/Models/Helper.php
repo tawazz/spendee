@@ -1,5 +1,6 @@
 <?php
   namespace HTTP\Models;
+  use \HTTP\Models\Tag;
     /**
      * Helper class
      */
@@ -163,7 +164,7 @@
               $month=12;
               $year -=1;
           }
-          $date = new DateTime($year."-".$month."-".$day);
+          $date = new \DateTime($year."-".$month."-".$day);
           $date = $date->format('d/F/Y');
           $nav['display'] = $date;
           $nav['next'] = $year."/".$month."/".($day+1);
@@ -181,7 +182,7 @@
               $year -=1;
           }
 
-        $date = new DateTime($year."-".$month."-1");
+        $date = new \DateTime($year."-".$month."-1");
         $date = $date->format('F/Y');
         $nav['display'] = $date;
         $nav['prev'] = $year."/".($month-1);
@@ -190,7 +191,7 @@
 
         }else if(isset($year)){
 
-        $date = new DateTime($year."-1-1");
+        $date = new \DateTime($year."-1-1");
         $date = $date->format('Y');
         $nav['display'] = $date;
         $nav['prev'] = ($year-1);
@@ -216,7 +217,7 @@
 
       public static function getTags()
       {
-         $tags = new Tags();
+         $tags = new Tag();
          return $tags->find('all');
       }
 

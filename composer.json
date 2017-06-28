@@ -14,9 +14,6 @@
         "slim/flash": "^0.2.0"
     },
     "autoload": {
-        "classmap": [
-            "app/Models"
-        ],
         "psr-4": {
             "HTTP\\": "app/HTTP"
         }

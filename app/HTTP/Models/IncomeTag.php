@@ -4,7 +4,7 @@
 
     protected $table='inc_tags';
     protected $primary_key ='id';
-    protected $hasOne =['Tags'];
+    protected $hasOne =['\HTTP\Models\Tag'];
 
     public function  findIncTagsById($id){
       $result = $this->find('all',[

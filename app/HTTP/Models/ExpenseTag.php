@@ -1,17 +1,17 @@
 <?php
   namespace HTTP\Models;
-
+  use \HTTP\Models\{Expense,Tag};
   class ExpenseTag extends \Table{
 
     protected $table='exp_tags';
     protected $primary_key ='id';
-    protected $hasOne =['Tags'];
+    protected $hasOne =['\HTTP\Models\Tag'];
 
     public function  findExpTagsById($id){
       $result = $this->find('all',[
         'where'=>['exp_id','=',$id]
       ]);
-      $model = new Tags();
+      $model = new Tag();
       for($i=0;$i<count($result);$i++){
           $result[$i]->{'tags'} = $this->db->query($this->qb->table('tags')->where('id',"=",$result[$i]->{'tag_id'})->get())->first();
       }
@@ -21,8 +21,8 @@
 
     public function expTagsData($user_id,$startDate,$endDate)
     {
-      $EXP = new Expenses();
-      $Tags = new Tags();
+      $EXP = new Expense();
+      $Tags = new Tag();
       $exptags= [];
 
       $allTags = $Tags->find('all');
@@ -38,8 +38,8 @@
 
     public function expTagsTotalSpent($user_id,$startDate,$endDate,$tags)
     {
-      $EXP = new Expenses();
-      $TAGS = new Tags();
+      $EXP = new Expense();
+      $TAGS = new Tag();
       $exptags= [];
 
 

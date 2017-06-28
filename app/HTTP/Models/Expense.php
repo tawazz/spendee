@@ -5,7 +5,7 @@
 
     protected $table='expenses';
     protected $primary_key ='exp_id';
-    protected $hasMany =['ExpTags'];
+    protected $hasMany =['\HTTP\Models\ExpenseTag'];
 
     public function totalExp($startDate,$endDate){
         $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<",$endDate)->get();

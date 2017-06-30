@@ -11,7 +11,8 @@
         "robmorgan/phinx": "^0.6.4",
         "fzaninotto/faker": "^1.6",
         "dflydev/fig-cookies": "^1.0",
-        "slim/flash": "^0.2.0"
+        "slim/flash": "^0.2.0",
+        "doctrine/dbal": "^2.5"
     },
     "autoload": {
         "psr-4": {

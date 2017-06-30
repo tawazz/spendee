@@ -4,7 +4,7 @@
   class Income extends \Table{
 
     protected $table='incomes';
-    protected $primary_key ='inc_id';
+    protected $primary_key ='id';
 
     public function totalInc($startDate,$endDate){
         $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<",$endDate)->get();

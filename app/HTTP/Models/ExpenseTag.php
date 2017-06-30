@@ -3,7 +3,7 @@
   use \HTTP\Models\{Expense,Tag};
   class ExpenseTag extends \Table{
 
-    protected $table='exp_tags';
+    protected $table='expense_tags';
     protected $primary_key ='id';
     protected $hasOne =['\HTTP\Models\Tag'];
 
@@ -28,7 +28,7 @@
       $allTags = $Tags->find('all');
 
       foreach ($allTags as $tag) {
-        $amount = (int) $this->db->query("SELECT Sum(exp.cost ) as total FROM exp_tags as tag,expenses as exp where tag_id = ? and exp.exp_id = tag.exp_id and  exp.date >= ? and exp.date <= ? and exp.user_id = ?",[$tag->id,$startDate,$endDate,$user_id])->first()->total;
+        $amount = (int) $this->db->query("SELECT Sum(exp.cost ) as total FROM expense_tags as tag,expenses as exp where tag_id = ? and exp.id = tag.exp_id and  exp.date >= ? and exp.date <= ? and exp.user_id = ?",[$tag->id,$startDate,$endDate,$user_id])->first()->total;
         if($amount > 0){
           $exptags[$tag->name] =  $amount;
         }

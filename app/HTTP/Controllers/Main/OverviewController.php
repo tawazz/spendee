@@ -12,8 +12,8 @@
       if(!isset($year)){
         $year = $year= date('Y');
       }
-      $data = $app->Helper->getData($app,$app->auth->user_id,$year);
-      $overviewData = $app->Helper->yearOverView($app,$app->auth->user_id,$year);
+      $data = $app->Helper->getData($app,$app->auth->id,$year);
+      $overviewData = $app->Helper->yearOverView($app,$app->auth->id,$year);
 
       $app->view->render($resp,'main/dashboard.php',[
         'totalExp'=>$overviewData['totalExp'],

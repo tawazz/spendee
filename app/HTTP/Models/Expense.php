@@ -4,7 +4,7 @@
   class Expense extends \Table{
 
     protected $table='expenses';
-    protected $primary_key ='exp_id';
+    protected $primary_key ='id';
     protected $hasMany =['\HTTP\Models\ExpenseTag'];
 
     public function totalExp($startDate,$endDate){

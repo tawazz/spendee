@@ -3,7 +3,7 @@
   class User extends \Table
   {
     protected $table = 'users';
-    protected $primary_key ='user_id';
+    protected $primary_key ='id';
     protected $hasOne = ['\HTTP\Models\Remember'];
     protected $validate = [
       'firstname'=> array(

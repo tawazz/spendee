@@ -20,18 +20,18 @@
         if(!isset($year)){
           $year = $year= date('Y');
         }
-        $product = $app->Exp->read($app->auth->user_id)->getProduct($name,$year."-"."1"."-1",($year+1)."-1-1");
-        $totalexp = $app->Exp->read($app->auth->user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
-        $totalinc = $app->Inc->read($app->auth->user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
+        $product = $app->Exp->read($app->auth->id)->getProduct($name,$year."-"."1"."-1",($year+1)."-1-1");
+        $totalexp = $app->Exp->read($app->auth->id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
+        $totalinc = $app->Inc->read($app->auth->id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
         $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
         $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
         $nav = $app->Helper->getNav($year);
         $exp_monthly = [];
-        $exp = isset($app->Exp->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year+1)."1-1")->cost)?$app->Exp->read($app->auth->user_id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost:0;
+        $exp = isset($app->Exp->read($app->auth->id)->spentOnProduct($name,$year."-1-1",($year+1)."1-1")->cost)?$app->Exp->read($app->auth->id)->spentOnProduct($name,$year."-1-1",($year)."12-31")->cost:0;
         for($i=1;$i<=12;$i++){
           $startDate = $year."-".$i."-1";
           $endDate = $year."-".($i+1)."-1";
-          $exp_monthly[$i] = isset($app->Exp->read($app->auth->user_id)->spentOnProduct($name,$startDate,$endDate)->cost) ? $app->Exp->read($app->auth->user_id)->spentOnProduct($name,$startDate,$endDate)->cost : 0;
+          $exp_monthly[$i] = isset($app->Exp->read($app->auth->id)->spentOnProduct($name,$startDate,$endDate)->cost) ? $app->Exp->read($app->auth->id)->spentOnProduct($name,$startDate,$endDate)->cost : 0;
         }
         $appData = [
           'exp_total' => $totalexp,
@@ -59,7 +59,7 @@
       $year = isset($args['year']) ? $args['year'] : Null;
       $month = isset($args['month']) ? $args['month'] : Null;
       $day = isset($args['day']) ? $args['day'] : Null;
-      $data = $this->container->Helper->getData($app,$app->auth->user_id,$year,$month,$day);
+      $data = $this->container->Helper->getData($app,$app->auth->id,$year,$month,$day);
       $this->view->render($resp,'main/expenses.php',[
         'appData' => $data,
         'page'    => 'expenses',
@@ -73,7 +73,7 @@
           'name'=> $_POST['name'],
           'cost'=> str_replace( ',', '',$_POST['cost'] ),
           'date'=> $_POST['date'],
-          'user_id'=> $app->auth->user_id
+          'id'=> $app->auth->id
       ];
       $exp_id = $app->Exp->save($data);
       foreach ($_POST['tags'] as $tag_id) {

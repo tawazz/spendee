@@ -8,7 +8,7 @@ namespace HTTP\Models;
  use Carbon\Carbon;
 class Budget extends \Table
 {
-  protected $table='budget';
+  protected $table='budgets';
   protected $primary_key ='id';
 
   public function getBudgetData($app,$year=2016,$month=8)

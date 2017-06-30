@@ -2,7 +2,7 @@
   namespace HTTP\Models;
   class IncomeTag extends \Table{
 
-    protected $table='inc_tags';
+    protected $table='income_tags';
     protected $primary_key ='id';
     protected $hasOne =['\HTTP\Models\Tag'];
 

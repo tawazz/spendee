@@ -39,11 +39,11 @@
             'where'=>['username','=',$_POST['username']]
           ]);
           if($fetch_user && $this->container->hash->make($req->getParam('password'),$req->getParam('username')) == $fetch_user->password ){
-            $this->session->put('id',$fetch_user->user_id);
+            $this->session->put('id',$fetch_user->id);
             if ($remember == 'on') {
               if (!$fetch_user->session) {
                 $remember_hash = $app->hash->make($app->hash->salt(10));
-                $user->remember($fetch_user->user_id,$remember_hash);
+                $user->remember($fetch_user->id,$remember_hash);
                 $resp = $app->Cookie->setCookie($resp,'remember',"{$remember_hash}",Carbon::parse('+4 weeks')->timestamp);
 
               }else{
@@ -99,7 +99,7 @@
     {
       $app = $this->container;
       if ($app->Cookie->getCookie($req,'remember')) {
-          $app->User->removeRemember($app->auth->user_id);
+          $app->User->removeRemember($app->auth->id);
           $app->Cookie->deleteCookie($resp,'remember');
       }
 

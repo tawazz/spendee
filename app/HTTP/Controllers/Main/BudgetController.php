@@ -16,7 +16,7 @@
       $id = $args['id'];
 
       $budget = $app->Budget->read($id)->get();
-      if ($budget->user_id == $app->auth->user_id) {
+      if ($budget->id == $app->auth->id) {
         $budgetTags = $app->BudgetTag->find("all",[
           "fields" => ["tag_id"],
           "where"=>["bud_id","=",$budget->id]
@@ -32,7 +32,7 @@
       $app = $this->container;
       $year = isset($args['year'])?$args['year']:NULL;
       $month = isset($args['month'])?$args['month']:NULL;
-      $data = $app->Helper->getData($app,$app->auth->user_id,$year,$month,NULL);
+      $data = $app->Helper->getData($app,$app->auth->id,$year,$month,NULL);
       $budgets = $app->Budget->getBudgetData($app,$data->nav['current']['year'],$data->nav['current']['month']);
       $app->view->render($resp,'budget/home.php',[
         'appData' => $data,
@@ -48,7 +48,7 @@
         "name"       => $_POST['name'],
         "amount"     => str_replace( ',', '',$_POST['amount'] ),
         "start_date" => $_POST['date'],
-        "user_id"    => $app->auth->user_id
+        "id"    => $app->auth->id
       ];
       $bud_id = $app->Budget->save($data);
 

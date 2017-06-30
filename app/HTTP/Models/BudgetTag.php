@@ -8,7 +8,7 @@ namespace HTTP\Models;
  */
 class BudgetTag extends Table
 {
-  protected $table='bud_tags';
+  protected $table='budget_tags';
   protected $primary_key ='id';
 
   public function deleteTagsFromBudget($bud_id)

@@ -7,12 +7,13 @@ WORKDIR /app
 RUN apt-get update && apt-get install nodejs npm -y
 RUN cp /usr/bin/nodejs /usr/bin/node
 COPY . /app
-RUN composer install
+RUN composer installcke
 
 WORKDIR /app/web
 RUN npm install
 RUN npm install --only=dev
 RUN npm install -g grunt
+npm install -g vue-cli
 RUN grunt
 
 WORKDIR /app

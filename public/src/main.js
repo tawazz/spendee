@@ -3,10 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+require('../../css/dist/spendee.css');
+require('../static/card.css');
+require('../static/mdi.css');
+require('../node_modules/mdi/css/materialdesignicons.css')
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,

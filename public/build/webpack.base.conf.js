@@ -2,6 +2,7 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+var webpack = require('webpack');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -54,5 +55,15 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins:[
+        new webpack.ProvidePlugin({
+           $: "jquery",
+           jQuery: "jquery",
+           "select2": "../node_modules/select2/dist/js/select2.full.min.js",
+           moment: "moment",
+           swal: 'sweetalert2',
+           datetimepicker:"../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
+       })
+    ]
 }

@@ -40,7 +40,16 @@ module.exports = function(grunt) {
        src: '../css/dist/spendee.css',
        dest: '../css/dist/spendee.min.css'
      }
-   }
+   },
+   watch: {
+    scripts: {
+      files: ['../css/*.css','../js/*.js'],
+      tasks: ['concat','min', 'cssmin'],
+      options: {
+        spawn: false,
+      },
+    },
+  }
 });
 
   // Load the plugin that provides the "uglify" task.
@@ -50,5 +59,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-min');
   // Default task(s).
   grunt.registerTask('default', ['concat','min', 'cssmin']);
+  grunt.registerTask('watch', ['watch']);
 
 };

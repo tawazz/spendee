@@ -90,7 +90,7 @@ display: inline-block;
     border-color: #00E676;
 }
 .panel > .panel-heading, .panel.panel-default > .panel-heading{
-    background-color: #4a5982;
+    background-color: #eeeeee;
     color: #fff;
 }
 .panel-footer {

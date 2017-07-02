@@ -1,24 +1,24 @@
 <template>
   <div>
-    <Nav />
-    <div class="container">
+    <Navbar />
+    <div class="container-fluid">
       <Dash />
       <router-view />
     </div>
-    <Footer />
+    <FooterArea />
   </div>
 </template>
 
 <script>
 import Dash from './components/dash'
-import Nav from './components/nav'
-import Footer from './components/footer'
+import Navbar from './components/nav'
+import FooterArea from './components/footer'
 export default {
   name: 'app',
   components:{
     Dash,
-    Nav,
-    Footer
+    Navbar,
+    FooterArea
   }
 }
 </script>

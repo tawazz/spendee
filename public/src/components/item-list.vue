@@ -5,7 +5,7 @@
               <h3 class="text-center">{{ date|date }}</h3>
           </div>
             <a href="/expense/id" v-for="exp in expense">
-                <div class="card-footer">
+                <div class="card-footer capitalize">
                     <span >{{exp.name}}</span>
                     <span class="pull-right"><i class="fa fa-usd">{{ exp.cost|formatMoney }}</i></span>
                     <div class="clearfix"></div>
@@ -49,5 +49,8 @@
     }
   }
 </script>
-<style scoped="">
+<style scoped>
+  .capitalize{
+    text-transform: capitalize;
+  }
 </style>

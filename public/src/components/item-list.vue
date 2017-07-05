@@ -1,22 +1,19 @@
 <template>
   <div class="col-sm-12">
-      <div v-for="expense,date in expenses" class="panel panel-danger">
-          <div class="panel-heading">
-              {{ date|date }}
+      <div v-for="expense,date in expenses" class="card">
+          <div class="card-heading" data-background-color="red">
+              <h3 class="text-center">{{ date|date }}</h3>
           </div>
             <a href="/expense/id" v-for="exp in expense">
-                <div class="panel-footer">
-                    <div class="pull-left item-icon" style="background-color:red;">
-                      <i class="mdi mdi-food fa-2x" style="padding-left:5px;"></i>
-                    </div>
-                    <span class="item-name">{{exp.name}}</span>
-                    <span class="pull-right"><i class="fa fa-usd item-cost">{{ exp.cost|formatMoney }}</i></span>
+                <div class="card-footer">
+                    <span >{{exp.name}}</span>
+                    <span class="pull-right"><i class="fa fa-usd">{{ exp.cost|formatMoney }}</i></span>
                     <div class="clearfix"></div>
                 </div>
             </a>
-          <div class="panel-footer">
+          <div class="card-footer">
               <span class="pull-left">Total</span>
-              <span class="pull-right"><i class="fa fa-usd item-cost">{{ 10|formatMoney }}</i></span>
+              <span class="pull-right"><i class="fa fa-usd">{{ 10|formatMoney }}</i></span>
               <div class="clearfix"></div>
           </div>
       </div>
@@ -52,22 +49,5 @@
     }
   }
 </script>
-<style>
-  .panel-footer {
-    padding: 10px 15px;
-  }
-  .item-name{
-    padding: 10px;
-    line-height: 3;
-    text-transform: capitalize;
-  }
-  .item-icon{
-    width:40px;
-    border-radius:50%;
-    color:#fff;
-  }
-  .item-cost{
-    margin-top: 8px;
-    font-size: 20px;
-  }
+<style scoped="">
 </style>

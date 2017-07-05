@@ -77,14 +77,15 @@ display: inline-block;
 }
 
 .navbar, .navbar.navbar-default{
-    background-color: #ff5722;
-    color: #fff;
+  background: linear-gradient(60deg, #ef5350, #e53935);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
+  color: #fff;
 }
 .navbar-default .navbar-brand{
-    color: #FFF;
+    color: #fff;
 }
 .navbar-default .navbar-nav>li>a {
-color: #FFF;
+  color: #FFF;
 }
 .navbar .navbar-nav > li > a{
   padding-top: 20px;
@@ -96,7 +97,7 @@ color: #FFF;
 }
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
 color: #fff;
-background-color: #FF3D00;
+background: linear-gradient(60deg, #ef5350, #e53935);;
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
     background-color: transparent;
@@ -105,7 +106,7 @@ background-color: #FF3D00;
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     text-decoration: none;
     color: #ffffff;
-    background-color: #FF3D00;
+    background: linear-gradient(60deg, #ef5350, #e53935);
 }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
     color: #CCC;

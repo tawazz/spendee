@@ -1,13 +1,15 @@
-<template>
-  <div class="row">
-    <div class="col-md-4">
-      <item-list :expenses="expdata.exp_data"/>
-    </div>
-    <div class="col-md-8">
-      <exp-graphs />
-    </div>
-    <div class="btn-add">
-      <a href="javascript:void(0)" class="btn btn-danger btn-fab"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
+<template >
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <item-list :expenses="expdata.exp_data"/>
+      </div>
+      <div class="col-md-6">
+        <exp-graphs />
+      </div>
+      <div class="btn-add">
+        <a href="javascript:void(0)" class="btn btn-danger btn-fab"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
+      </div>
     </div>
   </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <div class="card card-chart" data-count="15">
+      <div class="card">
           <div class="card-header" data-background-color="red">
-              <canvas class="ct-chart" ref="incomeGraph"></canvas>
+              <div id="morris-line-chart" />
           </div>
           <div class="card-content">
               <h4 class="card-title">Daily Expenses for {{ month }}</h4>
@@ -16,6 +16,7 @@
 </template>
 <script>
   import Chart from 'chart.js'
+  import Morris from 'morris-js-module'
   import moment from 'moment'
   export default {
     name:'graph',
@@ -27,64 +28,28 @@
     mounted:function () {
       let vm =this;
       let days = [];
-      let expenses = [];
+      let data =[];
       vm.month = moment(new Date()).format('MMM YYYY');
-      for (var i = 0; i < 31; i++) {
-        days.push(i);
-        expenses.push(Math.floor((Math.random() * 1000) + 1));
+      for (var i = 0; i < 15; i++) {
+        days.push("2017-07-"+ Math.floor((Math.random() * 30) + 1));
+        data.push({day: days[i], value: Math.floor((Math.random() * 1000) + 1)});
       }
-      let ctx = vm.$refs.incomeGraph;
-      vm.graph = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: days,
-            datasets: [{
-                label: 'Expenses',
-                data: expenses,
-                borderColor:'#fff',
-                backgroundColor:'rgba(255,255,255,0.4)',
-                borderWidth: 5,
-                pointBackgroundColor:'#fff',
-                pointBorderColor:'#fff',
-                pointBorderWidth:3,
-                pointRadius:0,
-                lineTension:0,
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true,
-                        fontColor:"#fff",
-                    },
-                    gridLines:{
-                      borderDash:[1,3],
-                      color:'#ccc',
-                      zeroLineColor:"#fff",
-                      drawOnChartArea:false
-                    }
-                }],
-                xAxes: [{
-                  ticks: {
-                      beginAtZero:true,
-                      fontColor:"#fff",
-                  },
-                  gridLines:{
-                    borderDash:[1,1],
-                    color:'#ccc',
-                    zeroLineColor:"#fff",
-                    drawOnChartArea:false
-                  }
-                }],
-            },
-            legend:{
-              position:'bottom',
-              labels:{
-                fontColor: '#fff'
-              }
-            }
-        }
+      new Morris($).Area({
+      element: 'morris-line-chart',
+      data: data,
+      xkey: 'day',
+      ykeys: ['value'],
+      labels: ['Spent'],
+      yLabelFormart: function (y) { return "$"+y; },
+      dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
+      preUnits:'$',
+      xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
+      lineColors:['#fff'],
+      goalLineColors:['#f5f5f5'],
+      gridTextColor:"#fff",
+      fillOpacity:"0.4",
+      grid:false,
+      resize:true
       });
     }
 

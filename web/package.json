@@ -14,6 +14,7 @@
     "bootstrap": "^3.3.7",
     "bootstrap-material-design": "^0.5.10",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "grunt": "^1.0.1",
     "jquery": "^3.2.1",
     "knob": "^1.1.0",
     "modernizr": "^3.5.0",

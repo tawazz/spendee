@@ -17,7 +17,7 @@
   import itemsList from '@/components/item-list'
   import graphs from '@/components/exp-graphs'
   const expdata =  require('../../static/data.json');
-  console.log(expdata);
+
   export default {
     name:'expenses',
     data:function () {

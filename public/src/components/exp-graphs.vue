@@ -67,6 +67,7 @@
   import Chart from 'chart.js'
   import moment from 'moment'
   import Morris from "morris"
+  import filters from '@/filters'
 
   export default {
     name:'graph',
@@ -85,7 +86,7 @@
            var D = date_exp;
            var cost = 0;
            $.each(exp[D],function (k,v) {
-             cost += v.cost;
+             cost += parseFloat(v.cost);
            });
            vm.line_data.push({day: D, value: cost});
         }
@@ -93,6 +94,7 @@
       }
 
     },
+    filters,
     methods: {
       areaChart() {
         let vm = this;
@@ -111,7 +113,14 @@
           gridTextColor:"#fff",
           fillOpacity:"0.4",
           grid:false,
-          resize:true
+          resize:true,
+          hoverCallback: function (index, options, content, row) {
+            content = `<div class="morris-hover-row-label">${filters.date(row.day)}</div><div class='morris-hover-point' style='color: #03a9f4'>
+              Spent:
+              $ ${filters.formatMoney(row.value)}
+            </div>`;
+            return content;
+          }
         });
       }
     },

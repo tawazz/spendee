@@ -18,45 +18,41 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Expense Tags</h4>
+                <h3 class="card-title text-primary"><i class="mdi mdi-tag-multiple"></i>  Tags</h3>
             </div>
             <div class="card-content">
-                <ul class="nav nav-pills nav-pills-warning">
-                    <li class="active">
-                        <a href="#pill1" data-toggle="tab" aria-expanded="true">Profile</a>
-                    </li>
-                    <li class="">
-                        <a href="#pill2" data-toggle="tab" aria-expanded="false">Settings</a>
-                    </li>
-                    <li class="">
-                        <a href="#pill3" data-toggle="tab" aria-expanded="false">Options</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane active" id="pill1">
-                        <div class="row">
-                            <div class="col-sm-6">
-                              <div id="morris-pie-chart" />
-                            </div>
-                            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div id="morris-pie-chart" ></div>
+                </div>
+                <div class="col-sm-6">
+                  <ul class="nav nav-pills nav-pills-warning">
+                      <li class="active">
+                          <a href="#pill1" data-toggle="tab" aria-expanded="true">Expenses</a>
+                      </li>
+                      <li class="">
+                          <a href="#pill2" data-toggle="tab" aria-expanded="false">Overview</a>
+                      </li>
+                  </ul>
+                  <div class="tab-content">
+                      <div class="tab-pane active" id="pill1">
+                          <div class="row">
+                            <div class="col-sm-12">
 
                             </div>
-                        </div>
-                        <div class="card-footer">
-                          <h4>here</h4>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="pill2">
-                        Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
-                        <br>
-                        <br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
-                    </div>
-                    <div class="tab-pane" id="pill3">
-                        Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas.
-                        <br>
-                        <br>Dynamically innovate resource-leveling customer service for state of the art customer service.
-                    </div>
+                          </div>
+                      </div>
+                      <div class="tab-pane" id="pill2">
+                          Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
+                          <br>
+                          <br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
+                      </div>
+                  </div>
                 </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <h4>here</h4>
             </div>
         </div>
     </div>

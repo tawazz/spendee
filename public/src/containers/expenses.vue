@@ -5,7 +5,7 @@
         <item-list :expenses="expdata.exp_data"/>
       </div>
       <div class="col-md-6">
-        <exp-graphs />
+        <exp-graphs :expenses="expdata.exp_data" />
       </div>
       <div class="btn-add">
         <a href="javascript:void(0)" class="btn btn-danger btn-fab"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>

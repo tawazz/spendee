@@ -34,11 +34,17 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="pill1">
-                        Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
-                        <br>
-                        <br> Dramatically visualize customer directed convergence without revolutionary ROI. Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits.
-                        <br>
-                        <br> This is very nice.
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div id="morris-pie-chart" />
+                            </div>
+                            <div class="col-sm-6">
+
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                          <h4>here</h4>
+                        </div>
                     </div>
                     <div class="tab-pane" id="pill2">
                         Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
@@ -64,38 +70,67 @@
 
   export default {
     name:'graph',
+    props:["expenses"],
     data:function () {
       return {
+        line_data:[],
         month:""
+      }
+    },
+    watch:{
+      expenses:function () {
+        let vm = this;
+        let exp = vm.expenses;
+        for (var date_exp in exp) {
+           var D = date_exp;
+           var cost = 0;
+           $.each(exp[D],function (k,v) {
+             cost += v.cost;
+           });
+           vm.line_data.push({day: D, value: cost});
+        }
+        vm.areaChart();
+      }
+
+    },
+    methods: {
+      areaChart() {
+        let vm = this;
+        new Morris.Area({
+          element: 'morris-line-chart',
+          data: vm.line_data,
+          xkey: 'day',
+          ykeys: ['value'],
+          labels: ['Spent'],
+          yLabelFormart: function (y) { return "$"+y; },
+          dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
+          preUnits:'$',
+          xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
+          lineColors:['#fff'],
+          goalLineColors:['#f5f5f5'],
+          gridTextColor:"#fff",
+          fillOpacity:"0.4",
+          grid:false,
+          resize:true
+        });
       }
     },
     mounted:function () {
       let vm =this;
       let days = [];
-      let data =[];
       vm.month = moment(new Date()).format('MMM YYYY');
-      for (var i = 0; i < 15; i++) {
-        days.push("2017-07-"+ Math.floor((Math.random() * 30) + 1));
-        data.push({day: days[i], value: Math.floor((Math.random() * 1000) + 1)});
-      }
-      
-      new Morris.Area({
-      element: 'morris-line-chart',
-      data: data,
-      xkey: 'day',
-      ykeys: ['value'],
-      labels: ['Spent'],
-      yLabelFormart: function (y) { return "$"+y; },
-      dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
-      preUnits:'$',
-      xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
-      lineColors:['#fff'],
-      goalLineColors:['#f5f5f5'],
-      gridTextColor:"#fff",
-      fillOpacity:"0.4",
-      grid:false,
-      resize:true
-    });
+
+      new Morris.Donut({
+        element: 'morris-pie-chart',
+        data: [
+          {label: "Food and Drink", value:200 },
+          {label: "Petrol", value:120 },
+        ],
+        formatter:function (y, data) { return '$'+y; } ,
+        colors:["#f44336"],
+        resize:true
+      });
+
     }
 
   }

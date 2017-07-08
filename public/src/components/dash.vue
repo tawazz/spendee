@@ -17,7 +17,7 @@
               </div>
               <div class="card-content">
                   <p class="category">Expenses</p>
-                  <h3 class="card-title">$34,245</h3>
+                  <h3 class="card-title text-danger">${{ exp|formatMoney }}</h3>
               </div>
           </div>
       </div>
@@ -28,7 +28,7 @@
               </div>
               <div class="card-content">
                   <p class="category">Incomes</p>
-                  <h3 class="card-title">$34,245</h3>
+                  <h3 class="card-title text-success">${{ inc|formatMoney }}</h3>
               </div>
           </div>
       </div>
@@ -39,13 +39,21 @@
               </div>
               <div class="card-content">
                   <p class="category">Balance</p>
-                  <h3 class="card-title">$34,245</h3>
+                  <h3 class="card-title text-info">${{ bal|formatMoney }}</h3>
               </div>
           </div>
       </div>
     </div>
   </div>
 </template>
+<script>
+import filters from '@/filters'
+  export default{
+    name:"dash",
+    props:["exp","inc","bal"],
+    filters
+  }
+</script>
 <style media="screen">
 
 </style>

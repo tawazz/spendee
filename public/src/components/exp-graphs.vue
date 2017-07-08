@@ -59,8 +59,9 @@
 </template>
 <script>
   import Chart from 'chart.js'
-  import Morris from 'morris-js-module'
   import moment from 'moment'
+  import Morris from "morris"
+
   export default {
     name:'graph',
     data:function () {
@@ -77,7 +78,8 @@
         days.push("2017-07-"+ Math.floor((Math.random() * 30) + 1));
         data.push({day: days[i], value: Math.floor((Math.random() * 1000) + 1)});
       }
-      new Morris($).Area({
+      
+      new Morris.Area({
       element: 'morris-line-chart',
       data: data,
       xkey: 'day',
@@ -93,7 +95,7 @@
       fillOpacity:"0.4",
       grid:false,
       resize:true
-      });
+    });
     }
 
   }

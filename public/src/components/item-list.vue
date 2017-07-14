@@ -1,13 +1,13 @@
 <template>
   <div class="col-sm-12">
-      <div v-for="expense,date in expenses" class="card">
-          <div class="card-heading" data-background-color="red">
+      <div v-for="item,date in data" class="card">
+          <div class="card-heading" :data-background-color="color">
               <h3 class="text-center">{{ date|date }}</h3>
           </div>
-            <a href="/expense/id" v-for="exp in expense">
+            <a :href="`/${type}/${i.user_id}`" v-for="i in item">
                 <div class="card-footer capitalize">
-                    <span >{{exp.name}}</span>
-                    <span class="pull-right"><i class="fa fa-usd">{{ exp.cost|formatMoney }}</i></span>
+                    <span >{{i.name}}</span>
+                    <span class="pull-right"><i class="fa fa-usd">{{ i.cost|formatMoney }}</i></span>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -29,7 +29,7 @@
 
       }
     },
-    props:["expenses"],
+    props:["data","color","type"],
     filters,
     mounted:function () {
 

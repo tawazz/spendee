@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <item-list :data="expdata.exp_data" color="red"/>
+        <item-list :data="expdata.exp_data" color="green" type="income" />
       </div>
       <div class="col-md-6">
         <exp-graphs :expenses="expdata.exp_data" />

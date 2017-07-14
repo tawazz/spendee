@@ -46,7 +46,7 @@ require_once __DIR__ . '../../../config.php';
                     ];
                     var_dump($this->error_info);
                     $this->_error = TRUE;
-                    return False;
+                    return $this;
                 }
             }
             return $this;

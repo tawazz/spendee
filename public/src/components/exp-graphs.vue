@@ -16,10 +16,11 @@
     </div>
     <div class="row">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title text-primary"><i class="mdi mdi-tag-multiple"></i>  Tags</h3>
+        <div class="card card-stats">
+            <div class="card-header card-header-icon" data-background-color="orange">
+                <i class="fa-2x mdi mdi-tag-multiple"></i>
             </div>
+            <div class="clearfix"></div>
             <div class="card-content">
               <div class="row">
                 <div class="col-sm-6">
@@ -130,9 +131,10 @@
         data: [
           {label: "Food and Drink", value:200 },
           {label: "Petrol", value:120 },
+          {label: "shopping", value:60 },
         ],
         formatter:function (y, data) { return '$'+y; } ,
-        colors:["#f44336"],
+        colors:["#ffa726","#ff6384","#36a2eb","#4bc0c0"],
         resize:true
       });
 

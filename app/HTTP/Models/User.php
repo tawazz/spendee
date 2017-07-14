@@ -1,5 +1,6 @@
 <?php
   namespace HTTP\Models;
+  use HTTP\Models\Remember;
   class User extends \Table
   {
     protected $table = 'users';
@@ -64,14 +65,13 @@
     }
 
     public function remember($id,$rem_hash){
-      $this->db->insert('session',[
-        'hash' => $rem_hash,
-        'user_id'=> $id
-      ]);
+      $r = new Remember();
+      $r->saveSession($id, $rem_hash);
     }
     public function removeRemember($id)
     {
-      $this->db->delete('session',['user_id','=',$id]);
+      $r = new Remember();
+      $r->deleteSession($id);
     }
     public function max()
     {

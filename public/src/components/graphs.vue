@@ -76,7 +76,7 @@
       }
     },
     watch:{
-      expenses:function () {
+      data:function () {
         let vm = this;
         let exp = vm.data;
         for (var date_exp in exp) {

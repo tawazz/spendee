@@ -2,6 +2,9 @@ export default{
   date:function (D) {
     return moment(D).format("dddd, MMMM Do YYYY");
   },
+  monthYear:function(D) {
+      return moment(D).format("MMMM YYYY");
+  },
   formatMoney:function(n,c, d, t){
         c = isNaN(c = Math.abs(c)) ? 2 : c;
         d = d == undefined ? "." : d;

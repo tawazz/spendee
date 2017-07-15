@@ -2,10 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <item-list :data="expdata.exp_data" color="green" type="income" />
+        <item-list :data="expdata.exp_data" :color="color" :type="type" />
       </div>
       <div class="col-md-6">
-        <exp-graphs :data="expdata.exp_data" />
+        <exp-graphs :data="expdata.exp_data" :color="color" :type="type" />
       </div>
       <div class="btn-add">
         <a href="javascript:void(0)" class="btn btn-danger btn-fab"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
@@ -15,14 +15,16 @@
 </template>
 <script>
   import itemsList from '@/components/item-list'
-  import graphs from '@/components/exp-graphs'
+  import graphs from '@/components/graphs'
   const expdata =  require('../../static/data.json');
 
   export default {
     name:'incomes',
     data:function () {
       return {
-        expdata:[]
+        expdata:[],
+        type:"income",
+        color:"green"
       };
     },
     components:{

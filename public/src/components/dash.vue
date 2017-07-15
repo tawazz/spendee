@@ -3,9 +3,9 @@
     <div class="row">
         <div class="col-xs-12">
           <div class="btn-group" role="group" aria-label="...">
-            <a href="" class="btn"><img src="../../images/left.png"/></a>
-            <span class="btn text-default" style="margin-top:7px;text-transform: capitalize;">July 2017</span>
-            <a href="" class="btn"><img src="../../images/right.png"/></a>
+            <router-link :to="{ name: nav.page}" class="btn" @click.prevent.native="previous"><img src="../../images/left.png"/></router-link>
+            <span class="btn text-default" style="margin-top:7px;text-transform: capitalize;">{{ nav.display }}</span>
+            <router-link :to="{ name: nav.page }"  @click.prevent.native="next" class="btn"><img src="../../images/right.png"/></router-link>
           </div>
         </div>
     </div>
@@ -48,10 +48,43 @@
 </template>
 <script>
 import filters from '@/filters'
+import { mapState } from 'vuex'
   export default{
     name:"dash",
     props:["exp","inc","bal"],
-    filters
+    filters,
+    methods:{
+        next:function () {
+            let vm =this;
+            let payload = {
+                year: vm.nav.current.year,
+                month: (parseInt(vm.nav.current.month)+1).toString()
+            };
+            vm.$store.dispatch('updateNav',payload);
+        },
+        previous:function () {
+            let vm = this;
+            let payload = {
+                year: vm.nav.current.year,
+                month: (parseInt(vm.nav.current.month)-1).toString()
+            };
+            vm.$store.dispatch('updateNav',payload);
+        }
+    },
+    computed:{
+        ...mapState({
+            nav: state => state.nav
+        })
+    },
+    mounted:function(){
+        let vm =this;
+        vm.$store.dispatch('updateNav',{
+            year:null,
+            month:null,
+            day:null
+        });
+        console.log(this.nav);
+    }
   }
 </script>
 <style media="screen">

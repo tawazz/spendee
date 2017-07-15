@@ -15,7 +15,8 @@
 </template>
 <script>
   import itemsList from '@/components/item-list'
-  import graphs from '@/components/exp-graphs'
+  import graphs from '@/components/graphs'
+  import { mapState } from 'vuex'
   const expdata =  require('../../static/data.json');
 
   export default {
@@ -31,9 +32,15 @@
       'item-list':itemsList,
       'exp-graphs':graphs
     },
+    computed:{
+        ...mapState({
+            "nav": state => state.nav
+        })
+    },
     mounted:function () {
       let vm =this;
       vm.expdata = expdata;
+      console.log(vm.nav);
     }
   }
 </script>

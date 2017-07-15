@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-            <div class="card-header" data-background-color="red">
+            <div class="card-header" :data-background-color="color">
                 <div id="morris-line-chart" />
             </div>
             <div class="card-content">
-                <h4 class="card-title">Daily Expenses for {{ month }}</h4>
+                <h4 class="card-title capitalize">Daily {{type}}s for {{ month }}</h4>
                 <p class="category">
                     <span class="text-danger"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in spending</p>
             </div>
@@ -68,7 +68,7 @@
 
   export default {
     name:'graph',
-    props:["expenses"],
+    props:["data","color","type"],
     data:function () {
       return {
         line_data:[],
@@ -78,7 +78,7 @@
     watch:{
       expenses:function () {
         let vm = this;
-        let exp = vm.expenses;
+        let exp = vm.data;
         for (var date_exp in exp) {
            var D = date_exp;
            var cost = 0;

@@ -4,7 +4,7 @@
           <div class="card-heading" :data-background-color="color">
               <h3 class="text-center">{{ date|date }}</h3>
           </div>
-            <a :href="`/${type}/${i.user_id}`" v-for="i in item">
+            <a :href="`/${type}/${i.user_id}`" :style="{color}" v-for="i in item">
                 <div class="card-footer capitalize">
                     <span >{{i.name}}</span>
                     <span class="pull-right"><i class="fa fa-usd">{{ i.cost|formatMoney }}</i></span>

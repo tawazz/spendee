@@ -5,7 +5,7 @@
         <item-list :data="expdata.exp_data" color="green" type="income" />
       </div>
       <div class="col-md-6">
-        <exp-graphs :expenses="expdata.exp_data" />
+        <exp-graphs :data="expdata.exp_data" />
       </div>
       <div class="btn-add">
         <a href="javascript:void(0)" class="btn btn-danger btn-fab"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
@@ -19,7 +19,7 @@
   const expdata =  require('../../static/data.json');
 
   export default {
-    name:'expenses',
+    name:'incomes',
     data:function () {
       return {
         expdata:[]

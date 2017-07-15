@@ -2,10 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <item-list :data="expdata.exp_data" color="red"/>
+        <item-list :data="expdata.exp_data" :color="color" :type="type"/>
       </div>
       <div class="col-md-6">
-        <exp-graphs :expenses="expdata.exp_data" />
+        <exp-graphs :data="expdata.exp_data" :type="type" :color="color" />
       </div>
       <div class="btn-add">
         <a href="javascript:void(0)" class="btn btn-danger btn-fab"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
@@ -22,7 +22,9 @@
     name:'expenses',
     data:function () {
       return {
-        expdata:[]
+        expdata:[],
+        color:"red",
+        type:"expense",
       };
     },
     components:{

@@ -12,8 +12,11 @@
     require 'main/main.php';
   })->add(new AuthMiddleware($container));
 
+  // API
+  $app->group('/api',function(){
+      require 'api/routes.php';
+  })->add(new AuthMiddleware($container));;
   //Vissible by all users
   require 'auth/auth.php';
-  require 'api/api.php';
   require 'errors/errors.php';
  ?>

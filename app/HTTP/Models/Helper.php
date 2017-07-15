@@ -6,6 +6,38 @@
      */
     class Helper
     {
+        public function getItems($model,$user_id,$year=null,$month=null,$day=null)
+        {
+            if(isset($year)&& isset($month) && isset($day) ){
+                $all= $model->read($user_id)->activity($year."-".$month."-".$day,$year."-".$month."-".($day+1));
+            }else if(isset($year)&& isset($month) ){
+                $all= $model->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
+            }else if(isset($year)){
+                $all = $model->read($user_id)->activity($year."-"."1"."-1",($year+1)."-1-1");
+            }else{
+                $month= date('m');
+                $year= date('Y');
+                $all = $model->read($user_id)->activity($year."-".$month."-1",$year."-".($month+1)."-1");
+            }
+            $Dates = [];
+
+            foreach ($all as $itm) {
+                $Dates[$itm->date] = NULL;
+            }
+
+            foreach ($Dates as $key => $value) {
+                $items = [];
+                foreach ($all as $itm) {
+                  if($key == $itm->date){
+                    array_push($items,$itm);
+                    $Dates[$itm->date] = $items;
+                  }
+                }
+
+            }
+
+            return $Dates;
+        }
       public static function getData($app,$user_id,$year=null,$month=null,$day=null){
 
         if(isset($year)&& isset($month) && isset($day) ){

@@ -1,7 +1,6 @@
 export default function(year,month,day){
     let nav = {};
     if(year && month && day ){
-        console.log("here");
     if(month == 13){
         month=1;
         year +=1;

@@ -87,6 +87,7 @@
            });
            vm.line_data.push({day: D, value: cost});
         }
+        $('#morris-line-chart').empty();
         vm.areaChart();
       }
 
@@ -119,6 +120,7 @@
             return content;
           }
         });
+        vm.line_data = [];
       }
     },
     mounted:function () {

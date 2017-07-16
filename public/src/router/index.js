@@ -14,7 +14,7 @@ export default new Router({
       name: 'home',
       component: Expenses
     },{
-      path: '/expenses',
+      path: '/expenses/:year?/:month?',
       name: 'Expenses',
       component: Expenses
     },{

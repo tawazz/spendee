@@ -10,6 +10,8 @@ Vue.use(Vuex)
 var store = new Vuex.Store({
     state: {
         nav,
+        expenses:[],
+        selectedExpense:null
     },
     mutations,
     actions,

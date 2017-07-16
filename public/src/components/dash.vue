@@ -3,9 +3,9 @@
     <div class="row">
         <div class="col-xs-12">
           <div class="btn-group" role="group" aria-label="...">
-            <router-link :to="{ name: nav.page}" class="btn" @click.prevent.native="previous"><img src="../../images/left.png"/></router-link>
+            <router-link :to="{ path:`/${nav.page}/${nav.prev}`}" class="btn" @click.native="previous"><img src="../../images/left.png"/></router-link>
             <span class="btn text-default" style="margin-top:7px;text-transform: capitalize;">{{ nav.display }}</span>
-            <router-link :to="{ name: nav.page }"  @click.prevent.native="next" class="btn"><img src="../../images/right.png"/></router-link>
+            <router-link :to="{ path:`/${nav.page}/${nav.next}`}"  @click.native="next" class="btn"><img src="../../images/right.png"/></router-link>
           </div>
         </div>
     </div>
@@ -81,9 +81,9 @@ import { mapState } from 'vuex'
         vm.$store.dispatch('updateNav',{
             year:null,
             month:null,
-            day:null
+            day:null,
+            page:"expenses"
         });
-        console.log(this.nav);
     }
   }
 </script>

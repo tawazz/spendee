@@ -13,7 +13,7 @@
             </a>
           <div class="card-footer">
               <span class="pull-left">Total</span>
-              <span class="pull-right"><i class="fa fa-usd">{{ 10|formatMoney }}</i></span>
+              <span class="pull-right"><i class="fa fa-usd">{{ total(item)|formatMoney }}</i></span>
               <div class="clearfix"></div>
           </div>
       </div>
@@ -31,6 +31,11 @@
     },
     props:["data","color","type"],
     filters,
+    methods:{
+        total:function (item) {
+            return item.reduce((a, b) => {return parseFloat(a) + parseFloat(b.cost); }, 0);
+        }
+    },
     mounted:function () {
 
     }

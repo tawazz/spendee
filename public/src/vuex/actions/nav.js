@@ -11,7 +11,7 @@ export default function(year,month,day){
             month=12;
             year -=1;
         }
-        
+
         var date = new Date(`${year}-${month}-${day}`);
         nav['date']= date;
         date = moment(date).format('d/MMM/YYYY');
@@ -33,9 +33,10 @@ export default function(year,month,day){
             year -=1;
         }
 
-        var date = new Date(`${year}-${month}-1`);
+        var date = `${year}/${month}/1`;
+        console.log(date);
         nav['date']= date;
-        date = moment(date).format('MMM/YYYY');
+        date = moment(date,'YYYY/M/dddd').format('MMM/YYYY');
         nav['display'] = date;
         nav['next'] = `${year}/${parseInt(month)+1}`;
         nav['prev'] = `${year}/${parseInt(month)-1}`;

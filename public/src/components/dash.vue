@@ -17,7 +17,7 @@
               </div>
               <div class="card-content">
                   <p class="category">Expenses</p>
-                  <h3 class="card-title text-danger">${{ exp|formatMoney }}</h3>
+                  <h4 class="card-title text-danger">${{ exp|formatMoney }}</h4>
               </div>
           </div>
       </div>
@@ -28,7 +28,7 @@
               </div>
               <div class="card-content">
                   <p class="category">Incomes</p>
-                  <h3 class="card-title text-success">${{ inc|formatMoney }}</h3>
+                  <h4 class="card-title text-success">${{ inc|formatMoney }}</h4>
               </div>
           </div>
       </div>
@@ -39,7 +39,7 @@
               </div>
               <div class="card-content">
                   <p class="category">Balance</p>
-                  <h3 class="card-title text-info">${{ bal|formatMoney }}</h3>
+                  <h4 class="card-title text-info">${{ bal|formatMoney }}</h4>
               </div>
           </div>
       </div>

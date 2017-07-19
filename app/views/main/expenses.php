@@ -1,4 +1,4 @@
-{% extends 'templates/vue.php' %}
+{% extends vue_template %}
 {% block css %}
 <style media="screen">
   .select2-container .select2-search--inline .select2-search__field{

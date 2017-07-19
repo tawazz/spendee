@@ -76,7 +76,8 @@
     "address"  => Settings::get('locale.address'),
     "phone"    => Settings::get('locale.phone'),
     "email"    => Settings::get('locale.email'),
-    "flash"    => $container->flash
+    "flash"    => $container->flash,
+    "vue_template"=> Settings::get('views.vue')
   ]);
   //routes
   require'app/routes/routes.php';

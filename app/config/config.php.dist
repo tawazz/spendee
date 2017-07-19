@@ -19,7 +19,8 @@
       ],
       'views'        => [
         'cache'      => 'app/views/cache',
-        'dir'        => 'app/views'
+        'dir'        => 'app/views',
+        'vue'        => 'templates/vue.php'
       ]
   ];
  ?>

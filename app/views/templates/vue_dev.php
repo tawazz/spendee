@@ -14,11 +14,10 @@
     <link rel="apple-touch-icon" href="/images/icon.png" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='//fonts.googleapis.com/css?family=Lobster+Two:400,200italic,700' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
-    <link href='/css/dist/app.css' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,700"' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id="app"></div>
-    <script type="text/javascript" src="/js/dist/app.js"></script>
+    <script type="text/javascript" src="//10.0.0.3:3001/app.js"></script>
   </body>
 </html>

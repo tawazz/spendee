@@ -60,8 +60,8 @@
       $month = isset($args['month']) ? $args['month'] : Null;
       $day = isset($args['day']) ? $args['day'] : Null;
       $data = $this->container->Helper->getData($app,$app->auth->id,$year,$month,$day);
-      $this->view->render($resp,'main/expenses.php',[
-        'appData' => $data,
+      $this->view->render($resp,'main/vue.php',[
+        'appData' => json_encode($data),
         'page'    => 'expenses',
         'totals'  => []
       ]);

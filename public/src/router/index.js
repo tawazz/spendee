@@ -18,7 +18,7 @@ export default new Router({
       name: 'Expenses',
       component: Expenses
     },{
-      path: '/incomes',
+      path: '/incomes/:year?/:month?',
       name: 'Incomes',
       component: Incomes
     }

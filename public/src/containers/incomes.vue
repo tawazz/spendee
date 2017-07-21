@@ -2,10 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <item-list :data="expdata.exp_data" :color="color" :type="type" />
+        <item-list :data="incomes" :color="color" :type="type" />
       </div>
       <div class="col-md-6">
-        <exp-graphs :data="expdata.exp_data" :color="color" :type="type" />
+        <exp-graphs :data="incomes" :color="color" :type="type" />
       </div>
       <div class="btn-add">
         <a href="javascript:void(0)" class="btn btn-danger btn-fab"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
@@ -16,7 +16,9 @@
 <script>
   import itemsList from '@/components/item-list'
   import graphs from '@/components/graphs'
-  const expdata =  require('../../static/data.json');
+  import { mapState } from 'vuex'
+  import {axios,apis} from '@/hooks'
+  import Vue from 'vue'
 
   export default {
     name:'incomes',
@@ -31,9 +33,39 @@
       'item-list':itemsList,
       'exp-graphs':graphs
     },
+    beforeRouteEnter (to, from, next) {
+        let year = (to.params.year)?to.params.year:null;
+        let month = (to.params.month?to.params.month:null);
+        axios.get(apis.incomes(year,month)).then(response => {
+            next(vm => {
+                vm.$store.dispatch('updateNav',{
+                    year,
+                    month,
+                    day:null
+                });
+                vm.$store.dispatch('updateInc',response.data);
+                vm.$store.dispatch('updatePage',"incomes");
+            });
+        });
+    },
+    computed:{
+        ...mapState({
+            "incomes": state => state.incomes
+        })
+    },
+    watch:{
+        $route:function () {
+            let vm = this;
+            let params = vm.$route.params;
+            let year = params.year;
+            let month = params.month;
+            axios.get(apis.incomes(year,month)).then(response => {
+                vm.$store.dispatch('updateInc',response.data);
+            });
+        }
+    },
     mounted:function () {
       let vm =this;
-      vm.expdata = expdata;
     }
   }
 </script>

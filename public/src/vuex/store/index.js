@@ -11,7 +11,9 @@ var store = new Vuex.Store({
     state: {
         nav,
         expenses:[],
-        selectedExpense:null
+        selectedExpense:null,
+        incomes:[],
+        selectedIncome:null
     },
     mutations,
     actions,

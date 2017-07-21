@@ -59,8 +59,8 @@
       $day = isset($args['day']) ? $args['day'] : Null;
 
       $data = $app->Helper->getData($app,$app->auth->id,$year,$month,$day);
-      $app->view->render($resp,'main/incomes.php',[
-        'appData' => $data,
+      $app->view->render($resp,'main/vue.php',[
+        'appData' => json_encode($data),
         'page'    => 'incomes',
         'totals'  => []
       ]);

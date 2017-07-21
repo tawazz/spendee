@@ -51,7 +51,13 @@ import filters from '@/filters'
 import { mapState } from 'vuex'
   export default{
     name:"dash",
-    props:["exp","inc","bal"],
+    data:function () {
+        return{
+            exp:'',
+            inc:'',
+            bal:''
+        }
+    },
     filters,
     methods:{
         next:function () {
@@ -81,9 +87,11 @@ import { mapState } from 'vuex'
         vm.$store.dispatch('updateNav',{
             year:null,
             month:null,
-            day:null,
-            page:"expenses"
+            day:null
         });
+        vm.bal = window.appData.balance;
+        vm.exp = window.appData.exp_total;
+        vm.inc = window.appData.inc_total;
     }
   }
 </script>

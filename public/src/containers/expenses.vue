@@ -49,6 +49,7 @@
                     day:null
                 });
                 vm.$store.dispatch('updateExp',response.data);
+                vm.$store.dispatch('updatePage',"expenses");
             });
         });
     },

@@ -10,17 +10,26 @@ function getUrl(page,year,month,day){
     let url = "";
     month = (month) ? parseInt(month): null;
     year = (year) ? parseInt(year): null;
-    if(month > 12){
-        month=1;
-        year +=1;
-    }
-    if(month < 1){
-        month=12;
-        year -=1;
-    }
+
     if (year && month && day) {
+        if(month > 12){
+            month=1;
+            year +=1;
+        }
+        if(month < 1){
+            month=12;
+            year -=1;
+        }
         url = `/api/${page}/${year}/${month}/${day}`;
     }else if (year && month){
+        if(month > 12){
+            month=1;
+            year +=1;
+        }
+        if(month < 1){
+            month=12;
+            year -=1;
+        }
         url = `/api/${page}/${year}/${month}`;
     }else if (year) {
         url = `/api/${page}/${year}`;

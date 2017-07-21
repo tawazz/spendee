@@ -19,6 +19,8 @@
   </head>
   <body>
     <div id="app"></div>
+    {% block content %}{% endblock %}
+    {% block js %}{% endblock %}
     <script type="text/javascript" src="/js/dist/app.js"></script>
   </body>
 </html>

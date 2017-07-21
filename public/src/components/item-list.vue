@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12">
+  <div>
       <div v-for="item,date in data" class="card">
           <div class="card-heading" :data-background-color="color">
               <h3 class="text-center">{{ date|date }}</h3>

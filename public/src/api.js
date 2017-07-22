@@ -4,6 +4,9 @@ export default {
     },
     incomes:function (year,month,day) {
         return getUrl('incomes',year,month,day);
+    },
+    totals:function (year,month,day) {
+        return getUrl('totals',year,month,day);
     }
 }
 function getUrl(page,year,month,day){

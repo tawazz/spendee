@@ -13,5 +13,8 @@ export default{
     },
     SELECTEDEXPENSE(state,payload){
         state.selectedExpense = payload;
+    },
+    SETTOTALS(state,payload){
+        state.totals = payload;
     }
 }

@@ -53,9 +53,7 @@ import { mapState } from 'vuex'
     name:"dash",
     data:function () {
         return{
-            exp:'',
-            inc:'',
-            bal:''
+
         }
     },
     filters,
@@ -79,7 +77,10 @@ import { mapState } from 'vuex'
     },
     computed:{
         ...mapState({
-            nav: state => state.nav
+            nav: state => state.nav,
+            exp: state => state.totals.expenses,
+            inc: state => state.totals.incomes,
+            bal: state => state.totals.balance,
         })
     },
     mounted:function(){
@@ -89,9 +90,6 @@ import { mapState } from 'vuex'
             month:null,
             day:null
         });
-        vm.bal = window.appData.balance;
-        vm.exp = window.appData.exp_total;
-        vm.inc = window.appData.inc_total;
     }
   }
 </script>

@@ -12,7 +12,4 @@
 {% block content %}
 {% endblock %}
 {% block js %}
-    <script type="text/javascript">
-        window.appData = {{ appData|raw }};
-    </script>
 {% endblock %}

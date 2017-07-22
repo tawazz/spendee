@@ -13,7 +13,12 @@ var store = new Vuex.Store({
         expenses:[],
         selectedExpense:null,
         incomes:[],
-        selectedIncome:null
+        selectedIncome:null,
+        totals:{
+            balance:0,
+            expenses:0,
+            incomes:0
+        }
     },
     mutations,
     actions,

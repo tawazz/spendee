@@ -1,6 +1,7 @@
 <?php
     use \HTTP\Controllers\API\ExpensesApi;
     use \HTTP\Controllers\API\IncomesApi;
+    use \HTTP\Controllers\API\Totals;
 
     $this->get('/expenses[/{year}[/{month}[/{day}]]]',ExpensesApi::class)->setName('api.expenses');
     $this->get('/expense/{name}[/{year}]',ExpensesApi::class.':retrieve')->setName('api.expense.retrieve');
@@ -13,4 +14,6 @@
     $this->post('/income',IncomesApi::class.':create')->setName('api.income.create');
     $this->put('/income/{id}',IncomesApi::class.':update')->setName('api.income.update');
     $this->delete('/income/{id}',IncomesApi::class.':delete')->setName('api.income.delete');
+
+    $this->get('/totals[/{year}[/{month}[/{day}]]]',Totals::class)->setName('api.totals');
  ?>

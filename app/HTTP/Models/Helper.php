@@ -1,6 +1,8 @@
 <?php
   namespace HTTP\Models;
   use \HTTP\Models\Tag;
+  use \HTTP\Models\Expense;
+  use \HTTP\Models\Income;
     /**
      * Helper class
      */
@@ -38,7 +40,8 @@
 
             return $Dates;
         }
-      public static function getData($app,$user_id,$year=null,$month=null,$day=null){
+
+        public static function getData($app,$user_id,$year=null,$month=null,$day=null){
 
         if(isset($year)&& isset($month) && isset($day) ){
           if($month == 13){
@@ -157,9 +160,9 @@
 
         return (object) $response;
 
-      }
-      public static function yearOverView($app,$user_id,$year)
-      {
+        }
+        public static function yearOverView($app,$user_id,$year)
+        {
         $totalexp = $app->Exp->read($user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
         $totalinc = $app->Inc->read($user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
         $allIncomes = json_decode($app->Inc->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1"));
@@ -184,9 +187,9 @@
         ];
 
         return $response;
-      }
-      public static function getNav($year=null,$month=null,$day=null)
-      {
+        }
+        public static function getNav($year=null,$month=null,$day=null)
+        {
         if(isset($year)&& isset($month) && isset($day) ){
           if($month == 13){
               $month=1;
@@ -245,18 +248,46 @@
         }
 
         return $nav;
-      }
-
-      public static function getTags()
-      {
+        }
+        public static function getTags()
+        {
          $tags = new Tag();
          return $tags->find('all');
-      }
-
-      public static function JsonResponse($app,$value='')
-      {
+        }
+        public static function JsonResponse($app,$value='')
+        {
          $app->response->headers->set('Content-Type', 'application/json');
          $app->response->setBody($value);
-      }
+        }
+        public static function getTotals($user_id,$year=null,$month=null,$day=null)
+        {
+            $exp = $inc = $bal = 0;
+            $Exp = new Expense();
+            $Inc = new Income();
+            if(isset($year) && isset($month) && isset($day)) {
+                $exp = $Exp->read($user_id)->totalExp($year."-".$month."-".$day,$year."-".$month."-".($day+1));
+                $inc = $Inc->read($user_id)->totalInc($year."-".$month."-".$day,$year."-".$month."-".($day+1));
+            }else if(isset($year)&& isset($month) ){
+                $exp = $Exp->read($user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
+                $inc = $Inc->read($user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
+            }else if(isset($year)){
+                $exp = $Exp->read($user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
+                $inc = $Inc->read($user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
+            }else{
+                $month= date('m');
+                $year= date('Y');
+                $exp = $Exp->read($user_id)->totalExp($year."-".$month."-1",$year."-".($month+1)."-1");
+                $inc = $Inc->read($user_id)->totalInc($year."-".$month."-1",$year."-".($month+1)."-1");
+            }
+            $exp = isset($exp) ? $exp : 0;
+            $inc = isset($inc) ? $inc : 0;
+            $bal = round($inc - $exp,2,PHP_ROUND_HALF_UP);
+
+            return [
+                'expenses' => $exp,
+                'incomes'  => $inc,
+                'balance'  => $bal
+            ];
+        }
     }
  ?>

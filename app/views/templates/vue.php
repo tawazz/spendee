@@ -16,6 +16,7 @@
     <link href='//fonts.googleapis.com/css?family=Lobster+Two:400,200italic,700' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
     <link href='/css/dist/app.css' rel='stylesheet' type='text/css'>
+    <link href='/css/main.css' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id="app"></div>

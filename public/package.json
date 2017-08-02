@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bootstrap": "^3.3.7",
+    "bootstrap-material-design": "^0.5.10",
     "chart.js": "^2.6.0",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "^4.7.0",
@@ -24,7 +25,9 @@
     "raphael": "^2.2.7",
     "select2": "^4.0.3",
     "select2-bootstrap-theme": "0.1.0-beta.10",
+    "snackbar": "^1.0.2",
     "sweetalert2": "^6.6.5",
+    "tether": "^1.4.0",
     "update": "^0.7.4",
     "vue": "^2.3.4",
     "vue-router": "^2.7.0",
@@ -73,7 +76,7 @@
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions",
+    "last 5 versions",
     "not ie <= 8"
   ]
 }

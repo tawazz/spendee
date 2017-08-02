@@ -11,6 +11,5 @@ module.exports = [
    //'./node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
    "../css/bootstrap-datetimepicker.min.css",
    "../css/morris.css",
-   "./node_modules/snackbar/dist/snackbar.min.css",
-   "../css/main.css",
+   "./node_modules/snackbar/dist/snackbar.min.css"
 ]

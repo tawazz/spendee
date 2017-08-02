@@ -145,5 +145,4 @@
   }
 </script>
 <style scoped>
-  @import "../../static/pills.css";
 </style>

@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <div class="container-fluid">
-      <Dash :bal="expdata.balance" :exp="expdata.exp_total" :inc="expdata.inc_total"/>
+      <Dash />
       <router-view />
     </div>
     <FooterArea />
@@ -13,7 +13,6 @@
 import Dash from './components/dash'
 import Navbar from './components/nav'
 import FooterArea from './components/footer'
-const expdata =  require('../static/data.json');
 export default {
   name: 'app',
   data:function () {
@@ -27,8 +26,7 @@ export default {
     FooterArea
   },
   mounted:function () {
-    let vm =this;
-    vm.expdata = expdata;
+    var vm =this;
   }
 }
 </script>

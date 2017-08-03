@@ -29,6 +29,17 @@
     public function errors(){
       return $this->errors;
     }
+
+    public function __get($prop)
+    {
+      if($this->{$prop}){
+        return $this->{$prop};
+      }
+      if($this->mailer->{$prop}){
+        return $this->{$prop};
+      }
+      return null;
+    }
   }
 
  ?>

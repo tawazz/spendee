@@ -76,9 +76,8 @@
         $mailer->Password = $app['Config']->get('email.password');
         $mailer->setFrom($app['Config']->get('email.user'), 'WEBCHEAP');
         $mailer->isHTML(true);
-        // TODO: figure out how to use Slim Dependancies in terminal
-        return $mailer;
-        #return new \Mailer($app['view'],$mailer,$app['queue']);
+        $mailer = new \Mailer($app['view'],$mailer);
+        return $mailer->mailer;
       };
     }
   }

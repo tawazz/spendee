@@ -6,13 +6,16 @@ use Illuminate\Queue\Worker;
 use Illuminate\Queue\WorkerOptions;
 use HTTP\Jobs\{ Container,DebugException};
 use HTTP\Services\ServiceProvider;
-use Slim\DefaultServicesProvider;
-use Pimple\Container as App;
+use \Slim\App;
+use \Slim\Http\Environment;
 
 $app = new App();
-#$app->register(new DefaultServicesProvider());
-$app->register(new ServiceProvider());
-$queue = $app['queue'];
+$app->environment = Environment::mock([
+    'REQUEST_URI' => '/'
+]);
+$container = $app->getContainer();
+$container->register(new ServiceProvider());
+$queue = $container['queue'];
 $data = [
       'body'    => "hello email job jost",
       'subject' => "Test",
@@ -21,7 +24,7 @@ $data = [
       'phone'   => "04035123",
       'to'      => "tawanda.nyakudjga@gmail.com"
     ];
-  #$view = $app->view();
-  #$view->appendData($data);
-  #$data['body'] = $view->render('email/contact_email.php');
+  $view = $container['view'];
+  $view->appendData($data);
+  $data['body'] = $view->fetch('emails/contact.php',$data);
   $queue->push(HTTP\Jobs\Handlers\EmailHandler::class,$data);

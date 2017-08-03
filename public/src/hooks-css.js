@@ -7,3 +7,7 @@ require('../node_modules/morris.js/morris.css')
 require('../static/card.css');
 require('../static/pills.css');
 require("../node_modules/mdi/css/materialdesignicons.css")
+
+if( process.env.NODE_ENV == "development") {
+  require('../../css/main.css');
+}

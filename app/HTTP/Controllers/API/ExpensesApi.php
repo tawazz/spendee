@@ -8,7 +8,7 @@
     {
         public function __invoke($req, $resp,$args)
         {
-            return $this->list($req,$resp,$args);
+            return $this->get($req,$resp,$args);
         }
         public function retrieve($req, $resp,$args)
         {
@@ -46,7 +46,7 @@
             $app->view->render($resp,'errors/404.php');
           }
         }
-        public function list($req,$resp,$args)
+        public function get($req,$resp,$args)
         {
           $app = $this->container;
           $year = isset($args['year']) ? $args['year'] : Null;

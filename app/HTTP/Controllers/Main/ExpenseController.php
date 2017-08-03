@@ -8,7 +8,7 @@
 
     public function __invoke($req, $resp,$args)
     {
-        $this->list($req,$resp,$args);
+        $this->get($req,$resp,$args);
     }
     public function retrieve($req, $resp,$args)
     {
@@ -53,15 +53,14 @@
         $app->view->render($resp,'errors/404.php');
       }
     }
-    public function list($req,$resp,$args)
+
+    public function get($req,$resp,$args)
     {
       $app = $this->container;
       $year = isset($args['year']) ? $args['year'] : Null;
       $month = isset($args['month']) ? $args['month'] : Null;
       $day = isset($args['day']) ? $args['day'] : Null;
-      $data = $this->container->Helper->getData($app,$app->auth->id,$year,$month,$day);
       $this->view->render($resp,'main/vue.php',[
-        'appData' => json_encode($data),
         'page'    => 'expenses',
         'totals'  => []
       ]);

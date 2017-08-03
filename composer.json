@@ -12,7 +12,12 @@
         "fzaninotto/faker": "^1.6",
         "dflydev/fig-cookies": "^1.0",
         "slim/flash": "^0.2.0",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "phpmailer/phpmailer": "^5.2",
+        "illuminate/queue": "^5.4",
+        "pda/pheanstalk": "^3.1",
+        "illuminate/encryption": "^5.4"
+
     },
     "autoload": {
         "psr-4": {

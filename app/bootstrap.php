@@ -1,10 +1,9 @@
 <?php
   session_start();
   require 'vendor/autoload.php';
-  require 'Tazzy-Helpers/autoload.php';
   use Slim\App;
-  use Carbon\Carbon;
   use HTTP\Middleware\{Error,Dump,Csrf};
+  use HTTP\Services\ServiceProvider;
 
   $app = new App(
     new \Slim\Container([
@@ -14,48 +13,15 @@
     ])
   );
   $container = $app->getContainer();
+  //Register service provider
+  $container->register(new ServiceProvider());
   //Middleware
   $app->add(new Dump($container));
   $app->add(new Error($container));
   $app->add(new Csrf($container));
   require 'app/HTTP/Middleware/auth_filters.php';
   //views
-  $container["view"] = function($c){
-    $view = new HTTP\Helpers\Twig(Settings::get('views.dir'), [
-        'cache' => Settings::get('views.cache')
-    ]);
-    // Instantiate and add Slim specific extension
-    $basePath = rtrim(str_ireplace('index.php', '', $c['request']->getUri()->getBasePath()), '/');
-    $view->addExtension(new HTTP\Helpers\TwigExtension($c['router'], $basePath));
-    $view->addExtension(new \Twig_Extension_Debug());
-
-    return $view;
-  };
   $app->view = $container->view;
-  //models
-  require 'app/HTTP/Models/Models.php';
-  //dependancies
-  $container['session'] = function(){
-    return  new Session();
-  };
-  $container['hash'] = function(){
-    return  new Hash();
-  };
-
-  $container['Config'] = function(){
-    return  new Settings();
-  };
-
-  $container['Helper'] = function(){
-    return  new HTTP\Models\Helper();
-  };
-
-  $container['Cookie'] = function(){
-    return  new HTTP\Helpers\Cookie();
-  };
-  $container['flash'] = function () {
-    return new \Slim\Flash\Messages();
-  };
 
  //variables
   $container['debug'] = Settings::get('debug');

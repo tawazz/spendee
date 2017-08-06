@@ -4,7 +4,7 @@ require_once __DIR__.'/../../vendor/autoload.php';
 
 use Illuminate\Queue\Worker;
 use Illuminate\Queue\WorkerOptions;
-use HTTP\Jobs\{ Container,DebugException};
+use HTTP\Jobs\{ Container,DebugException };
 use HTTP\Services\ServiceProvider;
 use \Slim\App;
 use \Slim\Http\Environment;

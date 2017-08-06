@@ -19,11 +19,11 @@
 
     public function __get($prop)
     {
-        if ($this->{$prop}) {
+        if (isset($this->{$prop})) {
             return $this->{$prop};
         }
 
-        if ($this->container->{$prop}) {
+        if (isset($this->container->{$prop})) {
             return $this->container->{$prop};
         }
     }

@@ -6,11 +6,13 @@ import router from './router'
 import bs from 'bootstrap'
 import store from '@/vuex/store'
 import axios from 'axios'
+import $ from 'jquery'
+import material from 'material'
 require('./hooks-css')
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
-
+$.material.init();
 new Vue({
   el: '#app',
   store,

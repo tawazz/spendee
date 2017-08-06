@@ -28,7 +28,9 @@ module.exports = {
       '@': resolve('src'),
       'datetimepicker':'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js',
       'easing':'jquery.easing/jquery.easing.js',
-      'morris':'morris.js/morris.js'
+      'morris':'morris.js/morris.js',
+      'material':'bootstrap-material-design/dist/js/material.js',
+      'ripples':'bootstrap-material-design/dist/js/ripples.js'
     }
   },
   module: {
@@ -40,6 +42,14 @@ module.exports = {
       },
       {
         test: /bootstrap.+\.(js)$/,
+        loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
+      },
+      {
+        test: /material.+\.(js)$/,
+        loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
+      },
+      {
+        test: /ripples.+\.(js)$/,
         loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
       },
       {
@@ -72,6 +82,8 @@ module.exports = {
            "select2": "../node_modules/select2/dist/js/select2.full.min.js",
            moment: "moment",
            swal: 'sweetalert2',
+           material:'../node_modules/bootstrap-material-design/dist/js/material.js',
+           ripples:'../node_modules/bootstrap-material-design/dist/js/ripples.js',
            datetimepicker:"../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"
        })
     ]

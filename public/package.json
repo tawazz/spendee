@@ -15,6 +15,7 @@
     "bootstrap-material-design": "^0.5.10",
     "chart.js": "^2.6.0",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+    "flatpickr": "^3.0.6",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "jquery-validation": "^1.16.0",
@@ -30,6 +31,7 @@
     "tether": "^1.4.0",
     "update": "^0.7.4",
     "vue": "^2.3.4",
+    "vue-multiselect": "^2.0.2",
     "vue-router": "^2.7.0",
     "vuex": "^2.3.1"
   },

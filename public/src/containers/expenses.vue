@@ -11,31 +11,13 @@
         <a href="#" class="btn btn-danger btn-fab" @click.prevent="addButtonClick" ><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
       </div>
     </div>
-    <modal title="Add Expense" :isOpen="showAddModal" :ok="addExpense" :cancel="closeModal" okText="Save">
-      <form name="addForm" id="addForm" method="post" action="/expenses/add">
-          <div class="form-group">
-              <input type="text" class="form-control" name="name" placeholder="Enter Item Name" style="cursor: auto;">
-          </div>
-          <div class="form-group">
-              <input type="text" class="form-control money" name="cost"  placeholder="Enter Amount">
-          </div>
-          <div class="form-group">
-              <input type="text" class="form-control datepicker" name="date" placeholder="Date" data-provide="datepicker" onfocus="blur();" onkeydown="return false">
-          </div>
-          <div class="form-group">
-            <label for="tags">Tags</label>
-            <select class="form-control" name="tags[]" id="tags" multiple="multiple" style="width:100%;height:50px;">
-              <option value="tag.id">tag.name</option>
-            </select>
-          </div>
-        </form>
-    </modal>
+    <add-exp :show="showAddModal" :save="addExpense" :close="closeModal"/>
   </div>
 </template>
 <script>
   import itemsList from '@/components/item-list'
   import graphs from '@/components/graphs'
-  import modal from '@/components/helpers/modal'
+  import addExpenseModal from '@/components/expenses/add-expense'
   import { mapState } from 'vuex'
   import {axios,apis} from '@/hooks'
   import Vue from 'vue'
@@ -52,7 +34,7 @@
     components:{
       'item-list':itemsList,
       'exp-graphs':graphs,
-      modal
+      'add-exp':addExpenseModal
     },
     computed:{
         ...mapState({

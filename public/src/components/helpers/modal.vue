@@ -147,10 +147,6 @@
 .modal .btn {
     margin-bottom: 0px;
 }
-.modal-body, .modal-footer, .modal-header {
-    background-color: #F5F5F5;
-    color: #333333;
-}
 .modal-transition {
     transition: all .6s ease;
 }

@@ -7,7 +7,8 @@ export default {
     },
     totals:function (year,month,day) {
         return getUrl('totals',year,month,day);
-    }
+    },
+    tags:"/api/tags"
 }
 function getUrl(page,year,month,day){
     let url = "";

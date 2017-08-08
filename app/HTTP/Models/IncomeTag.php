@@ -4,7 +4,9 @@
 
     protected $table='income_tags';
     protected $primary_key ='id';
-    protected $hasOne =['\HTTP\Models\Tag'];
+    protected $hasOne =[
+      ['class' => \HTTP\Models\Tag::class, 'id' => 'tag_id']
+    ];;
 
     public function  findIncTagsById($id){
       $result = $this->find('all',[

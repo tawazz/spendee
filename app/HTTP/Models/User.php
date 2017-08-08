@@ -5,7 +5,9 @@
   {
     protected $table = 'users';
     protected $primary_key ='id';
-    protected $hasOne = ['\HTTP\Models\Remember'];
+    protected $hasMany = [
+      ['class' => \HTTP\Models\Remember::class,'id' => 'user_id']
+    ];
     protected $validate = [
       'firstname'=> array(
           'min'=> 2,

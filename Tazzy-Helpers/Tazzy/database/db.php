@@ -299,7 +299,7 @@ require_once __DIR__ . '../../../config.php';
             return false;
         }
 
-        private function primaryKey($table){
+        public function primaryKey($table){
             $query = $this->query("SHOW KEYS FROM ".$table." WHERE Key_name = 'PRIMARY'")->result();
             if(!$this->error()){
               return $query[0]->Column_name;
@@ -307,11 +307,11 @@ require_once __DIR__ . '../../../config.php';
             return FALSE;
         }
         public function tableColumns($table){
-            $query = $this->query("SELECT `COLUMN_NAME` AS 'column'
-FROM `INFORMATION_SCHEMA`.`COLUMNS`
-WHERE `TABLE_SCHEMA`='mycakedb331'
-    AND `TABLE_NAME`='{$table}';")->result();
-    return $query;
+          $query = $this->query("SELECT `COLUMN_NAME` AS 'column'
+          FROM `INFORMATION_SCHEMA`.`COLUMNS`
+          WHERE `TABLE_SCHEMA`= ".Config::get('db.db')."
+              AND `TABLE_NAME`='{$table}';")->result();
+          return $query;
         }
     }
 ?>

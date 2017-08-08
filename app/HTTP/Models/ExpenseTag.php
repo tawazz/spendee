@@ -5,7 +5,9 @@
 
     protected $table='expense_tags';
     protected $primary_key ='id';
-    protected $hasOne =['\HTTP\Models\Tag'];
+    protected $hasOne =[
+      ['class' => \HTTP\Models\Tag::class, 'id' => 'tag_id']
+    ];
 
     public function  findExpTagsById($id){
       $result = $this->find('all',[

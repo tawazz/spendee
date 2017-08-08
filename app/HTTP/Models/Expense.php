@@ -10,16 +10,28 @@
     ];
 
     public function totalExp($startDate,$endDate){
-        $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<",$endDate)->get();
+        $sql = $this->qb
+              ->sum($this->table,'cost')
+              ->where('user_id','=',$this->active_record)
+              ->andWhere("date",">=",$startDate)
+              ->andWhere("date","<",$endDate)
+              ->get();
         return $this->db->query($sql)->first()->sum;
     }
 
      // get total cost of an expense/income between 2 dates
 
     public function spentOnProduct($name,$startDate,$endDate){
-            $query = $this->db->query("select Sum(cost) AS cost from $this->table where user_id = ? and name LIKE ? and date >= ? and date < ? ",array($this->active_record,$name,$startDate,$endDate));
-            $query->first()->name = $name;
-            return $query->first();
+      $query = $this->qb
+              ->sum($this->table,'cost')
+              ->where('user_id','=',$this->active_record)
+              ->andWhere('name','LIKE',$name)
+              ->andWhere('date','>=',$startDate)
+              ->andWhere('date','<',$endDate)
+              ->get();
+      $result = $this->db->query($query);
+      $result->first()->name = $name;
+      return $result->first();
     }
     public function getProduct($name,$startDate,$endDate){
       return $this->find('all',[

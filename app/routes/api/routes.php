@@ -2,6 +2,7 @@
     use \HTTP\Controllers\API\ExpensesApi;
     use \HTTP\Controllers\API\IncomesApi;
     use \HTTP\Controllers\API\Totals;
+    use \HTTP\Controllers\API\Tags;
 
     $this->get('/expenses[/{year}[/{month}[/{day}]]]',ExpensesApi::class)->setName('api.expenses');
     $this->get('/expense/{name}[/{year}]',ExpensesApi::class.':retrieve')->setName('api.expense.retrieve');
@@ -16,4 +17,6 @@
     $this->delete('/income/{id}',IncomesApi::class.':delete')->setName('api.income.delete');
 
     $this->get('/totals[/{year}[/{month}[/{day}]]]',Totals::class)->setName('api.totals');
+
+    $this->get('/tags',Tags::class)->setName('api.tags');
  ?>

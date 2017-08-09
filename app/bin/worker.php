@@ -3,8 +3,7 @@
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Illuminate\Queue\Worker;
-use Illuminate\Queue\WorkerOptions;
-use HTTP\Jobs\{ Container,DebugException};
+use HTTP\Jobs\DebugException;
 use HTTP\Services\ServiceProvider;
 use Pimple\Container as App;
 

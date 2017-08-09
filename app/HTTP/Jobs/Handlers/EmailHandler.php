@@ -10,12 +10,13 @@
     public function fire($job, $data)
        {
          $mailer = $this->container['mailer'];
-         $mailer->addAddress($data['to']);
-         $mailer->Subject = $data['subject'];
-         $mailer->Body = $data['body'];
-         echo "Sending email...\n";
-         if(!$mailer->send()){
-             throw new Exception($mailer->ErrorInfo, 1);
+         $sent = $mailer->send('emails/contact.php',$data,function($message) use($data){
+           echo "Sending email...\n";
+           $message->to($data['to']);
+           $message->subject($data['subject']);
+         });
+         if(!$sent){
+             throw new \Exception($mailer->errors, 1);
          }else{
            echo "email sent ...\n";
          }

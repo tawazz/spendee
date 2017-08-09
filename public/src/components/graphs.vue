@@ -20,35 +20,12 @@
             <div class="card-header card-header-icon" data-background-color="orange">
                 <i class="fa-2x mdi mdi-tag-multiple"></i>
             </div>
+            <h4 class="card-title">Tags Overview</h4>
             <div class="clearfix"></div>
             <div class="card-content">
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                   <div id="morris-pie-chart" ></div>
-                </div>
-                <div class="col-sm-6">
-                  <ul class="nav nav-pills nav-pills-warning">
-                      <li class="active">
-                          <a href="#pill1" data-toggle="tab" aria-expanded="true">Expenses</a>
-                      </li>
-                      <li class="">
-                          <a href="#pill2" data-toggle="tab" aria-expanded="false">Overview</a>
-                      </li>
-                  </ul>
-                  <div class="tab-content">
-                      <div class="tab-pane active" id="pill1">
-                          <div class="row">
-                            <div class="col-sm-12">
-
-                            </div>
-                          </div>
-                      </div>
-                      <div class="tab-pane" id="pill2">
-                          Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas.
-                          <br>
-                          <br>Dramatically maintain clicks-and-mortar solutions without functional solutions.
-                      </div>
-                  </div>
                 </div>
               </div>
             </div>

@@ -18,7 +18,8 @@ var store = new Vuex.Store({
             balance:0,
             expenses:0,
             incomes:0
-        }
+        },
+        tagData:null
     },
     mutations,
     actions,

@@ -16,5 +16,8 @@ export default{
     },
     SETTOTALS(state,payload){
         state.totals = payload;
+    },
+    SETTAGDATA(state,payload){
+      state.tagData = payload;
     }
 }

@@ -16,21 +16,20 @@
     </div>
     <div class="row">
     <div class="col-md-12">
-        <div class="card card-stats">
-            <div class="card-header card-header-icon" data-background-color="orange">
+        <div class="card">
+            <div v-if="type=='income'" class="card-header card-header-icon" :data-background-color="color">
+              <i class="fa-2x mdi mdi-tag-multiple"></i>
+            </div>
+            <div v-else class="card-header card-header-icon" data-background-color="rose">
                 <i class="fa-2x mdi mdi-tag-multiple"></i>
             </div>
-            <h4 class="card-title">Tags Overview</h4>
-            <div class="clearfix"></div>
             <div class="card-content">
+              <h4 class="card-title">Tags Overview</h4>
               <div class="row">
                 <div class="col-sm-12">
                   <div id="morris-pie-chart" ></div>
                 </div>
               </div>
-            </div>
-            <div class="card-footer">
-              <h4>here</h4>
             </div>
         </div>
     </div>
@@ -42,20 +41,23 @@
   import moment from 'moment'
   import Morris from "morris"
   import filters from '@/filters'
+  import {apis} from '@/hooks'
+  import randomColor from 'randomcolor'
 
   export default {
     name:'graph',
-    props:["data","color","type"],
+    props:["areaChart","color","type","tagChart"],
     data:function () {
       return {
         line_data:[],
+        pie_data:[],
         month:""
       }
     },
     watch:{
-      data:function () {
+      areaChart:function () {
         let vm = this;
-        let exp = vm.data;
+        let exp = vm.areaChart;
         for (var date_exp in exp) {
            var D = date_exp;
            var cost = 0;
@@ -65,13 +67,21 @@
            vm.line_data.push({day: D, value: cost});
         }
         $('#morris-line-chart').empty();
-        vm.areaChart();
+        vm.drawAreaChart();
+      },
+      tagChart:function () {
+        let vm =this;
+        Object.keys(vm.tagChart).map(pie => {
+          vm.pie_data.push({label: pie, value:vm.tagChart[pie]});
+        });
+        $('#morris-pie-chart').empty();
+        vm.drawTagChart();
       }
 
     },
     filters,
     methods: {
-      areaChart() {
+      drawAreaChart() {
         let vm = this;
         new Morris.Area({
           element: 'morris-line-chart',
@@ -98,24 +108,25 @@
           }
         });
         vm.line_data = [];
+      },
+      drawTagChart(){
+        let vm =this;
+        let colors = randomColor({
+                       count: vm.pie_data.length,
+                       luminosity: 'light',
+                       hue: '#ec407a'
+                    });
+        new Morris.Donut({
+          element: 'morris-pie-chart',
+          data: vm.pie_data,
+          formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
+          colors,
+          resize:true
+        });
+        vm.pie_data = [];
       }
     },
     mounted:function () {
-      let vm =this;
-      let days = [];
-      vm.month = moment(new Date()).format('MMM YYYY');
-
-      new Morris.Donut({
-        element: 'morris-pie-chart',
-        data: [
-          {label: "Food and Drink", value:200 },
-          {label: "Petrol", value:120 },
-          {label: "shopping", value:60 },
-        ],
-        formatter:function (y, data) { return '$'+y; } ,
-        colors:["#ffa726","#ff6384","#36a2eb","#4bc0c0"],
-        resize:true
-      });
 
     }
 

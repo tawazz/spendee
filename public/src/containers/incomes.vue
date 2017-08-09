@@ -5,7 +5,7 @@
         <item-list :data="incomes" :color="color" :type="type" />
       </div>
       <div class="col-md-6">
-        <exp-graphs :data="incomes" :color="color" :type="type" />
+        <exp-graphs :areaChart="incomes" :color="color" :type="type" />
       </div>
       <div class="btn-add">
         <a href="javascript:void(0)" class="btn btn-danger btn-fab"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>

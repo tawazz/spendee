@@ -21,6 +21,9 @@ export default {
     },
     selectExp(context,payload){
         context.commit('SELECTEDEXPENSE',payload);
+    },
+    updateTagData(context,payload){
+      context.commit('SETTAGDATA',payload);
     }
 
 }

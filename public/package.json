@@ -23,6 +23,7 @@
     "mdi": "^1.9.33",
     "moment": "^2.18.1",
     "morris.js": "https://github.com/tawazz/morris.js.git",
+    "randomcolor": "^0.5.3",
     "raphael": "^2.2.7",
     "select2": "^4.0.3",
     "select2-bootstrap-theme": "0.1.0-beta.10",

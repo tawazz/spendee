@@ -5,7 +5,7 @@
         <item-list :data="expenses" :color="color" :type="type"/>
       </div>
       <div class="col-md-6">
-        <exp-graphs :data="expenses" :type="type" :color="color" />
+        <exp-graphs :areaChart="expenses" :tagChart="tagData" :type="type" :color="color" />
       </div>
       <div class="btn-add">
         <a href="#" class="btn btn-danger btn-fab" @click.prevent="addButtonClick" ><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
@@ -38,7 +38,8 @@
     },
     computed:{
         ...mapState({
-            "expenses": state => state.expenses
+            expenses: state => state.expenses,
+            tagData: state => state.tagData,
         })
     },
     beforeRouteEnter (to, from, next) {
@@ -51,6 +52,9 @@
                     year,
                     month,
                     day:null
+                });
+                axios.get(apis.tagData(year,month)).then((response)=>{
+                  vm.$store.dispatch('updateTagData',response.data);
                 });
                 vm.$store.dispatch('updateExp',response.data);
                 vm.$store.dispatch('updatePage',"expenses");
@@ -66,6 +70,9 @@
             axios.get(apis.expenses(year,month)).then(response => {
                 vm.$store.dispatch('updateExp',response.data);
             });
+            axios.get(apis.tagData(year,month)).then((response)=>{
+              vm.$store.dispatch('updateTagData',response.data);
+            });
         }
     },
     methods:{
@@ -79,10 +86,14 @@
       },
       closeModal() {
           this.showAddModal = false;
+      },
+      init(){
+        let vm = this;
       }
     },
     mounted:function () {
       let vm =this;
+      vm.init();
     }
   }
 </script>

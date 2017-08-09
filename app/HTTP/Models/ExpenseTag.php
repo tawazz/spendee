@@ -21,7 +21,7 @@
       return $result;
     }
 
-    public function expTagsData($user_id,$startDate,$endDate)
+    public function tagData($user_id,$startDate,$endDate)
     {
       $EXP = new Expense();
       $Tags = new Tag();

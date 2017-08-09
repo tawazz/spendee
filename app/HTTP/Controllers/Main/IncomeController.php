@@ -54,16 +54,7 @@
     public function list($req,$resp,$args)
     {
       $app = $this->container;
-      $year = isset($args['year']) ? $args['year'] : Null;
-      $month = isset($args['month']) ? $args['month'] : Null;
-      $day = isset($args['day']) ? $args['day'] : Null;
-
-      $data = $app->Helper->getData($app,$app->auth->id,$year,$month,$day);
-      $app->view->render($resp,'main/vue.php',[
-        'appData' => json_encode($data),
-        'page'    => 'incomes',
-        'totals'  => []
-      ]);
+      $app->view->render($resp,'main/vue.php');
     }
     public function create($req, $resp,$args)
     {

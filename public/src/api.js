@@ -8,6 +8,9 @@ export default {
     totals:function (year,month,day) {
         return getUrl('totals',year,month,day);
     },
+    tagData:function (year,month,day) {
+      return getUrl('tags/expenses',year,month,day);
+    },
     tags:"/api/tags"
 }
 function getUrl(page,year,month,day){

@@ -4,7 +4,7 @@
     /**
      *
      */
-    class ExpenseTag extends \HTTP\Controllers\BaseController
+    class ExpenseTags extends \HTTP\Controllers\BaseController
     {
         public function __invoke($req, $resp,$args)
         {
@@ -22,7 +22,7 @@
             $year = isset($args['year']) ? $args['year'] : Null;
             $month = isset($args['month']) ? $args['month'] : Null;
             $day = isset($args['day']) ? $args['day'] : Null;
-            $data = $app->Helper->getTotals($app->auth->id,$year,$month,$day);
+            $data = $app->Helper->getExpenseTags($app,$app->auth->id,$year,$month,$day);
 
             return $resp->withJson($data);
         }

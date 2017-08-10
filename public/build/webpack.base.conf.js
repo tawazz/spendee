@@ -62,7 +62,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('../../css/dist/img/[name].[ext]')
+          name: utils.assetsPath('../../assets/images/[name].[ext]')
         }
       },
       {
@@ -70,7 +70,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('../../css/dist/fonts/[name].[ext]')
+          name: utils.assetsPath('../../assets/css/fonts/[name].[ext]')
         }
       }
     ]

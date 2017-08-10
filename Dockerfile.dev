@@ -7,17 +7,11 @@ WORKDIR /app
 RUN apt-get update && apt-get install nodejs npm -y
 RUN cp /usr/bin/nodejs /usr/bin/node
 
-WORKDIR /app/web
-RUN npm install
-RUN npm install --only=dev
-RUN npm install -g grunt grunt-cli
-RUN npm install grunt
-
 WORKDIR /app/public
 RUN npm install
+RUN npm run build
 
 WORKDIR /app
-
 
 EXPOSE 80
 CMD ["apache2ctl", "-D", "FOREGROUND"]

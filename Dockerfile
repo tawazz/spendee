@@ -11,11 +11,9 @@ RUN git checkout master
 COPY app/config/config.php /app/app/config/
 RUN composer install
 
-WORKDIR /app/web
+WORKDIR /app/public
 RUN npm install
-RUN npm install --only=dev
-RUN npm install -g grunt
-RUN grunt
+RUN npm run build
 
 WORKDIR /app
 

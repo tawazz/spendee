@@ -36,7 +36,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract css into its own file
     new ExtractTextPlugin({
-      filename: utils.assetsPath('../../css/dist/[name].css')
+      filename: utils.assetsPath('../css/[name].css')
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -67,7 +67,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),
-        to: path.resolve(__dirname, '../../css/dist'),
+        to: path.resolve(__dirname, '../../assets/css'),
         ignore: ['.*']
       }
   ])

@@ -7,7 +7,7 @@
             <div  :style="{color}" v-for="i in item">
                 <div class="card-footer capitalize">
                     <div>
-                      <a :href="`/${type}/${i.user_id}`" style="bottom:0;padding-left:15px;">{{i.name}}</a>
+                      <a :href="`/${type}/${i.user_id}`" :style="{color}" style="bottom:0;padding-left:15px;">{{i.name}}</a>
                       <span class="tag" style="margin:0 5px;" v-for="tag in i.expense_tags">
                         {{ tag.tags.name}}
                       </span>

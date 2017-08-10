@@ -16,7 +16,8 @@
         "phpmailer/phpmailer": "^5.2",
         "illuminate/queue": "^5.4",
         "pda/pheanstalk": "^3.1",
-        "illuminate/encryption": "^5.4"
+        "illuminate/encryption": "^5.4",
+        "lavary/crunz": "^1.4"
 
     },
     "autoload": {

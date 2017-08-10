@@ -8,3 +8,4 @@ web/node_modules
 app/views/cache
 dist
 /assets
+/logs/*.log

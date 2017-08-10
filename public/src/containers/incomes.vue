@@ -70,9 +70,6 @@
   }
 </script>
 <style media="screen">
-  .btn.btn-fab i.material-icons, .input-group-btn .btn.btn-fab i.material-icons {
-    line-height: 16px;
-  }
   .btn-add{
     position: fixed;
     bottom: 0px;

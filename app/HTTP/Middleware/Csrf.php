@@ -11,33 +11,38 @@ class Csrf extends BaseMiddleware {
   public function __invoke($req,$resp,$next){
 
     $this->key = "csrf_token";
-    $this->check($req);
+    $resp = $this->check($req,$resp);
     $resp = $next($req,$resp);
     return $resp;
   }
 
-  public function check($req){
+  public function check($req,$resp){
     $session = $this->session;
     $hash = $this->hash;
 
     if (!$session->exists($this->key)) {
-      $session->put($this->key,$hash->make($hash->salt(10)));
+      $token = $hash->make($hash->salt(10));
+      $session->put($this->key,$token);
     }
     $token = $session->get($this->key);
-    if (strpos($req->getUri()->getPath(), 'api') === false) {
 
-      if (in_array($req->getMethod(),['POST','PUT','DELETE'])) {
-        $submited_token = $req->getParam($this->key) ? : "";
-        if (!$hash->check($token,$submited_token)) {
-           throw new Exception("CSRF token mismatch ");
-        }
+    if (in_array($req->getMethod(),['POST','PUT','DELETE'])) {
+      $submited_token = $req->getParam($this->key) ? : "";
+      if (empty($submited_token)) {
+        $submited_token = $this->Cookie->getCookie($req,$this->key)->getValue() ? : "";
       }
-      unset($_POST[$this->key]);
-      $this->view->appendData([
-        'csrf_key'=>$this->key,
-        'csrf_token'=>$token
-      ]);
+      if (!$hash->check($token,$submited_token)) {
+         throw new \Exception("CSRF token mismatch ");
+      }
     }
+    unset($_POST[$this->key]);
+    $this->view->appendData([
+      'csrf_key'=>$this->key,
+      'csrf_token'=>$token
+    ]);
+    $resp = $this->Cookie->deleteCookie($resp,$this->key);
+    $resp = $this->Cookie->setCookie($resp,$this->key,$token);
+    return $resp;
   }
 
 }

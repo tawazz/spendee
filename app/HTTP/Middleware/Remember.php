@@ -14,15 +14,15 @@ namespace HTTP\Middleware;
       public function run($req,$resp){
         $app = $this->container;
         if($app->session->exists('id')){
-          $user = $app->User;
-          if($user->read($app->session->get('id'))){
-            $app->auth = $user->get();
+          $user = $app->User->get($app->session->get('id'));
+          if(isset($user)){
+            $app->auth = $user;
           }
           $app->view->appendData([
               "auth"=>$app->auth
           ]);
         }
-        $this->rememberMe($req,$resp);
+        $resp = $this->rememberMe($req,$resp);
       }
 
       protected function rememberMe($req,$resp)
@@ -34,26 +34,23 @@ namespace HTTP\Middleware;
           if(isset($exist))
           {
             $id = $exist->user_id;
-            $user = $this->User->find('first',[
-                'where'=>['user_id','=',$id]
-            ]);
-            if($user){
+            $user = $this->User->get($id);
+            if(isset($user)){
                 $this->session->put('id',$user->user_id);
-                dump($this->container->auth);
-                die();
-                $this->container->auth = $user;
+                $this->container['auth'] = $user;
                 $this->view->appendData([
-                    "auth"=>$this->auth
+                    "auth"=>$user
                 ]);
             }else {
               $this->User->removeRemember($user->user_id);
             }
           }else{
-            $this->Cookie->deleteCookie($resp,'remember');
+            $resp = $this->Cookie->deleteCookie($resp,'remember');
           }
         }else{
-          return $resp->withStatus(302)->withHeader('Location','/login');
+          $resp = $resp->withStatus(302)->withHeader('Location','/login');
         }
+        return $resp;
       }
 
     }

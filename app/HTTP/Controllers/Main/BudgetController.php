@@ -15,7 +15,7 @@
       $app = $this;
       $id = $args['id'];
 
-      $budget = $app->Budget->read($id)->get();
+      $budget = $app->Budget->get($id);
       if ($budget->id == $app->auth->id) {
         $budgetTags = $app->BudgetTag->find("all",[
           "fields" => ["tag_id"],

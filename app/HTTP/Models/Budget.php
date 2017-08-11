@@ -15,7 +15,13 @@ class Budget extends \Table
   {
       $startDate = $year."/".$month."/1";
       $endDate = $year."/".($month+1)."/1";
-      $budgets = $this->db->query($this->qb->table($this->table)->where("start_date",">=",$startDate)->andWhere("start_date","<",$endDate)->andWhere("user_id","=",$app->auth->user_id)->get())->result();
+      $budgets = $this->db->query($this->qb
+                          ->table($this->table)
+                          ->where("start_date",">=",$startDate)
+                          ->andWhere("start_date","<",$endDate)
+                          ->andWhere("user_id","=",$app->auth->user_id)
+                          ->get())
+                          ->result();
       foreach ($budgets as $budget) {
         $budgetTags = $app->BudgetTag->find('all',[
           "where" => ["bud_id","=",$budget->id]

@@ -79,16 +79,16 @@
       }
       return FALSE;
     }
-    public function get($field=[]){
+    public function get($id,$field=[]){
       if(!isset($field)){
         return $this->find('first',[
-          'where'=>[$this->primary_key,'=',$this->active_record],
+          'where'=>[$this->primary_key,'=',$id],
           'fields'=>$field
         ]);
       }else{
         return $this->find('first',[
         'where'=>[
-                $this->primary_key,'=',$this->active_record
+                $this->primary_key,'=',$id
             ]
         ]);
       }

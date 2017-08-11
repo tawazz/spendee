@@ -41,14 +41,9 @@
           if($fetch_user && $this->container->hash->make($req->getParam('password'),$req->getParam('username')) == $fetch_user->password ){
             $this->session->put('id',$fetch_user->id);
             if ($remember == 'on') {
-              if (!$fetch_user->session) {
                 $remember_hash = $app->hash->make($app->hash->salt(10));
-                $user->remember($fetch_user->id,$remember_hash);
+                $app->User->remember($fetch_user->id,$remember_hash);
                 $resp = $app->Cookie->setCookie($resp,'remember',"{$remember_hash}",Carbon::parse('+4 weeks')->timestamp);
-
-              }else{
-                $resp = $app->Cookie->setCookie($resp,'remember',"{$fetch_user->session->hash}",Carbon::parse('+4 weeks')->timestamp);
-              }
               return $this->redirect($resp,$this->urlFor('expenses'));
             }else{
               return $this->redirect($resp,$this->urlFor('expenses'));

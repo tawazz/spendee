@@ -11,11 +11,12 @@ namespace HTTP\Models;
    {
        $data = [
          'hash' => $hash,
-         'user_id'=> $id
+         'user_id'=> $user_id
        ];
        $saved = $this->save($data);
        if(!$saved){
            dump($saved);
+           die();
        }
    }
 

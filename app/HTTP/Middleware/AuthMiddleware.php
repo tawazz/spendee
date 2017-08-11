@@ -16,12 +16,12 @@ class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
   protected function run($req,$resp){
     $app = $this->container;
     if($app->session->exists('id')){
-      $user = $app->User;
-      if($user->read($app->session->get('id'))){
-        $app['auth'] = $user->get();
+      $user = $app->User->get($app->session->get('id'));
+      if(isset($user)){
+        $app['auth'] = $user;
       }
       $app->view->appendData([
-          "auth"=>$app->auth
+          "auth"=>$user
       ]);
     }else{
       $resp = $this->rememberMe($req,$resp);
@@ -38,11 +38,9 @@ class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
       if(isset($exist))
       {
         $id = $exist->user_id;
-        $user = $this->User->find('first',[
-            'where'=>['user_id','=',$id]
-        ]);
+        $user = $this->User->get($id);
         if($user){
-            $this->session->put('id',$user->user_id);
+            $this->session->put('id',$user->id);
             $this->container->auth = $user;
             $this->view->appendData([
                 "auth"=>$this->auth

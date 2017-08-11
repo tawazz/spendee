@@ -75,7 +75,7 @@
               $app->ExpTags->save($tags_data);
           }
 
-          return $resp->withJson($app->Exp->read($exp_id)->get(),200);
+          return $resp->withJson($app->Exp->get($exp_id),200);
         }
         public function update($req, $resp,$args)
         {

@@ -1,5 +1,5 @@
 <template lang="html">
-  <modal title="Add Expense" :isOpen="show" :ok="save" :cancel="close" okText="Save">
+  <modal title="Add Expense" :isOpen="show" :ok="addExpense" :cancel="close" okText="Save">
     <form name="addForm" id="addForm" method="post" action="/expenses/add">
       <div class="row">
         <div class="col-sm-6 col-xs-12">
@@ -65,7 +65,7 @@ export default {
         name:"",
         cost:"",
         date:"",
-        tags:[1,4,12]
+        tags:[]
       },
       datepicker:null,
       tags:[],
@@ -117,6 +117,15 @@ export default {
           });
         });
       }
+    },
+    addExpense:function (e) {
+      let vm =this;
+      let data = {...vm.expense};
+      vm.$http.post(apis.expense(),data).then((response)=>{
+        vm.save();
+      }).catch((error)=>{
+        console.log(error);
+      });
     }
   },
   beforeMount:function () {

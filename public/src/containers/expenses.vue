@@ -63,16 +63,7 @@
     },
     watch:{
         $route:function () {
-            let vm = this;
-            let params = vm.$route.params;
-            let year = params.year;
-            let month = params.month;
-            axios.get(apis.expenses(year,month)).then(response => {
-                vm.$store.dispatch('updateExp',response.data);
-            });
-            axios.get(apis.tagData(year,month)).then((response)=>{
-              vm.$store.dispatch('updateTagData',response.data);
-            });
+            this.updatePage();
         }
     },
     methods:{
@@ -82,7 +73,21 @@
       },
       addExpense() {
         let vm = this;
+        vm.updatePage();
         vm.closeModal();
+
+      },
+      updatePage(){
+        let vm = this;
+        let params = vm.$route.params;
+        let year = params.year;
+        let month = params.month;
+        axios.get(apis.expenses(year,month)).then(response => {
+            vm.$store.dispatch('updateExp',response.data);
+        });
+        axios.get(apis.tagData(year,month)).then((response)=>{
+          vm.$store.dispatch('updateTagData',response.data);
+        });
       },
       closeModal() {
           this.showAddModal = false;

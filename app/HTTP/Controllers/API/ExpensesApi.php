@@ -60,20 +60,22 @@
         {
           $app = $this;
           $data = [
-              'name'=> $_POST['name'],
-              'cost'=> str_replace( ',', '',$_POST['cost'] ),
-              'date'=> $_POST['date'],
-              'id'=> $app->auth->id
+              'name'=> $req->getParam('name'),
+              'cost'=> str_replace( ',', '',$req->getParam('cost') ),
+              'date'=> $req->getParam('date'),
+              'user_id'=> $app->auth->id
           ];
           $exp_id = $app->Exp->save($data);
-          foreach ($_POST['tags'] as $tag_id) {
+
+          foreach ($req->getParam('tags') as $tag_id) {
               $tags_data = [
                 'exp_id' => $exp_id,
                 'tag_id' => $tag_id
               ];
               $app->ExpTags->save($tags_data);
           }
-          return $this->redirect($resp,$app->urlFor('expenses'));
+
+          return $resp->withJson($app->Exp->read($exp_id)->get(),200);
         }
         public function update($req, $resp,$args)
         {

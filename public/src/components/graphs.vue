@@ -7,7 +7,7 @@
                 <div id="morris-line-chart" />
             </div>
             <div class="card-content">
-                <h4 class="card-title capitalize">Daily {{type}}s for {{ month }}</h4>
+                <h4 class="card-title capitalize">Daily {{type}}s for {{ nav.display }}</h4>
                 <p class="category">
                     <span class="text-danger"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in spending</p>
             </div>
@@ -42,6 +42,7 @@
   import Morris from "morris"
   import filters from '@/filters'
   import {apis} from '@/hooks'
+  import { mapState } from 'vuex'
   import randomColor from 'randomcolor'
 
   export default {
@@ -126,8 +127,10 @@
         vm.pie_data = [];
       }
     },
-    mounted:function () {
-
+    computed:{
+      ...mapState({
+          nav: state => state.nav
+      })
     }
 
   }

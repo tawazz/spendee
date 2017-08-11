@@ -11,7 +11,13 @@ export default {
     tagData:function (year,month,day) {
       return getUrl('tags/expenses',year,month,day);
     },
-    tags:"/api/tags"
+    tags:"/api/tags",
+    expense:function(id = null) {
+      if (id) {
+        return `/api/expense/${id};`
+      }
+      return '/api/expense'
+    },
 }
 function getUrl(page,year,month,day){
     let url = "";

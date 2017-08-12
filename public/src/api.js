@@ -18,6 +18,9 @@ export default {
       }
       return '/api/expense'
     },
+    location:function (query,ll='-31.95,115.86') {
+      return `/api/places?ll=${ll}&query=${query}`;
+    }
 }
 function getUrl(page,year,month,day){
     let url = "";

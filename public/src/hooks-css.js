@@ -7,6 +7,8 @@ require("../node_modules/font-awesome/css/font-awesome.min.css")
 require('./theme.less')
 require('../static/card.css');
 require('../static/pills.css');
+require('../node_modules/awesomplete/awesomplete.base.css');
+require('../node_modules/awesomplete/awesomplete.theme.css');
 //require('../node_modules/flatpickr/dist/flatpickr.css')
 require('../node_modules/flatpickr/dist/themes/airbnb.css')
 require('@/assets/main.css');

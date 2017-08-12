@@ -5,6 +5,7 @@
   use Pimple\ServiceProviderInterface;
   require_once __DIR__.'/../../../Tazzy-Helpers/autoload.php';
   require_once __DIR__.'/../../config/settings.php';
+  require_once __DIR__.'/../../config/database.php';
   /**
    * Services
    */

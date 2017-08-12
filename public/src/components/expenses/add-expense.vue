@@ -3,22 +3,133 @@
     <form name="addForm" id="addForm" method="post" action="/expenses/add">
       <div class="row">
         <div class="col-sm-6 col-xs-12">
-          <div class="form-group">
-              <input type="text" class="form-control" name="name" placeholder="Enter Expense" v-model="expense.name">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-shopping"></i></button>
+            </span>
+            <div class="form-group label-floating is-empty">
+              <label class="control-label">Expense</label>
+              <input type="text" class="form-control" name="name" v-model="expense.name">
+            </div>
           </div>
         </div>
         <div class="col-sm-6 col-xs-12">
-          <div class="form-group">
-              <input type="text" class="form-control money" name="cost" @blur="updateCost"  placeholder="Enter Amount">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-currency-usd"></i></button>
+            </span>
+            <div class="form-group label-floating is-empty">
+              <label class="control-label">Amount</label>
+              <input type="text" class="form-control money" name="cost" @blur="updateCost">
+            </div>
           </div>
         </div>
       </div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="date" placeholder="Date" ref="datepicker">
+      <div class="input-group">
+        <span class="input-group-addon">
+          <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar"></i></button>
+        </span>
+        <div class="form-group label-floating is-empty">
+          <label class="control-label">Date</label>
+          <input type="text" class="form-control" name="date" ref="datepicker">
         </div>
-        <div class="form-group">
-          <label for="tags">Tags</label>
-          <multiselect v-model="selectedTags" :options="tags" :multiple="true" track-by="id" :searchable="true" :hide-selected="true"  placeholder="Select Tag">
+      </div>
+        <div class="row">
+          <div class="col-sm-6 col-xs-12">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-update"></i></button>
+              </span>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label">Repeat</label>
+                <select class="form-control" name="repeat" v-model="expense.repeat">
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xs-12">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-cancel"></i></button>
+              </span>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label">End Repeat</label>
+                <select class="form-control" name="repeat" v-model="expense.repeat">
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar-check"></i></button>
+              </span>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label">Repeat Until</label>
+                <input type="text" class="form-control" name="repeat-until" ref="repeat_until">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-bell-ring"></i></button>
+              </span>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label">Reminder</label>
+                <select class="form-control" name="repeat" v-model="expense.repeat">
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                  <option value="never">Never</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-xs-12">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-map-marker"></i></button>
+              </span>
+              <div class="form-group label-floating is-empty">
+                <label class="control-label">Location</label>
+                <input type="text" class="form-control" style="font-size:12px;"name="location" @input="selectLocation" ref="places">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xs-12">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-image"></i></button>
+              </span>
+              <div class="form-group is-fileinput is-empty">
+                <input type="text" readonly="" class="form-control" placeholder="Browse...">
+                <input type="file" class="form-control" name="image">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" style="padding-top:30px;">
+            <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-tag-multiple"></i></button>
+          </span>
+          <label for="tags" class="control-label" >Tags</label>
+          <multiselect class="" v-model="selectedTags" :options="tags" :multiple="true" track-by="id" :searchable="true" :hide-selected="true"  placeholder="Select Tag">
             <template slot="tag" scope="props">
               <ul class="tags">
                 <li><a href="#" class="tag" @click.prevent="props.remove(props.option)">{{ props.option.name }}</a></li>
@@ -38,6 +149,7 @@ import modal from '@/components/helpers/modal'
 import maskMoney from '@/components/helpers/mask-money'
 import flatpickr from "flatpickr"
 import Multiselect from 'vue-multiselect'
+import Awesomplete from 'awesomplete'
 import apis from '@/api'
 
 export default {
@@ -65,11 +177,19 @@ export default {
         name:"",
         cost:"",
         date:"",
-        tags:[]
+        tags:[],
+        location:{
+          name:"",
+          lat:"",
+          long:""
+        }
       },
       datepicker:null,
       tags:[],
-      selectedTags:[]
+      selectedTags:[],
+      locations:[],
+      locationsDataList:[],
+      placesInput:null
     }
   },
   watch:{
@@ -88,10 +208,28 @@ export default {
           vm.expense.date = dateStr;
         }
       });
+      flatpickr(vm.$refs.repeat_until, {
+        altInput: true,
+        altFormat:"D, F j, Y",
+        onChange: function(selectedDates, dateStr, instance) {
+          vm.expense.date = dateStr;
+        }
+      });
       $('.money').maskMoney();
       setTimeout(()=>{
         vm.mapTagsToSelected();
-      },1000);
+      },100);
+      $(document).ready(function(){
+        vm.placesInput = new Awesomplete(vm.$refs.places,{
+          list: vm.locationsDataList,
+          minChars: 3,
+          autoFirst:true
+        });
+      });
+      $(vm.$refs.places).on('awesomplete-selectcomplete',function(e){
+        let name = e.target.value;
+        vm.updateLocation(name);
+      });
     },
     updateCost(e){
       let vm = this;
@@ -126,6 +264,48 @@ export default {
       }).catch((error)=>{
         console.log(error);
       });
+    },
+    selectLocation:function (e) {
+      let vm = this;
+      let query = e.target.value;
+      if (query.length > 2) {
+        vm.$http.get(apis.location(query)).then((response)=>{
+          vm.locations=[];
+          vm.locationsDataList = [];
+          let list = []
+          response.data.map(data =>{
+            data.response.map(venue =>{
+              let address = venue.location.address ? venue.location.address :"";
+              let city = venue.location.city ? venue.location.city: "";
+              let place = `${venue.name} ${address} ${city}`.trim();
+              list.push(place);
+              vm.locations.push({name:place,venue});
+            });
+          });
+          vm.placesInput.list = list;
+          vm.locationsDataList = list;
+        }).catch((error)=>{
+          console.log(error);
+        });
+      }
+      vm.updateLocation(query);
+    },
+    updateLocation:function (name) {
+      let vm = this;
+      let found = false;
+      vm.locations.map(loc => {
+        if (loc.name == name ) {
+          found = true;
+          vm.expense.location.name = name;
+          vm.expense.location.lat = loc.venue.location.lat;
+          vm.expense.location.long = loc.venue.location.lng;
+        }
+      });
+      if (!found) {
+        vm.expense.location.name = name.trim();
+        vm.expense.location.lat = "";
+        vm.expense.location.long = "";
+      }
     }
   },
   beforeMount:function () {

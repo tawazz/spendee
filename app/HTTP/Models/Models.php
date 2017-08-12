@@ -27,4 +27,7 @@
   $container['BudgetTag'] = function(){
       return new \HTTP\Models\BudgetTag();
   };
+  $container['Places'] = $container->factory(function($c) {
+      return new \HTTP\Models\Place();
+  });
  ?>

@@ -59,21 +59,51 @@
         public function create($req, $resp,$args)
         {
           $app = $this;
-          $data = [
-              'name'=> $req->getParam('name'),
-              'cost'=> str_replace( ',', '',$req->getParam('cost') ),
-              'date'=> $req->getParam('date'),
-              'user_id'=> $app->auth->id
-          ];
-          $exp_id = $app->Exp->save($data);
+          $body = json_decode($req->getBody()->getContents());
+          $repeatOptions = $this->Exp->getPossbileEnumValues('repeat');
+          $repeat = in_array($body->repeat, $repeatOptions) ? $body->repeat : null ;
+          $recurring = null;
+          if (isset($repeat) && $repeat !=  '0') {
+            $end_repeat = ($body->end_repeat == 'never') ? null : $body->repeat_until;
+            $recurring = $app->RecurringExpense;
+            $recurring->reminder = isset($body->reminder) ? $body->reminder : 0;
+          } else {
+            $end_repeat = null;
+          }
 
-          foreach ($req->getParam('tags') as $tag_id) {
+          $exp_data = [
+              'name'=> $body->name,
+              'cost'=> str_replace( ',', '',$body->cost ),
+              'date'=> $body->date,
+              'user_id'=> $app->auth->id,
+          ];
+          isset($repeat) ? $exp_data['repeat']=$repeat: "";
+          isset($end_repeat) ? $exp_data['end_repeat']=$end_repeat: "";
+
+          $exp_id = $app->Exp->save($exp_data);
+
+          if (isset($recurring)) {
+            $recurring->exp_id = $exp_id;
+            $recurring->save();
+          }
+
+          foreach ($body->tags as $tag_id) {
               $tags_data = [
                 'exp_id' => $exp_id,
                 'tag_id' => $tag_id
               ];
               $app->ExpTags->save($tags_data);
           }
+
+          if (isset($body->location) && !empty($body->location->lat) && !empty($body->location->long) && !empty($body->location->name) ) {
+            $loc = $this->Location;
+            $loc->name = $body->location->name;
+            $loc->lat = $body->location->lat;
+            $loc->long = $body->location->long;
+            $loc->exp_id = $exp_id;
+            $loc->save();
+          }
+
 
           return $resp->withJson($app->Exp->get($exp_id),200);
         }
@@ -110,6 +140,10 @@
           $id = $args['id'];
           $app->Exp->read($id)->delete();
           return $this->redirect($resp,$app->urlFor('expense.retrieve',['name'=>$_POST['name']]));
+        }
+        public function repeatOptions($req, $resp,$args)
+        {
+          return $resp->withJson($this->Exp->getPossbileEnumValues('repeat'));
         }
     }
 

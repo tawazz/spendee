@@ -7,7 +7,7 @@
             <span class="input-group-addon">
               <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-shopping"></i></button>
             </span>
-            <div class="form-group label-floating is-empty">
+            <div class="form-group label-floating" :class="{'is-empty':(expense.name == '')}">
               <label class="control-label">Expense</label>
               <input type="text" class="form-control" name="name" v-model="expense.name">
             </div>
@@ -18,7 +18,7 @@
             <span class="input-group-addon">
               <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-currency-usd"></i></button>
             </span>
-            <div class="form-group label-floating is-empty">
+            <div class="form-group label-floating" :class="{'is-empty':(expense.cost == '')}">
               <label class="control-label">Amount</label>
               <input type="text" class="form-control money" name="cost" @blur="updateCost">
             </div>
@@ -29,7 +29,7 @@
         <span class="input-group-addon">
           <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar"></i></button>
         </span>
-        <div class="form-group label-floating is-empty">
+        <div class="form-group label-floating" :class="{'is-empty':(expense.date == '')}">
           <label class="control-label">Date</label>
           <input type="text" class="form-control" name="date" ref="datepicker">
         </div>
@@ -40,41 +40,38 @@
               <span class="input-group-addon">
                 <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-update"></i></button>
               </span>
-              <div class="form-group label-floating is-empty">
+              <div class="form-group label-floating" :class="{'is-empty':(expense.repeat == '')}">
                 <label class="control-label">Repeat</label>
                 <select class="form-control" name="repeat" v-model="expense.repeat">
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
+                  <option value="0">Never</option>
+                  <option value="1">Daily</option>
+                  <option value="7">Weekly</option>
+                  <option value="14">Fortnightly</option>
+                  <option value="30">Monthly</option>
                 </select>
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-xs-12">
+          <div class="col-sm-6 col-xs-12" v-show="expense.repeat!='0'">
             <div class="input-group">
               <span class="input-group-addon">
                 <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-cancel"></i></button>
               </span>
-              <div class="form-group label-floating is-empty">
+              <div class="form-group label-floating" :class="{'is-empty':(expense.end_repeat == '')}">
                 <label class="control-label">End Repeat</label>
-                <select class="form-control" name="repeat" v-model="expense.repeat">
+                <select class="form-control" name="end_repeat" v-model="expense.end_repeat">
                   <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
+                  <option value="date">Date</option>
                 </select>
               </div>
             </div>
           </div>
-          <div class="col-sm-12">
+          <div class="col-sm-12" v-show="expense.repeat!='0' && expense.end_repeat=='date'">
             <div class="input-group">
               <span class="input-group-addon">
                 <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar-check"></i></button>
               </span>
-              <div class="form-group label-floating is-empty">
+              <div class="form-group label-floating" :class="{'is-empty':(expense.repeat_until == '')}">
                 <label class="control-label">Repeat Until</label>
                 <input type="text" class="form-control" name="repeat-until" ref="repeat_until">
               </div>
@@ -82,19 +79,18 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-sm-12" v-show="expense.repeat!='0'">
             <div class="input-group">
               <span class="input-group-addon">
                 <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-bell-ring"></i></button>
               </span>
-              <div class="form-group label-floating is-empty">
+              <div class="form-group label-floating" :class="{'is-empty':(expense.reminder == '')}">
                 <label class="control-label">Reminder</label>
-                <select class="form-control" name="repeat" v-model="expense.repeat">
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
-                  <option value="never">Never</option>
+                <select class="form-control" name="reminder" v-model="expense.reminder">
+                  <option value="0">Never</option>
+                  <option value="-1">Day Before</option>
+                  <option value="-7">Week Before</option>
+                  <option value="-30">Month Before</option>
                 </select>
               </div>
             </div>
@@ -106,7 +102,7 @@
               <span class="input-group-addon">
                 <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-map-marker"></i></button>
               </span>
-              <div class="form-group label-floating is-empty">
+              <div class="form-group label-floating" :class="{'is-empty':(expense.location.name == '')}">
                 <label class="control-label">Location</label>
                 <autocomplete class="form-control" name="location" :list="locationsDataList" :onInput="selectLocation" :onSelect="updateLocation"/>
               </div>
@@ -183,7 +179,11 @@ export default {
           name:"",
           lat:"",
           long:""
-        }
+        },
+        repeat:'0',
+        repeat_until:'0',
+        end_repeat:'never',
+        reminder:'0'
       },
       datepicker:null,
       tags:[],

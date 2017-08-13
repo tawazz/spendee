@@ -30,4 +30,10 @@
   $container['Places'] = $container->factory(function($c) {
       return new \HTTP\Models\Place();
   });
+  $container['RecurringExpense'] = $container->factory(function($c) {
+      return new \HTTP\Models\RecurringExpense();
+  });
+  $container['Location'] = $container->factory(function($c) {
+      return new \HTTP\Models\Location();
+  });
  ?>

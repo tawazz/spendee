@@ -27,6 +27,7 @@ namespace HTTP\Models;
 
   public function clearOldSessions()
   {
+    $to_delete = 0;
     $duplicates = $this->db->query("select count(id), user_id from ". $this->table ." group by user_id having count(id) > 1;")->result();
     foreach ($duplicates as $dupe) {
       $sessions = $this->find('all',[
@@ -34,12 +35,12 @@ namespace HTTP\Models;
         "fields"=> ["id"],
         "order" => ["id" => "asc"]
       ]);
-
+      $to_delete = $to_delete + sizeof($sessions);
       for ($i=0; $i < sizeof($sessions)-1 ; $i++) {
         $this->db->delete($this->table,["id","=",$sessions[$i]->id]);
       }
     }
-
+    return $to_delete;
   }
  }
  ?>

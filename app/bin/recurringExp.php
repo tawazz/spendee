@@ -61,8 +61,7 @@
         'exp_id' => $exp_id
       ]);
     }
-    echo "Expense ".$expense->name." saved...\n";
-
+    echo $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->toDayDateTimeString()." expense ".$expense->name." saved...\n";
   }
 
  ?>

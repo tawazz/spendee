@@ -13,6 +13,6 @@
   $container->register(new ServiceProvider());
 
   $r = $container->Remember;
-  $r->clearOldSessions();
-  echo "Old Sessions Cleared";
+  $deleted = $r->clearOldSessions();
+  echo $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->toDayDateTimeString()." cleared $deleted old sessions cleared\n";
  ?>

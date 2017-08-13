@@ -311,6 +311,16 @@
       return $this->errors;
     }
 
+    public function getPossbileEnumValues($name){
+      $type = $this->db->query('SHOW COLUMNS FROM '.$this->table.' WHERE Field = "'.$name.'"')->first()->Type;
+      preg_match('/^enum\((.*)\)$/', $type, $matches);
+      $enum = [];
+      foreach(explode(',', $matches[1]) as $value){
+         $v = trim( $value, "'" );
+         $enum[] = $v;
+      }
+      return $enum;
+    }
     protected function primaryKey(){
         $query = $this->db->query("SHOW KEYS FROM ".$this->table." WHERE Key_name = 'PRIMARY'")->result();
         if(!$this->db->error()){

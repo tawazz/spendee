@@ -227,7 +227,7 @@ require_once __DIR__ . '../../../config.php';
                 $i=1;
                 $sql = "insert into ".$table."(";
                 foreach( $keys as $key){
-                   $sql = $sql ."$key";
+                   $sql = $sql ."`$key`";
                    if($i<count($params)){
                        $sql.=', ';
                    }
@@ -238,7 +238,7 @@ require_once __DIR__ . '../../../config.php';
                        $i++;
                    }
                 }
-                $sql = $sql.")VALUES (".$values.")";
+                $sql = $sql.") VALUES (".$values.")";
                 //echo $sql;
                 if(!$this->query($sql,$V)->error()){
                     return $this;

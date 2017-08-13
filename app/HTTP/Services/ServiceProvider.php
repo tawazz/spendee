@@ -84,6 +84,10 @@
         $mailer = new \Mailer($app['view'],$mailer);
         return $mailer;
       };
+
+      $container['Carbon'] = function ($app){
+        return new \Carbon\Carbon();
+      };
     }
   }
 

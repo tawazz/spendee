@@ -34,7 +34,6 @@ export default function(year,month,day){
         }
 
         var date = `${year}/${month}/1`;
-        console.log(date);
         nav['date']= date;
         date = moment(date,'YYYY/M/dddd').format('MMM/YYYY');
         nav['display'] = date;

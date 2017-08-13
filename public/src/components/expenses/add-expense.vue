@@ -108,7 +108,7 @@
               </span>
               <div class="form-group label-floating is-empty">
                 <label class="control-label">Location</label>
-                <input type="text" class="form-control" style="font-size:12px;"name="location" @input="selectLocation" ref="places">
+                <autocomplete class="form-control" name="location" :list="locationsDataList" :onInput="selectLocation" :onSelect="updateLocation"/>
               </div>
             </div>
           </div>
@@ -147,9 +147,9 @@
 <script>
 import modal from '@/components/helpers/modal'
 import maskMoney from '@/components/helpers/mask-money'
+import autocomplete from '@/components/helpers/autocomplete'
 import flatpickr from "flatpickr"
 import Multiselect from 'vue-multiselect'
-import Awesomplete from 'awesomplete'
 import apis from '@/api'
 
 export default {
@@ -169,7 +169,8 @@ export default {
   },
   components:{
     modal,
-    'multiselect':Multiselect
+    'multiselect':Multiselect,
+    autocomplete
   },
   data:function () {
     return{
@@ -189,7 +190,6 @@ export default {
       selectedTags:[],
       locations:[],
       locationsDataList:[],
-      placesInput:null
     }
   },
   watch:{
@@ -219,17 +219,6 @@ export default {
       setTimeout(()=>{
         vm.mapTagsToSelected();
       },100);
-      $(document).ready(function(){
-        vm.placesInput = new Awesomplete(vm.$refs.places,{
-          list: vm.locationsDataList,
-          minChars: 3,
-          autoFirst:true
-        });
-      });
-      $(vm.$refs.places).on('awesomplete-selectcomplete',function(e){
-        let name = e.target.value;
-        vm.updateLocation(name);
-      });
     },
     updateCost(e){
       let vm = this;
@@ -267,31 +256,33 @@ export default {
     },
     selectLocation:function (e) {
       let vm = this;
-      let query = e.target.value;
-      if (query.length > 2) {
-        vm.$http.get(apis.location(query)).then((response)=>{
-          vm.locations=[];
-          vm.locationsDataList = [];
-          let list = []
-          response.data.map(data =>{
-            data.response.map(venue =>{
-              let address = venue.location.address ? venue.location.address :"";
-              let city = venue.location.city ? venue.location.city: "";
-              let place = `${venue.name} ${address} ${city}`.trim();
-              list.push(place);
-              vm.locations.push({name:place,venue});
+      if (e.target.value != null) {
+        let query = e.target.value;
+        if (query.length > 2) {
+          vm.$http.get(apis.location(query)).then((response)=>{
+            vm.locations=[];
+            vm.locationsDataList = [];
+            let list = []
+            response.data.map(data =>{
+              data.response.map(venue =>{
+                let address = venue.location.address ? venue.location.address :"";
+                let city = venue.location.city ? venue.location.city: "";
+                let place = `${venue.name} ${address} ${city}`.trim();
+                list.push(place);
+                vm.locations.push({name:place,venue});
+              });
             });
+            vm.locationsDataList = list;
+          }).catch((error)=>{
+            console.log(error);
           });
-          vm.placesInput.list = list;
-          vm.locationsDataList = list;
-        }).catch((error)=>{
-          console.log(error);
-        });
+        }
+        vm.updateLocation(e);
       }
-      vm.updateLocation(query);
     },
-    updateLocation:function (name) {
+    updateLocation:function (e) {
       let vm = this;
+      let name = e.target.value;
       let found = false;
       vm.locations.map(loc => {
         if (loc.name == name ) {

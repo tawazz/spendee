@@ -1,10 +1,8 @@
 <?php
   namespace HTTP\Services;
-  use Pimple\Container;
+  use \Pimple\Container;
   #use HTTP\Helpers\Container;
-  use Pimple\ServiceProviderInterface;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\StreamHandler;
+  use \Pimple\ServiceProviderInterface;
   require_once __DIR__.'/../../../Tazzy-Helpers/autoload.php';
   require_once __DIR__.'/../../config/settings.php';
   require_once __DIR__.'/../../config/database.php';
@@ -93,10 +91,10 @@ use Monolog\Handler\StreamHandler;
 
       $container['log'] = function ($app) {
         $log = new \Monolog\Logger('files');
-        $formatter = new \LineFormatter( null, null, false, true);
+        $formatter = new \Monolog\Formatter\LineFormatter( null, null, false, true);
 
-        $debugHandler = new \MonologHandlerStreamHandler('/app/logs/debug.log',\Monolog\Logger::DEBUG);
-        $errorHandler = new \MonologHandlerStreamHandler('/app/logs/error.log',\Monolog\Logger::ERROR);
+        $debugHandler = new \Monolog\Handler\StreamHandler('/app/logs/debug.log',\Monolog\Logger::DEBUG);
+        $errorHandler = new \Monolog\Handler\StreamHandler('/app/logs/error.log',\Monolog\Logger::ERROR);
 
         $debugHandler->setFormatter($formatter);
         $errorHandler->setFormatter($formatter);

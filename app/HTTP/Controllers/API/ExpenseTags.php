@@ -22,7 +22,15 @@
             $year = isset($args['year']) ? $args['year'] : Null;
             $month = isset($args['month']) ? $args['month'] : Null;
             $day = isset($args['day']) ? $args['day'] : Null;
-            $data = $app->Helper->getExpenseTags($app,$app->auth->id,$year,$month,$day);
+            $cache = $app->cache;
+            $cache_key = 'api.exp.tags'.$app->auth->id.'.'.$year.'.'.$month;
+            $data = [];
+            if (!$cache->has($cache_key)) {
+              $data = $app->Helper->getExpenseTags($app,$app->auth->id,$year,$month,$day);
+              $cache->set($cache_key,$data);
+            } else {
+              $data = $cache->get($cache_key);
+            }
 
             return $resp->withJson($data);
         }

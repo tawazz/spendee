@@ -23,7 +23,7 @@
             $month = isset($args['month']) ? $args['month'] : Null;
             $day = isset($args['day']) ? $args['day'] : Null;
             $cache = $app->cache;
-            $cache_key = 'api.totals.'.$year.'.'.$month;
+            $cache_key = 'api.totals.'.$app->auth->id.'.'.$year.'.'.$month;
             $data = [];
             if (!$cache->has($cache_key)) {
               $data = $app->Helper->getTotals($app->auth->id,$year,$month,$day);

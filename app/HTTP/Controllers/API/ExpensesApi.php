@@ -54,7 +54,7 @@
           $month = isset($args['month']) ? $args['month'] : Null;
           $day = isset($args['day']) ? $args['day'] : Null;
           $data = [];
-          $cache_key = 'api.expenses.get.'.$year.'.'.$month;
+          $cache_key = 'api.expenses.get.'.$app->auth->id.'.'.$year.'.'.$month;
           if (!$cache->has($cache_key)) {
             $data = $app->Helper->getItems($app->Exp,$app->auth->id,$year,$month,$day);
             $cache->set($cache_key,$data);
@@ -111,9 +111,17 @@
             $loc->save();
           }
 
-
+          // clear cache
+          $date = $app->Carbon->parse($body->date);
+          $cache_keys = [
+            'api.expenses.get.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
+            'api.totals.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
+            'api.exp.tags'.$app->auth->id.'.'.$year.'.'.$month
+          ];
+          $app->cache->deleteMultiple($cache_keys);
           return $resp->withJson($app->Exp->get($exp_id),200);
         }
+
         public function update($req, $resp,$args)
         {
           $app = $this;

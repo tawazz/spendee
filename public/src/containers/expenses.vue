@@ -88,6 +88,11 @@
         axios.get(apis.tagData(year,month)).then((response)=>{
           vm.$store.dispatch('updateTagData',response.data);
         });
+        vm.$store.dispatch('updateNav',{
+            year,
+            month,
+            day:null
+        });
       },
       closeModal() {
           this.showAddModal = false;

@@ -88,10 +88,9 @@
         axios.get(apis.tagData(year,month)).then((response)=>{
           vm.$store.dispatch('updateTagData',response.data);
         });
-        vm.$store.dispatch('updateNav',{
-            year,
-            month,
-            day:null
+
+        axios.get(apis.totals(year,month,null)).then(res => {
+          vm.$store.dispatch('setTotals',res.data);
         });
       },
       closeModal() {

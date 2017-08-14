@@ -10,6 +10,9 @@ export default {
             commit('SETTOTALS',res.data);
         });
     },
+    setTotals(context,payload) {
+      context.commit('SETTOTALS',payload);
+    },
     updateExp(context,payload) {
         context.commit('SETEXP',payload);
     },

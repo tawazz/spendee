@@ -49,11 +49,18 @@
         public function get($req,$resp,$args)
         {
           $app = $this->container;
+          $cache = $app->cache;
           $year = isset($args['year']) ? $args['year'] : Null;
           $month = isset($args['month']) ? $args['month'] : Null;
           $day = isset($args['day']) ? $args['day'] : Null;
-          $data = $app->Helper->getItems($app->Exp,$app->auth->id,$year,$month,$day);
-
+          $data = [];
+          $cache_key = 'api.expenses.get.'.$year.'.'.$month;
+          if (!$cache->has($cache_key)) {
+            $data = $app->Helper->getItems($app->Exp,$app->auth->id,$year,$month,$day);
+            $cache->set($cache_key,$data);
+          } else {
+            $data = $cache->get($cache_key);
+          }
           return $resp->withJson($data);
         }
         public function create($req, $resp,$args)

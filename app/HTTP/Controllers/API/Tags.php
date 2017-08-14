@@ -18,7 +18,16 @@
         public function get($req, $resp, $args)
         {
             $app = $this->container;
-            return $resp->withJson($app->Tags->find('all'));
+            $cache = $app->cache;
+            $cache_key = 'api.get.tags';
+
+            if (!$cache->has($cache_key)) {
+              $data = $app->Tags->find('all');
+              $cache->set($cache_key,$data);
+            } else {
+              $data = $cache->get($cache_key);
+            }
+            return $resp->withJson($data);
         }
 
         public function create($req, $resp,$args)

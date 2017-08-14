@@ -22,25 +22,38 @@ class Places extends \HTTP\Controllers\BaseController
   public function get($req, $resp, $args)
   {
     $app = $this->container;
-    $places = $app->Places->exists($req->getQueryParam('query'));
-    if ($places) {
-      return $resp->withJson($places);
-    }
-    $api_endpoint = "https://api.foursquare.com/v2/venues/search?";
-    $search_url = "{$api_endpoint}ll={$req->getQueryParam('ll')}&query={$req->getQueryParam('query')}&client_id={$this->client_id}&client_secret={$this->client_secret}&v=20170812&radius=100000";
-
-    $client = new Http();
-    $res = $client->request('GET', $search_url);
-    if ($res->getStatusCode()==200) {
-      $place = $app->Places;
-      $place->query = $req->getQueryParam('query');
-      $place->response = $res->getBody();
-      $place->save();
+    $cache = $app->cache;
+    $cache_key = 'api.places.'.$req->getQueryParam('ll').'.'.$req->getQueryParam('query');
+    $data = [];
+    if (!$cache->has($cache_key)) {
       $places = $app->Places->exists($req->getQueryParam('query'));
-      return $resp->withJson($places);
+      if ($places) {
+        $data = $places;
+        $cache->set($cache_key,$data);
+        $resp->withJson($data);
+      } else {
+        $api_endpoint = "https://api.foursquare.com/v2/venues/search?";
+        $search_url = "{$api_endpoint}ll={$req->getQueryParam('ll')}&query={$req->getQueryParam('query')}&client_id={$this->client_id}&client_secret={$this->client_secret}&v=20170812&radius=100000";
+
+        $client = new Http();
+        $res = $client->request('GET', $search_url);
+        if ($res->getStatusCode()==200) {
+          $place = $app->Places;
+          $place->query = $req->getQueryParam('query');
+          $place->response = $res->getBody();
+          $place->save();
+          $places = $app->Places->exists($req->getQueryParam('query'));
+          $cache->set($cache_key,$places);
+          return $resp->withJson($places);
+        } else {
+          return $resp->withJson(false,400);
+        }
+      }
+    } else {
+      $data = $cache->get($cache_key);
+      return $resp->withJson($data);
     }
 
-    return $resp->withJson(false,400);
   }
 
   public function create($req, $resp,$args)

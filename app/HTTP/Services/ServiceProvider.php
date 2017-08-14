@@ -3,6 +3,8 @@
   use Pimple\Container;
   #use HTTP\Helpers\Container;
   use Pimple\ServiceProviderInterface;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
   require_once __DIR__.'/../../../Tazzy-Helpers/autoload.php';
   require_once __DIR__.'/../../config/settings.php';
   require_once __DIR__.'/../../config/database.php';
@@ -87,6 +89,27 @@
 
       $container['Carbon'] = function ($app){
         return new \Carbon\Carbon();
+      };
+
+      $container['log'] = function ($app) {
+        $log = new \Monolog\Logger('files');
+        $formatter = new \LineFormatter( null, null, false, true);
+
+        $debugHandler = new \MonologHandlerStreamHandler('/app/logs/debug.log',\Monolog\Logger::DEBUG);
+        $errorHandler = new \MonologHandlerStreamHandler('/app/logs/error.log',\Monolog\Logger::ERROR);
+
+        $debugHandler->setFormatter($formatter);
+        $errorHandler->setFormatter($formatter);
+
+        $log->pushHandler($debugHandler);
+        $log->pushHandler($errorHandler);
+
+        return $log;
+      };
+
+      $container['cache'] = function($app) {
+        $cache = new \Symfony\Component\Cache\Simple\FilesystemCache();
+        return $cache;
       };
     }
   }

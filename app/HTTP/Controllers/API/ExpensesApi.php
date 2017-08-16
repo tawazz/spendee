@@ -73,7 +73,7 @@
           if (isset($repeat) && $repeat !=  '0') {
             $end_repeat = ($body->end_repeat == 'never') ? null : $body->repeat_until;
             $recurring = $app->RecurringExpense;
-            $recurring->reminder = isset($body->reminder) ? $body->reminder : 0;
+            $recurring->reminder = isset($body->reminder) ? $body->reminder : '0';
           } else {
             $end_repeat = null;
           }
@@ -116,7 +116,7 @@
           $cache_keys = [
             'api.expenses.get.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
             'api.totals.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
-            'api.exp.tags'.$app->auth->id.'.'.$year.'.'.$month
+            'api.exp.tags'.$app->auth->id.'.'.$date->year.'.'.$date->month
           ];
           $app->cache->deleteMultiple($cache_keys);
           return $resp->withJson($app->Exp->get($exp_id),200);

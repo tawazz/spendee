@@ -67,13 +67,15 @@
         {
           $app = $this;
           $body = json_decode($req->getBody()->getContents());
-          $repeatOptions = $this->Exp->getPossbileEnumValues('repeat');
+          $repeatOptions = $this->RecurringExpense->getPossbileEnumValues('repeat');
           $repeat = in_array($body->repeat, $repeatOptions) ? $body->repeat : null ;
           $recurring = null;
           if (isset($repeat) && $repeat !=  '0') {
             $end_repeat = ($body->end_repeat == 'never') ? null : $body->repeat_until;
             $recurring = $app->RecurringExpense;
             $recurring->reminder = isset($body->reminder) ? $body->reminder : '0';
+            $recurring->end_repeat = $end_repeat;
+            $recurring->repeat = $repeat;
           } else {
             $end_repeat = null;
           }
@@ -84,42 +86,43 @@
               'date'=> $body->date,
               'user_id'=> $app->auth->id,
           ];
-          isset($repeat) ? $exp_data['repeat']=$repeat: "";
-          isset($end_repeat) ? $exp_data['end_repeat']=$end_repeat: "";
+          try {
+            $exp_id = $app->Exp->save($exp_data);
 
-          $exp_id = $app->Exp->save($exp_data);
+            if (isset($recurring)) {
+              $recurring->exp_id = $exp_id;
+              $recurring->save();
+            }
 
-          if (isset($recurring)) {
-            $recurring->exp_id = $exp_id;
-            $recurring->save();
+            foreach ($body->tags as $tag_id) {
+                $tags_data = [
+                  'exp_id' => $exp_id,
+                  'tag_id' => $tag_id
+                ];
+                $app->ExpTags->save($tags_data);
+            }
+
+            if (isset($body->location) && !empty($body->location->lat) && !empty($body->location->long) && !empty($body->location->name) ) {
+              $loc = $this->Location;
+              $loc->name = $body->location->name;
+              $loc->lat = $body->location->lat;
+              $loc->long = $body->location->long;
+              $loc->exp_id = $exp_id;
+              $loc->save();
+            }
+
+            // clear cache
+            $date = $app->Carbon->parse($body->date);
+            $cache_keys = [
+              'api.expenses.get.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
+              'api.totals.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
+              'api.exp.tags'.$app->auth->id.'.'.$date->year.'.'.$date->month
+            ];
+            $app->cache->deleteMultiple($cache_keys);
+            return $resp->withJson($app->Exp->get($exp_id),200);
+          } catch (\Exception $e) {
+            return $resp->withJson($e->getMessage(),400);
           }
-
-          foreach ($body->tags as $tag_id) {
-              $tags_data = [
-                'exp_id' => $exp_id,
-                'tag_id' => $tag_id
-              ];
-              $app->ExpTags->save($tags_data);
-          }
-
-          if (isset($body->location) && !empty($body->location->lat) && !empty($body->location->long) && !empty($body->location->name) ) {
-            $loc = $this->Location;
-            $loc->name = $body->location->name;
-            $loc->lat = $body->location->lat;
-            $loc->long = $body->location->long;
-            $loc->exp_id = $exp_id;
-            $loc->save();
-          }
-
-          // clear cache
-          $date = $app->Carbon->parse($body->date);
-          $cache_keys = [
-            'api.expenses.get.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
-            'api.totals.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
-            'api.exp.tags'.$app->auth->id.'.'.$date->year.'.'.$date->month
-          ];
-          $app->cache->deleteMultiple($cache_keys);
-          return $resp->withJson($app->Exp->get($exp_id),200);
         }
 
         public function update($req, $resp,$args)

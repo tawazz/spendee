@@ -12,10 +12,13 @@
   $container = $app->getContainer();
   $container->register(new ServiceProvider());
 
-  $expenses = $container->RecurringExpense->all();
+  $today = $container->Carbon->now(new \DateTimeZone('Australia/Perth'));
+
+  $expenses = $container->RecurringExpense->where('ended',false)->get();
   foreach ($expenses as $exp) {
     $expense = $exp->expense();
-    switch ($expense->repeat) {
+    $exp_data = null;
+    switch ($exp->repeat) {
       case '30':
         $repeat = $container->Carbon->parse($expense->date)->addMonths(1 * $exp->interval)->toDateString();
         break;
@@ -32,36 +35,55 @@
         $repeat = $container->Carbon->parse($expense->date)->addDays(1 * $exp->interval)->toDateString();
         break;
     }
-    $exp_data = [
+    if (isset($exp->end_repeat)) {
+      $end = $container->Carbon->parse($exp->end_repeat);
+      if ($today->lte($end)) {
+        $exp_data = [
+            'name'=> $expense->name,
+            'cost'=> $expense->cost,
+            'date'=> $repeat,
+            'user_id'=> $expense->user_id,
+            'parent_id'=>$expense->id
+        ];
+      } else {
+        $exp->ended = true;
+        $exp->save();
+        break;
+      }
+    } else {
+      $exp_data = [
         'name'=> $expense->name,
         'cost'=> $expense->cost,
         'date'=> $repeat,
         'user_id'=> $expense->user_id,
-        'repeat'=> $expense->repeat
-    ];
-    isset($expense->end_repeat) ? $exp_data['end_repeat'] = $expense->end_repeat:"";
-    $exp_id = $container->Exp->save($exp_data);
-    $exp->interval = $exp->interval+1;
-    $exp->save();
+        'parent_id'=>$expense->id
+      ];
+    }
+    if (isset($exp_data)) {
+      $exp_id = $container->Exp->save($exp_data);
+      $exp->interval = $exp->interval+1;
+      $exp->save();
 
-    foreach ($expense->expense_tags as $T) {
-        $tags_data = [
-          'exp_id' => $exp_id,
-          'tag_id' => $T->tags->id
-        ];
-        $tags_id = $container->ExpTags->save($tags_data);
+      foreach ($expense->expense_tags as $T) {
+          $tags_data = [
+            'exp_id' => $exp_id,
+            'tag_id' => $T->tags->id
+          ];
+          $tags_id = $container->ExpTags->save($tags_data);
+      }
+      $loc=$container->Location->where('exp_id',$expense->id)->first();
+      if ($loc->exists) {
+        $container->Location->insert([
+          'name' => $loc->name,
+          'lat' => $loc->lat,
+          'long' => $loc->long,
+          'exp_id' => $exp_id
+        ]);
+      }
+      echo $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->toDayDateTimeString()." expense ".$expense->name." saved...\n";
+
     }
 
-    $loc=$container->Location->where('exp_id',2697)->first();
-    if ($loc->exists) {
-      $container->Location->insert([
-        'name' => $loc->name,
-        'lat' => $loc->lat,
-        'long' => $loc->long,
-        'exp_id' => $exp_id
-      ]);
-    }
-    echo $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->toDayDateTimeString()." expense ".$expense->name." saved...\n";
   }
 
  ?>

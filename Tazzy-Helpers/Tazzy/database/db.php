@@ -44,7 +44,7 @@ require_once __DIR__ . '../../../config.php';
                       'sql'=> $this->_query,
                       'error' => $this->_query->errorInfo()[2]
                     ];
-                    var_dump($this->error_info);
+                    throw new \Exception($this->error_info['error'], 1);
                     $this->_error = TRUE;
                     return $this;
                 }

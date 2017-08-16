@@ -1,5 +1,4 @@
 <?php
-
   /**
    *
    */
@@ -41,7 +40,7 @@
               return $this->db->lastIndex();
             }else{
               $this->errors = $this->db->error_info();
-              return false;
+              throw new \Exception($this->errors);
             }
           }else{
             return false;

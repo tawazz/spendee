@@ -181,7 +181,7 @@ export default {
           long:""
         },
         repeat:'0',
-        repeat_until:'0',
+        repeat_until:null,
         end_repeat:'never',
         reminder:'0'
       },
@@ -212,7 +212,7 @@ export default {
         altInput: true,
         altFormat:"D, F j, Y",
         onChange: function(selectedDates, dateStr, instance) {
-          vm.expense.date = dateStr;
+          vm.expense.repeat_until = dateStr;
         }
       });
       $('.money').maskMoney();

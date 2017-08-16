@@ -11,10 +11,11 @@ use \Settings;
     protected $guarded = array();
     protected $primary_key ='id';
 
+
     public static function getPossbileEnumValues($name){
       $instance = new static; // create an instance of the model to be able to get the table name
       $settings = new Settings();
-      $type = DB::select( DB::raw('SHOW COLUMNS FROM '.$settings->get('mysql.prefix').$instance->getTable().' WHERE Field = "'.$name.'"') )[0]->Type;
+      $type = DB::select( DB::raw('SHOW COLUMNS FROM '.$settings->get('db.prefix').$instance->getTable().' WHERE Field = "'.$name.'"') )[0]->Type;
       preg_match('/^enum\((.*)\)$/', $type, $matches);
       $enum = array();
       foreach(explode(',', $matches[1]) as $value){

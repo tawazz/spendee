@@ -204,6 +204,7 @@ export default {
       vm.datepicker = flatpickr(vm.$refs.datepicker, {
         altInput: true,
         altFormat:"D, F j, Y",
+        disableMobile: "true",
         onChange: function(selectedDates, dateStr, instance) {
           vm.expense.date = dateStr;
         }
@@ -211,6 +212,7 @@ export default {
       flatpickr(vm.$refs.repeat_until, {
         altInput: true,
         altFormat:"D, F j, Y",
+        disableMobile: "true",
         onChange: function(selectedDates, dateStr, instance) {
           vm.expense.repeat_until = dateStr;
         }

@@ -15,9 +15,9 @@
   $today = $container->Carbon->now()->hour(0)->minute(0)->second(0);
 
   $expenses = $container->RecurringExpense->where('ended',false)->get();
-  dump($expenses);
   foreach ($expenses as $exp) {
     $expense = $exp->expense();
+    $container->auth = $container->User->get($expense->user_id);
     $exp_data = null;
     switch ($exp->repeat) {
       case '30':
@@ -74,7 +74,7 @@
             $tags_id = $container->ExpTags->save($tags_data);
         }
         $loc=$container->Location->where('exp_id',$expense->id)->first();
-        if ($loc->exists) {
+        if (isset($loc) && $loc->exists) {
           $container->Location->insert([
             'name' => $loc->name,
             'lat' => $loc->lat,
@@ -82,7 +82,7 @@
             'exp_id' => $exp_id
           ]);
         }
-        \HTTP\Helpers\Utils::clearExpRouteCache($app,$body->date);
+        \HTTP\Helpers\Utils::clearExpRouteCache($container,$repeat);
         echo $container->Carbon->now()->toDayDateTimeString()." expense ".$expense->name." saved...\n";
       }
     }

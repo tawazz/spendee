@@ -112,13 +112,7 @@
             }
 
             // clear cache
-            $date = $app->Carbon->parse($body->date);
-            $cache_keys = [
-              'api.expenses.get.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
-              'api.totals.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
-              'api.exp.tags'.$app->auth->id.'.'.$date->year.'.'.$date->month
-            ];
-            $app->cache->deleteMultiple($cache_keys);
+            \HTTP\Helpers\Utils::clearExpRouteCache($app,$body->date);
             return $resp->withJson($app->Exp->get($exp_id),200);
           } catch (\Exception $e) {
             return $resp->withJson($e->getMessage(),400);

@@ -1,5 +1,5 @@
 <template lang="html">
-  <modal title="Add Expense" :isOpen="show" :ok="addExpense" :cancel="close" okText="Save">
+  <modal title="Add Expense" :isOpen="show" :ok="addExpense" :cancel="cancelExp" okText="Save">
     <form name="addForm" id="addForm" method="post" action="/expenses/add">
       <div class="row">
         <div class="col-sm-6 col-xs-12">
@@ -251,10 +251,36 @@ export default {
       let vm =this;
       let data = {...vm.expense};
       vm.$http.post(apis.expense(),data).then((response)=>{
+        vm.resetExp();
         vm.save();
       }).catch((error)=>{
         console.log(error);
       });
+    },
+    cancelExp:function () {
+      this.resetExp();
+      this.close();
+    },
+    resetExp:function () {
+      this.expense = {
+        name:"",
+        cost:"",
+        date:"",
+        tags:[],
+        location:{
+          name:"",
+          lat:"",
+          long:""
+        },
+        repeat:'0',
+        repeat_until:null,
+        end_repeat:'never',
+        reminder:'0'
+      };
+      this.selectedTags=[],
+      this.locations=[],
+      this.locationsDataList=[]
+      document.forms.addForm.reset();
     },
     selectLocation:function (e) {
       let vm = this;

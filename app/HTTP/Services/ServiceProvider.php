@@ -70,16 +70,16 @@
         $config = $app['Config'];
         $mailer = new \PHPMailer();
         $mailer->IsSMTP();
-        $mailer->SMTPDebug = 2;
         $mailer->Host = $app['Config']->get('email.host');
         $mailer->SMTPAuth = $app['Config']->get('email.auth');
         $mailer->Port = $app['Config']->get('email.port');
         $mailer->Username = $app['Config']->get('email.user');
         $mailer->Password = $app['Config']->get('email.password');
-        $mailer->setFrom($app['Config']->get('email.user'), 'Spendee');
+        $mailer->setFrom($app['Config']->get('email.from'), 'Spendee');
         $mailer->isHTML(true);
         if (!$config->get('debug')) {
           $mailer->SMTPSecure = $app['Config']->get('email.secure');
+          $mailer->SMTPDebug = 2;
         }
         $mailer = new \Mailer($app['view'],$mailer);
         return $mailer;

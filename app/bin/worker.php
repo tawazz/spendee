@@ -28,11 +28,13 @@ while (true) {
           sleep(5);
         }
     } catch (\Pheanstalk\Exception\ConnectionException $e) {
-       echo $e->__toString();
-       break;
+      echo $e->__toString();
+      sleep(5);
     } catch (Exception $e) {
-         echo $e->__toString();
+      echo $e->__toString();
+      sleep(5);
     } catch (Throwable $e) {
-         echo $e->__toString();
+      echo $e->__toString();
+      sleep(5);
     }
 }

@@ -35,6 +35,9 @@
           'secure'   => 'tls',
           'auth'     => true
       ],
+      'pushbullet'   => [
+        'token'=> 'token'
+      ]
 
   ];
  ?>

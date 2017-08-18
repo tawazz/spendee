@@ -1,5 +1,6 @@
 <?php
   namespace HTTP\Services;
+  date_default_timezone_set('Australia/Perth');
   use \Pimple\Container;
   #use HTTP\Helpers\Container;
   use \Pimple\ServiceProviderInterface;
@@ -95,12 +96,15 @@
 
         $debugHandler = new \Monolog\Handler\StreamHandler('/app/logs/debug.log',\Monolog\Logger::DEBUG);
         $errorHandler = new \Monolog\Handler\StreamHandler('/app/logs/error.log',\Monolog\Logger::ERROR);
+        $taskHandler = new \Monolog\Handler\StreamHandler('/app/logs/tasks.log',\Monolog\Logger::INFO);
 
         $debugHandler->setFormatter($formatter);
         $errorHandler->setFormatter($formatter);
+        $taskHandler->setFormatter($formatter);
 
         $log->pushHandler($debugHandler);
         $log->pushHandler($errorHandler);
+        $log->pushHandler($taskHandler);
 
         return $log;
       };
@@ -108,6 +112,11 @@
       $container['cache'] = function($app) {
         $cache = new \Symfony\Component\Cache\Simple\FilesystemCache();
         return $cache;
+      };
+
+      $container['pb'] = function($app) {
+        $pb = new \Pushbullet\Pushbullet($app->Config->get('pushbullet.token'));
+        return $pb;
       };
     }
   }

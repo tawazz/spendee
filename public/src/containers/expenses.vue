@@ -53,8 +53,10 @@
                     month,
                     day:null
                 });
+                vm.$store.dispatch('loading');
                 axios.get(apis.tagData(year,month)).then((response)=>{
                   vm.$store.dispatch('updateTagData',response.data);
+                  vm.$store.dispatch('done');
                 });
                 vm.$store.dispatch('updateExp',response.data);
                 vm.$store.dispatch('updatePage',"expenses");
@@ -82,15 +84,20 @@
         let params = vm.$route.params;
         let year = params.year;
         let month = params.month;
+        vm.$store.dispatch('loading');
         axios.get(apis.expenses(year,month)).then(response => {
             vm.$store.dispatch('updateExp',response.data);
+            vm.$store.dispatch('done');
         });
+        vm.$store.dispatch('loading');
         axios.get(apis.tagData(year,month)).then((response)=>{
           vm.$store.dispatch('updateTagData',response.data);
+          vm.$store.dispatch('done');
         });
-
+        vm.$store.dispatch('loading');
         axios.get(apis.totals(year,month,null)).then(res => {
           vm.$store.dispatch('setTotals',res.data);
+          vm.$store.dispatch('done');
         });
       },
       closeModal() {

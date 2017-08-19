@@ -19,5 +19,11 @@ export default{
     },
     SETTAGDATA(state,payload){
       state.tagData = payload;
+    },
+    LOADING(state){
+      state.busy += 1;
+    },
+    DONE(state){
+      state.busy -= 1;
     }
 }

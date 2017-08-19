@@ -19,7 +19,8 @@ var store = new Vuex.Store({
             expenses:0,
             incomes:0
         },
-        tagData:null
+        tagData:null,
+        busy:0
     },
     mutations,
     actions,

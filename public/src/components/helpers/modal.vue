@@ -89,12 +89,10 @@
               default:false
             },
             ok:{
-              type:Function,
-              required:true
+              type:Function
             },
             cancel:{
-              type:Function,
-              required:true
+              type:Function
             }
         },
         data () {

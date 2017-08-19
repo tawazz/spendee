@@ -47,7 +47,9 @@
       }
 
       foreach ($reminders as $reminder) {
-        $pb->allDevices()->pushNote("Spendee - Recurring Expenses",$reminder);
+        if (isset($reminder)) {
+          $pb->allDevices()->pushNote("Spendee - Recurring Expenses",$reminder);
+        }
       }
       $container['log']->info('Notifications sent');
     }

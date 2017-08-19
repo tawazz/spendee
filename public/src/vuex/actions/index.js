@@ -6,8 +6,10 @@ export default {
         var page = (payload.page)?payload.page:(state.nav.page)?state.nav.page:"expenses";
         payload = nav(payload.year,payload.month,payload.day);
         commit('SETNAV',{...payload,page});
+        state.busy += 1;
         axios.get(apis.totals(payload.current.year,payload.current.month,null)).then(res => {
             commit('SETTOTALS',res.data);
+            state.busy -= 1;
         });
     },
     setTotals(context,payload) {
@@ -27,6 +29,12 @@ export default {
     },
     updateTagData(context,payload){
       context.commit('SETTAGDATA',payload);
+    },
+    loading(context){
+      context.commit('LOADING');
+    },
+    done(context){
+      context.commit('DONE');
     }
 
 }

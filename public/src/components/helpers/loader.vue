@@ -7,9 +7,8 @@
         <div class="col-lg-12">
           <div class="loader"></div>
         </div>
-        <div class="col-lg-12" style="margin-top:20px;">
-          <slot>Loading...</slot>
-        </div>
+          <slot>
+          </slot>
       </div>
     </div>
   </modal>

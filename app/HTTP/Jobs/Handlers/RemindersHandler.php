@@ -51,7 +51,7 @@
           $pb->allDevices()->pushNote("Spendee - Recurring Expenses",$reminder);
         }
       }
-      $container['log']->info('Notifications sent');
+      echo $Carbon->now(new \DateTimeZone('Australia/Perth'))->toDayDateTimeString()." ".sizeof($reminders)." Reminders sent...\n";
     }
 
     public function getReminder($exp,$repeat,$today)

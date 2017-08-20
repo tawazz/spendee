@@ -3,7 +3,7 @@
 <table bgcolor="#10622d" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; width: 100%; margin: 0; padding: 20px;">
   <tr>
     <td>
-      <img src="http://192.168.1.149:8006/images/icon.png" alt="" />
+      <img src="http://spendee.tawazz.net/images/icon.png" alt="" />
     </td>
     <td>
     </td>

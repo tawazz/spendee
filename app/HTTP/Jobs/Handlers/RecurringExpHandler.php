@@ -16,9 +16,9 @@
         $container->Carbon = $Carbon;
         $today = $Carbon->now()->hour(0)->minute(0)->second(0);
 
-        $Exp = new \HTTP\Models\Expense();
-        $User = new \HTTP\Models\User();
-        $ExpTags = new \HTTP\Models\ExpenseTag();
+        $Exp = $container->Exp;
+        $User = $container->User;
+        $ExpTags = $container->ExpTags;
 
         $expenses = RecurringExpense::where('ended',false)->get();
         foreach ($expenses as $exp) {

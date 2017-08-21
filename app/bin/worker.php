@@ -32,9 +32,11 @@ while (true) {
       sleep(5);
     } catch (Exception $e) {
       echo $e->__toString();
+      $job->release(60);
       sleep(5);
     } catch (Throwable $e) {
       echo $e->__toString();
+      $job->release(60);
       sleep(5);
     }
 }

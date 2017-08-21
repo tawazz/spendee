@@ -1,7 +1,6 @@
 <?php
   namespace HTTP\Jobs\Handlers;
   use \HTTP\Models\RecurringExpense;
-  use \HTTP\Models\User;
   /**
    *
    */
@@ -10,9 +9,10 @@
     public function fire($job, $data){
 
       $container = $this->container;
-      $pb = $container['pb'];
-      $Carbon =$container['Carbon'];
-      $User = new User();
+      $pb = $container->pb;
+      $Carbon =$container->Carbon;
+      $User = $container->User;
+
       $today = $Carbon->now()->hour(0)->minute(0)->second(0);
 
       $expenses = RecurringExpense::where('ended',false)->get();
@@ -51,7 +51,7 @@
           $pb->allDevices()->pushNote("Spendee - Recurring Expenses",$reminder);
         }
       }
-      echo $Carbon->now(new \DateTimeZone('Australia/Perth'))->toDayDateTimeString()." ".sizeof($reminders)." Reminders sent...\n";
+      $container->log->info('Notifications sent');
     }
 
     public function getReminder($exp,$repeat,$today)

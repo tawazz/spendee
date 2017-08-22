@@ -14,7 +14,7 @@ $queue = $app['queue'];
 $dispatcher = new Illuminate\Events\Dispatcher();
 $exceptionHandler = new DebugException();
 $connection = $queue->getConnection('default');
-$tube = 'default';
+$tube = $app['Config']->get('jobs.queue');
 $worker = new Worker($queue->getQueueManager(), $dispatcher , $exceptionHandler);
 
 while (true) {

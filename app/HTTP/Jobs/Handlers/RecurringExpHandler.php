@@ -1,7 +1,6 @@
 <?php
   namespace HTTP\Jobs\Handlers;
   use \HTTP\Jobs\Handlers\BaseHandler;
-  use \HTTP\Models\RecurringExpense;
 
   /**
    * RecurringExpenseHandler
@@ -20,7 +19,7 @@
         $User = $container->User;
         $ExpTags = $container->ExpTags;
 
-        $expenses = RecurringExpense::where('ended',false)->get();
+        $expenses = $container->RecurringExpense->where('ended',false)->get();
         foreach ($expenses as $exp) {
           $expense = $exp->expense();
           $container->auth = $User->get($expense->user_id);
@@ -94,7 +93,7 @@
           }
         }
       } catch (\Exception $e){
-        $container['log']->debug($e->getMessage());
+        $container->log->debug($e->getMessage(),$e->getTrace());
         throw new \Exception($e->getMessage(), 1);
       }
     }

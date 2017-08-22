@@ -1,21 +1,19 @@
 <?php
   namespace HTTP\Jobs\Handlers;
-  use \HTTP\Models\RecurringExpense;
   /**
    *
    */
   class Remindershandler extends \HTTP\Jobs\Handlers\BaseHandler
   {
     public function fire($job, $data){
-      try{
+      try {
         $container = $this->container;
         $pb = $container->pb;
         $Carbon =$container->Carbon;
         $User = $container->User;
 
         $today = $Carbon->now()->hour(0)->minute(0)->second(0);
-
-        $expenses = RecurringExpense::where('ended',false)->get();
+        $expenses = $container->RecurringExpense->where('ended',false)->get();
         $reminders = [];
         foreach ($expenses as $exp) {
           $expense = $exp->expense();
@@ -51,10 +49,11 @@
             $pb->allDevices()->pushNote("Spendee - Recurring Expenses",$reminder);
           }
         }
-        #$container->log->info('Notifications sent');
+        $container->log->info('Notifications Sent...');
         echo $Carbon->now()->toDayDateTimeString()." Notifications Sent...\n";
       } catch(\Exception $e) {
-        dump($e);
+        echo $Carbon->now()->toDayDateTimeString()." Notifications".$e->getMessage()."\n";
+        $container->log->info('Notifications error',$e->getTrace());
         $job->release();
       }
     }

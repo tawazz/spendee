@@ -31,6 +31,9 @@ class Helper
       $items = [];
       foreach ($all as $itm) {
         if($key == $itm->date){
+          if (isset($itm->is_recurring)) {
+            $itm->is_recurring = boolval($itm->is_recurring);
+          }
           array_push($items,$itm);
           $Dates[$itm->date] = $items;
         }

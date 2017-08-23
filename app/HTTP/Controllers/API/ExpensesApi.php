@@ -70,12 +70,14 @@
           $repeatOptions = $this->RecurringExpense->getPossbileEnumValues('repeat');
           $repeat = in_array($body->repeat, $repeatOptions) ? $body->repeat : null ;
           $recurring = null;
+          $isRecurring = false;
           if (isset($repeat) && $repeat !=  '0') {
             $end_repeat = ($body->end_repeat == 'never') ? null : $body->repeat_until;
             $recurring = $app->RecurringExpense;
             $recurring->reminder = isset($body->reminder) ? $body->reminder : '0';
             $recurring->end_repeat = $end_repeat;
             $recurring->repeat = $repeat;
+            $isRecurring = true;
           } else {
             $end_repeat = null;
           }
@@ -85,6 +87,7 @@
               'cost'=> str_replace( ',', '',$body->cost ),
               'date'=> $body->date,
               'user_id'=> $app->auth->id,
+              'is_recurring'=>$isRecurring
           ];
           try {
             $exp_id = $app->Exp->save($exp_data);

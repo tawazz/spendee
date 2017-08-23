@@ -4,15 +4,16 @@
           <div class="card-heading" :data-background-color="color">
               <h3 class="text-center">{{ date|date }}</h3>
           </div>
-            <div  :style="{color}" v-for="i in item">
+            <div v-for="i in item">
                 <div class="card-footer capitalize">
                     <div>
                       <a :href="`/${type}/${i.user_id}`" :style="{color}" style="bottom:0;padding-left:15px;">{{i.name}}</a>
                       <span class="tag" style="margin:0 5px;" v-for="tag in i.expense_tags">
                         {{ tag.tags.name}}
                       </span>
+                      <span v-if="i.is_recurring" class="mdi mdi-reload" style="font-size:1.3em" ></span>
                     </div>
-                    <span class="pull-right"><i class="fa fa-usd">{{ i.cost|formatMoney }}</i></span>
+                    <span class="pull-right" :style="{color}"><i class="fa fa-usd">{{ i.cost|formatMoney }}</i></span>
                     <div class="clearfix"></div>
                 </div>
             </div>

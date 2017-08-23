@@ -1,7 +1,7 @@
 <?php
   namespace HTTP\Jobs\Handlers;
   use \HTTP\Jobs\Handlers\BaseHandler;
-
+  date_default_timezone_set('Australia/Perth');
   /**
    * RecurringExpenseHandler
    */
@@ -20,6 +20,7 @@
         $ExpTags = $container->ExpTags;
 
         $expenses = $container->RecurringExpense->where('ended',false)->get();
+        echo "[ ".$Carbon->now()->toDayDateTimeString(). " ] ".sizeof($expenses) . " recurring expenses found\n";
         foreach ($expenses as $exp) {
           $expense = $exp->expense();
           $container->auth = $User->get($expense->user_id);
@@ -42,6 +43,7 @@
               break;
           }
           if ($today->eq($Carbon->parse($repeat))) {
+            echo "adding expense ".$expense->name." for ".$container->auth->username."\n";
             if (isset($exp->end_repeat)) {
               $end = $Carbon->parse($exp->end_repeat);
               if ($today->lte($end)) {
@@ -50,7 +52,8 @@
                     'cost'=> $expense->cost,
                     'date'=> $repeat,
                     'user_id'=> $expense->user_id,
-                    'parent_id'=>$expense->id
+                    'parent_id'=>$expense->id,
+                    'is_recurring'=>true
                 ];
               } else {
                 $exp->ended = true;
@@ -63,7 +66,8 @@
                 'cost'=> $expense->cost,
                 'date'=> $repeat,
                 'user_id'=> $expense->user_id,
-                'parent_id'=>$expense->id
+                'parent_id'=>$expense->id,
+                'is_recurring'=>true
               ];
             }
             if (isset($exp_data)) {

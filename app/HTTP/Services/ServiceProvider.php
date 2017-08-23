@@ -1,8 +1,7 @@
 <?php
   namespace HTTP\Services;
-  date_default_timezone_set('Australia/Perth');
+  use \HTTP\Services\ModelService;
   use \Pimple\Container;
-  #use HTTP\Helpers\Container;
   use \Pimple\ServiceProviderInterface;
   require_once __DIR__.'/../../../Tazzy-Helpers/autoload.php';
   require_once __DIR__.'/../../config/settings.php';
@@ -14,7 +13,7 @@
   {
     public function register(Container $container)
     {
-      //require_once __DIR__.'/../Models/Models.php';
+      $container->register(new ModelService());
 
       $container['session'] = function(){
         return  new \Session();
@@ -119,42 +118,6 @@
         $pb = new \Pushbullet\Pushbullet($app->Config->get('pushbullet.token'));
         return $pb;
       };
-      $container['User'] = function(){
-          return new \HTTP\Models\User();
-      };
-      $container['Exp'] = function(){
-          return new \HTTP\Models\Expense();
-      };
-      $container['Inc'] = function(){
-          return new \HTTP\Models\Income();
-      };
-      $container['Tags'] = function(){
-          return new \HTTP\Models\Tag();
-      };
-      $container['ExpTags'] = function(){
-          return new \HTTP\Models\ExpenseTag();
-      };
-      $container['IncTags'] = function(){
-          return new \HTTP\Models\IncomeTag();
-      };
-      $container['Remember'] = function(){
-          return new \HTTP\Models\Remember();
-      };
-      $container['Budget'] = function(){
-          return new \HTTP\Models\Budget();
-      };
-      $container['BudgetTag'] = function(){
-          return new \HTTP\Models\BudgetTag();
-      };
-      $container['Places'] = $container->factory(function($c) {
-          return new \HTTP\Models\Place();
-      });
-      $container['RecurringExpense'] = $container->factory(function($c) {
-          return new \HTTP\Models\RecurringExpense();
-      });
-      $container['Location'] = $container->factory(function($c) {
-          return new \HTTP\Models\Location();
-      });
     }
   }
 

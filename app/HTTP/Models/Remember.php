@@ -2,7 +2,7 @@
 
 namespace HTTP\Models;
 
- class Remember extends \Table
+ class Remember extends \Tazzy\Database\Table
  {
    protected $table = 'remember';
    protected $primary_key ='id';

@@ -6,7 +6,7 @@ namespace HTTP\Models;
  *
  */
  use Carbon\Carbon;
-class Budget extends \Table
+class Budget extends \Tazzy\Database\Table
 {
   protected $table='budgets';
   protected $primary_key ='id';

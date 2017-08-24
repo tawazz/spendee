@@ -1,7 +1,7 @@
 <?php
   namespace HTTP\Models;
 
-  class Income extends \Table{
+  class Income extends \Tazzy\Database\Table {
 
     protected $table='incomes';
     protected $primary_key ='id';

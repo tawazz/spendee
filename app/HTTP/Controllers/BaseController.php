@@ -14,7 +14,7 @@
     public function __construct($container) {
        $this->container = $container;
        $this->view = $container->view;
-       $this->session = new \Session();
+       $this->session = new \Tazzy\Utils\Session();
     }
 
     public function __get($prop)

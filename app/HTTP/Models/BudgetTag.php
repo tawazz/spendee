@@ -6,7 +6,7 @@ namespace HTTP\Models;
  *
 
  */
-class BudgetTag extends Table
+class BudgetTag extends \Tazzy\Database\Table
 {
   protected $table='budget_tags';
   protected $primary_key ='id';

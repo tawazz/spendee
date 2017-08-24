@@ -3,7 +3,6 @@
   use \HTTP\Services\ModelService;
   use \Pimple\Container;
   use \Pimple\ServiceProviderInterface;
-  require_once __DIR__.'/../../../Tazzy-Helpers/autoload.php';
   require_once __DIR__.'/../../config/settings.php';
   require_once __DIR__.'/../../config/database.php';
   /**
@@ -16,10 +15,10 @@
       $container->register(new ModelService());
 
       $container['session'] = function(){
-        return  new \Session();
+        return  new \Tazzy\Utils\Session();
       };
       $container['hash'] = function(){
-        return  new \Hash();
+        return  new \Tazzy\Utils\Hash();
       };
 
       $container['Config'] = function(){

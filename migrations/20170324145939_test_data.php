@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__.'/../vendor/fzaninotto/faker/src/autoload.php';
-require_once __DIR__. '/../Tazzy-Helpers/autoload.php';
 use \HTTP\Migrations\Migration;
 use \Faker\Factory;
 use \HTTP\Models\{Expense,Income};

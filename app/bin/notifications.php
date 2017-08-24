@@ -11,6 +11,6 @@
   ]);
   $container = $app->getContainer();
   $container->register(new ServiceProvider());
-
+  echo "[ ".$container->Carbon->now()->toDayDateTimeString(). " ] running task notifications\n";
   $container->queue->push(\HTTP\Jobs\Handlers\RemindersHandler::class,null);
  ?>

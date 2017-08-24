@@ -15,6 +15,7 @@
         $today = $Carbon->now()->hour(0)->minute(0)->second(0);
         $expenses = $container->RecurringExpense->where('ended',false)->get();
         $reminders = [];
+        echo "[ ".$Carbon->now()->toDayDateTimeString(). " ] running job notifications \n";
         foreach ($expenses as $exp) {
           $expense = $exp->expense();
           $container->auth = $User->get($expense->user_id);

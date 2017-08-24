@@ -4,7 +4,10 @@
       <div class="col-md-12">
         <div class="card">
             <div class="card-header" :data-background-color="color">
-                <div id="morris-line-chart" />
+                <div v-show="data_available" id="morris-line-chart" />
+                <div v-show="!data_available" class="nodata">
+                   No Data Available
+                </div>
             </div>
             <div class="card-content">
                 <h4 class="card-title capitalize">Daily {{type}}s for {{ nav.display }}</h4>
@@ -27,7 +30,10 @@
               <h4 class="card-title">Tags Overview</h4>
               <div class="row">
                 <div class="col-sm-12">
-                  <div id="morris-pie-chart" ></div>
+                  <div v-show="tag_data_available" id="morris-pie-chart" ></div>
+                  <div v-show="!tag_data_available" class="nodata">
+                     No Data Available
+                  </div>
                 </div>
               </div>
             </div>
@@ -44,21 +50,25 @@
   import {apis} from '@/hooks'
   import { mapState } from 'vuex'
   import randomColor from 'randomcolor'
+  import _ from 'lodash'
 
   export default {
     name:'graph',
-    props:["areaChart","color","type","tagChart"],
+    props:["expenses","color","type","tagChart"],
     data:function () {
       return {
         line_data:[],
         pie_data:[],
-        month:""
+        month:"",
+        data_available:false,
+        tag_data_available:false
       }
     },
     watch:{
-      areaChart:function () {
+      expenses:function () {
         let vm = this;
-        let exp = vm.areaChart;
+        let exp = vm.expenses;
+        vm.cal_data_available();
         for (var date_exp in exp) {
            var D = date_exp;
            var cost = 0;
@@ -68,7 +78,10 @@
            vm.line_data.push({day: D, value: cost});
         }
         $('#morris-line-chart').empty();
-        vm.drawAreaChart();
+        setTimeout(()=>{
+          vm.drawAreaChart();
+        },100);
+
       },
       tagChart:function () {
         let vm =this;
@@ -76,7 +89,11 @@
           vm.pie_data.push({label: pie, value:vm.tagChart[pie]});
         });
         $('#morris-pie-chart').empty();
-        vm.drawTagChart();
+        vm.tag_data_available = vm.pie_data.length > 0;
+        setTimeout(()=>{
+          vm.drawTagChart();
+        },100);
+
       }
 
     },
@@ -84,47 +101,54 @@
     methods: {
       drawAreaChart() {
         let vm = this;
-        new Morris.Area({
-          element: 'morris-line-chart',
-          data: vm.line_data,
-          xkey: 'day',
-          ykeys: ['value'],
-          labels: ['Spent'],
-          yLabelFormart: function (y) { return "$"+y; },
-          dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
-          preUnits:'$',
-          xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
-          lineColors:['#fff'],
-          goalLineColors:['#f5f5f5'],
-          gridTextColor:"#fff",
-          fillOpacity:"0.4",
-          grid:false,
-          resize:true,
-          hoverCallback: function (index, options, content, row) {
-            content = `<div class="morris-hover-row-label">${filters.date(row.day)}</div><div class='morris-hover-point' style='color: #03a9f4'>
+        if (vm.line_data.length > 0) {
+          new Morris.Area({
+            element: 'morris-line-chart',
+            data: vm.line_data,
+            xkey: 'day',
+            ykeys: ['value'],
+            labels: ['Spent'],
+            yLabelFormart: function (y) { return "$"+y; },
+            dateFormat: function (x) { return moment(x).format("dddd, MMMM Do YYYY"); },
+            preUnits:'$',
+            xLabelFormat:function (x) { return moment(x).format("MMM Do"); },
+            lineColors:['#fff'],
+            goalLineColors:['#f5f5f5'],
+            gridTextColor:"#fff",
+            fillOpacity:"0.4",
+            grid:false,
+            resize:true,
+            hoverCallback: function (index, options, content, row) {
+              content = `<div class="morris-hover-row-label">${filters.date(row.day)}</div><div class='morris-hover-point' style='color: #03a9f4'>
               Spent:
               $ ${filters.formatMoney(row.value)}
-            </div>`;
-            return content;
-          }
-        });
-        vm.line_data = [];
+              </div>`;
+              return content;
+            }
+          });
+          vm.line_data = [];
+        }
       },
       drawTagChart(){
         let vm =this;
-        let colors = randomColor({
-                       count: vm.pie_data.length,
-                       luminosity: 'light',
-                       hue: '#ec407a'
-                    });
-        new Morris.Donut({
-          element: 'morris-pie-chart',
-          data: vm.pie_data,
-          formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
-          colors,
-          resize:true
-        });
-        vm.pie_data = [];
+        if (vm.pie_data.length > 0) {
+          let colors = randomColor({
+            count: vm.pie_data.length,
+            luminosity: 'light',
+            hue: '#ec407a'
+          });
+          new Morris.Donut({
+            element: 'morris-pie-chart',
+            data: vm.pie_data,
+            formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
+            colors,
+            resize:true
+          });
+          vm.pie_data = [];
+        }
+      },
+      cal_data_available:function () {
+        this.data_available = _.keys(this.expenses).length > 0;
       }
     },
     computed:{
@@ -136,4 +160,10 @@
   }
 </script>
 <style scoped>
+  .nodata{
+    min-height: 370px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 </style>

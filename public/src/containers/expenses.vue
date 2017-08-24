@@ -5,7 +5,7 @@
         <item-list :data="expenses" :color="color" :type="type"/>
       </div>
       <div class="col-md-6">
-        <exp-graphs :areaChart="expenses" :tagChart="tagData" :type="type" :color="color" />
+        <exp-graphs :expenses="expenses" :tagChart="tagData" :type="type" :color="color" />
       </div>
       <div class="btn-add">
         <a href="#" class="btn btn-danger btn-fab" @click.prevent="addButtonClick" ><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>

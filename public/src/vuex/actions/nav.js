@@ -35,20 +35,20 @@ export default function(year,month,day){
 
         var date = `${year}/${month}/1`;
         nav['date']= date;
-        date = moment(date,'YYYY/M/dddd').format('MMM/YYYY');
-        nav['display'] = date;
-        nav['next'] = `${year}/${parseInt(month)+1}`;
-        nav['prev'] = `${year}/${parseInt(month)-1}`;
+        var formatted_date = moment(date,'YYYY/M/dddd').format('MMM/YYYY');
+        nav['display'] = formatted_date;
+        nav['next'] = moment(date,'YYYY/M/dddd').add(1, 'months').format('YYYY/M');
+        nav['prev'] = moment(date,'YYYY/M/dddd').subtract(1, 'months').format('YYYY/M');
         nav['current']={'year':year,'month':month,'day':1};
 
     }else if(year){
 
         var date = new Date(`${year}-1-1`);
         nav['date']= date;
-        date = moment(date).format('YYYY');
-        nav['display'] = date;
-        nav['next'] = `${year+1}`;
-        nav['prev'] = `${year-1}`;
+        var formatted_date = moment(date).format('YYYY');
+        nav['display'] = formatted_date;
+        nav['next'] = moment(date).add(1, 'y').format('YYYY');
+        nav['prev'] = moment(date).subtract(1, 'y').format('YYYY');
         nav['current']={'year':year,'month':1,'day':1};
 
     }else{
@@ -58,10 +58,11 @@ export default function(year,month,day){
         year = date.getFullYear(),
         month =date.getMonth()+1,
         day = 1,
-        date = moment(date).format('MMM/YYYY');
-        nav['display'] = date;
-        nav['next'] = `${year}/${parseInt(month)+1}`;
-        nav['prev'] = `${year}/${parseInt(month)-1}`;
+        date = `${year}/${month}/1`;
+        var formatted_date= moment(date,'YYYY/M/dddd').format('MMM/YYYY');
+        nav['display'] = formatted_date;
+        nav['next'] = moment(date,'YYYY/M/dddd').add(1, 'months').format('YYYY/M');
+        nav['prev'] = moment(date,'YYYY/M/dddd').subtract(1, 'months').format('YYYY/M');
         nav['current']={'year':year,'month':month,'day':1};
 
     }

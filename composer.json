@@ -20,7 +20,8 @@
     "lavary/crunz": "^1.4",
     "symfony/cache": "^3.3",
     "ivkos/pushbullet": "^3.3",
-    "tazzy/helpers": "dev-master"
+    "tazzy/helpers": "dev-master",
+    "php-middleware/php-debug-bar": "^1.4"
   },
   "autoload": {
     "psr-4": {

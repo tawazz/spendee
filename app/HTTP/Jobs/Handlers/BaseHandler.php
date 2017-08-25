@@ -4,6 +4,7 @@
   use \HTTP\Services\ServiceProvider;
   use \Slim\App;
   use \Slim\Http\Environment;
+  date_default_timezone_set('Australia/Perth');
   /**
    * BaseHander
    */

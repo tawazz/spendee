@@ -117,6 +117,13 @@
         $pb = new \Pushbullet\Pushbullet($app->Config->get('pushbullet.token'));
         return $pb;
       };
+      $container['debugbar_middleware'] = function($app) {
+        $debugbar = new \DebugBar\StandardDebugBar();
+        $debugbarRenderer = $debugbar->getJavascriptRenderer('/phpdebugbar');
+        $middleware = new \PhpMiddleware\PhpDebugBar\PhpDebugBarMiddleware($debugbarRenderer);
+        return $middleware;
+      };
+
     }
   }
 

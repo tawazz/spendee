@@ -125,7 +125,7 @@
             <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-tag-multiple"></i></button>
           </span>
           <label for="tags" class="control-label" >Tags</label>
-          <multiselect class="" v-model="selectedTags" :options="tags" :multiple="true" track-by="id" :searchable="true" :hide-selected="true"  placeholder="Select Tag">
+          <multiselect class="" v-model="selectedTags" :options="tags" :multiple="true" track-by="id" :searchable="true" :custom-label="searchTags" :hide-selected="true"  placeholder="Select Tag">
             <template slot="tag" scope="props">
               <ul class="tags">
                 <li><a href="#" class="tag" @click.prevent="props.remove(props.option)">{{ props.option.name }}</a></li>
@@ -325,6 +325,9 @@ export default {
         vm.expense.location.lat = "";
         vm.expense.location.long = "";
       }
+    },
+    searchTags({id,name}){
+      return name;
     }
   },
   beforeMount:function () {
@@ -341,3 +344,12 @@ export default {
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style media="screen">
+  .multiselect__option--highlight,
+  .multiselect__option--highlight:after{
+    background: #03a9f4;
+  }
+  .multiselect--active {
+    z-index: 50;
+  }
+</style>

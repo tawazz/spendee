@@ -1,6 +1,6 @@
 <template>
     <div v-show="isOpen" :transition="transition">
-        <div class="modal" @click.self="clickMask">
+        <div class="modal fade in" @click.self="clickMask">
             <div class="modal-dialog" :class="modalClass" role="document">
                 <div class="modal-content">
                     <!--Header-->
@@ -128,8 +128,10 @@
               let vm = this;
               if (isOpen) {
                 $(vm.$refs.modal).modal('show');
+                $("body").addClass("modal-open");
               }else {
                 $(vm.$refs.modal).modal('hide');
+                $("body").removeClass("modal-open")
               }
 
             }

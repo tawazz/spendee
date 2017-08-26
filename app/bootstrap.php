@@ -21,7 +21,7 @@
   $app->add(new Error($container));
   $app->add(new Csrf($container));
   if ($container->Config->get('debug')) {
-    $app->add($container->debugbar_middleware);
+    #$app->add($container->debugbar_middleware);
   }
   require 'app/HTTP/Middleware/auth_filters.php';
   //views

@@ -1,6 +1,12 @@
 <?php
   namespace HTTP\Models;
+  use \HTTP\Models\RecurringExpense;
 
+  const DAILY = 'daily';
+  const WEEKLY = 'weekly';
+  const FORTNIGHTLY = 'fortnightly';
+  const MONTHLY = 'monthly';
+  const YEARLY = 'yearly';
   class Expense extends \Tazzy\Database\Table{
 
     protected $table='expenses';
@@ -8,6 +14,53 @@
     protected $hasMany =[
       ['class' => \HTTP\Models\ExpenseTag::class, 'id' => 'exp_id']
     ];
+    private $RecurringExpense = null;
+
+    public function get($id,$field=[])
+    {
+      $result = parent::get($id,$field);
+
+      if ($result) {
+        $tags = [];
+        if (sizeof($result->expense_tags) > 0) {
+          foreach ($result->expense_tags as $exptag) {
+            array_push($tags,$exptag->tags->id);
+          }
+        }
+        $result->tags = $tags;
+        $result->is_recurring = boolval($result->is_recurring);
+        $this->RecurringExpense = new RecurringExpense();
+        $rc = $this->RecurringExpense->where('exp_id',$result->id)->first();
+        if (isset($rc)) {
+          $result->repeat =$rc->repeat;
+          $result->end_repeat = isset($rc->end_repeat) ? 'date' : 'never';
+          $result->repeat_until = isset($rc->end_repeat) ? $rc->end_repeat : null;
+          $result->reminder = $rc->reminder;
+        } else {
+          $result->repeat = '0';
+          $result->end_repeat = 'never';
+          $result->repeat_until =  null;
+          $result->reminder = '0';
+        }
+        $loc = new Location();
+        $place = $loc->where('exp_id',$result->id)->first();
+        if (isset($place)) {
+          $result->location = (object) [
+            "lat"  => $place->lat,
+            "long" => $place->long,
+            "name" => $place->name
+          ];
+        } else {
+          $result->location = (object) [
+            "lat"  => "",
+            "long" => "",
+            "name" => ""
+          ];
+        }
+
+      }
+      return $result;
+    }
 
     public function totalExp($startDate,$endDate){
         $sql = $this->qb
@@ -85,10 +138,45 @@
       return $this->find('all',[
         'where'=>['user_id','=',$this->active_record],
         'andWhere'=>[['date','>=',$startDate],['date','<',$endDate]],
-        'order'=>['date'=>'DESC']
+        'order'=>['date'=>'DESC'],
       ]);
     }
 
+    public function activityWithRelationships($startDate,$endDate)
+    {
+      $exp_ids = $this->find('all',[
+        'where'=>['user_id','=',$this->active_record],
+        'andWhere'=>[['date','>=',$startDate],['date','<',$endDate]],
+        'order'=>['date'=>'DESC'],
+        'fields'=>['id']
+      ]);
+      $expenses = [];
+      foreach ($exp_ids as $exp) {
+        array_push($expenses,$this->get($exp->id));
+      }
+      return $expenses;
+    }
+
+    private function repeatOptions($value)
+    {
+      switch ($value) {
+        case 1:
+        return DAILY;
+        break;
+        case 7:
+        return WEEKLY;
+        break;
+        case 14:
+        return FORTNIGHTLY;
+        break;
+        case 30:
+        return MONTHLY;
+        break;
+        case 365:
+        return YEARLY;
+        break;
+      }
+    }
 
   }
  ?>

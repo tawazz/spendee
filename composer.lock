@@ -3743,12 +3743,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tawazz/Tazzy-Helpers.git",
-                "reference": "bcc4641982028df5a40370f3d59b243b12178924"
+                "reference": "1ed0f950e176d70a0666e79a423680d1b0935ae4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tawazz/Tazzy-Helpers/zipball/bcc4641982028df5a40370f3d59b243b12178924",
-                "reference": "bcc4641982028df5a40370f3d59b243b12178924",
+                "url": "https://api.github.com/repos/tawazz/Tazzy-Helpers/zipball/1ed0f950e176d70a0666e79a423680d1b0935ae4",
+                "reference": "1ed0f950e176d70a0666e79a423680d1b0935ae4",
                 "shasum": ""
             },
             "require": {
@@ -3781,7 +3781,7 @@
                 "source": "https://github.com/tawazz/Tazzy-Helpers/tree/master",
                 "issues": "https://github.com/tawazz/Tazzy-Helpers/issues"
             },
-            "time": "2017-08-24 07:42:15"
+            "time": "2017-08-26 08:14:37"
         },
         {
             "name": "twig/twig",

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <item-list :data="expenses" :color="color" :type="type"/>
+        <item-list :data="expenses" :color="color" :type="type" :editCallback="editExp"/>
       </div>
       <div class="col-md-6">
         <exp-graphs :expenses="expenses" :tagChart="tagData" :type="type" :color="color" />
@@ -11,7 +11,7 @@
         <a href="#" class="btn btn-danger btn-fab" @click.prevent="addButtonClick" ><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
       </div>
     </div>
-    <add-exp :show="showAddModal" :save="addExpense" :close="closeModal"/>
+    <add-exp :show="showAddModal" :save="addExpense" :close="closeModal" :selected_exp="selected_exp"/>
   </div>
 </template>
 <script>
@@ -28,7 +28,8 @@
       return {
         color:"red",
         type:"expense",
-        showAddModal:false
+        showAddModal:false,
+        selected_exp:null
       };
     },
     components:{
@@ -105,6 +106,13 @@
       },
       init(){
         let vm = this;
+      },
+      editExp(id,type) {
+        let vm = this;
+        axios.get(apis.expense(id)).then((response)=>{
+          this.showAddModal = true;
+          vm.selected_exp = response.data;
+        });
       }
     },
     mounted:function () {

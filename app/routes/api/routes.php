@@ -7,7 +7,7 @@
     use \HTTP\Controllers\API\Places;
 
     $this->get('/expenses[/{year}[/{month}[/{day}]]]',ExpensesApi::class)->setName('api.expenses');
-    $this->get('/expense/{name}[/{year}]',ExpensesApi::class.':retrieve')->setName('api.expense.retrieve');
+    $this->get('/expense/{id}',ExpensesApi::class.':retrieve')->setName('api.expense.retrieve');
     $this->post('/expense',ExpensesApi::class.':create')->setName('api.expense.create');
     $this->put('/expense/{id}',ExpensesApi::class.':update')->setName('api.expense.update');
     $this->delete('/expense/{id}',ExpensesApi::class.':delete')->setName('api.expense.delete');

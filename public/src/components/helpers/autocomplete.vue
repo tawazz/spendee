@@ -1,11 +1,11 @@
 <template lang="html">
-  <input type="text"  @input="onInput" ref="autocomplete">
+  <input type="text" v-model='value'  @input="onInput" ref="autocomplete">
 </template>
 
 <script>
 import Awesomplete from 'awesomplete'
 export default {
-  props:['list','onInput','onSelect'],
+  props:['list','onInput','onSelect','value'],
   data:function () {
     return {
       awesomplete:null

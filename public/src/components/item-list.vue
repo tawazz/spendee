@@ -7,7 +7,7 @@
             <div v-for="i in item">
                 <div class="card-footer capitalize">
                     <div>
-                      <a :href="`/${type}/${i.user_id}`" :style="{color}" style="bottom:0;padding-left:15px;">{{i.name}}</a>
+                      <a href="#" :style="{color}" @click.prevent="edit(i.id)" style="bottom:0;padding-left:15px;">{{i.name}}</a>
                       <span class="tag" style="margin:0 5px;" v-for="tag in i.expense_tags">
                         {{ tag.tags.name}}
                       </span>
@@ -35,11 +35,14 @@
 
       }
     },
-    props:["data","color","type"],
+    props:["data","color","type","editCallback"],
     filters,
     methods:{
         total:function (item) {
             return item.reduce((a, b) => {return parseFloat(a) + parseFloat(b.cost); }, 0);
+        },
+        edit: function (id) {
+          this.editCallback(id,this.type);
         }
     },
     mounted:function () {

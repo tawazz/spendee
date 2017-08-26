@@ -20,7 +20,7 @@
             </span>
             <div class="form-group label-floating" :class="{'is-empty':(expense.cost == '')}">
               <label class="control-label">Amount</label>
-              <input type="text" class="form-control money" name="cost" @blur="updateCost">
+              <input type="text" class="form-control money" v-model="expense.cost" name="cost" @blur="updateCost">
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@
               </span>
               <div class="form-group label-floating" :class="{'is-empty':(expense.location.name == '')}">
                 <label class="control-label">Location</label>
-                <autocomplete class="form-control" name="location" :list="locationsDataList" :onInput="selectLocation" :onSelect="updateLocation"/>
+                <autocomplete class="form-control" v-model="expense.location.name" name="location" :list="locationsDataList" :onInput="selectLocation" :onSelect="updateLocation"/>
               </div>
             </div>
           </div>
@@ -147,6 +147,7 @@ import autocomplete from '@/components/helpers/autocomplete'
 import flatpickr from "flatpickr"
 import Multiselect from 'vue-multiselect'
 import apis from '@/api'
+import _ from 'lodash'
 
 export default {
   props:{
@@ -161,6 +162,9 @@ export default {
     close:{
       type:Function,
       required:true
+    },
+    selected_exp:{
+      type:Object
     }
   },
   components:{
@@ -186,6 +190,7 @@ export default {
         reminder:'0'
       },
       datepicker:null,
+      repeatpicker:null,
       tags:[],
       selectedTags:[],
       locations:[],
@@ -196,6 +201,18 @@ export default {
     selectedTags:function () {
       let vm = this;
       vm.selectTag(vm.selectedTags);
+    },
+    selected_exp:function () {
+      if (!_.isNil(this.selected_exp)) {
+        delete this.selected_exp['expense_tags'];
+        this.expense = this.selected_exp;
+        this.datepicker.setDate(this.expense.date,true,'Y-m-d');
+        if (!_.isNil(this.expense.repeat_until)) {
+          this.repeatpicker.setDate(this.expense.repeat_until,true,'Y-m-d');
+        }
+        this.mapTagsToSelected();
+      }
+
     }
   },
   methods:{
@@ -209,7 +226,7 @@ export default {
           vm.expense.date = dateStr;
         }
       });
-      flatpickr(vm.$refs.repeat_until, {
+      vm.repeatpicker = flatpickr(vm.$refs.repeat_until, {
         altInput: true,
         altFormat:"D, F j, Y",
         disableMobile: "true",
@@ -250,12 +267,21 @@ export default {
     addExpense:function (e) {
       let vm =this;
       let data = {...vm.expense};
-      vm.$http.post(apis.expense(),data).then((response)=>{
-        vm.resetExp();
-        vm.save();
-      }).catch((error)=>{
-        console.log(error);
-      });
+      if (vm.expense.id) {
+        vm.$http.put(apis.expense(vm.expense.id),data).then((response)=>{
+          vm.resetExp();
+          vm.save();
+        }).catch((error)=>{
+          console.log(error);
+        });
+      } else {
+        vm.$http.post(apis.expense(),data).then((response)=>{
+          vm.resetExp();
+          vm.save();
+        }).catch((error)=>{
+          console.log(error);
+        });
+      }
     },
     cancelExp:function () {
       this.resetExp();

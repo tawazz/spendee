@@ -18,6 +18,12 @@ class Utils
     $app->cache->deleteMultiple($cache_keys);
   }
 
+  public static function fixMoneyInput($money){
+    $money = str_replace( ',', '',$money);
+    $money = str_replace('$','',$money);
+    return $money;
+  }
+
   public static function sendReminders($container)
   {
       $pb = $container->pb;
@@ -75,6 +81,76 @@ class Utils
         return "Expense {$expense->name} - $".$expense->cost." to be added on {$repeat->addDay()->format('l jS \\of F Y ')}";
       }
     }
+  }
+
+  public static function updateExpense($app,$data){
+
+    $recurring = $app->RecurringExpense;
+    $recurring = $recurring->where('exp_id',$data->id)->first();
+
+    if (!$recurring->exists) {
+      $recurring = null;
+    }
+    $repeatOptions = $app->RecurringExpense->getPossbileEnumValues('repeat');
+    $repeat = in_array($data->repeat, $repeatOptions) ? $data->repeat : null ;
+
+    $isRecurring = false;
+
+    if (isset($repeat) && $repeat !=  '0') {
+      $end_repeat = ($data->end_repeat == 'never') ? null : $data->repeat_until;
+      $recurring = isset($recurring) ? $recurring : $app->RecurringExpense;
+      $recurring->reminder = isset($data->reminder) ? $data->reminder : '0';
+      $recurring->end_repeat = $end_repeat;
+      $recurring->repeat = $repeat;
+      $isRecurring = true;
+    } else {
+      $end_repeat = null;
+      $app->Exp->raw("delete from {$app->RecurringExpense->getTable()} where exp_id = {$data->id}");
+    }
+
+    $exp_data = [
+        'name'=> $data->name,
+        'cost'=> self::fixMoneyInput($data->cost),
+        'date'=> $data->date,
+        'user_id'=> $data->user_id,
+        'is_recurring'=>$isRecurring
+    ];
+
+    try {
+      $app->Exp->read($data->id)->set($exp_data);
+
+      if (isset($recurring)) {
+        $recurring->exp_id = $data->id;
+        $recurring->save();
+      }
+
+      $app->ExpTags->raw("delete from {$app->ExpTags->getTable()} where exp_id = {$data->id}");
+      foreach ($data->tags as $tag_id) {
+        $tags_data = [
+          'exp_id' => $data->id,
+          'tag_id' => $tag_id
+        ];
+        $app->ExpTags->save($tags_data);
+      }
+
+      $app->Exp->raw("delete from {$app->Location->getTable()} where exp_id = {$data->id}");
+      if (isset($data->location) && !empty($data->location->lat) && !empty($data->location->long) && !empty($data->location->name) ) {
+        $loc = $app->Location;
+        $loc->name = $data->location->name;
+        $loc->lat = $data->location->lat;
+        $loc->long = $data->location->long;
+        $loc->exp_id = $data->id;
+        $loc->save();
+      }
+
+      // clear cache
+      self::clearExpRouteCache($app,$data->date);
+
+      return $app->Exp->get($data->id);
+    } catch (\Exception $e) {
+      return false;
+    }
+    return false;
   }
 }
 

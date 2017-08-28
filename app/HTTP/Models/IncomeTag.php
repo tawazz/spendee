@@ -1,6 +1,6 @@
 <?php
   namespace HTTP\Models;
-  class IncomeTag extends \Tazzy\Database\Table{
+  class IncomeTag extends BaseTable{
 
     protected $table='income_tags';
     protected $primary_key ='id';

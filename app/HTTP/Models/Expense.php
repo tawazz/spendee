@@ -7,7 +7,7 @@
   const FORTNIGHTLY = 'fortnightly';
   const MONTHLY = 'monthly';
   const YEARLY = 'yearly';
-  class Expense extends \Tazzy\Database\Table{
+  class Expense extends BaseTable{
 
     protected $table='expenses';
     protected $primary_key ='id';

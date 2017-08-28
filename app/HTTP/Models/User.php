@@ -1,7 +1,7 @@
 <?php
   namespace HTTP\Models;
   use HTTP\Models\Remember;
-  class User extends \Tazzy\Database\Table
+  class User extends BaseTable
   {
     protected $table = 'users';
     protected $primary_key ='id';

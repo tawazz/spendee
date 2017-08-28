@@ -2,7 +2,7 @@
   namespace HTTP\Models;
   use \HTTP\Models\{Expense,Tag};
 
-  class ExpenseTag extends \Tazzy\Database\Table{
+  class ExpenseTag extends BaseTable{
 
     protected $table='expense_tags';
     protected $primary_key ='id';

@@ -90,6 +90,21 @@ class Utils
 
     if (!$recurring->exists) {
       $recurring = null;
+    } else {
+      $expense = $app->Exp->get($data->id);
+      $exp_date = $app->Carbon->parse($expense->date);
+      $new_date = $app->Carbon->parse($data->date);
+      $today = $app->Carbon->now()->hour(0)->minute(0)->second(0);
+      if ($exp_date->ne($new_date)) {
+        do {
+          $recurring_date = self::getRecurringDate($expense,$recurring);
+          if ($recurring_date->eq($exp_date)) {
+            $recurring->interval += 1;
+            // TODO: duplicate expense
+          }
+          $exp_date->addDays(1);
+        } while ($exp_date->lt($today));
+      }
     }
     $repeatOptions = $app->RecurringExpense->getPossbileEnumValues('repeat');
     $repeat = in_array($data->repeat, $repeatOptions) ? $data->repeat : null ;
@@ -151,6 +166,27 @@ class Utils
       return false;
     }
     return false;
+  }
+
+  public function getRecurringDate($expense,$recurring)
+  {
+    switch ($recurring->repeat) {
+      case '30':
+        return $Carbon->parse($expense->date)->addMonths(1 * $recurring->interval)->toDateString();
+        break;
+      case '365':
+        return $Carbon->parse($expense->date)->addYears(1 * $recurring->interval)->toDateString();
+        break;
+      case '14':
+        return $Carbon->parse($expense->date)->addWeeks(2 * $recurring->interval)->toDateString();
+        break;
+      case '7':
+        return $Carbon->parse($expense->date)->addWeeks(1 * $recurring->interval)->toDateString();
+        break;
+      case '1':
+        return $Carbon->parse($expense->date)->addDays(1 * $recurring->interval)->toDateString();
+        break;
+    }
   }
 }
 

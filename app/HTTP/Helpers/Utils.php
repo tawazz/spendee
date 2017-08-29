@@ -102,8 +102,9 @@ class Utils
           $recurring->interval += 1;
           $recurring->save();
           self::duplicateExp($app,$expense, $recurring_date->toDateString());
-          $exp_date->addDays(1);
-        } while ($exp_date->lt($today));
+          $new_date->addDays(1);
+          $repeat_until = isset($recurring->end_repeat) ? $app->Carbon->parse($recurring->end_repeat)->lte($new_date) : true;
+        } while ($new_date->lte($exp_date) && $repeat_until );
       }
     }
     $repeatOptions = $app->RecurringExpense->getPossbileEnumValues('repeat');

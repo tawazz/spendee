@@ -83,16 +83,10 @@ class Utils
     }
   }
 
-  public static function updateExpense($app,$data=null){
-    $data = json_decode("
-    {
-    \"user_id\":\"20\",\r\n
-     \"name\":\"food\",\r\n      \"cost\":\"10.00\",\r\n      \"date\":\"2017-08-17\",\r\n      \"id\":\"276\",\r\n      \"photo\":\"null\",\r\n      \"parent_id\":\"null\",\r\n      \"is_recurring\":\"true\",\r\n      \"tags\":[\"1\"],\r\n      \"repeat\":\"1\",\r\n      \"end_repeat\":\"date\",\r\n      \"repeat_until\":\"2017-09-08\",\r\n      \"reminder\":\"-30\",\r\n      \"location\":{\"lat\":\"\",\"long\":\"\",\"name\":\"\"}}
-    ");
-
+  public static function updateExpense($app,$data){
+    $app->auth = $app->User->get($data->user_id);
     $recurring = $app->RecurringExpense;
     $recurring = $recurring->where('exp_id',$data->id)->first();
-    eval(\Psy\sh());
     if (!$recurring->exists) {
       $recurring = null;
     } else {
@@ -100,17 +94,14 @@ class Utils
       $exp_date = $app->Carbon->parse($expense->date);
       $new_date = $app->Carbon->parse($data->date);
       $today = $app->Carbon->now()->hour(0)->minute(0)->second(0);
-      eval(\Psy\sh());
       if ($exp_date->ne($new_date)) {
         $recurring->interval = 1;
-        eval(\Psy\sh());
         do {
+          $expense->date = $new_date->toDateString();
           $recurring_date = self::getRecurringDate($app,$expense,$recurring);
-          if ($recurring_date->eq($exp_date)) {
-            $recurring->interval += 1;
-            $recurring->save();
-            self::duplicateExp($app,$expense, $recurring_date->toDateString());
-          }
+          $recurring->interval += 1;
+          $recurring->save();
+          self::duplicateExp($app,$expense, $recurring_date->toDateString());
           $exp_date->addDays(1);
         } while ($exp_date->lt($today));
       }
@@ -169,7 +160,6 @@ class Utils
 
       // clear cache
       self::clearExpRouteCache($app,$data->date);
-
       return $app->Exp->get($data->id);
     } catch (\Exception $e) {
       return false;
@@ -201,29 +191,26 @@ class Utils
   public static function duplicateExp($app,$expense,$date) {
     $exp_date = $app->Carbon->parse($date);
     $today = $app->Carbon->now()->hour(0)->minute(0)->second(0);
-    eval(\Psy\sh());
-    if ($today->lte($exp_date)) {
+    if ($today->gte($exp_date)) {
       $exp_data = [
           'name'=> $expense->name,
           'cost'=> $expense->cost,
           'date'=> $date,
           'user_id'=> $expense->user_id,
-          'parent_id'=>$expense->id,
-          'is_recurring'=>true
+          'parent_id'=>$expense->id
       ];
 
-      $exp->ended = true;
-      $exp_id =$exp->save();
+      $exp_id = $app->Exp->save($exp_data);
       foreach ($expense->expense_tags as $T) {
           $tags_data = [
             'exp_id' => $exp_id,
             'tag_id' => $T->tags->id
           ];
-          $tags_id = $ExpTags->save($tags_data);
+          $tags_id = $app->ExpTags->save($tags_data);
       }
-      $loc=\HTTP\Models\Location::where('exp_id',$expense->id)->first();
+      $loc=$app->Location->where('exp_id',$expense->id)->first();
       if (isset($loc) && $loc->exists) {
-        $container->Location->insert([
+        $app->Location->insert([
           'name' => $loc->name,
           'lat' => $loc->lat,
           'long' => $loc->long,

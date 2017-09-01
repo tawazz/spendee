@@ -30,7 +30,8 @@ module.exports = {
       'easing':'jquery.easing/jquery.easing.js',
       'morris':'morris.js/morris.js',
       'material':'bootstrap-material-design/dist/js/material.js',
-      'ripples':'bootstrap-material-design/dist/js/ripples.js'
+      'ripples':'bootstrap-material-design/dist/js/ripples.js',
+      'notify':"notify/dist/bootstrap-notify.js"
     }
   },
   module: {
@@ -50,6 +51,10 @@ module.exports = {
       },
       {
         test: /ripples.+\.(js)$/,
+        loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
+      },
+      {
+        test: /bootstrap-notify.+\.(js)$/,
         loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window'
       },
       {

@@ -58,7 +58,7 @@
               'cost'=> str_replace( ',', '',$body->cost ),
               'date'=> $body->date,
               'user_id'=> $app->auth->id,
-              'is_recurring'=>$isRecurring
+              'is_recurring'=>$isRecurring ? 1 : 0
           ];
           try {
             $exp_id = $app->Exp->save($exp_data);
@@ -107,8 +107,10 @@
         {
           $app = $this;
           $id = $args['id'];
+          $exp = $app->Exp->get($id);
           $app->Exp->read($id)->delete();
-          return $this->redirect($resp,$app->urlFor('expense.retrieve',['name'=>$_POST['name']]));
+          \HTTP\Helpers\Utils::clearExpRouteCache($app,$exp->date);
+          return $resp->withJson(['success' => true],200);
         }
         public function repeatOptions($req, $resp,$args)
         {

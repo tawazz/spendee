@@ -89,10 +89,16 @@
               default:false
             },
             ok:{
-              type:Function
+              type:Function,
+              default: function () {
+                return void(0);
+              }
             },
             cancel:{
-              type:Function
+              type:Function,
+              default: function () {
+                return void(0);
+              }
             }
         },
         data () {

@@ -1,5 +1,5 @@
 <template lang="html">
-  <modal title="Add Expense" :isOpen="show" :ok="addExpense" :cancel="cancelExp" okText="Save">
+  <modal title="Add Expense" :isOpen="show">
     <form name="addForm" id="addForm" method="post" action="/expenses/add">
       <div class="row">
         <div class="col-sm-6 col-xs-12">
@@ -137,6 +137,11 @@
           </multiselect>
         </div>
       </form>
+      <div slot="footer">
+          <button type="button" class="btn btn-info" @click="addExpense">{{okText}}</button>
+          <button v-if="isUpdate" type="button" class="btn btn-danger" @click="deleteExp">Delete</button>
+          <button type="button" class="btn btn-default" @click="cancelExp">Cancel</button>
+      </div>
   </modal>
 </template>
 
@@ -144,6 +149,7 @@
 import modal from '@/components/helpers/modal'
 import maskMoney from '@/components/helpers/mask-money'
 import autocomplete from '@/components/helpers/autocomplete'
+import notify from '@/components/helpers/notify'
 import flatpickr from "flatpickr"
 import Multiselect from 'vue-multiselect'
 import apis from '@/api'
@@ -215,6 +221,14 @@ export default {
 
     }
   },
+  computed:{
+    okText: function () {
+      return this.isUpdate ? "Update" : "Save";
+    },
+    isUpdate: function () {
+      return this.expense.id;
+    }
+  },
   methods:{
     init:function () {
       let vm =this;
@@ -269,6 +283,7 @@ export default {
       let data = {...vm.expense};
       if (vm.expense.id) {
         vm.$http.put(apis.expense(vm.expense.id),data).then((response)=>{
+          notify.alert("Expense Updated...");
           vm.resetExp();
           vm.save();
         }).catch((error)=>{
@@ -276,6 +291,7 @@ export default {
         });
       } else {
         vm.$http.post(apis.expense(),data).then((response)=>{
+          notify.alert("Expense Saved...");
           vm.resetExp();
           vm.save();
         }).catch((error)=>{
@@ -354,6 +370,14 @@ export default {
     },
     searchTags({id,name}){
       return name;
+    },
+    deleteExp(id){
+      let vm = this;
+      vm.$http.delete(apis.expense(vm.expense.id)).then((response) => {
+        notify.alert("Expense Deleted...");
+        this.resetExp();
+        this.save();
+      });
     }
   },
   beforeMount:function () {

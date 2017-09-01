@@ -30,7 +30,7 @@ class Places extends \HTTP\Controllers\BaseController
       if ($places) {
         $data = $places;
         $cache->set($cache_key,$data);
-        $resp->withJson($data);
+        return $resp->withJson($data);
       } else {
         $api_endpoint = "https://api.foursquare.com/v2/venues/search?";
         $search_url = "{$api_endpoint}ll={$req->getQueryParam('ll')}&query={$req->getQueryParam('query')}&client_id={$this->client_id}&client_secret={$this->client_secret}&v=20170812&radius=100000";

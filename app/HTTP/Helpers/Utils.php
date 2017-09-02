@@ -87,7 +87,7 @@ class Utils
     $app->auth = $app->User->get($data->user_id);
     $recurring = $app->RecurringExpense;
     $recurring = $recurring->where('exp_id',$data->id)->first();
-    if (!$recurring->exists) {
+    if (isset($recurring) && !$recurring->exists) {
       $recurring = null;
     } else {
       $expense = $app->Exp->get($data->id);
@@ -129,7 +129,7 @@ class Utils
         'cost'=> self::fixMoneyInput($data->cost),
         'date'=> $data->date,
         'user_id'=> $data->user_id,
-        'is_recurring'=>$isRecurring
+        'is_recurring'=>$isRecurring ? 1 : 0
     ];
 
     try {
@@ -163,6 +163,7 @@ class Utils
       self::clearExpRouteCache($app,$data->date);
       return $app->Exp->get($data->id);
     } catch (\Exception $e) {
+      $app->log->debug($e->getMessage(),$e->getTrace());
       return false;
     }
     return false;

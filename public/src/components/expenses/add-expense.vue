@@ -287,7 +287,9 @@ export default {
           vm.resetExp();
           vm.save();
         }).catch((error)=>{
-          console.log(error);
+          notify.alert('Error Updating Expense',JSON.stringify(error.response.data),{
+            type:"danger"
+          });
         });
       } else {
         vm.$http.post(apis.expense(),data).then((response)=>{
@@ -295,7 +297,9 @@ export default {
           vm.resetExp();
           vm.save();
         }).catch((error)=>{
-          console.log(error);
+          notify.alert('Error Saving Expense',JSON.stringify(error.response.data),{
+            type:"danger"
+          });
         });
       }
     },

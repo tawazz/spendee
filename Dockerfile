@@ -6,8 +6,13 @@ RUN mkdir -p /app
 RUN mkdir -p /app/logs
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y nodejs npm \
+RUN apt-get update && apt-get install -y npm \
 supervisor cron  php7.0-gd  php-xdebug
+
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash && \
+. "/root/.nvm/nvm.sh" && nvm install --lts
+
+RUN npm install -g yarn
 
 COPY docker/services /etc/supervisor/conf.d
 COPY docker/tasks /etc/cron.d/tasks

@@ -138,8 +138,8 @@
         </div>
       </form>
       <div slot="footer">
-          <button type="button" class="btn btn-info" @click="addExpense">{{okText}}</button>
-          <button v-if="isUpdate" type="button" class="btn btn-danger" @click="deleteExp">Delete</button>
+          <button type="button" :disabled="busy" class="btn btn-info" @click="addExpense">{{okText}}</button>
+          <button v-if="isUpdate" :disabled="busy" type="button" class="btn btn-danger" @click="deleteExp">Delete</button>
           <button type="button" class="btn btn-default" @click="cancelExp">Cancel</button>
       </div>
   </modal>
@@ -153,6 +153,7 @@ import notify from '@/components/helpers/notify'
 import flatpickr from "flatpickr"
 import Multiselect from 'vue-multiselect'
 import apis from '@/api'
+import { mapState } from 'vuex'
 import _ from 'lodash'
 
 export default {
@@ -227,7 +228,10 @@ export default {
     },
     isUpdate: function () {
       return this.expense.id;
-    }
+    },
+    ...mapState({
+        busy: state => state.busy > 0
+    })
   },
   methods:{
     init:function () {
@@ -255,9 +259,7 @@ export default {
     },
     updateCost(e){
       let vm = this;
-      setTimeout(function () {
-        vm.expense.cost = e.target.value;
-      },100)
+      vm.expense.cost = e.target.value;
     },
     selectTag(value){
       let vm = this;
@@ -280,26 +282,31 @@ export default {
     },
     addExpense:function (e) {
       let vm =this;
+      vm.$store.dispatch('loading');
       let data = {...vm.expense};
       if (vm.expense.id) {
         vm.$http.put(apis.expense(vm.expense.id),data).then((response)=>{
           notify.alert("Expense Updated...");
           vm.resetExp();
           vm.save();
+          vm.$store.dispatch('done');
         }).catch((error)=>{
           notify.alert('Error Updating Expense',JSON.stringify(error.response.data),{
             type:"danger"
           });
+          vm.$store.dispatch('done');
         });
       } else {
         vm.$http.post(apis.expense(),data).then((response)=>{
           notify.alert("Expense Saved...");
           vm.resetExp();
           vm.save();
+          vm.$store.dispatch('done');
         }).catch((error)=>{
           notify.alert('Error Saving Expense',JSON.stringify(error.response.data),{
             type:"danger"
           });
+          vm.$store.dispatch('done');
         });
       }
     },

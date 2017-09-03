@@ -109,7 +109,9 @@
       },
       editExp(id,type) {
         let vm = this;
+        vm.$store.dispatch('loading');
         axios.get(apis.expense(id)).then((response)=>{
+          vm.$store.dispatch('done');
           this.showAddModal = true;
           vm.selected_exp = response.data;
         });
@@ -127,5 +129,6 @@
     bottom: 0px;
     right: 0px;
     padding: 50px;
+    z-index: 4;
   }
 </style>

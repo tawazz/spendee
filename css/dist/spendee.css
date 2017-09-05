@@ -281,6 +281,7 @@ header {
     background-attachment: fixed;
     text-align: center;
     color: white;
+    margin-top: -20px;
 }
 .app-gallery img{
   max-height: 400px;

@@ -3,6 +3,9 @@ namespace HTTP\Helpers;
 use League\Csv\Reader;
 use League\Csv\Writer;
 date_default_timezone_set('Australia/Perth');
+
+const CLIENT_ID = "0JOOESNULVBUOHVDNPVU5OMQG1JF0FLSFTOLTLHE3NAED3YZ";
+const CLIENT_SECRET= "JLQV5FM2KKDGYFJJA5FOT11YNY1T15MGJ2AXMW5YVLN15R5Y";
 /**
 *
 */
@@ -199,7 +202,7 @@ class Utils
   public static function addExpense($app,$data) {
 
     $repeatOptions = $app->RecurringExpense->getPossbileEnumValues('repeat');
-    $repeat = in_array($data->repeat, $repeatOptions) ? $data->repeat : null ;
+    $repeat = isset($repeat) ? in_array($data->repeat, $repeatOptions) ? $data->repeat : null : null;
     $recurring = null;
     $isRecurring = false;
     if (isset($repeat) && $repeat !=  '0') {
@@ -226,13 +229,14 @@ class Utils
       $recurring->exp_id = $exp_id;
       $recurring->save();
     }
-
-    foreach ($data->tags as $tag_id) {
-      $tags_data = [
-        'exp_id' => $exp_id,
-        'tag_id' => $tag_id
-      ];
-      $app->ExpTags->save($tags_data);
+    if (isset($data->tags)) {
+      foreach ($data->tags as $tag_id) {
+        $tags_data = [
+          'exp_id' => $exp_id,
+          'tag_id' => $tag_id
+        ];
+        $app->ExpTags->save($tags_data);
+      }
     }
 
     if (isset($data->location) && !empty($data->location->lat) && !empty($data->location->long) && !empty($data->location->name) ) {
@@ -284,32 +288,76 @@ class Utils
   }
   public static function addFromCsv($app)
   {
-    $reader = Reader::createFromPath(__DIR__.'/../../bin/csv/file.csv');
+    $reader = Reader::createFromPath(__DIR__.'/../../bin/csv/Transactions.csv');
     $reader->setHeaderOffset(0);
     $records = $reader->getRecords($reader->getHeader());
+    $app->auth = $app->User->get(20);
     foreach ($records as $offset => $record) {
       $record = (object) $record;
       $description = explode("-",$record->Description);
-      if (sizeof($description > 3)) {
-        $longData= explode(" ",trim($description[2]));
-        $location = "";
-        if(sizeof($longData > 3)){
-          for ($i=2; $i < sizeof($longData) ; $i++) {
-            if ($longData[$i] != "Date") {
-              $location .= $longData[$i]." ";
-            } else {
-              break;
-            }
+      if (!empty($record->Debit)) {
+        $data = [
+          "name" => ucwords(strtolower(trim($description[0]))),
+          "date" => $app->Carbon->createFromFormat('d/m/Y',trim($record->Date))->toDateString(),
+          "cost" => floatval($record->Debit) * - 1
+        ];
+        self::addExpense($app,(object) $data);
+      }
+    }
+  }
+
+  public static function searchLocation($app,$query,$ll="-31.95,115.86")
+  {
+    if (trim($query) == "") {
+      return false;
+    }
+    $cache = $app->cache;
+    $cache_key = 'api.places.'.$ll.'.'.$query;
+    $data = [];
+    if (!$cache->has($cache_key)) {
+      $places = $app->Places->exists($query);
+      if ($places) {
+        $data = $places;
+        $cache->set($cache_key,$data);
+        return $data;
+      } else {
+        $api_endpoint = "https://api.foursquare.com/v2/venues/search?";
+        $search_url = "{$api_endpoint}ll={$ll}&query={$query}&client_id=".CLIENT_ID."&client_secret=".CLIENT_SECRET."&v=20170812&radius=100000";
+        $client = new \GuzzleHttp\Client();
+        $res = $client->request('GET', $search_url);
+        if ($res->getStatusCode()==200) {
+          $place = $app->Places;
+          $place->query = $query;
+          $place->response = $res->getBody();
+          $place->save();
+          $places = $app->Places->exists($query);
+          $cache->set($cache_key,$places);
+          return $places;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      $data = $cache->get($cache_key);
+      return $data;
+    }
+  }
+
+  public static function locationFromCsv($app,$description)
+  {
+    if (sizeof($description) > 2) {
+      $longData= explode(" ",trim($description[2]));
+      $location = "";
+      if(sizeof($longData) > 2){
+        for ($i=2; $i < sizeof($longData) ; $i++) {
+          if ($longData[$i] != "Date") {
+            $location .= $longData[$i]." ";
+          } else {
+            break;
           }
         }
       }
-      $data = [
-        "name" => trim($description[0]),
-        "date" => $app->Carbon->createFromFormat('d/m/Y',trim($record->Date))->toDateString(),
-        "cost" => intval($record->Debit) * - 1,
-        "location" => trim($location)
-      ];
-      dump($data);
+      $location = self::searchLocation($app,$location);
     }
   }
 }

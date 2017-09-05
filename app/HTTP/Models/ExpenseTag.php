@@ -31,7 +31,7 @@
       $allTags = $Tags->find('all');
 
       foreach ($allTags as $tag) {
-        $amount = (int) $this->db->query("SELECT Sum(exp.cost ) as total FROM expense_tags as tag,expenses as exp where tag_id = ? and exp.id = tag.exp_id and  exp.date >= ? and exp.date <= ? and exp.user_id = ?",[$tag->id,$startDate,$endDate,$user_id])->first()->total;
+        $amount = (int) $this->db->query("SELECT Sum(exp.cost ) as total FROM expense_tags as tag,expenses as exp where tag_id = ? and exp.id = tag.exp_id and  exp.date >= ? and exp.date < ? and exp.user_id = ?",[$tag->id,$startDate,$endDate,$user_id])->first()->total;
         if($amount > 0){
           $exptags[$tag->name] =  $amount;
         }

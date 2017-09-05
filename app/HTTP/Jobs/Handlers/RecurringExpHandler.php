@@ -52,8 +52,7 @@
                     'cost'=> $expense->cost,
                     'date'=> $repeat,
                     'user_id'=> $expense->user_id,
-                    'parent_id'=>$expense->id,
-                    'is_recurring'=>true
+                    'parent_id'=>$expense->id
                 ];
               } else {
                 $exp->ended = true;
@@ -66,8 +65,7 @@
                 'cost'=> $expense->cost,
                 'date'=> $repeat,
                 'user_id'=> $expense->user_id,
-                'parent_id'=>$expense->id,
-                'is_recurring'=>true
+                'parent_id'=>$expense->id
               ];
             }
             if (isset($exp_data)) {

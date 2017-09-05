@@ -42,6 +42,13 @@
     {
         $this->session->flash($key,$value);
     }
+
+    public function notFound(){
+      return $this->container['response']
+          ->withStatus(404)
+          ->withHeader('Content-Type', 'text/html')
+          ->write($this->view->fetch('errors/404.php'));
+    }
   }
 
  ?>

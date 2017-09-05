@@ -22,7 +22,8 @@
     "ivkos/pushbullet": "^3.3",
     "tazzy/helpers": "dev-master",
     "php-middleware/php-debug-bar": "^1.4",
-    "psy/psysh": "@stable"
+    "psy/psysh": "@stable",
+    "league/csv": "^9.0"
   },
   "autoload": {
     "psr-4": {

@@ -60,6 +60,9 @@
       $year = isset($args['year']) ? $args['year'] : Null;
       $month = isset($args['month']) ? $args['month'] : Null;
       $day = isset($args['day']) ? $args['day'] : Null;
+      if (isset($month) && $month > 12) {
+        return $this->notFound();
+      }
       $this->view->render($resp,'main/vue.php',[
         'page'    => 'expenses',
         'totals'  => []

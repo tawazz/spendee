@@ -24,6 +24,9 @@
           $year = isset($args['year']) ? $args['year'] : Null;
           $month = isset($args['month']) ? $args['month'] : Null;
           $day = isset($args['day']) ? $args['day'] : Null;
+          if (isset($month) && $month > 13) {
+            return $this->notFound();
+          }
           $data = [];
           $cache_key = 'api.expenses.get.'.$app->auth->id.'.'.$year.'.'.$month;
           if (!$cache->has($cache_key)) {
@@ -38,56 +41,9 @@
         {
           $app = $this;
           $body = json_decode($req->getBody()->getContents());
-          $repeatOptions = $this->RecurringExpense->getPossbileEnumValues('repeat');
-          $repeat = in_array($body->repeat, $repeatOptions) ? $body->repeat : null ;
-          $recurring = null;
-          $isRecurring = false;
-          if (isset($repeat) && $repeat !=  '0') {
-            $end_repeat = ($body->end_repeat == 'never') ? null : $body->repeat_until;
-            $recurring = $app->RecurringExpense;
-            $recurring->reminder = isset($body->reminder) ? $body->reminder : '0';
-            $recurring->end_repeat = $end_repeat;
-            $recurring->repeat = $repeat;
-            $isRecurring = true;
-          } else {
-            $end_repeat = null;
-          }
-
-          $exp_data = [
-              'name'=> $body->name,
-              'cost'=> str_replace( ',', '',$body->cost ),
-              'date'=> $body->date,
-              'user_id'=> $app->auth->id,
-              'is_recurring'=>$isRecurring ? 1 : 0
-          ];
-          try {
-            $exp_id = $app->Exp->save($exp_data);
-
-            if (isset($recurring)) {
-              $recurring->exp_id = $exp_id;
-              $recurring->save();
-            }
-
-            foreach ($body->tags as $tag_id) {
-                $tags_data = [
-                  'exp_id' => $exp_id,
-                  'tag_id' => $tag_id
-                ];
-                $app->ExpTags->save($tags_data);
-            }
-
-            if (isset($body->location) && !empty($body->location->lat) && !empty($body->location->long) && !empty($body->location->name) ) {
-              $loc = $this->Location;
-              $loc->name = $body->location->name;
-              $loc->lat = $body->location->lat;
-              $loc->long = $body->location->long;
-              $loc->exp_id = $exp_id;
-              $loc->save();
-            }
-
-            // clear cache
-            \HTTP\Helpers\Utils::clearExpRouteCache($app,$body->date);
-            return $resp->withJson($app->Exp->get($exp_id),200);
+          try{
+            $exp = \HTTP\Helpers\Utils::addExpense($app,$body);
+            return $resp->withJson($exp,200);
           } catch (\Exception $e) {
             return $resp->withJson($e->getMessage(),400);
           }
@@ -97,7 +53,7 @@
         {
           $app = $this;
           $data = json_decode(json_encode($req->getParsedBody()));
-          $updated = Utils::updateExpense($app, $data);
+          $updated = Utils::updateExpense($app,$data);
           if ($updated) {
             return $resp->withJson($updated,200);
           }

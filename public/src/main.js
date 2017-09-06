@@ -13,10 +13,14 @@ require('./hooks-css')
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 $.material.init();
-new Vue({
+const app = new Vue({
   el: '#app',
   store,
   router,
   template: '<App/>',
   components: { App }
-})
+});
+
+router.onReady(() => {
+  app.$mount('#app')
+});

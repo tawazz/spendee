@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Expenses from '@/containers/expenses'
-import Incomes from '@/containers/incomes'
-
 Vue.use(Router)
 
 export default new Router({
@@ -12,15 +8,15 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Expenses
+      component: () => import('@/containers/expenses')
     },{
       path: '/expenses/:year?/:month?',
       name: 'Expenses',
-      component: Expenses
+      component: () => import('@/containers/expenses')
     },{
       path: '/incomes/:year?/:month?',
       name: 'Incomes',
-      component: Incomes
+      component: () => import('@/containers/incomes')
     }
   ]
 })

@@ -7,3 +7,4 @@ app/views/cache
 dist
 /assets
 /logs/*.log
+/logs/*.log.*

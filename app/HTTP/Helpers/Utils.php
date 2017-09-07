@@ -288,7 +288,7 @@ class Utils
   }
   public static function addFromCsv($app)
   {
-    $reader = Reader::createFromPath(__DIR__.'/../../bin/csv/Transactions.csv');
+    $reader = Reader::createFromPath(__DIR__.'/../../bin/csv/file.csv');
     $reader->setHeaderOffset(0);
     $records = $reader->getRecords($reader->getHeader());
     $app->auth = $app->User->get(20);

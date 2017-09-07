@@ -7,8 +7,29 @@
       <div class="col-md-6">
         <exp-graphs :expenses="expenses" :tagChart="tagData" :type="type" :color="color" />
       </div>
-      <div class="btn-add">
-        <a href="#" class="btn btn-danger btn-fab" @click.prevent="addButtonClick" ><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
+      <div class="btn-group dropup btn-add">
+        <button
+          type="button"
+          class="btn btn-danger btn-fab btn-raised dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          data-tooltip="tooltip" data-placement="left" title="add expense"
+          @click.prevent="addButtonClick"
+          @mouseover="openFabMenu">
+          <i class="material-icons mdi mdi-plus"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li
+            data-tooltip="tooltip"
+            data-placement="left"
+            title="import csv">
+            <a href="#"
+              class="btn btn-danger btn-fab btn-raised">
+              <i class="material-icons mdi mdi-file-excel"></i>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
     <add-exp :show="showAddModal" :save="addExpense" :close="closeModal" :selected_exp="selected_exp"/>
@@ -70,6 +91,12 @@
         }
     },
     methods:{
+      openFabMenu(e){
+        setTimeout(()=>{
+          $('.dropdown-toggle').dropdown('toggle');
+        },100)
+
+      },
       addButtonClick () {
         let vm =this;
         vm.showAddModal = true;
@@ -106,6 +133,10 @@
       },
       init(){
         let vm = this;
+        setTimeout(()=>{
+          $('[data-tooltip="tooltip"]').tooltip();
+        },100);
+
       },
       editExp(id,type) {
         let vm = this;
@@ -128,7 +159,17 @@
     position: fixed;
     bottom: 0px;
     right: 0px;
-    padding: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
     z-index: 4;
+  }
+  ul.dropdown-menu {
+    box-shadow: none;
+    border: 0;
+    min-width:0;
+    background:transparent
+  }
+  ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
   }
 </style>

@@ -5,7 +5,7 @@
         <div class="col-sm-6 col-xs-12">
           <div class="input-group">
             <span class="input-group-addon">
-              <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-shopping"></i></button>
+              <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-shopping"></i></button>
             </span>
             <div class="form-group label-floating" :class="{'is-empty':(expense.name == '')}">
               <label class="control-label">Expense</label>
@@ -16,7 +16,7 @@
         <div class="col-sm-6 col-xs-12">
           <div class="input-group">
             <span class="input-group-addon">
-              <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-currency-usd"></i></button>
+              <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-currency-usd"></i></button>
             </span>
             <div class="form-group label-floating" :class="{'is-empty':(expense.cost == '')}">
               <label class="control-label">Amount</label>
@@ -27,7 +27,7 @@
       </div>
       <div class="input-group">
         <span class="input-group-addon">
-          <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar"></i></button>
+          <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar"></i></button>
         </span>
         <div class="form-group label-floating" :class="{'is-empty':(expense.date == '')}">
           <label class="control-label">Date</label>
@@ -38,7 +38,7 @@
           <div class="col-sm-6 col-xs-12">
             <div class="input-group">
               <span class="input-group-addon">
-                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-update"></i></button>
+                <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-update"></i></button>
               </span>
               <div class="form-group label-floating" :class="{'is-empty':(expense.repeat == '')}">
                 <label class="control-label">Repeat</label>
@@ -55,7 +55,7 @@
           <div class="col-sm-6 col-xs-12" v-show="expense.repeat!='0'">
             <div class="input-group">
               <span class="input-group-addon">
-                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-cancel"></i></button>
+                <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-cancel"></i></button>
               </span>
               <div class="form-group label-floating" :class="{'is-empty':(expense.end_repeat == '')}">
                 <label class="control-label">End Repeat</label>
@@ -69,7 +69,7 @@
           <div class="col-sm-12" v-show="expense.repeat!='0' && expense.end_repeat=='date'">
             <div class="input-group">
               <span class="input-group-addon">
-                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar-check"></i></button>
+                <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar-check"></i></button>
               </span>
               <div class="form-group label-floating" :class="{'is-empty':(expense.repeat_until == '')}">
                 <label class="control-label">Repeat Until</label>
@@ -82,7 +82,7 @@
           <div class="col-sm-12" v-show="expense.repeat!='0'">
             <div class="input-group">
               <span class="input-group-addon">
-                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-bell-ring"></i></button>
+                <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-bell-ring"></i></button>
               </span>
               <div class="form-group label-floating" :class="{'is-empty':(expense.reminder == '')}">
                 <label class="control-label">Reminder</label>
@@ -100,7 +100,7 @@
           <div class="col-sm-6 col-xs-12">
             <div class="input-group">
               <span class="input-group-addon">
-                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-map-marker"></i></button>
+                <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-map-marker"></i></button>
               </span>
               <div class="form-group label-floating" :class="{'is-empty':(expense.location.name == '')}">
                 <label class="control-label">Location</label>
@@ -111,7 +111,7 @@
           <div class="col-sm-6 col-xs-12">
             <div class="input-group">
               <span class="input-group-addon">
-                <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-image"></i></button>
+                <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-image"></i></button>
               </span>
               <div class="form-group is-fileinput is-empty">
                 <input type="text" readonly="" class="form-control" placeholder="Browse...">
@@ -122,7 +122,7 @@
         </div>
         <div class="input-group">
           <span class="input-group-addon" style="padding-top:30px;">
-            <button class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-tag-multiple"></i></button>
+            <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-tag-multiple"></i></button>
           </span>
           <label for="tags" class="control-label" >Tags</label>
           <multiselect class="" v-model="selectedTags" :options="tags" :multiple="true" track-by="id" :searchable="true" :custom-label="searchTags" :hide-selected="true"  placeholder="Select Tag">
@@ -405,12 +405,19 @@ export default {
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-<style media="screen">
+<style>
   .multiselect__option--highlight,
   .multiselect__option--highlight:after{
     background: #03a9f4;
   }
   .multiselect--active {
     z-index: 50;
+  }
+  #addForm > div:nth-child(1) > div:nth-child(2) > div > span > button
+  #addForm .btn-fab:disabled,#addForm .btn-fab[disabled][disabled],
+  #addForm .btn-fab:disabled:hover,#addForm .btn-fab[disabled][disabled]:hover{
+    background-color: #f44336;
+    color: #fff;
+    cursor: default;
   }
 </style>

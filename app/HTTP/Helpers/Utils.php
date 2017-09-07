@@ -360,6 +360,33 @@ class Utils
       $location = self::searchLocation($app,$location);
     }
   }
+
+  public static function relatedTags($app,$start="2017-09-1",$end="2017-09-30")
+  {
+    $db = \Tazzy\Database\DB::connect();
+    $qb = new \Tazzy\Database\QueryBuilder();
+    $expenses = $db->query($qb->fields('expenses',['id','name','user_id'])
+                ->whereBtwn("date",[$start,$end])->get())->result();
+    foreach ($expenses as $exp) {
+
+      if (!$app->ExpensesAndTags->hasTag($exp->id)) {
+        $availableTags = $app->ExpensesAndTags->getRelatedTags($exp->name);
+        if ($availableTags->isNotEmpty()) {
+          foreach ($availableTags as $avail) {
+            $tags_data = [
+              'exp_id' => $exp->id,
+              'tag_id' => $avail->tag
+            ];
+            $app->ExpTags->save($tags_data);
+            $app->auth = $app->User->get($exp->user_id);
+            self::clearExpRouteCache($app,$start);
+            self::clearExpRouteCache($app,$end);
+          }
+        }
+      }
+    }
+
+  }
 }
 
 

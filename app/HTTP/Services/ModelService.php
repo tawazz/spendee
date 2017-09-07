@@ -46,6 +46,10 @@ class ModelService implements ServiceProviderInterface
     $container['Location'] = $container->factory(function($c) {
         return new \HTTP\Models\Location();
     });
+    $container['ExpensesAndTags'] = $container->factory(function($c) {
+        return new \HTTP\Models\ExpensesAndTags();
+    });
+
   }
 }
 

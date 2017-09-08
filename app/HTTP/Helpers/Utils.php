@@ -368,7 +368,9 @@ class Utils
     $expenses = $db->query($qb->fields('expenses',['id','name','user_id'])
                 ->whereBtwn("date",[$start,$end])->get())->result();
     foreach ($expenses as $exp) {
-
+      if (!$exp->user_id) {
+        continue;
+      }
       if (!$app->ExpensesAndTags->hasTag($exp->id)) {
         $availableTags = $app->ExpensesAndTags->getRelatedTags($exp->name);
         if ($availableTags->isNotEmpty()) {
@@ -381,6 +383,7 @@ class Utils
             $app->auth = $app->User->get($exp->user_id);
             self::clearExpRouteCache($app,$start);
             self::clearExpRouteCache($app,$end);
+            break;
           }
         }
       }

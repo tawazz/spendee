@@ -1,5 +1,6 @@
 <?php
   namespace HTTP\Models;
+  use Illuminate\Database\Capsule\Manager as DB;
 
   class ExpensesAndTags extends \HTTP\Models\BaseModel {
 
@@ -7,7 +8,10 @@
 
     public function getRelatedTags($name)
     {
-      return $this->select('tag')->where('name', 'LIKE', "%".$name."%")->distinct()->get();
+      return $this->select('tag',DB::raw('Count(*) as count'))
+      ->where('name', 'LIKE', "%".$name."%")
+      ->groupBy('tag')
+      ->orderBy(DB::raw('count'),'desc')->get();
     }
 
     public function hasTag($exp_id)

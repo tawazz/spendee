@@ -133,10 +133,8 @@
             show(isOpen){
               let vm = this;
               if (isOpen) {
-                $(vm.$refs.modal).modal('show');
                 $("body").addClass("modal-open");
               }else {
-                $(vm.$refs.modal).modal('hide');
                 $("body").removeClass("modal-open")
               }
 

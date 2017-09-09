@@ -1,0 +1,88 @@
+<template lang="html">
+  <modal :isOpen="show" title="Import Expenses" :ok="uploadFile" :cancel="close" okText="import">
+    <form  action="" method="post">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-file"></i></button>
+            </span>
+            <div class="form-group is-fileinput is-empty">
+              <input type="text" readonly="" class="form-control" placeholder="Browse...">
+              <input type="file" class="form-control" name="expenses" ref="csv">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </modal>
+</template>
+
+<script>
+import modal from '@/components/helpers/modal'
+import notify from '@/components/helpers/notify'
+import apis from '@/api'
+export default {
+  props:{
+    show:{
+      type:Boolean,
+      default:false
+    },
+    save:{
+        type:Function,
+        required:true
+    },
+    close:{
+      type:Function,
+      required:true
+    }
+  },
+  components:{
+    modal
+  },
+  methods:{
+    uploadFile(){
+      let vm = this;
+      var data = new FormData();
+      var file = $(vm.$refs.csv).prop('files');
+      if (file.length > 0) {
+        file = file[0];
+        if (file.type == 'text/csv') {
+          data.append('expenses',file);
+          var config = {
+            onUploadProgress: function(progressEvent) {
+              var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+            }
+          };
+          vm.$http.post(apis.import_exp,data,config).then((response) =>{
+
+          }).catch((error) => {
+            notify.alert('Error! importing file',JSON.stringify(error.response.data),{
+              type:"danger"
+            });
+          });
+        } else {
+          notify.alert('Error! only csv files supported',"",{
+            type:"danger"
+          });
+        }
+      } else {
+        notify.alert('Error! please select a file',"",{
+          type:"danger"
+        });
+      }
+
+    }
+
+  }
+}
+</script>
+
+<style lang="css" scoped>
+.btn-fab:disabled,.btn-fab[disabled][disabled],
+.btn-fab:disabled:hover,.btn-fab[disabled][disabled]:hover{
+  background-color: #f44336;
+  color: #fff;
+  cursor: default;
+}
+</style>

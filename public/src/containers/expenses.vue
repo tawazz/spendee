@@ -24,7 +24,7 @@
             data-tooltip="tooltip"
             data-placement="left"
             title="import csv">
-            <a href="#"
+            <a href="#" @click.prevent="showImportModal=true"
               class="btn btn-danger btn-fab btn-raised">
               <i class="material-icons mdi mdi-file-excel"></i>
             </a>
@@ -33,12 +33,14 @@
       </div>
     </div>
     <add-exp :show="showAddModal" :save="addExpense" :close="closeModal" :selected_exp="selected_exp"/>
+    <imp-exp :show="showImportModal" :save="importExpenses" :close="closeImportModal" :selected_exp="selected_exp"/>
   </div>
 </template>
 <script>
   import itemsList from '@/components/item-list'
   import graphs from '@/components/graphs'
   import addExpenseModal from '@/components/expenses/add-expense'
+  import importExpensesModal from '@/components/expenses/import-expenses'
   import { mapState } from 'vuex'
   import {axios,apis} from '@/hooks'
   import Vue from 'vue'
@@ -50,13 +52,15 @@
         color:"red",
         type:"expense",
         showAddModal:false,
+        showImportModal:true,
         selected_exp:null
       };
     },
     components:{
       'item-list':itemsList,
       'exp-graphs':graphs,
-      'add-exp':addExpenseModal
+      'add-exp':addExpenseModal,
+      'imp-exp':importExpensesModal
     },
     computed:{
         ...mapState({
@@ -130,6 +134,12 @@
       },
       closeModal() {
           this.showAddModal = false;
+      },
+      closeImportModal(){
+        this.showImportModal = false;
+      },
+      importExpenses(){
+
       },
       init(){
         let vm = this;

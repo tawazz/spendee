@@ -1,5 +1,5 @@
 <template lang="html">
-  <modal title="Add Expense" :isOpen="show">
+  <modal title="Add Expense" :isOpen="show" :cancel="cancelExp">
     <form name="addForm" id="addForm" method="post" action="/expenses/add">
       <div class="row">
         <div class="col-sm-6 col-xs-12">

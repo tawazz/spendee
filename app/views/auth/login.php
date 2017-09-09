@@ -19,14 +19,13 @@
                       <input type="checkbox" name="remember">
                       <span class="checkbox-material"><span class="check"></span></span> Remember Me
                     </label>
-                    <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}">
                   </div>
+                  {{ csrf()|raw }}
                   <button type="submit" class="btn btn-info btn-raised col-xs-12 ">LOGIN</button>
                     <div class="form-group col-xs-12 text-center">
                       <span class="text-danger">{{errors.login}}</span>
                         <br/><p>Don't have an Account? Sign up <a href="{{urlFor('register')}}" style="color:#5bc0de;">here</a> </p>
                     </div>
-
                 </form>
             </div>
         </div>

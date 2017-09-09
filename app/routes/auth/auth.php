@@ -10,7 +10,7 @@
       $this->get('/register',$auth.':registerView')->setName('register');
       $this->post('/register',$auth.':register')->setName('post.register');
       $this->get('/logout',$auth.':logout')->setName('logout');
-  })->add(new Guest($container));
+  })->add(new Guest($container))->add($container->csrf);
 
 $app->post('/update/user', function() use($app){
     if (empty($_POST['email'])) {

@@ -33,7 +33,7 @@
       {
         $path = substr($path,1);
       }
-      return ($host) ? "http://".$_SERVER['HTTP_HOST'].$this->baseUrl()."/public/".$path : $this->baseUrl()."/public/".$path ;
+      return ($host) ? "http://".$_SERVER['HTTP_HOST'].$this->baseUrl()."/assets/".$path : $this->baseUrl()."/assets/".$path ;
     }
 
   }

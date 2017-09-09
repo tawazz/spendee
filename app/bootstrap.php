@@ -3,7 +3,7 @@
   date_default_timezone_set('Australia/Perth');
   require 'vendor/autoload.php';
   use Slim\App;
-  use HTTP\Middleware\{Error,Dump,Csrf};
+  use HTTP\Middleware\{Error,Dump};
   use HTTP\Services\ServiceProvider;
 
   $app = new App(
@@ -19,7 +19,7 @@
   //Middleware
   $app->add(new Dump($container));
   $app->add(new Error($container));
-  $app->add(new Csrf($container));
+  #$app->add($container->csrf);
   if ($container->Config->get('debug')) {
     #$app->add($container->debugbar_middleware);
   }

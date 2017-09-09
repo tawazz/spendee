@@ -27,7 +27,7 @@
                      <div class="form-group{%if errors.email%} has-error{%endif%}">
                         <input type="email" name="email" class="form-control" placeholder="Email*" value="{{values.email}}" >{{errors.email}}
                      </div>
-              <input type="hidden" name="{{csrf_key}}" value="{{csrf_token}}">
+                     {{ csrf()|raw }}
                 <label> </label><br/><input type="submit" class="btn btn-info btn-raised" style="padding:8px 50px;" value="Sign Up"/></br>
                 <div id="error"></div>
                 </form>

@@ -36,6 +36,12 @@
         return new \Slim\Flash\Messages();
       };
 
+      $container['csrf'] = function ($c) {
+        $csrf = new \Slim\Csrf\Guard;
+        $csrf->setPersistentTokenMode(true);
+        return $csrf;
+      };
+
       $container["view"] = function($app){
         $view = new \HTTP\Helpers\Twig($app['Config']->get('views.dir'), [
             'cache' => $app['Config']->get('views.cache')
@@ -44,6 +50,7 @@
         $basePath = rtrim(str_ireplace('index.php', '', $app['request']->getUri()->getBasePath()), '/');
         $view->addExtension(new \HTTP\Helpers\TwigExtension($app['router'], $basePath));
         $view->addExtension(new \Twig_Extension_Debug());
+        $view->addExtension(new \HTTP\Helpers\CsrfExtension($app['csrf']));
 
         return $view;
       };

@@ -19,6 +19,9 @@
     <div id="app"></div>
     {% block content %}{% endblock %}
     {% block js %}{% endblock %}
+    <script type="text/javascript">
+      Window.csrf = {{ csrf|json_encode()|raw }};
+    </script>
     <script type="text/javascript" src="//10.0.0.3:3001/app.js"></script>
   </body>
 </html>

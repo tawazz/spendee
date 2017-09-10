@@ -52,7 +52,7 @@
         color:"red",
         type:"expense",
         showAddModal:false,
-        showImportModal:true,
+        showImportModal:false,
         selected_exp:null
       };
     },
@@ -139,7 +139,9 @@
         this.showImportModal = false;
       },
       importExpenses(){
-
+        let vm = this;
+        vm.closeImportModal();
+        vm.updatePage();
       },
       init(){
         let vm = this;

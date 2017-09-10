@@ -20,7 +20,8 @@ export default {
     },
     location:function (query,ll='-31.95,115.86') {
       return `/api/places?ll=${ll}&query=${query}`;
-    }
+    },
+    import_exp:"/api/import/expenses"
 }
 function getUrl(page,year,month,day){
     let url = "";

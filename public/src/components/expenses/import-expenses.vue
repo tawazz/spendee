@@ -21,7 +21,7 @@
 <script>
 import modal from '@/components/helpers/modal'
 import notify from '@/components/helpers/notify'
-import apis from '@/api'
+import { apis,axios } from '@/hooks'
 export default {
   props:{
     show:{
@@ -42,34 +42,39 @@ export default {
   },
   methods:{
     uploadFile(){
-      let vm = this;
+      var vm = this;
       var data = new FormData();
       var file = $(vm.$refs.csv).prop('files');
       if (file.length > 0) {
         file = file[0];
         if (file.type == 'text/csv') {
+          vm.$store.dispatch('loading');
           data.append('expenses',file);
           var config = {
             onUploadProgress: function(progressEvent) {
               var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
             }
           };
-          vm.$http.post(apis.import_exp,data,config).then((response) =>{
-
+          axios.post(apis.import_exp,data,config).then((response) =>{
+            vm.save();
+            vm.$store.dispatch('done');
           }).catch((error) => {
-            notify.alert('Error! importing file',JSON.stringify(error.response.data),{
+            notify.alert('Error! importing file',"",{
               type:"danger"
             });
+            vm.$store.dispatch('done');
           });
         } else {
           notify.alert('Error! only csv files supported',"",{
             type:"danger"
           });
+          vm.$store.dispatch('done');
         }
       } else {
         notify.alert('Error! please select a file',"",{
           type:"danger"
         });
+        vm.$store.dispatch('done');
       }
 
     }

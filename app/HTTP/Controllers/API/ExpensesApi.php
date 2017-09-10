@@ -1,6 +1,7 @@
 <?php
     namespace HTTP\Controllers\API;
     use \HTTP\Helpers\Utils;
+    use \Tazzy\Utils\File;
 
     /**
      *
@@ -68,9 +69,36 @@
           \HTTP\Helpers\Utils::clearExpRouteCache($app,$exp->date);
           return $resp->withJson(['success' => true],200);
         }
+
         public function repeatOptions($req, $resp,$args)
         {
           return $resp->withJson($this->Exp->getPossbileEnumValues('repeat'));
+        }
+
+        public function import($req, $resp,$args)
+        {
+          try {
+            $file = new File($_FILES['expenses']);
+            $file->allowed = ['csv'];
+            if (!$file->error() && $file->isAllowed()) {
+              $hash = $this->hash->unique();
+              $folder = "/app/assets/imports";
+              if(!is_dir($folder)) {
+                mkdir($folder);
+              }
+              $path = '/app/assets/imports/'.$hash.'.csv';
+              $file->move($path);
+              $data = [
+                "path" => $path,
+                "user_id" => $this->auth->id
+              ];
+              $this->queue->push(\HTTP\Jobs\Handlers\ImportHandler::class,$data);
+              return $resp->withJson(["success" => true]);
+            }
+          } catch (Exception $e) {
+            return $resp->withStatus(400)->withJson(["error" => $e->getMessage()]);
+          }
+          return $resp->withStatus(400);
         }
     }
 

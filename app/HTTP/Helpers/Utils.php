@@ -286,12 +286,17 @@ class Utils
       }
     }
   }
-  public static function addFromCsv($app)
-  {
-    $reader = Reader::createFromPath(__DIR__.'/../../bin/csv/file.csv');
+  public static function readFile($app,$path){
+    $reader = Reader::createFromPath($path);
     $reader->setHeaderOffset(0);
-    $records = $reader->getRecords($reader->getHeader());
-    $app->auth = $app->User->get(20);
+    // TODO: check if correct format
+    # ING Format for now
+    $ing = ["Date","Description","Credit","Debit","Balance"];
+    if ($ing !== $reader->getHeader()) {
+      throw new \Exception("Error Processing csv, only Ing Bank format allowed at the moment.", 1);
+    }
+    $records = $reader->getRecords($ing);
+    $expenses = [];
     foreach ($records as $offset => $record) {
       $record = (object) $record;
       $description = explode("-",$record->Description);
@@ -299,11 +304,21 @@ class Utils
         $data = [
           "name" => ucwords(strtolower(trim($description[0]))),
           "date" => $app->Carbon->createFromFormat('d/m/Y',trim($record->Date))->toDateString(),
-          "cost" => floatval($record->Debit) * - 1
+          "cost" => floatval($record->Debit) * - 1,
+          "user_id" => $app->auth->id
         ];
-        self::addExpense($app,(object) $data);
+        array_push($expenses,$data);
       }
     }
+    return $expenses;
+  }
+  public static function addFromCsv($app,$path)
+  {
+    $expenses = self::readFile($app,$path);
+    foreach ($expenses as $exp) {
+      self::addExpense($app,(object) $exp);
+    }
+    return $expenses;
   }
 
   public static function searchLocation($app,$query,$ll="-31.95,115.86")
@@ -365,8 +380,11 @@ class Utils
   {
     $db = \Tazzy\Database\DB::connect();
     $qb = new \Tazzy\Database\QueryBuilder();
-    $expenses = $db->query($qb->fields('expenses',['id','name','user_id'])
-                ->whereBtwn("date",[$start,$end])->get())->result();
+    $expenses = $db->query($qb->fields('expenses',['id','name','user_id','date'])
+                ->where("user_id",$app->auth->id)
+                ->andWhere("date",">=",$start)
+                ->andWhere("date","<",$end)
+                ->get())->result();
     foreach ($expenses as $exp) {
       if (!$exp->user_id) {
         continue;
@@ -380,9 +398,10 @@ class Utils
               'tag_id' => $avail->tag
             ];
             $app->ExpTags->save($tags_data);
-            $app->auth = $app->User->get($exp->user_id);
-            self::clearExpRouteCache($app,$start);
-            self::clearExpRouteCache($app,$end);
+            if (!$app->auth) {
+              $app->auth = $app->User->get($exp->user_id);
+            }
+            self::clearExpRouteCache($app,$exp->date);
             break;
           }
         }

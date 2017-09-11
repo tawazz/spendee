@@ -380,11 +380,11 @@ class Utils
   {
     $db = \Tazzy\Database\DB::connect();
     $qb = new \Tazzy\Database\QueryBuilder();
-    $expenses = $db->query($qb->fields('expenses',['id','name','user_id','date'])
-                ->where("user_id",$app->auth->id)
-                ->andWhere("date",">=",$start)
-                ->andWhere("date","<",$end)
-                ->get())->result();
+    $sql = $qb->fields('expenses',['id','name','user_id','date'])
+                ->whereBtwn('date',[$start,$end])
+                ->andWhere("user_id","=",$app->auth->id)
+                ->get();
+    $expenses = $db->query($sql)->result();
     foreach ($expenses as $exp) {
       if (!$exp->user_id) {
         continue;

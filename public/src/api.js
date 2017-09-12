@@ -8,7 +8,10 @@ export default {
     totals:function (year,month,day) {
         return getUrl('totals',year,month,day);
     },
-    tagData:function (year,month,day) {
+    tagData:function (year,month,day,detail = false) {
+      if (detail) {
+        return getUrl('tags/expenses',year,month,day)+"?detail=true";
+      }
       return getUrl('tags/expenses',year,month,day);
     },
     tags:"/api/tags",

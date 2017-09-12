@@ -18,7 +18,8 @@ class Utils
     $cache_keys = [
       'api.expenses.get.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
       'api.totals.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
-      'api.exp.tags'.$app->auth->id.'.'.$date->year.'.'.$date->month
+      'api.exp.tags'.$app->auth->id.'.'.$date->year.'.'.$date->month.'.'.'with_detail',
+      'api.exp.tags'.$app->auth->id.'.'.$date->year.'.'.$date->month.'.'.'with_out_detail'
     ];
     $app->cache->deleteMultiple($cache_keys);
   }

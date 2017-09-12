@@ -19,14 +19,16 @@
         public function get($req, $resp, $args)
         {
             $app = $this->container;
+            $with_detail = $req->getParam('detail') ? $req->getParam('detail') == "true" : false;
             $year = isset($args['year']) ? $args['year'] : Null;
             $month = isset($args['month']) ? $args['month'] : Null;
             $day = isset($args['day']) ? $args['day'] : Null;
             $cache = $app->cache;
-            $cache_key = 'api.exp.tags'.$app->auth->id.'.'.$year.'.'.$month;
+            $detail_cache_key = ($with_detail) ? 'with_detail' : 'with_out_detail';
+            $cache_key = 'api.exp.tags'.$app->auth->id.'.'.$year.'.'.$month.'.'.$detail_cache_key;
             $data = [];
             if (!$cache->has($cache_key)) {
-              $data = $app->Helper->getExpenseTags($app,$app->auth->id,$year,$month,$day);
+              $data = $app->Helper->getExpenseTags($app,$app->auth->id,$with_detail,$year,$month,$day);
               $cache->set($cache_key,$data);
             } else {
               $data = $cache->get($cache_key);

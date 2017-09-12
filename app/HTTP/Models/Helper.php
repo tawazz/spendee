@@ -44,7 +44,7 @@ class Helper
     return $Dates;
   }
 
-  public static function getExpenseTags($app,$user_id,$year=null,$month=null,$day=null){
+  public static function getExpenseTags($app,$user_id,$with_detail,$year=null,$month=null,$day=null){
 
     if(isset($year)&& isset($month) && isset($day) ){
       if($month == 13){
@@ -55,7 +55,7 @@ class Helper
         $month=12;
         $year -=1;
       }
-      $exptags = $app->ExpTags->tagData($user_id,$year."-".$month."-1",$year."-".$month."-".($day+1));
+      $exptags = $app->ExpTags->tagData($user_id,$with_detail,$year."-".$month."-1",$year."-".$month."-".($day+1));
 
     }else if(isset($year)&& isset($month) ){
 
@@ -68,16 +68,16 @@ class Helper
         $year -=1;
       }
 
-      $exptags = $app->ExpTags->tagData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
+      $exptags = $app->ExpTags->tagData($user_id,$with_detail,$year."-".$month."-1",$year."-".($month+1)."-1");
 
     }else if(isset($year)){
-      $exptags = $app->ExpTags->tagData($user_id,$year."-"."1"."-1",($year+1)."-1-1");
+      $exptags = $app->ExpTags->tagData($user_id,$with_detail,$year."-"."1"."-1",($year+1)."-1-1");
 
     }else{
 
       $month= date('m');
       $year= date('Y');
-      $exptags = $app->ExpTags->tagData($user_id,$year."-".$month."-1",$year."-".($month+1)."-1");
+      $exptags = $app->ExpTags->tagData($user_id,$with_detail,$year."-".$month."-1",$year."-".($month+1)."-1");
 
     }
     return $exptags;

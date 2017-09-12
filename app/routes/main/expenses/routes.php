@@ -1,10 +1,13 @@
 <?php
-  use HTTP\Controllers\Main\ExpenseController;
+  use HTTP\Controllers\VueController;
   //Expenses
-  $this->get('/expenses[/{year}[/{month}[/{day}]]]',ExpenseController::class)->setName('expenses');
-  $this->get('/expense/{name}[/{year}]',ExpenseController::class.':retrieve')->setName('expense.retrieve');
-  $this->post('/expense',ExpenseController::class.':create')->setName('expense.create');
-  $this->put('/expense/{id}',ExpenseController::class.':update')->setName('expense.update');
-  $this->delete('/expense/{id}',ExpenseController::class.':delete')->setName('expense.delete');
+  $this->get('/expenses[/{year}[/{month}[/{day}]]]',VueController::class)->setName('expenses');
+  $this->get('/expense/{name}[/{year}]',VueController::class)->setName('expense.retrieve');
+  $this->post('/expense',VueController::class)->setName('expense.create');
+  $this->put('/expense/{id}',VueController::class)->setName('expense.update');
+  $this->delete('/expense/{id}',VueController::class)->setName('expense.delete');
+
+  //Tags
+  $this->get('/tags[/{id}]',VueController::class)->setName('tags');
 
  ?>

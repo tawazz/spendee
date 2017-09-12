@@ -36,6 +36,7 @@
           $exptags[$tag->name] =  $amount;
           if ($with_detail) {
             $exptags[$tag->name] = [
+              "id" => $tag->id,
               "amount" =>  $amount,
               "expenses" => $this->db->query("select * from expenses,(select exp_id from expenses_and_tags where tag = ? ) as exptags where id = exptags.exp_id and date >= ? and date < ? and user_id = ? ;",
                             [$tag->id,$startDate,$endDate,$user_id])->result()

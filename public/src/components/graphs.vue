@@ -159,11 +159,6 @@
 
   }
 </script>
-<style scoped>
-  .nodata{
-    min-height: 370px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+<style>
+
 </style>

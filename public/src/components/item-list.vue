@@ -8,9 +8,9 @@
                 <div class="card-footer capitalize">
                     <div>
                       <a href="#" :style="{color}" @click.prevent="edit(i.id)" style="bottom:0;padding-left:15px;">{{i.name}}</a>
-                      <span class="tag" style="margin:0 5px;" v-for="tag in i.expense_tags">
-                        {{ tag.tags.name}}
-                      </span>
+                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.expense_tags":to="{ name: 'Tags',params: { id: tag.tags.id }}">
+                          {{ tag.tags.name}}
+                        </router-link>
                       <span v-if="i.is_recurring" class="mdi mdi-reload" style="font-size:1.3em" ></span>
                     </div>
                     <span class="pull-right" :style="{color}"><i class="fa fa-usd">{{ i.cost|formatMoney }}</i></span>
@@ -53,5 +53,9 @@
 <style scoped>
   .capitalize{
     text-transform: capitalize;
+  }
+  a.tag{
+    bottom:0;
+    text-decoration: none;
   }
 </style>

@@ -17,6 +17,11 @@ export default new Router({
       path: '/incomes/:year?/:month?',
       name: 'Incomes',
       component: () => import('@/containers/incomes')
+    },{
+      path: '/tags/:id?/',
+      name: 'Tags',
+      component: () => import('@/containers/tags')
     }
+
   ]
 })

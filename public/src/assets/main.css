@@ -441,3 +441,10 @@ a:hover, a:focus {
 .alert [data-notify="dismiss"] {
   margin-right: 5px;
 }
+
+.nodata{
+  min-height: 370px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

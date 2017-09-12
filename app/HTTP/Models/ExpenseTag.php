@@ -40,6 +40,11 @@
               "expenses" => $this->db->query("select * from expenses,(select exp_id from expenses_and_tags where tag = ? ) as exptags where id = exptags.exp_id and date >= ? and date < ? and user_id = ? ;",
                             [$tag->id,$startDate,$endDate,$user_id])->result()
             ];
+            $spent = [];
+            foreach ($exptags[$tag->name]["expenses"] as $exp) {
+              $spent[$exp->name] = isset($spent[$exp->name]) ? floatval($spent[$exp->name] + $exp->cost) : floatval($exp->cost);
+            }
+            $exptags[$tag->name]["spent"] = $spent;
           }
         }
       }

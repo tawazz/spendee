@@ -69,10 +69,10 @@ export default {
         day:null
       });
       vm.$store.dispatch('loading');
-      vm.$store.dispatch('updatePage',"tags/1");
       axios.all([tagData(),tag()]).then(axios.spread((td,tag) => {
         vm.tagData = td.data;
         vm.tag = tag.data;
+        vm.$store.dispatch('updatePage',`tags/${vm.tag.id}`);
         vm.$store.dispatch('done');
       }));
     });

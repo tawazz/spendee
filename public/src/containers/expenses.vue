@@ -80,7 +80,7 @@
                     day:null
                 });
                 vm.$store.dispatch('loading');
-                axios.get(apis.tagData(year,month)).then((response)=>{
+                axios.get(apis.tagData(0,year,month)).then((response)=>{
                   vm.$store.dispatch('updateTagData',response.data);
                   vm.$store.dispatch('done');
                 });

@@ -27,7 +27,7 @@
       $EXP = new Expense();
       $Tags = new Tag();
       $exptags= [];
-      if(isset($id)){
+      if($id){
         $allTags = $Tags->find('all',[
           "where" => ["id","=",$id]
         ]);

@@ -23,7 +23,8 @@
     $this->get('/totals[/{year}[/{month}[/{day}]]]',Totals::class)->setName('api.totals');
 
     $this->get('/tags',Tags::class)->setName('api.tags');
-    $this->get('/tags/expenses[/{year}[/{month}[/{day}]]]',ExpenseTags::class)->setName('api.tags.expenses');
+    $this->get('/tag/{id}',Tags::class.':retrieve')->setName('api.tag');
+    $this->get('/tags/expenses[/{id}[/{year}[/{month}]]]',ExpenseTags::class)->setName('api.tags.expenses');
 
     $this->get('/places',Places::class)->setName('api.places');
 

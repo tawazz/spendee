@@ -8,13 +8,17 @@ export default {
     totals:function (year,month,day) {
         return getUrl('totals',year,month,day);
     },
-    tagData:function (year,month,day,detail = false) {
+    tagData:function (id,year,month,day,detail = false) {
+      let url = `tags/expenses/${id}`;
       if (detail) {
-        return getUrl('tags/expenses',year,month,day)+"?detail=true";
+        return getUrl(url,year,month,day)+"?detail=true";
       }
-      return getUrl('tags/expenses',year,month,day);
+      return getUrl(url,year,month,day);
     },
     tags:"/api/tags",
+    "tag": function (id) {
+      return `/api/tag/${id}`;
+    },
     expense:function(id = null) {
       if (id) {
         return `/api/expense/${id}`

@@ -20,22 +20,16 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>Tag</th>
                         <th>Expenses</th>
-                        <th>Amount</th>
+                        <th>Cost</th>
                         <th>Percentage</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr v-for="(value,key) in tagData">
-                        <td>
-                          <router-link :to="{ name: 'Tags',params: { id: value.id }}">
-                            {{ key }}
-                          </router-link>
-                        </td>
-                        <td class="text-center"> {{ value.expenses.length }}</td>
-                        <td> $ {{ value.amount|formatMoney }}</td>
-                        <td> {{ (value.amount/total_exp) * 100|formatMoney }}%</td>
+                    <tbody v-for="(value,key) in tagData">
+                      <tr v-for="(cost,exp) in value.spent">
+                        <td class="text-capitalize"> {{ exp }}</td>
+                        <td> $ {{ cost|formatMoney }}</td>
+                        <td> {{ (cost/value.amount) * 100|round }}%</td>
                       </tr>
                     </tbody>
                   </table>
@@ -61,25 +55,34 @@ export default {
   beforeRouteEnter (to, from, next) {
     let year = to.params.year;
     let month = to.params.month;
-
-    axios.get(apis.tagData(year,month,null,true)).then(response => {
-      next(vm => {
-        vm.$store.dispatch('updateNav',{
-          year,
-          month,
-          day:null
-        });
-        vm.$store.dispatch('loading');
-        vm.$store.dispatch('updatePage',"tags");
-        vm.tagData = response.data;
-        vm.$store.dispatch('done');
+    let id = to.params.id;
+    let tagData = () => {
+      return axios.get(apis.tagData(id,year,month,null,true));
+    };
+    let tag = () => {
+      return axios.get(apis.tag(id));
+    }
+    next(vm => {
+      vm.$store.dispatch('updateNav',{
+        year,
+        month,
+        day:null
       });
+      vm.$store.dispatch('loading');
+      vm.$store.dispatch('updatePage',"tags/1");
+      axios.all([tagData(),tag()]).then(axios.spread((td,tag) => {
+        vm.tagData = td.data;
+        vm.tag = tag.data;
+        vm.$store.dispatch('done');
+      }));
     });
+
   },
   data:function () {
     return {
       tagData: [],
       tag:{
+        id:null,
         name:"All Tags"
       },
       pie_data:[],
@@ -89,11 +92,21 @@ export default {
   watch:{
     tagData:function () {
       this.initPieData();
+    },
+    $route:function () {
+      let vm = this;
+      let year = vm.$route.params.year;
+      let month = vm.$route.params.month;
+      let id = vm.$route.params.id;
+      axios.get(apis.tagData(id,year,month,null,true)).then(response => {
+        vm.tagData = response.data;
+      });
     }
   },
   methods:{
     drawTagChart(){
       let vm =this;
+      $('#morris-pie-chart').empty();
       if (vm.pie_data.length > 0) {
         let colors = randomColor({
           count: vm.pie_data.length,
@@ -109,17 +122,21 @@ export default {
         });
         vm.showChart = true;
         vm.pie_data = [];
+      } else {
+        vm.showChart = false;
       }
     },
     initPieData(){
       let vm = this;
-      console.log(vm.tagData);
       var data = []
       Object.keys(vm.tagData).map(tag =>{
         data.push({label: tag, value:vm.tagData[tag].amount});
       });
       vm.pie_data = data;
-      vm.drawTagChart();
+      setTimeout(()=>{
+        vm.drawTagChart();
+      },100);
+
     }
   },
   computed:{

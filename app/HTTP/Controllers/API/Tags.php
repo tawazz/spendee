@@ -12,7 +12,8 @@
 
         public function retrieve($req, $resp,$args)
         {
-
+            $app = $this->container;
+            return $resp->withJson($app->Tags->get($args['id']));
         }
 
         public function get($req, $resp, $args)

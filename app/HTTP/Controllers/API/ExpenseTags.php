@@ -22,10 +22,10 @@ class ExpenseTags extends \HTTP\Controllers\BaseController
     $with_detail = $req->getParam('detail') ? $req->getParam('detail') == "true" : false;
     $year = isset($args['year']) ? $args['year'] : Null;
     $month = isset($args['month']) ? $args['month'] : Null;
-    $id =  $req->getParam('tag_id') ? $req->getParam('tag_id') : null;
+    $id =  isset($args['id']) ? $args['id'] : Null;
     $cache = $app->cache;
     $detail_cache_key = ($with_detail) ? 'with_detail' : 'with_out_detail';
-    $cache_key = 'api.exp.tags.'.$app->auth->id.'.'.$year.'.'.$month.'.'.$detail_cache_key;
+    $cache_key = 'api.exp.tags.'.$app->auth->id.'.'.$id.'.'.$year.'.'.$month.'.'.$detail_cache_key;
     $data = [];
     if (true ) { # !$cache->has($cache_key)
       $data = $app->Helper->getExpenseTags($app,$app->auth->id,$with_detail,$id,$year,$month);

@@ -23,7 +23,8 @@
     "tazzy/helpers": "dev-master",
     "php-middleware/php-debug-bar": "^1.4",
     "psy/psysh": "@stable",
-    "league/csv": "^9.0"
+    "league/csv": "^9.0",
+    "lusitanian/oauth": "^0.8.10"
   },
   "autoload": {
     "psr-4": {

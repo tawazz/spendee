@@ -8,6 +8,6 @@
   $this->delete('/expense/{id}',VueController::class)->setName('expense.delete');
 
   //Tags
-  $this->get('/tags[/{id}]',VueController::class)->setName('tags');
+  $this->get('/tags[/{year}[/{month}]]',VueController::class)->setName('tags');
 
  ?>

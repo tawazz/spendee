@@ -22,14 +22,18 @@
       return $result;
     }
 
-    public function tagData($user_id,$with_detail,$startDate,$endDate)
+    public function tagData($user_id,$with_detail,$id,$startDate,$endDate)
     {
       $EXP = new Expense();
       $Tags = new Tag();
       $exptags= [];
-
-      $allTags = $Tags->find('all');
-
+      if(isset($id)){
+        $allTags = $Tags->find('all',[
+          "where" => ["id","=",$id]
+        ]);
+      } else {
+        $allTags = $Tags->find('all');
+      }
       foreach ($allTags as $tag) {
         $amount = (int) $this->db->query("SELECT Sum(exp.cost ) as total FROM expense_tags as tag,expenses as exp where tag_id = ? and exp.id = tag.exp_id and  exp.date >= ? and exp.date < ? and exp.user_id = ?",[$tag->id,$startDate,$endDate,$user_id])->first()->total;
         if($amount > 0){

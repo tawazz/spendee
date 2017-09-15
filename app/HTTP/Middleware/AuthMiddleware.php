@@ -16,13 +16,16 @@ class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
   protected function run($req,$resp){
     $app = $this->container;
     if($app->session->exists('id')){
-      $user = $app->User->get($app->session->get('id'));
-      if(isset($user)){
+      $user = $app->User->find($app->session->get('id'));
+      if($user->exists){
         $app['auth'] = $user;
+        $app->view->appendData([
+            "auth"=>$user
+        ]);
+      } else {
+        $this->flash->addMessage('global','Login required to access the resource');
+        $resp = $resp->withStatus(302)->withHeader('Location','/login');
       }
-      $app->view->appendData([
-          "auth"=>$user
-      ]);
     }else{
       $resp = $this->rememberMe($req,$resp);
     }

@@ -32,17 +32,14 @@
       ];
 
       if ($user->validate($_POST,$rules)) {
-        $exist = $user->exist($_POST);
+        $exists = $user->exist($_POST);
         $remember = $req->getParam('remember');
-        if($exist){
-          $fetch_user = $user->find('first',[
-            'where'=>['username','=',$_POST['username']]
-          ]);
-          if($fetch_user && $this->container->hash->make($req->getParam('password'),$req->getParam('username')) == $fetch_user->password ){
-            $this->session->put('id',$fetch_user->id);
+        if($exists){
+          if($exists && $this->container->hash->make($req->getParam('password'),$req->getParam('username')) == $exists->password ){
+            $this->session->put('id',$exists->id);
             if ($remember == 'on') {
                 $remember_hash = $app->hash->make($app->hash->salt(10));
-                $app->User->remember($fetch_user->id,$remember_hash);
+                $user->remember($exists->id,$remember_hash);
                 $resp = $app->Cookie->setCookie($resp,'remember',"{$remember_hash}",Carbon::parse('+4 weeks')->timestamp);
               return $this->redirect($resp,$this->urlFor('expenses'));
             }else{

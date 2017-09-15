@@ -10,6 +10,7 @@ class GoogleAuthController extends \HTTP\Controllers\BaseController
     if (!empty($req->getParam('code'))) {
       // retrieve the CSRF state parameter
       $state = $req->getParam('state') !==null ? $req->getParam('state') : null;
+      try {
       // This was a callback request from google, get the token
       $googleService->requestAccessToken($_GET['code'], $state);
       // Send a request with it
@@ -17,8 +18,11 @@ class GoogleAuthController extends \HTTP\Controllers\BaseController
       if ($this->authenticate($result['email'],$resp)) {
         return $this->redirect($resp,$this->urlFor('expenses'));
       }
-      dump($result);
-      die();
+    } catch (\Exception $e) {
+        return $this->redirect($resp,'/login/google?go=go');
+    }
+      $this->flash->addMessage("global","Google Account not regestered");
+      return $this->redirect($resp,$this->urlFor('login'));
     } elseif (!empty($req->getParam('go')) && $req->getParam('go') === 'go') {
       $url = $googleService->getAuthorizationUri()->getAbsoluteUri();
       return $this->redirect($resp,$url);
@@ -28,15 +32,13 @@ class GoogleAuthController extends \HTTP\Controllers\BaseController
   }
 
   private function authenticate($email,$resp){
-    $USER = $this->User;
+    $User = $this->User;
     try {
-      $user = $USER->find('first',[
-        'where'=>['email','=',$email]
-      ]);
+      $user = $User->where('email',$email)->first();
       if($user){
         $this->session->put('id',$user->id);
         $remember_hash = $this->hash->make($this->hash->salt(10));
-        $USER->remember($user->id,$remember_hash);
+        $User->remember($user->id,$remember_hash);
         $resp = $this->Cookie->setCookie($resp,'remember',"{$remember_hash}",$this->Carbon::parse('+4 weeks')->timestamp);
         return true;
       }

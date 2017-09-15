@@ -10,9 +10,9 @@ class ModelService implements ServiceProviderInterface
 
   public function register(Container $container)
   {
-    $container['User'] = function(){
+    $container['User'] = $container->factory(function(){
         return new \HTTP\Models\User();
-    };
+    });
     $container['Exp'] = function(){
         return new \HTTP\Models\Expense();
     };

@@ -1,13 +1,10 @@
 <?php
   namespace HTTP\Models;
   use HTTP\Models\Remember;
-  class User extends BaseTable
+  class User extends BaseModel
   {
     protected $table = 'users';
-    protected $primary_key ='id';
-    protected $hasMany = [
-      ['class' => \HTTP\Models\Remember::class,'id' => 'user_id']
-    ];
+    protected $guarded = [];
     protected $validate = [
       'firstname'=> array(
           'min'=> 2,
@@ -40,24 +37,18 @@
     ];
 
     public function exist ($data){
-      $this->errors = null;
-      $conditions = [
-        "where"=>["username","=",$data['username']]
-      ];
-      $user = $this->find('first',$conditions);
-      if($user){
+      $user = $this->where('username',$data['username'])->first();
+      if($user !== null){
         return $user;
       }else{
-        //$this->errors = $user->errors();
         return false;
       }
     }
 
     public function activate($id){
-      $user = $this->find('first',['where'=>['active_hash','=',Hash::make($id)]]);
-      if($user){
-        $this->read($user->user_id);
-        $this->set([
+      $user = $this->where('active_hash',Hash::make($id))->first();
+      if($user !== null ){
+        $user->update([
           'active'=>true,
           'active_hash'=>null
         ]);

@@ -2,6 +2,7 @@
   use Carbon\Carbon;
   use HTTP\Controllers\Auth\AuthController;
   use \HTTP\Middleware\Guest;
+  use \HTTP\Controllers\Auth\GoogleAuthController;
   $auth = AuthController::class;
 
   $app->group('',function() use($auth) {
@@ -10,6 +11,7 @@
       $this->get('/register',$auth.':registerView')->setName('register');
       $this->post('/register',$auth.':register')->setName('post.register');
       $this->get('/logout',$auth.':logout')->setName('logout');
+      $this->get('/login/google',GoogleAuthController::class);
   })->add(new Guest($container))->add($container->csrf);
 
 $app->post('/update/user', function() use($app){

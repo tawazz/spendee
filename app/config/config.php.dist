@@ -37,6 +37,11 @@
       ],
       'pushbullet'   => [
         'token'=> 'token'
+      ],
+      'google'       => [
+          'key'      => 'key',
+          'secret'   => 'secret',
+          'callback' => 'http://spendee.dev/login/google'
       ]
 
   ];

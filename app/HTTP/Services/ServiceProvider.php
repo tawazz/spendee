@@ -1,6 +1,7 @@
 <?php
   namespace HTTP\Services;
   use \HTTP\Services\ModelService;
+  use \HTTP\Services\GoogleService;
   use \Pimple\Container;
   use \Pimple\ServiceProviderInterface;
   require_once __DIR__.'/../../config/settings.php';
@@ -13,6 +14,7 @@
     public function register(Container $container)
     {
       $container->register(new ModelService());
+      $container->register(new GoogleService());
 
       $container['session'] = function(){
         return  new \Tazzy\Utils\Session();

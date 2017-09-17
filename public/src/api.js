@@ -1,3 +1,4 @@
+import _ from 'lodash'
 export default {
     expenses:function (year,month,day) {
         return getUrl('expenses',year,month,day);
@@ -35,7 +36,7 @@ function getUrl(page,year,month,day){
     month = (month) ? parseInt(month): null;
     year = (year) ? parseInt(year): null;
 
-    if (year && month && day) {
+    if (!_.isNil(year) && _.isNil(month) && _.isNil(day)) {
         if(month > 12){
             month=1;
             year +=1;
@@ -45,7 +46,7 @@ function getUrl(page,year,month,day){
             year -=1;
         }
         url = `/api/${page}/${year}/${month}/${day}`;
-    }else if (year && month){
+    }else if (!_.isNil(year) && !_.isNil(month)){
         if(month > 12){
             month=1;
             year +=1;
@@ -55,7 +56,7 @@ function getUrl(page,year,month,day){
             year -=1;
         }
         url = `/api/${page}/${year}/${month}`;
-    }else if (year) {
+    }else if (!_.isNil(year)) {
         url = `/api/${page}/${year}`;
     }else {
         let d = new Date();

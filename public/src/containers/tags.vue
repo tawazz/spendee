@@ -10,8 +10,8 @@
             <h4 class="card-title">Expenses on {{ tag.name }}</h4>
             <div class="row">
               <div class="col-md-6">
-                <div v-show="showChart" id="morris-pie-chart" ></div>
-                <div v-show="!showChart" class="nodata">
+                <div v-show="showPieChart" id="morris-pie-chart" ></div>
+                <div v-show="!showPieChart" class="nodata">
                    No Data Available
                 </div>
               </div>
@@ -40,6 +40,22 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-icon" data-background-color="rose">
+            <i class="fa-2x mdi mdi-chart-bar"></i>
+          </div>
+          <div class="card-content">
+            <h4 class="card-title">Year Overview</h4>
+              <div v-show="showBarChart" id="morris-bar-chart" ></div>
+              <div v-show="!showBarChart" class="nodata">
+                 {{ barChartText }}
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,6 +66,7 @@ import moment from 'moment'
 import filters from '@/filters'
 import Morris from "morris"
 import randomColor from 'randomcolor'
+import _ from 'lodash'
 export default {
   filters,
   beforeRouteEnter (to, from, next) {
@@ -75,6 +92,7 @@ export default {
         vm.$store.dispatch('updatePage',`tags/${vm.tag.id}`);
         vm.$store.dispatch('done');
       }));
+      vm.initBarData();
     });
 
   },
@@ -86,12 +104,19 @@ export default {
         name:"All Tags"
       },
       pie_data:[],
-      showChart:false
+      showPieChart:false,
+      showBarChart:false,
+      yearlyData:[],
+      barChartText: "No Data Available",
+      previousYear: null
     }
   },
   watch:{
     tagData:function () {
       this.initPieData();
+    },
+    yearlyData:function () {
+      this.drawBarChart();
     },
     $route:function () {
       let vm = this;
@@ -101,6 +126,7 @@ export default {
       axios.get(apis.tagData(id,year,month,null,true)).then(response => {
         vm.tagData = response.data;
       });
+      this.initBarData();
     }
   },
   methods:{
@@ -120,10 +146,43 @@ export default {
           colors,
           resize:true
         });
-        vm.showChart = true;
+        vm.showPieChart = true;
         vm.pie_data = [];
       } else {
-        vm.showChart = false;
+        vm.showPieChart = false;
+      }
+    },
+    drawBarChart(){
+      let vm =this;
+      $('#morris-bar-chart').empty();
+      if (vm.yearlyData.length > 0) {
+        vm.showBarChart = true;
+        let i =0;
+        let year = _.isNil(vm.$route.params.year) ? new Date().getFullYear() : vm.$route.params.year;
+        let bars = vm.yearlyData.map(data => {
+          i++;
+          var date = moment(`${year}/${i}/1`,'YYYY/M/dddd').format('MMM/YYYY');
+          return {'d': date,'v': _.isArray(data)? 0: data[vm.tag.name]}
+        });
+
+        let barColors = randomColor({
+          count: 1,
+          hue: '#ec407a'
+        });
+        setTimeout(()=> {
+          new Morris.Bar({
+            element: 'morris-bar-chart',
+            data:bars,
+            xkey: 'd',
+            ykeys: ['v'],
+            labels: ['Expenses'],
+            barColors,
+            preUnits:'$',
+            resize:true
+          });
+        },100)
+      } else {
+        vm.showBarChart = false;
       }
     },
     initPieData(){
@@ -137,6 +196,33 @@ export default {
         vm.drawTagChart();
       },100);
 
+    },
+    initBarData(){
+      let vm = this;
+      vm.barChartText = "No Data Available";
+      let year = _.isNil(vm.$route.params.year) ? new Date().getFullYear() : vm.$route.params.year;
+      if (year != vm.previousYear) {
+        vm.previousYear = year;
+        vm.yearlyData = [];
+        let tagData = () => {
+          let req = [];
+          for (var i = 1; i < 13; i++) {
+            req[i] = axios.get(apis.tagData(vm.$route.params.id,_.toString(year),_.toString(i),null,false));
+          }
+          return req;
+        };
+        let barData = [];
+        vm.barChartText = "Loading...";
+        axios.all(tagData()).then(axios.spread((...args) => {
+          for (let i = 1; i < args.length; i++) {
+            if (!_.isNil(args[i])) {
+              barData.push(args[i].data);
+            }
+          }
+          vm.yearlyData = barData;
+          vm.barChartText = "No Data Available";
+        }));
+      }
     }
   },
   computed:{
@@ -145,6 +231,7 @@ export default {
     })
   },
   mounted:function () {
+    let vm = this;
 
   }
 }

@@ -41,7 +41,7 @@ class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
       if(isset($exist))
       {
         $id = $exist->user_id;
-        $user = $this->User->get($id);
+        $user = $this->User->find($id);
         if($user){
             $this->session->put('id',$user->id);
             $this->container->auth = $user;

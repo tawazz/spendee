@@ -9,7 +9,7 @@
           <div class="card-content">
             <h4 class="card-title">Expenses on {{ tag.name }}</h4>
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-6 text-center">
                 <div v-show="showPieChart" id="morris-pie-chart" ></div>
                 <div v-show="!showPieChart" class="nodata">
                    No Data Available
@@ -139,15 +139,17 @@ export default {
           luminosity: 'light',
           hue: '#ec407a'
         });
-        new Morris.Donut({
-          element: 'morris-pie-chart',
-          data: vm.pie_data,
-          formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
-          colors,
-          resize:true
-        });
-        vm.showPieChart = true;
-        vm.pie_data = [];
+        setTimeout(()=>{
+          new Morris.Donut({
+            element: 'morris-pie-chart',
+            data: vm.pie_data,
+            formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
+            colors,
+            resize:true
+          });
+          vm.showPieChart = true;
+          vm.pie_data = [];
+        },100);
       } else {
         vm.showPieChart = false;
       }
@@ -192,10 +194,7 @@ export default {
         data.push({label: tag, value:vm.tagData[tag].amount});
       });
       vm.pie_data = data;
-      setTimeout(()=>{
-        vm.drawTagChart();
-      },100);
-
+      vm.drawTagChart();
     },
     initBarData(){
       let vm = this;

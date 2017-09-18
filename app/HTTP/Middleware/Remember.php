@@ -14,7 +14,7 @@ namespace HTTP\Middleware;
       public function run($req,$resp){
         $app = $this->container;
         if($app->session->exists('id')){
-          $user = $app->User->get($app->session->get('id'));
+          $user = $app->User->find($app->session->get('id'));
           if(isset($user)){
             $app->auth = $user;
           }
@@ -34,7 +34,7 @@ namespace HTTP\Middleware;
           if(isset($exist))
           {
             $id = $exist->user_id;
-            $user = $this->User->get($id);
+            $user = $this->User->find($id);
             if(isset($user)){
                 $this->session->put('id',$user->user_id);
                 $this->container['auth'] = $user;

@@ -15,7 +15,7 @@ $container->register(new ServiceProvider());
 
 $exp = $container->Exp;
 $inc = $container->Inc;
-$auth = $container->User->get(20);
+$auth = $container->User->find(20);
 $container->auth = $auth;
 $faker = Factory::create();
 $faker->addProvider(new Faker\Provider\DateTime($faker));

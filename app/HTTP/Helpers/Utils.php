@@ -42,7 +42,7 @@ class Utils
     echo "[ ".$Carbon->now()->toDayDateTimeString(). " ] running job notifications \n";
     foreach ($expenses as $exp) {
       $expense = $exp->expense();
-      $container->auth = $User->get($expense->user_id);
+      $container->auth = $User->find($expense->user_id);
       $repeat = null;
 
       switch ($exp->repeat) {
@@ -90,7 +90,7 @@ class Utils
   }
 
   public static function updateExpense($app,$data){
-    $app->auth = $app->User->get($data->user_id);
+    $app->auth = $app->User->find($data->user_id);
     $recurring = $app->RecurringExpense;
     $recurring = $recurring->where('exp_id',$data->id)->first();
     if (isset($recurring) && !$recurring->exists) {
@@ -400,7 +400,7 @@ class Utils
             ];
             $app->ExpTags->save($tags_data);
             if (!$app->auth) {
-              $app->auth = $app->User->get($exp->user_id);
+              $app->auth = $app->User->find($exp->user_id);
             }
             self::clearExpRouteCache($app,$exp->date);
             break;

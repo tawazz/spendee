@@ -11,7 +11,7 @@
     public function fire($job, $data)
     {
       $pb = $this->container->pb;
-      $this->container->auth = $this->container->User->get($data['user_id']);
+      $this->container->auth = $this->container->User->find($data['user_id']);
       $added = Utils::addFromCsv($this->container,$data['path']);
       if($added){
         //inteligent tagging

@@ -23,7 +23,7 @@
         echo "[ ".$Carbon->now()->toDayDateTimeString(). " ] ".sizeof($expenses) . " recurring expenses found\n";
         foreach ($expenses as $exp) {
           $expense = $exp->expense();
-          $container->auth = $User->get($expense->user_id);
+          $container->auth = $User->find($expense->user_id);
           $exp_data = null;
           switch ($exp->repeat) {
             case '30':

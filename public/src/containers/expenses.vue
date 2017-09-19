@@ -122,7 +122,7 @@
             vm.$store.dispatch('done');
         });
         vm.$store.dispatch('loading');
-        axios.get(apis.tagData(year,month)).then((response)=>{
+        axios.get(apis.tagData(0,year,month)).then((response)=>{
           vm.$store.dispatch('updateTagData',response.data);
           vm.$store.dispatch('done');
         });
@@ -175,13 +175,13 @@
     margin-bottom: 50px;
     z-index: 4;
   }
-  ul.dropdown-menu {
+  .btn-add>ul.dropdown-menu {
     box-shadow: none;
     border: 0;
     min-width:0;
     background:transparent
   }
-  ul.nav li.dropdown:hover > ul.dropdown-menu {
+  .btn-add>ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;
   }
 </style>

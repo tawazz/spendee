@@ -50,9 +50,14 @@ class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
             ]);
         }else {
           $this->User->removeRemember($user->user_id);
+          $this->flash->addMessage('global','Login required to access the resource');
+          $resp = $this->Cookie->deleteCookie($resp,'remember');
+          $resp->withStatus(302)->withHeader('Location','/login');
         }
       }else{
-        return $this->Cookie->deleteCookie($resp,'remember');
+        $this->flash->addMessage('global','Login required to access the resource');
+        $resp = $this->Cookie->deleteCookie($resp,'remember');
+        $resp->withStatus(302)->withHeader('Location','/login');
       }
     }
     else{

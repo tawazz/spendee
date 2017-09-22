@@ -13,7 +13,9 @@
                         </router-link>
                       <span v-if="i.is_recurring" class="mdi mdi-reload" style="font-size:1.3em" ></span>
                     </div>
-                    <span class="pull-right" :style="{color}"><i class="fa fa-usd">{{ i.cost|formatMoney }}</i></span>
+                    <span class="pull-right" :style="{color}">
+                      <i class="fa fa-usd">{{ i.cost|formatMoney }}</i>
+                    </span>
                     <div class="clearfix"></div>
                 </div>
             </div>

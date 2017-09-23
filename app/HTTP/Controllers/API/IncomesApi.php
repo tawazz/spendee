@@ -47,7 +47,7 @@
           $data = [
             'name'=> $data->name,
             'cost'=> Utils::fixMoneyInput($data->cost),
-            'date'=> $date->date],
+            'date'=> $date->date
           ];
           $app->Inc->read($id)->set($data);
           return $resp->withJson(['success' => true],200);

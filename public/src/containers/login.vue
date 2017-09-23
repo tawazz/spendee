@@ -4,13 +4,13 @@
       <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
         <form role="form" action="/login" method="post" name="login">
           <div class="card card-login">
-            <div class="card-header text-center" data-background-color="red">
+            <div class="card-header text-center" data-background-color="rose">
               <div class="text-center img-responsive"><img src="/images/icon.png" alt="logo" style="width:auto; height:70px;"/></div>
               <div class="text-center"><h3 class="brand-font">Spendee</h3></div>
               <h4 class="card-title">Login</h4>
               <div class="social-line">
-                <a href="#eugen" class="btn btn-lg btn-just-icon btn-simple">
-                  <i class="fa fa-google-plus"></i>
+                <a href="/login/google?go=google" class="btn btn-lg btn-raised btn-warning">
+                  <i class="fa fa-google"></i>
                 </a>
               </div>
             </div>

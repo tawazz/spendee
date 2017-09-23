@@ -35,7 +35,6 @@ export default {
   },
   mounted:function () {
     var vm =this;
-    console.log(vm.$route);
   }
 }
 </script>

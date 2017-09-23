@@ -19,11 +19,11 @@ class GoogleAuthController extends \HTTP\Controllers\BaseController
         return $this->redirect($resp,$this->urlFor('expenses'));
       }
     } catch (\Exception $e) {
-        return $this->redirect($resp,'/login/google?go=go');
+        return $this->redirect($resp,'/login/google?go=google');
     }
       $this->flash->addMessage("global","Google Account not regestered");
       return $this->redirect($resp,$this->urlFor('login'));
-    } elseif (!empty($req->getParam('go')) && $req->getParam('go') === 'go') {
+    } elseif (!empty($req->getParam('go')) && $req->getParam('go') === 'google') {
       $url = $googleService->getAuthorizationUri()->getAbsoluteUri();
       return $this->redirect($resp,$url);
     } else {

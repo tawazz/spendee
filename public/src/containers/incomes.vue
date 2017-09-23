@@ -17,7 +17,7 @@
   import itemsList from '@/components/item-list'
   import graphs from '@/components/graphs'
   import { mapState } from 'vuex'
-  import {axios,apis} from '@/hooks'
+  import {axios,apis,utils} from '@/hooks'
   import Vue from 'vue'
 
   export default {
@@ -46,6 +46,11 @@
                 vm.$store.dispatch('updateInc',response.data);
                 vm.$store.dispatch('updatePage',"incomes");
             });
+        }).catch((error)=>{
+          next(vm => {
+            utils.error_handler(vm,error);
+            vm.$store.dispatch('done');
+          });
         });
     },
     computed:{
@@ -61,6 +66,9 @@
             let month = params.month;
             axios.get(apis.incomes(year,month)).then(response => {
                 vm.$store.dispatch('updateInc',response.data);
+            }).catch((error)=>{
+              utils.error_handler(vm,error);
+              vm.$store.dispatch('done');
             });
         }
     },

@@ -42,7 +42,7 @@
   import addExpenseModal from '@/components/expenses/add-expense'
   import importExpensesModal from '@/components/expenses/import-expenses'
   import { mapState } from 'vuex'
-  import {axios,apis} from '@/hooks'
+  import {axios,apis,utils} from '@/hooks'
   import Vue from 'vue'
 
   export default {
@@ -83,6 +83,9 @@
                 axios.get(apis.tagData(0,year,month)).then((response)=>{
                   vm.$store.dispatch('updateTagData',response.data);
                   vm.$store.dispatch('done');
+                }).catch((error)=>{
+                  utils.error_handler(vm,error);
+                  vm.$store.dispatch('done');
                 });
                 vm.$store.dispatch('updateExp',response.data);
                 vm.$store.dispatch('updatePage',"expenses");
@@ -120,15 +123,24 @@
         axios.get(apis.expenses(year,month)).then(response => {
             vm.$store.dispatch('updateExp',response.data);
             vm.$store.dispatch('done');
+        }).catch((error)=>{
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
         });
         vm.$store.dispatch('loading');
         axios.get(apis.tagData(0,year,month)).then((response)=>{
           vm.$store.dispatch('updateTagData',response.data);
           vm.$store.dispatch('done');
+        }).catch((error)=>{
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
         });
         vm.$store.dispatch('loading');
         axios.get(apis.totals(year,month,null)).then(res => {
           vm.$store.dispatch('setTotals',res.data);
+          vm.$store.dispatch('done');
+        }).catch((error)=>{
+          utils.error_handler(vm,error);
           vm.$store.dispatch('done');
         });
       },
@@ -157,6 +169,9 @@
           vm.$store.dispatch('done');
           this.showAddModal = true;
           vm.selected_exp = response.data;
+        }).catch((error)=>{
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
         });
       }
     },

@@ -405,7 +405,7 @@ export default {
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-<style>
+<style scoped="">
   .multiselect__option--highlight,
   .multiselect__option--highlight:after{
     background: #03a9f4;

@@ -16,8 +16,8 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><router-link :to="{ name: 'Expenses'}">Expenses</router-link></li>
-              <li><router-link :to="{ name: 'Incomes' }">Incomes</router-link></li>
+              <li><router-link :to="{ path: '/expenses'}">Expenses</router-link></li>
+              <li><router-link :to="{ path: '/incomes' }">Incomes</router-link></li>
               <li><a href="">Budgets</a></li>
               <li><a href="">Overview</a></li>
               <li class="dropdown">

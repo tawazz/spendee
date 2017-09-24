@@ -8,7 +8,7 @@ export default new Router({
     {
       path: '/',
       name: 'default',
-      component: { render (c) { return c('router-view') } },
+      component: () => import('@/layouts/default'),
       children: [
         {
           path: 'login',

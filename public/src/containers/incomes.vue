@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <item-list :data="incomes" :color="color" :type="type" />
+        <item-list :data="incomes" :color="color" :type="type" :editCallback="editInc" />
       </div>
       <div class="col-md-6">
         <exp-graphs :areaChart="incomes" :color="color" :type="type" />
@@ -96,6 +96,18 @@
 
         axios.get(apis.incomes(year,month)).then(response => {
             vm.$store.dispatch('updateInc',response.data);
+        }).catch((error)=>{
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
+        });
+      },
+      editInc(id,type) {
+        let vm = this;
+        vm.$store.dispatch('loading');
+        axios.get(apis.income(id)).then((response)=>{
+          vm.$store.dispatch('done');
+          this.showAddModal = true;
+          vm.selected_inc = response.data;
         }).catch((error)=>{
           utils.error_handler(vm,error);
           vm.$store.dispatch('done');

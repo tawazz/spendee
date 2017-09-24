@@ -59,7 +59,7 @@
             'date'=> $body->date
           ];
           $app->Inc->read($id)->set($data);
-          $app->IncTags->raw("delete from {$app->IncTags->getTable()} where inc_id = {$data->id}");
+          $app->IncTags->raw("delete from {$app->IncTags->getTable()} where inc_id = {$body->id}");
           foreach ($body->tags as $tag_id) {
             $tags_data = [
               'inc_id' => $id,

@@ -110,13 +110,10 @@ export default {
       vm.selectTag(vm.selectedTags);
     },
     selected_inc:function () {
-      if (!_.isNil(this.selected_exp)) {
-        delete this.selected_exp['income_tags'];
-        this.income = this.selected_exp;
+      if (!_.isNil(this.selected_inc)) {
+        delete this.selected_inc['income_tags'];
+        this.income = this.selected_inc;
         this.datepicker.setDate(this.income.date,true,'Y-m-d');
-        if (!_.isNil(this.income.repeat_until)) {
-          this.repeatpicker.setDate(this.income.repeat_until,true,'Y-m-d');
-        }
         this.mapTagsToSelected();
       }
 

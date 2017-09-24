@@ -26,6 +26,12 @@ export default {
       }
       return `/api/expense`
     },
+    income:function(id = null) {
+      if (id) {
+        return `/api/income/${id}`
+      }
+      return `/api/income`
+    },
     location:function (query,ll='-31.95,115.86') {
       return `/api/places?ll=${ll}&query=${query}`;
     },

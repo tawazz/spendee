@@ -1,5 +1,6 @@
 <?php
     namespace HTTP\Controllers\API;
+    use \HTTP\Helpers\Utils;
 
     /**
      *
@@ -29,10 +30,11 @@
         public function create($req, $resp,$args)
         {
           $app = $this;
+          $body = (object) $req->getParsedBody();
           $data = [
-              'name'=> $_POST['name'],
-              'cost'=> str_replace( ',', '',$_POST['cost'] ),
-              'date'=> $_POST['date'],
+              'name'=> $body->name,
+              'cost'=> Utils::fixMoneyInput($body->cost),
+              'date'=> $body->date,
               'user_id'=> $app->auth->id
           ];
           $exp_id = $app->Inc->save($data);

@@ -27,7 +27,7 @@ class Utils
   public static function fixMoneyInput($money){
     $money = str_replace( ',', '',$money);
     $money = str_replace('$','',$money);
-    return $money;
+    return floatval($money);
   }
 
   public static function sendReminders($container)

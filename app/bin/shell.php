@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set ('Australia/Perth' );
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use \HTTP\Services\ServiceProvider;

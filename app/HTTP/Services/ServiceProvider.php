@@ -1,5 +1,6 @@
 <?php
   namespace HTTP\Services;
+  date_default_timezone_set ('Australia/Perth' );
   use \HTTP\Services\ModelService;
   use \HTTP\Services\GoogleService;
   use \Pimple\Container;

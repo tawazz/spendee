@@ -11,6 +11,9 @@
                         <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.expense_tags":to="{ name: 'Tags',params: { id: tag.tags.id }}">
                           {{ tag.tags.name}}
                         </router-link>
+                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.income_tags":to="{ name: 'Tags',params: { id: tag.tags.id }}">
+                          {{ tag.tags.name}}
+                        </router-link>
                       <span v-if="i.is_recurring" class="mdi mdi-reload" style="font-size:1.3em" ></span>
                     </div>
                     <span class="pull-right" :style="{color}">

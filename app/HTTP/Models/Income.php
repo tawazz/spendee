@@ -5,6 +5,9 @@
 
     protected $table='incomes';
     protected $primary_key ='id';
+    protected $hasMany =[
+      ['class' => \HTTP\Models\IncomeTag::class, 'id' => 'inc_id']
+    ];
 
     public function totalInc($startDate,$endDate){
         $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<",$endDate)->get();

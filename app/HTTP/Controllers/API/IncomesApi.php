@@ -37,21 +37,36 @@
               'date'=> $body->date,
               'user_id'=> $app->auth->id
           ];
-          $exp_id = $app->Inc->save($data);
+          $inc_id = $app->Inc->save($data);
 
+          foreach ($body->tags as $tag_id) {
+            $tags_data = [
+              'inc_id' => $inc_id,
+              'tag_id' => $tag_id
+            ];
+            $app->IncTags->save($tags_data);
+          }
           return $resp->withJson(['success' => true],200);
         }
         public function update($req, $resp,$args)
         {
           $app = $this;
           $id = $args['id'];
-          $data = json_decode(json_encode($req->getParsedBody()));
+          $body = (object) $req->getParsedBody();
           $data = [
-            'name'=> $data->name,
-            'cost'=> Utils::fixMoneyInput($data->cost),
-            'date'=> $date->date
+            'name'=> $body->name,
+            'cost'=> Utils::fixMoneyInput($body->cost),
+            'date'=> $body->date
           ];
           $app->Inc->read($id)->set($data);
+          $app->IncTags->raw("delete from {$app->IncTags->getTable()} where inc_id = {$data->id}");
+          foreach ($body->tags as $tag_id) {
+            $tags_data = [
+              'inc_id' => $id,
+              'tag_id' => $tag_id
+            ];
+            $app->IncTags->save($tags_data);
+          }
           return $resp->withJson(['success' => true],200);
         }
         public function delete($req, $resp,$args)

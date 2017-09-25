@@ -5,7 +5,7 @@
         <item-list :data="incomes" :color="color" :type="type" :editCallback="editInc" />
       </div>
       <div class="col-md-6">
-        <exp-graphs :areaChart="incomes" :color="color" :type="type" />
+        <graphs :data="incomes" :tagChart="tagData" :color="color" :type="type" />
       </div>
       <div class="btn-add">
         <a href="#" class="btn btn-success btn-fab" @click.prevent="showAddIncomeModal"><i class="material-icons mdi mdi-plus"></i><div class="ripple-container"></div></a>
@@ -26,7 +26,6 @@
     name:'incomes',
     data:function () {
       return {
-        expdata:[],
         type:"income",
         color:"green",
         showAddModal:false,
@@ -35,7 +34,7 @@
     },
     components:{
       'item-list':itemsList,
-      'exp-graphs':graphs,
+      'graphs':graphs,
       'add-inc': addIncomeModal
     },
     beforeRouteEnter (to, from, next) {
@@ -60,7 +59,8 @@
     },
     computed:{
         ...mapState({
-            "incomes": state => state.incomes
+            "incomes": state => state.incomes,
+            tagData: state => state.tagData
         })
     },
     watch:{

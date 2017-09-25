@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="type != 'income'">
     <div class="col-md-12">
         <div class="card">
             <div v-if="type=='income'" class="card-header card-header-icon" :data-background-color="color">
@@ -54,7 +54,7 @@
 
   export default {
     name:'graph',
-    props:["expenses","color","type","tagChart"],
+    props:["data","color","type","tagChart"],
     data:function () {
       return {
         line_data:[],
@@ -65,18 +65,18 @@
       }
     },
     watch:{
-      expenses:function () {
+      data:function () {
         let vm = this;
-        let exp = vm.expenses;
+        let data = vm.data;
         vm.cal_data_available();
-        for (var date_exp in exp) {
-           var D = date_exp;
-           var cost = 0;
-           $.each(exp[D],function (k,v) {
-             cost += parseFloat(v.cost);
-           });
-           vm.line_data.push({day: D, value: cost});
-        }
+        $.each(data, function (i,D) {
+          var cost = 0;
+          $.each(D,function (k,v) {
+            cost += parseFloat(v.cost);
+          });
+          vm.line_data.push({day: i, value: cost});
+        });
+
         $('#morris-line-chart').empty();
         setTimeout(()=>{
           vm.drawAreaChart();
@@ -148,7 +148,7 @@
         }
       },
       cal_data_available:function () {
-        this.data_available = _.keys(this.expenses).length > 0;
+        this.data_available = _.keys(this.data).length > 0;
       }
     },
     computed:{

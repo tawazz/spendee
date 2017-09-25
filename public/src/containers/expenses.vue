@@ -5,7 +5,7 @@
         <item-list :data="expenses" :color="color" :type="type" :editCallback="editExp"/>
       </div>
       <div class="col-md-6">
-        <exp-graphs :expenses="expenses" :tagChart="tagData" :type="type" :color="color" />
+        <exp-graphs :data="expenses" :tagChart="tagData" :type="type" :color="color" />
       </div>
       <div class="btn-group dropup btn-add">
         <button

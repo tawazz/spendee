@@ -111,7 +111,6 @@ export default {
     },
     selected_inc:function () {
       if (!_.isNil(this.selected_inc)) {
-        delete this.selected_inc['income_tags'];
         this.income = this.selected_inc;
         this.datepicker.setDate(this.income.date,true,'Y-m-d');
         this.mapTagsToSelected();
@@ -159,10 +158,10 @@ export default {
     },
     mapTagsToSelected(){
       let vm =this;
-      if (vm.income.tags) {
-        $.each(vm.income.tags,(i,tag) => {
+      if (vm.income.income_tags) {
+        $.each(vm.income.income_tags,(i,inc) => {
           vm.tags.map( t => {
-            if (t.id == tag) {
+            if (t.id == inc.tags.id) {
               vm.selectedTags.push(t);
             }
           });

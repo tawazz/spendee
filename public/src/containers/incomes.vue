@@ -65,16 +65,7 @@
     },
     watch:{
         $route:function () {
-            let vm = this;
-            let params = vm.$route.params;
-            let year = params.year;
-            let month = params.month;
-            axios.get(apis.incomes(year,month)).then(response => {
-                vm.$store.dispatch('updateInc',response.data);
-            }).catch((error)=>{
-              utils.error_handler(vm,error);
-              vm.$store.dispatch('done');
-            });
+          this.updatePage();
         }
     },
     methods: {
@@ -94,8 +85,18 @@
         let year = params.year;
         let month = params.month;
 
+        vm.$store.dispatch('loading');
         axios.get(apis.incomes(year,month)).then(response => {
             vm.$store.dispatch('updateInc',response.data);
+            vm.$store.dispatch('done');
+        }).catch((error)=>{
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
+        });
+        vm.$store.dispatch('loading');
+        axios.get(apis.totals(year,month,null)).then(res => {
+          vm.$store.dispatch('setTotals',res.data);
+          vm.$store.dispatch('done');
         }).catch((error)=>{
           utils.error_handler(vm,error);
           vm.$store.dispatch('done');

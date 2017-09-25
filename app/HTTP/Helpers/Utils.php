@@ -24,6 +24,16 @@ class Utils
     $app->cache->deleteMultiple($cache_keys);
   }
 
+  public static function clearIncRouteCache($app,$date){
+    // clear cache
+    $date = $app->Carbon->parse($date);
+    $cache_keys = [
+      'api.incomes.get.'.$app->auth->id.'.'.$date->year.'.'.$date->month,
+      'api.totals.'.$app->auth->id.'.'.$date->year.'.'.$date->month
+    ];
+    $app->cache->deleteMultiple($cache_keys);
+  }
+
   public static function fixMoneyInput($money){
     $money = str_replace( ',', '',$money);
     $money = str_replace('$','',$money);

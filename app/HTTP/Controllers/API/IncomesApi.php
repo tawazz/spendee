@@ -20,10 +20,18 @@
         public function list($req,$resp,$args)
         {
           $app = $this->container;
+          $cache = $app->cache;
           $year = isset($args['year']) ? $args['year'] : Null;
           $month = isset($args['month']) ? $args['month'] : Null;
           $day = isset($args['day']) ? $args['day'] : Null;
-          $data = $app->Helper->getItems($app->Inc,$app->auth->id,$year,$month,$day);
+          $data = [];
+          $cache_key = 'api.incomes.get.'.$app->auth->id.'.'.$year.'.'.$month;
+          if (!$cache->has($cache_key)) {
+            $data = $app->Helper->getItems($app->Inc,$app->auth->id,$year,$month,$day);
+            $cache->set($cache_key,$data);
+          } else {
+            $data = $cache->get($cache_key);
+          }
 
           return $resp->withJson($data);
         }
@@ -46,12 +54,14 @@
             ];
             $app->IncTags->save($tags_data);
           }
+          Utils::clearIncRouteCache($app,$body->date);
           return $resp->withJson(['success' => true],200);
         }
         public function update($req, $resp,$args)
         {
           $app = $this;
           $id = $args['id'];
+          $prev = $app->Inc->get($id);
           $body = (object) $req->getParsedBody();
           $data = [
             'name'=> $body->name,
@@ -67,13 +77,17 @@
             ];
             $app->IncTags->save($tags_data);
           }
+          Utils::clearIncRouteCache($app,$body->date);
+          Utils::clearIncRouteCache($app,$prev->date);
           return $resp->withJson(['success' => true],200);
         }
         public function delete($req, $resp,$args)
         {
           $app = $this;
           $id = $args['id'];
+          $prev = $app->Inc->get($id);
           $app->Inc->read($id)->delete();
+          Utils::clearIncRouteCache($app,$prev->date);
           return $resp->withJson(['success' => true],200);
         }
     }

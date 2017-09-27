@@ -19,7 +19,7 @@
   import addIncomeModal from '@/components/incomes/add'
   import graphs from '@/components/graphs'
   import { mapState } from 'vuex'
-  import {axios,apis,utils} from '@/hooks'
+  import {axios,apis,utils,store} from '@/hooks'
   import Vue from 'vue'
 
   export default {
@@ -38,7 +38,7 @@
       'add-inc': addIncomeModal
     },
     beforeRouteEnter (to, from, next) {
-      vm.$store.dispatch('loading');
+      store.dispatch('loading');
       let year = (to.params.year)?to.params.year:null;
       let month = (to.params.month?to.params.month:null);
       axios.get(apis.incomes(year,month)).then(response => {

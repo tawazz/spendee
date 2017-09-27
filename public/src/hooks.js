@@ -6,6 +6,7 @@ import apis from './api.js'
 import filters from './filters'
 import axios from 'axios'
 import utils from '@/helpers/utils'
+import store from '@/vuex/store'
 
 export {
     $,
@@ -13,5 +14,6 @@ export {
     apis,
     filters,
     axios,
-    utils
+    utils,
+    store
 }

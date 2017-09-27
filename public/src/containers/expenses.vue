@@ -42,7 +42,7 @@
   import addExpenseModal from '@/components/expenses/add-expense'
   import importExpensesModal from '@/components/expenses/import-expenses'
   import { mapState } from 'vuex'
-  import {axios,apis,utils} from '@/hooks'
+  import {axios,apis,utils,store} from '@/hooks'
   import Vue from 'vue'
 
   export default {
@@ -69,7 +69,7 @@
         })
     },
     beforeRouteEnter (to, from, next) {
-      vm.$store.dispatch('loading');
+      store.dispatch('loading');
       let year = to.params.year;
       let month = to.params.month;
 

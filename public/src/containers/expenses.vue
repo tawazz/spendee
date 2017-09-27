@@ -69,28 +69,30 @@
         })
     },
     beforeRouteEnter (to, from, next) {
-        let year = to.params.year;
-        let month = to.params.month;
+      vm.$store.dispatch('loading');
+      let year = to.params.year;
+      let month = to.params.month;
 
-        axios.get(apis.expenses(year,month)).then(response => {
-            next(vm => {
-                vm.$store.dispatch('updateNav',{
-                    year,
-                    month,
-                    day:null
-                });
-                vm.$store.dispatch('loading');
-                axios.get(apis.tagData(0,year,month)).then((response)=>{
-                  vm.$store.dispatch('updateTagData',response.data);
-                  vm.$store.dispatch('done');
-                }).catch((error)=>{
-                  utils.error_handler(vm,error);
-                  vm.$store.dispatch('done');
-                });
-                vm.$store.dispatch('updateExp',response.data);
-                vm.$store.dispatch('updatePage',"expenses");
-            });
+      axios.get(apis.expenses(year,month)).then(response => {
+        next(vm => {
+          vm.$store.dispatch('done');
+          vm.$store.dispatch('updateNav',{
+            year,
+            month,
+            day:null
+          });
+          vm.$store.dispatch('loading');
+          axios.get(apis.tagData(0,year,month)).then((response)=>{
+            vm.$store.dispatch('updateTagData',response.data);
+            vm.$store.dispatch('done');
+          }).catch((error)=>{
+            utils.error_handler(vm,error);
+            vm.$store.dispatch('done');
+          });
+          vm.$store.dispatch('updateExp',response.data);
+          vm.$store.dispatch('updatePage',"expenses");
         });
+      });
     },
     watch:{
         $route:function () {

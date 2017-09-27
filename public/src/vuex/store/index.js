@@ -24,12 +24,7 @@ var store = new Vuex.Store({
     },
     mutations,
     actions,
-    getters:{
-        /*showAlert: state => {
-            return state.alert.visible;
-        },*/
-
-    }
+    getters
 });
 
 export default store;

@@ -38,24 +38,26 @@
       'add-inc': addIncomeModal
     },
     beforeRouteEnter (to, from, next) {
-        let year = (to.params.year)?to.params.year:null;
-        let month = (to.params.month?to.params.month:null);
-        axios.get(apis.incomes(year,month)).then(response => {
-            next(vm => {
-                vm.$store.dispatch('updateNav',{
-                    year,
-                    month,
-                    day:null
-                });
-                vm.$store.dispatch('updateInc',response.data);
-                vm.$store.dispatch('updatePage',"incomes");
-            });
-        }).catch((error)=>{
-          next(vm => {
-            utils.error_handler(vm,error);
-            vm.$store.dispatch('done');
+      vm.$store.dispatch('loading');
+      let year = (to.params.year)?to.params.year:null;
+      let month = (to.params.month?to.params.month:null);
+      axios.get(apis.incomes(year,month)).then(response => {
+      next(vm => {
+          vm.$store.dispatch('updateNav',{
+              year,
+              month,
+              day:null
           });
+          vm.$store.dispatch('updateInc',response.data);
+          vm.$store.dispatch('updatePage',"incomes");
+          vm.$store.dispatch('done');
         });
+      }).catch((error)=>{
+        next(vm => {
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
+        });
+      });
     },
     computed:{
         ...mapState({

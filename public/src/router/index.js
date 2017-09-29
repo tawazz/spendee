@@ -53,6 +53,17 @@ export default new Router({
             }
           ]
 
+        },{
+          path: 'overview/:year?',
+          component: () => import('@/layouts/main'),
+          children: [
+            {
+              path: '',
+              name: 'Overview',
+              component: () => import('@/containers/overview')
+            }
+          ]
+
         }
       ]
     }

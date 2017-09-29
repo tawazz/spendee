@@ -1,5 +1,5 @@
 <?php
-  use HTTP\Controllers\Main\OverviewController;
-  
-  $this->get('/overview[/{year}]',OverviewController::class)->setName('overview');
+  use HTTP\Controllers\VueController;
+
+  $this->get('/overview[/{year}]',VueController::class)->setName('overview');
  ?>

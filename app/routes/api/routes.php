@@ -5,6 +5,7 @@
     use \HTTP\Controllers\API\Tags;
     use \HTTP\Controllers\API\ExpenseTags;
     use \HTTP\Controllers\API\Places;
+    use \HTTP\Controllers\API\Overview;
 
     $this->get('/expenses[/{year}[/{month}[/{day}]]]',ExpensesApi::class)->setName('api.expenses');
     $this->get('/expense/{id}',ExpensesApi::class.':retrieve')->setName('api.expense.retrieve');
@@ -27,5 +28,7 @@
     $this->get('/tags/expenses[/{id}[/{year}[/{month}]]]',ExpenseTags::class)->setName('api.tags.expenses');
 
     $this->get('/places',Places::class)->setName('api.places');
+
+    $this->get('/overview[/{year}]',Overview::class)->setName('api.overview');
 
  ?>

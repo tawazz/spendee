@@ -45,7 +45,7 @@ function getUrl(page,year,month,day){
     month = (month) ? parseInt(month): null;
     year = (year) ? parseInt(year): null;
 
-    if (!_.isNil(year) && _.isNil(month) && _.isNil(day)) {
+    if (!_.isNil(year) && !_.isNil(month) && !_.isNil(day)) {
         if(month > 12){
             month=1;
             year +=1;

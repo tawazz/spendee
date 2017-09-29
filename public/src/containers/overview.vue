@@ -10,7 +10,7 @@
 
 <script>
 import barChart from "@/components/graphs/bar_chart"
-import {_,moment,randomColor,apis,axios,utils} from '@/hooks'
+import {_,moment,randomColor,apis,axios,utils,store} from '@/hooks'
 
 export default {
   data:function () {
@@ -22,12 +22,34 @@ export default {
   components:{
     'bar-chart': barChart
   },
+  beforeRouteEnter (to, from, next) {
+    store.dispatch('loading');
+    let year = _.isNil(to.params.year) ? new Date().getFullYear() : to.params.year;
+    next(vm =>{
+      vm.updatePage();
+      vm.$store.dispatch('done');
+    });
+
+  },
   watch:{
     $route:function () {
-        this.drawBarChart();
+        this.updatePage();
     }
   },
   methods:{
+    updatePage(){
+      let vm = this;
+      store.dispatch('loading');
+      this.drawBarChart();
+      var year = _.isNil(vm.$route.params.year) ? new Date().getFullYear() : vm.$route.params.year;
+      vm.$store.dispatch('updateNav',{
+        year,
+        month:null,
+        day:null
+      });
+      vm.$store.dispatch('updatePage',"overview");
+      vm.$store.dispatch('done');
+    },
     drawBarChart(){
       let vm =this;
       var year = _.isNil(vm.$route.params.year) ? new Date().getFullYear() : vm.$route.params.year;
@@ -37,8 +59,7 @@ export default {
         vm.updateBarOptions(year);
         vm.$store.dispatch('done');
       }).catch((error)=>{
-        console.log(error);
-        //utils.error_handler(vm,error);
+        utils.error_handler(vm,error);
         vm.$store.dispatch('done');
       });
     },
@@ -72,9 +93,6 @@ export default {
         resize:true
       };
     }
-  },
-  mounted:function () {
-    this.drawBarChart();
   }
 }
 </script>

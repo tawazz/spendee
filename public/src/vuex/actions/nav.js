@@ -1,6 +1,7 @@
+import _ from 'lodash'
 export default function(year,month,day){
     let nav = {};
-    if(year && month && day ){
+    if(!_.isNil(year) && !_.isNil(month) && !_.isNil(day)) {
         month = parseInt(month);
         year = parseInt(year)
         if(month == 13){
@@ -20,10 +21,9 @@ export default function(year,month,day){
         nav['prev'] = `${year}/${month}/${day-1}`;
         nav['current']={'year':year,'month':month,'day':day};
 
-    }else if(year && month){
+    }else if(!_.isNil(year) && !_.isNil(month)){
         month = parseInt(month);
         year = parseInt(year)
-
         if(month == 13){
             month=1;
             year +=1;
@@ -41,15 +41,14 @@ export default function(year,month,day){
         nav['prev'] = moment(date,'YYYY/M/dddd').subtract(1, 'months').format('YYYY/M');
         nav['current']={'year':year,'month':month,'day':1};
 
-    }else if(year){
-
+    }else if(!_.isNil(year)){
         var date = new Date(`${year}-1-1`);
         nav['date']= date;
         var formatted_date = moment(date).format('YYYY');
         nav['display'] = formatted_date;
         nav['next'] = moment(date).add(1, 'y').format('YYYY');
         nav['prev'] = moment(date).subtract(1, 'y').format('YYYY');
-        nav['current']={'year':year,'month':1,'day':1};
+        nav['current']={'year':year,'month':null,'day':null};
 
     }else{
 

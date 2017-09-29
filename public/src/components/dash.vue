@@ -48,6 +48,7 @@
 </template>
 <script>
 import filters from '@/filters'
+import _ from 'lodash'
 import { mapState } from 'vuex'
   export default{
     name:"dash",
@@ -62,7 +63,7 @@ import { mapState } from 'vuex'
             let vm =this;
             let payload = {
                 year: vm.nav.current.year,
-                month: (parseInt(vm.nav.current.month)+1).toString()
+                month: _.isNil(vm.nav.current.month)? null : (parseInt(vm.nav.current.month)+1).toString()
             };
             vm.$store.dispatch('updateNav',payload);
         },
@@ -70,7 +71,7 @@ import { mapState } from 'vuex'
             let vm = this;
             let payload = {
                 year: vm.nav.current.year,
-                month: (parseInt(vm.nav.current.month)-1).toString()
+                month: _.isNil(vm.nav.current.month)? null : (parseInt(vm.nav.current.month)-1).toString()
             };
             vm.$store.dispatch('updateNav',payload);
         }
@@ -93,6 +94,3 @@ import { mapState } from 'vuex'
     }
   }
 </script>
-<style media="screen">
-
-</style>

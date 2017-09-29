@@ -63,13 +63,14 @@
     }
 
     public function totalExp($startDate,$endDate){
-        $sql = $this->qb
-              ->sum($this->table,'cost')
-              ->where('user_id','=',$this->active_record)
-              ->andWhere("date",">=",$startDate)
-              ->andWhere("date","<",$endDate)
-              ->get();
-        return $this->db->query($sql)->first()->sum;
+      $sql = $this->qb
+            ->sum($this->table,'cost')
+            ->where('user_id','=',$this->active_record)
+            ->andWhere("date",">=",$startDate)
+            ->andWhere("date","<",$endDate)
+            ->get();
+      $result =  $this->db->query($sql)->first();
+      return isset($result->sum) ? $result->sum : 0;
     }
 
      // get total cost of an expense/income between 2 dates
@@ -119,18 +120,9 @@
     //all monthly expenses/ incomes
 
     public function allActivity($startDate,$endDate,$type='expenses'){
-        $query = $this->db->query("SELECT lcase(name) as name,Sum(cost) as cost from $type where user_id= ? and date >= ? and date < ?  group by name order by cost DESC ",array($this->active_record,$startDate,$endDate))->result();
-      /*$conditions = array(
-          'where' =>['user_id','=',$this->active_record] ,
-          'andWhere'=>[
-            ["date",">=",$startDate],
-            ["date","<=",$endDate]
-          ],
-          'fields'=>['lcase(name) as name','Sum(cost) as cost']
-        );
-        $query = $this->find('all',$conditions);
-        */
-        return json_encode($query);
+      $sql = "SELECT lcase(name) as name,Sum(cost) as cost from $type where user_id= ? and date >= ? and date < ?  group by name order by cost DESC ";
+      $result = $this->db->query($sql,[$this->active_record,$startDate,$endDate])->result();
+      return $result;
     }
 
     public function activity($startDate,$endDate)

@@ -11,7 +11,8 @@
 
     public function totalInc($startDate,$endDate){
         $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<",$endDate)->get();
-        return $this->db->query($sql)->first()->sum;
+        $result =  $this->db->query($sql)->first();
+        return isset($result->sum) ? $result->sum : 0;
     }
 
      // get total cost of an expense/income between 2 dates
@@ -55,7 +56,7 @@
 
     public function allActivity($startDate,$endDate){
         $query = $this->db->query("SELECT lcase(name) as name,Sum(cost) as cost from $this->table where user_id= ? and date >= ? and date < ?  group by name order by cost DESC ",array($this->active_record,$startDate,$endDate));
-        return json_encode($query->result());
+        return $query->result();
     }
     public function activity($startDate,$endDate)
     {

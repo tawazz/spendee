@@ -12,20 +12,8 @@
       if(!isset($year)){
         $year = $year= date('Y');
       }
-      $data = $app->Helper->getData($app,$app->auth->id,$year);
       $overviewData = $app->Helper->yearOverView($app,$app->auth->id,$year);
-
-      $app->view->render($resp,'main/dashboard.php',[
-        'totalExp'=>$overviewData['totalExp'],
-        'totalInc'=>$overviewData['totalInc'],
-        'allIncomes'=>$overviewData['allIncomes'],
-        'allExpenses'=>$overviewData['allExpenses'],
-        'earned'=>$overviewData['earned'],
-        'spent'=>$overviewData['spent'],
-        'appData' => $data,
-        'page'    => 'overview',
-        'totals'  => []
-      ]);
+      return $resp->withJson($overviewData);
     }
   }
 

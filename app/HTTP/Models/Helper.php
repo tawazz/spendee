@@ -194,27 +194,29 @@ class Helper
   }
   public static function yearOverView($app,$user_id,$year)
   {
-    $totalexp = $app->Exp->read($user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
-    $totalinc = $app->Inc->read($user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
-    $allIncomes = json_decode($app->Inc->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1"));
-    $allExpenses = json_decode($app->Exp->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1"));
+    $totalexp    = $app->Exp->read($user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
+    $totalinc    = $app->Inc->read($user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
+    $allIncomes  = $app->Inc->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
+    $allExpenses = $app->Exp->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
 
-    $earned=[];
-    $itemSpent =[];
+    $incomes  =[];
+    $expenses =[];
+    $tags =[];
     for($i=1;$i<=12;$i++){
-      $earned[$i] = isset($app->Inc->read($user_id)->totalInc($year."-".$i."-1",$year."-".($i+1)."-1")->sum) ? $app->Inc->read($user_id)->totalInc($year."-".$i."-1",$year."-".($i+1)."-1")->sum :0 ;
-      $itemSpent[$i] = isset($app->Exp->read($user_id)->totalExp($year."-".$i."-1",$year."-".($i+1)."-1")->sum) ? $app->Exp->read($user_id)->totalExp($year."-".$i."-1",$year."-".($i+1)."-1")->sum : 0;
+      $incomes[$i]  = $app->Inc->read($user_id)->totalInc($year."-".$i."-1",$year."-".($i+1)."-1");
+      $expenses[$i] = $app->Exp->read($user_id)->totalExp($year."-".$i."-1",$year."-".($i+1)."-1");
+      $tag_data = $app->Helper->getExpenseTags($app,$app->auth->id,false,null,$year,$i);
+      $tags[$i] = $tag_data;
     }
-    $totalinc = isset($totalinc->sum)?$totalinc->sum:0;
-    $totalexp = isset($totalexp->sum)?$totalexp->sum:0;
 
     $response = [
-      'totalExp'=>$totalexp,
-      'totalInc'=>$totalinc,
-      'allIncomes'=>$allIncomes,
-      'allExpenses'=>$allExpenses,
-      'earned'=>$earned,
-      'spent'=>$itemSpent,
+      'totalExp'   => $totalexp,
+      'totalInc'   => $totalinc,
+      'allIncomes' => $allIncomes,
+      'allExpenses'=> $allExpenses,
+      'incomes'    => $incomes,
+      'expenses'   => $expenses,
+      'tags'       => $tags
     ];
 
     return $response;

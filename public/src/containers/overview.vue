@@ -2,7 +2,7 @@
   <div class="container">
     <div class='row'>
       <div class="col-md-12">
-        <bar-chart id="year-bar-chart" title="Year Overview" :options="barChartOptions" />
+        <bar-chart id="year-bar-chart" title="Balance Overview" :options="barChartOptions" />
       </div>
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 import barChart from "@/components/graphs/bar_chart"
-import {_,moment,randomColor,apis,axios,utils,store} from '@/hooks'
+import {_,moment,randomColor,apis,axios,utils,store,filters} from '@/hooks'
 
 export default {
   data:function () {
@@ -71,7 +71,9 @@ export default {
         var exp = vm.overviewData.expenses[i];
         var inc = vm.overviewData.incomes[i];
         var bal = inc - exp;
-        bars[i-1] = {date,exp,inc,bal}
+        var pos = (bal >= 0 )? bal : 0;
+        var neg = (bal < 0 )? bal : 0;
+        bars[i-1] = {date,pos,neg}
       }
 
       let barColors = randomColor({
@@ -83,13 +85,31 @@ export default {
         element: 'year-bar-chart',
         data:bars,
         xkey: 'date',
-        ykeys: ['inc', 'exp' ,'bal'],
-        labels: ['Incomes', 'Expenses' , 'Balance'],
+        ykeys: ['pos', 'neg'],
+        labels: ['Balance'],
         barColors: [randomColor({
-          uminosity: 'dark',
+          uminosity: 'bright',
           hue: '#43a047'
-        }),'#e53935','#60677A'],
+        }),randomColor({
+          uminosity: 'bright',
+          hue: '#ec407a'
+        })],
         preUnits:'$',
+        hoverCallback: function (index, options, content, row) {
+          let bal = 0;
+          if (row.pos > 0) {
+            bal = `$${filters.formatMoney(row.pos)}`
+          }else if(row.neg < 0) {
+            bal = `-$${filters.formatMoney(row.neg * -1)}`
+          }else{
+            bal = `$${filters.formatMoney(0)}`
+          }
+          content = `<div class="morris-hover-row-label">${filters.monthYear(row.date)}</div><div class='morris-hover-point' style='color: #03a9f4'>
+          Balance: ${bal}
+
+          </div>`;
+          return content;
+        },
         resize:true
       };
     }

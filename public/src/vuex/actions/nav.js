@@ -12,8 +12,7 @@ export default function(year,month,day){
             month=12;
             year -=1;
         }
-
-        var date = new Date(`${year}-${month}-${day}`);
+        var date = moment(`${year}-${month}-${day}`,'YYYY-MM-dddd');
         nav['date']= date;
         date = moment(date).format('d/MMM/YYYY');
         nav['display'] = date;
@@ -33,18 +32,18 @@ export default function(year,month,day){
             year -=1;
         }
 
-        var date = `${year}/${month}/1`;
+        var date = moment(`${year}/${month}/1`,'YYYY-MM-dddd');
         nav['date']= date;
-        var formatted_date = moment(date,'YYYY/M/dddd').format('MMM/YYYY');
+        var formatted_date = date.format('MMM/YYYY');
         nav['display'] = formatted_date;
         nav['next'] = moment(date,'YYYY/M/dddd').add(1, 'months').format('YYYY/M');
         nav['prev'] = moment(date,'YYYY/M/dddd').subtract(1, 'months').format('YYYY/M');
         nav['current']={'year':year,'month':month,'day':1};
 
     }else if(!_.isNil(year)){
-        var date = new Date(`${year}-1-1`);
+        var date = moment(`${year}-1-1`,'YYYY-MM-dddd');
         nav['date']= date;
-        var formatted_date = moment(date).format('YYYY');
+        var formatted_date = date.format('YYYY');
         nav['display'] = formatted_date;
         nav['next'] = moment(date).add(1, 'y').format('YYYY');
         nav['prev'] = moment(date).subtract(1, 'y').format('YYYY');

@@ -8,10 +8,10 @@
                 <div class="card-footer capitalize">
                     <div>
                       <a href="#" :style="{color}" @click.prevent="edit(i.id)" style="bottom:0;padding-left:15px;">{{i.name}}</a>
-                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.expense_tags":to="{ name: 'Tags',params: { id: tag.tags.id }}">
+                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.expense_tags":to="{ name: 'Tags',params: { id: tag.tags.id,year,month }}">
                           {{ tag.tags.name}}
                         </router-link>
-                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.income_tags":to="{ name: 'Tags',params: { id: tag.tags.id }}">
+                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.income_tags":to="{ name: 'Tags',params: { id: tag.tags.id,year,month }}">
                           {{ tag.tags.name}}
                         </router-link>
                       <span v-if="i.is_recurring" class="mdi mdi-reload" style="font-size:1.3em" ></span>
@@ -33,15 +33,18 @@
 <script>
   import moment from 'moment'
   import filters from '@/filters'
+  import {mapState} from 'vuex'
+
   export default{
     name:'item-list',
-    data:function () {
-      return {
-
-      }
-    },
     props:["data","color","type","editCallback"],
     filters,
+    computed:{
+      ...mapState({
+          year: state => state.nav.current.year,
+          month: state => state.nav.current.month
+      })
+    },
     methods:{
         total:function (item) {
             return item.reduce((a, b) => {return parseFloat(a) + parseFloat(b.cost); }, 0);
@@ -49,9 +52,6 @@
         edit: function (id) {
           this.editCallback(id,this.type);
         }
-    },
-    mounted:function () {
-
     }
   }
 </script>

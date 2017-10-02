@@ -47,7 +47,8 @@
             ];
             $spent = [];
             foreach ($exptags[$tag->name]["expenses"] as $exp) {
-              $spent[$exp->name] = isset($spent[$exp->name]) ? floatval($spent[$exp->name] + $exp->cost) : floatval($exp->cost);
+              $name = strtolower($exp->name);
+              $spent[$name] = isset($spent[$name]) ? floatval($spent[$name] + $exp->cost) : floatval($exp->cost);
             }
             $exptags[$tag->name]["spent"] = $spent;
           }

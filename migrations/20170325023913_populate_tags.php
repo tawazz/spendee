@@ -27,6 +27,7 @@ class PopulateTags extends Migration
      */
     public function up()
     {
+      /*
       $this->execute("
       INSERT INTO `tags` (`id`, `name`) VALUES
          (1, 'Food & Drink'),
@@ -66,5 +67,6 @@ class PopulateTags extends Migration
          (36, 'Credit card '),
          (37, 'Loan');
       ");
+      */
     }
 }

@@ -67,7 +67,7 @@ export default {
       let vm = this;
       let bars = [];
       for (var i = 1; i < 13; i++) {
-        var date = moment(`${year}/${i}/1`,'YYYY/M/dddd').format('MMM/YYYY');
+        var date = moment(`${year}-${i}-1`,'YYYY-M-dddd').format('MMM YYYY');
         var exp = vm.overviewData.expenses[i];
         var inc = vm.overviewData.incomes[i];
         var bal = inc - exp;
@@ -104,7 +104,7 @@ export default {
           }else{
             bal = `$${filters.formatMoney(0)}`
           }
-          content = `<div class="morris-hover-row-label">${filters.monthYear(row.date)}</div><div class='morris-hover-point' style='color: #03a9f4'>
+          content = `<div class="morris-hover-row-label">${row.date}</div><div class='morris-hover-point' style='color: #03a9f4'>
           Balance: ${bal}
 
           </div>`;

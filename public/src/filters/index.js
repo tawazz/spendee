@@ -3,7 +3,7 @@ export default{
     return moment(D).format("dddd, MMMM Do YYYY");
   },
   monthYear:function(D) {
-      return moment(D).format("MMMM YYYY");
+      return moment(D,'YYYY-M-dddd').format("MMMM YYYY");
   },
   formatMoney:function(n,c, d, t){
         c = isNaN(c = Math.abs(c)) ? 2 : c;

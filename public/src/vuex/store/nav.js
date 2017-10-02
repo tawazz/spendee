@@ -1,10 +1,11 @@
 export default {
-    nav:{
-        display:"",
-        next:"",
-        prev:"",
-        current:"",
-        date:null,
-        page:"Expenses"
-    }
+  display:"",
+  next:"",
+  prev:"",
+  current:{
+    year: "",
+    month:""
+  },
+  date:null,
+  page:"Expenses"
 }

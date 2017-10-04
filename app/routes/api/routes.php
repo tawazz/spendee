@@ -6,6 +6,7 @@
     use \HTTP\Controllers\API\ExpenseTags;
     use \HTTP\Controllers\API\Places;
     use \HTTP\Controllers\API\Overview;
+    use \HTTP\Controllers\API\Budget;
 
     $this->get('/expenses[/{year}[/{month}[/{day}]]]',ExpensesApi::class)->setName('api.expenses');
     $this->get('/expense/{id}',ExpensesApi::class.':retrieve')->setName('api.expense.retrieve');
@@ -30,5 +31,12 @@
     $this->get('/places',Places::class)->setName('api.places');
 
     $this->get('/overview[/{year}]',Overview::class)->setName('api.overview');
+
+    //budgets
+    $this->get('/budgets[/{year}[/{month}[/{day}]]]',Budget::class)->setName('budgets');
+    $this->get('/budget/{id}',Budget::class.':retrieve')->setName('budget.retrieve');
+    $this->post('/budget',Budget::class.':create')->setName('budget.create');
+    $this->put('/budget/{id}',Budget::class.':update')->setName('budget.update');
+    $this->delete('/budget/{id}',Budget::class.':delete')->setName('budget.delete');
 
  ?>

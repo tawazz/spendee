@@ -65,6 +65,18 @@ export default new Router({
           ]
 
         }
+        ,{
+          path: 'budgets/:year?/:month?',
+          component: () => import('@/layouts/main'),
+          children: [
+            {
+              path: '',
+              name: 'Budgets',
+              component: () => import('@/containers/budget')
+            }
+          ]
+
+        }
       ]
     }
 

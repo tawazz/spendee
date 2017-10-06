@@ -18,7 +18,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li><router-link :to="{ path: '/expenses'}">Expenses</router-link></li>
               <li><router-link :to="{ path: '/incomes' }">Incomes</router-link></li>
-              <li><a href="">Budgets</a></li>
+              <li><router-link :to="{ path: '/budgets' }">Budgets</router-link></li>
               <li><router-link :to="{ path: '/overview' }">Overview</router-link></li>
               <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">Settings</span></a>

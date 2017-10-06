@@ -7,7 +7,7 @@
       <h4 class="card-title">{{ title }}</h4>
         <div v-show="showBarChart" :id="id" ></div>
         <div v-show="!showBarChart" class="nodata">
-           Loading...
+           No Data Available.
         </div>
     </div>
   </div>

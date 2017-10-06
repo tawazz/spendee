@@ -7,6 +7,9 @@
       <div class="col-md-6">
         <line-chart id="year-line-chart" title="Year Overview" :options="lineChartOptions" />
       </div>
+      <div class="col-md-6">
+        <bar-chart id="inc-bar-chart" title="Income Overview" :options="incBarChartOptions" />
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +24,7 @@ export default {
     return {
       barChartOptions: null,
       lineChartOptions:null,
+      incBarChartOptions:null,
       overviewData: null
     }
   },
@@ -46,7 +50,7 @@ export default {
     updatePage(){
       let vm = this;
       store.dispatch('loading');
-      this.drawBarChart();
+      this.drawCharts();
       var year = _.isNil(vm.$route.params.year) ? new Date().getFullYear() : vm.$route.params.year;
       vm.$store.dispatch('updateNav',{
         year,
@@ -56,14 +60,15 @@ export default {
       vm.$store.dispatch('updatePage',"overview");
       vm.$store.dispatch('done');
     },
-    drawBarChart(){
+    drawCharts(){
       let vm =this;
       var year = _.isNil(vm.$route.params.year) ? new Date().getFullYear() : vm.$route.params.year;
       vm.$store.dispatch('loading');
       axios.get(apis.overview(year)).then((response)=>{
         vm.overviewData = response.data;
         vm.updateBarOptions(year);
-        vm.updateLineOptions(year)
+        vm.updateLineOptions(year);
+        vm.updateIncChartOptions();
         vm.$store.dispatch('done');
       }).catch((error)=>{
         utils.error_handler(vm,error);
@@ -85,7 +90,7 @@ export default {
         element: 'year-line-chart',
         data:bars,
         xkey: 'date',
-        ykeys: ['exp', 'inc', 'bal'],
+        ykeys: ['inc', 'exp', 'bal'],
         labels: ['Expense','Incomes','Balance'],
         lineColors: ["#6ffc76","#e2769a","#333333"],
         preUnits:'$',
@@ -144,6 +149,30 @@ export default {
           content = `<div class="morris-hover-row-label">${row.date}</div><div class='morris-hover-point' style='color: #03a9f4'>
           Balance: ${bal}
 
+          </div>`;
+          return content;
+        },
+        resize:true
+      };
+    },
+    updateIncChartOptions(){
+      let vm = this;
+      let bars = [];
+      vm.overviewData.allIncomes.slice(0,5).map(exp =>{
+        bars.push(exp);
+      });
+
+      vm.incBarChartOptions = {
+        element: 'inc-bar-chart',
+        data:bars,
+        xkey: 'name',
+        ykeys: ['cost'],
+        labels: ['Balance'],
+        barColors: ["#6ffc76"],
+        preUnits:'$',
+        hoverCallback: function (index, options, content, row) {
+          content = `<div class="morris-hover-row-label">${row.name}</div><div class='morris-hover-point' style='color: #03a9f4'>
+          $${filters.formatMoney(row.cost)}
           </div>`;
           return content;
         },

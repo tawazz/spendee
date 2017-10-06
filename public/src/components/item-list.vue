@@ -8,10 +8,10 @@
                 <div class="card-footer capitalize">
                     <div>
                       <a href="#" :style="{color}" @click.prevent="edit(i.id)" style="bottom:0;padding-left:15px;">{{i.name}}</a>
-                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.expense_tags":to="{ path: `tags/${tag.tags.id}/${year}/${month}`}">
+                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.expense_tags":to="{ path: `/tags/${tag.tags.id}/${year}/${month}`}">
                           {{ tag.tags.name}}
                         </router-link>
-                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.income_tags":to="{ path: `tags/${tag.tags.id}/${year}/${month}`}">
+                        <router-link class="tag" style="margin:0 5px;" :key="i.id+'_'+tag.tags.id" v-for="tag in i.income_tags":to="{ path: `/tags/${tag.tags.id}/${year}/${month}`}">
                           {{ tag.tags.name}}
                         </router-link>
                       <span v-if="i.is_recurring" class="mdi mdi-reload" style="font-size:1.3em" ></span>

@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="card">
-    <div class="card-header card-header-icon" data-background-color="rose">
+    <div class="card-header card-header-icon" :data-background-color="color">
       <i class="fa-2x mdi mdi-chart-areaspline"></i>
     </div>
     <div class="card-content">
@@ -30,6 +30,10 @@ export default {
     id:{
       required:true,
       type:String
+    },
+    color:{
+      type:String,
+      default: 'rose'
     }
   },
   data: function() {

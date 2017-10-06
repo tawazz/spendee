@@ -8,7 +8,7 @@
         <line-chart id="year-line-chart" title="Year Overview" :options="lineChartOptions" />
       </div>
       <div class="col-md-6">
-        <bar-chart id="inc-bar-chart" title="Income Overview" :options="incBarChartOptions" />
+        <bar-chart id="inc-bar-chart" title="Income Overview" color="green" :options="incBarChartOptions" />
       </div>
     </div>
   </div>

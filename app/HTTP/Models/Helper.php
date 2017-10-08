@@ -205,10 +205,8 @@ class Helper
     for($i=1;$i<=12;$i++){
       $incomes[$i]  = $app->Inc->read($user_id)->totalInc($year."-".$i."-1",$year."-".($i+1)."-1");
       $expenses[$i] = $app->Exp->read($user_id)->totalExp($year."-".$i."-1",$year."-".($i+1)."-1");
-      $tag_data = $app->Helper->getExpenseTags($app,$app->auth->id,false,null,$year,$i);
-      $tags[$i] = $tag_data;
     }
-
+    $tags = $app->Helper->getExpenseTags($app,$app->auth->id,false,null,$year,null);
     $response = [
       'totalExp'   => $totalexp,
       'totalInc'   => $totalinc,

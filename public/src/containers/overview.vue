@@ -10,6 +10,9 @@
       <div class="col-md-6">
         <bar-chart id="inc-bar-chart" title="Income Overview" color="green" :options="incBarChartOptions" />
       </div>
+      <div class="col-md-12">
+        <bubble-chart :options="bubble_chartData" />
+      </div>
     </div>
   </div>
 </template>
@@ -17,6 +20,7 @@
 <script>
 import barChart from "@/components/graphs/bar_chart"
 import lineChart from "@/components/graphs/line_chart"
+import bubble_chart from '@/components/graphs/bubble_chart'
 import {_,moment,randomColor,apis,axios,utils,store,filters} from '@/hooks'
 
 export default {
@@ -25,12 +29,14 @@ export default {
       barChartOptions: null,
       lineChartOptions:null,
       incBarChartOptions:null,
+      bubble_chartData:null,
       overviewData: null
     }
   },
   components:{
     'bar-chart': barChart,
-    'line-chart': lineChart
+    'line-chart': lineChart,
+    'bubble-chart': bubble_chart
   },
   beforeRouteEnter (to, from, next) {
     store.dispatch('loading');
@@ -69,6 +75,7 @@ export default {
         vm.updateBarOptions(year);
         vm.updateLineOptions(year);
         vm.updateIncChartOptions();
+        vm.updateBubbleChart();
         vm.$store.dispatch('done');
       }).catch((error)=>{
         utils.error_handler(vm,error);
@@ -178,6 +185,30 @@ export default {
         },
         resize:true
       };
+    },
+    updateBubbleChart(){
+      let vm = this;
+      let data = [];
+      let i =1;
+      let total  = 0;
+      Object.keys(vm.overviewData.tags).map(tag => {
+        total += vm.overviewData.tags[tag];
+      });
+      Object.keys(vm.overviewData.tags).map(tag =>{
+        data.push({
+            label:tag,
+            data: [{
+                x: i,
+                y: vm.overviewData.tags[tag],
+                r: Math.round((vm.overviewData.tags[tag]/total )*100)*5
+            }],
+            backgroundColor: "#f5f5f5",
+            hoverBackgroundColor: "#ff6384"
+        });
+        i+=1;
+      });
+      vm.bubble_chartData = data;
+
     }
   }
 }

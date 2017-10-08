@@ -14,6 +14,8 @@
         {
             $app = $this->container;
             $year = $year = isset($args['year']) ? $args['year'] : date('Y');
+            $data = $app->Helper->yearOverView($app,$app->auth->id,$year);
+            return $resp->withJson($data);
             $cache = $app->cache;
             $cache_key = 'api.get.overview.'.$year;
 

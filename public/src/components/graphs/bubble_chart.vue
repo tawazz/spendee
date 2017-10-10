@@ -1,13 +1,11 @@
 <template lang="html">
-  <div class="card card-chart" data-count="15">
-      <div class="card-header" :data-background-color="color">
-          <canvas class="ct-chart" ref="bubble_chart"></canvas>
+  <div class="card">
+      <div class="card-header card-header-icon" :data-background-color="color">
+          <i class="fa-2x mdi mdi-tags"></i>
       </div>
       <div class="card-content">
-          <h4 class="card-title">Tag Overview</h4>
-          <p class="category">
-            <span class="text-success">
-              <i class="fa fa-long-arrow-up"></i>55% </span> increase in today sales.</p>
+          <h4 class="card-title">{{ title }}</h4>
+          <canvas class="ct-chart" ref="bubble_chart"></canvas>
       </div>
   </div>
 </template>
@@ -27,7 +25,7 @@ export default {
     },
     color:{
       type:String,
-      default: 'blue'
+      default: 'rose'
     }
   },
   data:function () {

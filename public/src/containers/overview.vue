@@ -202,13 +202,12 @@ export default {
                 y: vm.overviewData.tags[tag],
                 r: Math.round((vm.overviewData.tags[tag]/total )*100)*5
             }],
-            backgroundColor: "#f5f5f5",
+            backgroundColor: "#ff6384",
             hoverBackgroundColor: "#ff6384"
         });
         i+=1;
       });
       vm.bubble_chartData = data;
-
     }
   }
 }

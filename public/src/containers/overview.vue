@@ -11,7 +11,7 @@
         <bar-chart id="inc-bar-chart" title="Income Overview" color="green" :options="incBarChartOptions" />
       </div>
       <div class="col-md-12">
-        <bubble-chart :options="bubble_chartData" />
+        <bubble-chart title="Tags Overview" :options="bubble_chartData" />
       </div>
     </div>
   </div>

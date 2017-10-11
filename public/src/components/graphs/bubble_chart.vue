@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="card">
       <div class="card-header card-header-icon" :data-background-color="color">
-          <i class="fa-2x mdi mdi-tags"></i>
+          <i class="fa-2x mdi  mdi-tag-multiple"></i>
       </div>
       <div class="card-content">
           <h4 class="card-title">{{ title }}</h4>

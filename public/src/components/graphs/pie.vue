@@ -1,15 +1,9 @@
 <template lang="html">
-  <div class="card">
-    <div class="card-header card-header-icon" :data-background-color="color">
-      <i class="fa-2x mdi mdi-chart-bar"></i>
-    </div>
-    <div class="card-content">
-      <h4 class="card-title">{{ title }}</h4>
-        <div v-show="showChart" :id="id" ></div>
-        <div v-show="!showChart" class="nodata">
-           No Data Available.
-        </div>
-    </div>
+  <div>
+      <div v-show="showChart" ref="pie_chart" :id="id" ></div>
+      <div v-show="!showChart" class="nodata">
+         No Data Available.
+      </div>
   </div>
 </template>
 
@@ -51,7 +45,7 @@
     methods: {
       drawChart(){
         let vm =this;
-        $(`#${vm.id}`).empty();
+        $(`#${vm.$refs.pie_chart.id}`).empty();
         if (vm.options.data.length > 0) {
           vm.showChart = true;
           setTimeout(()=> {
@@ -61,6 +55,9 @@
           vm.showChart = false;
         }
       },
+    },
+    mounted:function () {
+      this.drawChart();
     }
   }
 </script>

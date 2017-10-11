@@ -21,7 +21,7 @@
              </div>
           </div>
        </div>
-        <div v-for="budget in budgets" class="col-xs-12 col-sm-6">
+        <div v-for="budget in budgets" class="col-md-6 col-sm-12">
           <div class="panel panel-info">
               <div class="panel-heading">
                   <h2 style="text-transform:capitalize">{{budget.name}}</h2>
@@ -104,7 +104,7 @@
               <!-- /.panel-body -->
               <div class="panel-footer">
                 <h2 class="text-center">Budgeted Tags</h2>
-                  <div id="morris-pie-chart-tags-budget.id" class="text-center" />
+                  <pie-chart :id="`morris-pie-chart-tags-${budget.id}`" :options="budget_tags[`_${budget.id}`]"/>
               </div>
               <div v-if="!budget.expired" class="panel-footer">
                   <a class="btn btn-info" href="#" :data-budget-id ="budget.id" data-show-modal="#editModal" data-toggle="modal" data-target="#editBudget" >Edit</a>
@@ -118,13 +118,23 @@
 </template>
 
 <script>
+  import PieChart from "@/components/graphs/pie"
   import { mapState } from 'vuex'
-  import {axios,apis,utils,filters} from '@/hooks'
+  import {axios,apis,utils,filters,randomColor} from '@/hooks'
   export default {
+    components:{
+      'pie-chart': PieChart
+    },
     beforeRouteEnter (to, from, next) {
       let year = to.params.year;
       let month = to.params.month;
+
       next(vm => {
+        vm.$store.dispatch('updateNav',{
+          year,
+          month,
+          day:null
+        });
         vm.updatePage(year,month);
         vm.$store.dispatch('updatePage',"budgets");
       });
@@ -141,8 +151,8 @@
     },
     data: function () {
       return {
-        showAddButton: false,
-        budgets:[]
+        budgets:[],
+        budget_tags:{}
       }
     },
     computed:{
@@ -158,26 +168,50 @@
         let nav_period = `${month}-${year}`;
         return current_period == nav_period;
       }
-    }
+    },
     filters,
     methods:{
       addBudget(){
 
+      },
+      chartOptions(budget){
+        let vm = this;
+        let tags = budget.tags;
+        let tag_count = Object.keys(tags).length;
+
+        if (tag_count > 0) {
+          let colors = randomColor({
+            count: tag_count,
+            luminosity: 'light',
+            hue: '#ec407a'
+          });
+          let data = [];
+          Object.keys(tags).map(tag => {
+            return data.push({label: tag, value:budget.tags[tag]});
+          });
+          vm.budget_tags[`_${budget.id}`]={
+            element: `morris-pie-chart-tags-${budget.id}`,
+            data,
+            formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
+            colors,
+            resize:true
+          };
+        }else{
+          vm.budget_tags[`_${budget.id}`]={data:[]};
+        }
       },
       updatePage(year,month){
         let vm = this;
         vm.$store.dispatch('loading');
         axios.get(apis.budgets(year,month)).then(response => {
           vm.budgets = response.data;
+          vm.budgets.map(budget => {
+            vm.chartOptions(budget)
+          });
           vm.$store.dispatch('done');
         }).catch((error)=>{
           utils.error_handler(vm,error);
           vm.$store.dispatch('done');
-        });
-        vm.$store.dispatch('updateNav',{
-          year,
-          month,
-          day:null
         });
       }
     }

@@ -38,6 +38,9 @@ export default {
     import_exp:"/api/import/expenses",
     overview: function (year) {
       return `/api/overview/${year}`;
+    },
+    budgets:function (year,month) {
+      return getUrl('budgets',year,month,null);
     }
 }
 function getUrl(page,year,month,day){

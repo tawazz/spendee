@@ -1,12 +1,187 @@
 <template lang="html">
-  <div class="">
-    <h1>Budgets</h1>
+  <div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Budgets</h2>
+        </div>
+        <div class="col-sm-12">
+          <button v-if="showAddButton" style="margin-bottom: 20px;" type="button" @click="addBudget" class="btn btn-info btn-raised">
+              <i class="fa fa-plus"></i> Add Budget
+          </button>
+        </div>
+    </div>
+    <div class="row">
+       <div v-if="budgets.length < 1" class="col-xs-12">
+         <div class="panel panel-info">
+             <div class="panel-heading">
+                 <h2 class="text-center" style="text-transform:capitalize">No Budget Data Available</h2>
+             </div>
+             <div class="panel-body" style="height:300px;display: flex;justify-content: center; align-items: center;" >
+                 <h4 class="empty-content">Its Lonely Out here</h4>
+             </div>
+          </div>
+       </div>
+        <div v-for="budget in budgets" class="col-xs-12 col-sm-6">
+          <div class="panel panel-info">
+              <div class="panel-heading">
+                  <h2 style="text-transform:capitalize">{{budget.name}}</h2>
+              </div>
+              <div class="alert alert-info">
+                <div class="row">
+                  <div class="col-xs-6">
+                    <h4>Spent</h4>
+                    <p>${{budget.spent|formatMoney}}</p>
+                  </div>
+                  <div class="col-xs-6">
+                    <h4>Budgeted</h4>
+                    <p>${{budget.amount|formatMoney}}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- /.panel-heading -->
+              <div class="panel-body" >
+                <div v-if="budget.expired">
+                  <div v-if="budget.amount >= budget.spent">
+                    <p>
+                      You Saved
+                    </p>
+                    <p class="fa-2x text-success">
+                      ${{budget.saved|formatMoney}}
+                    </p>
+                    <p>
+                      this month!
+                    </p>
+                    <div class="progress progress-striped budget-progress">
+                      <div class="progress-bar progress-bar-success" :style="{width:`${budget.spentPercentage}%`}">{{budget.spentPercentage}}%</div>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <p>
+                      You over spent by
+                    </p>
+                    <p class="fa-2x text-danger">
+                      ${{budget.saved|formatMoney}}
+                    </p>
+                    <p>
+                      this month!
+                    </p>
+                    <div class="progress progress-striped budget-progress">
+                      <div class="progress-bar progress-bar-danger" style="width:100%">{{budget.spentPercentage}}%</div>
+                    </div>
+                  </div>
+                </div>
+                <div v-else>
+                  <div v-if="budget.spendingLeft >= 0">
+                    <p>
+                      You can keep spending
+                    </p>
+                    <p class="fa-2x text-success">
+                      ${{budget.spendingLeft|formatMoney}}
+                    </p>
+                    <p>
+                      each day!
+                    </p>
+                    <div class="progress progress-striped budget-progress">
+                      <div class="progress-bar progress-bar-success" :style="{width:`${budget.spentPercentage}%`}">{{budget.spentPercentage}}%</div>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <p>
+                      Opps! you went over budget by
+                    </p>
+                    <p class="fa-2x text-danger">
+                      ${{(budget.spent - budget.amount)|formatMoney}}
+                    </p>
+                    <p>
+                      spend carefully!!!
+                    </p>
+                    <div class="progress progress-striped budget-progress">
+                      <div class="progress-bar progress-bar-danger" style="width:100%">{{budget.spentPercentage}}%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.panel-body -->
+              <div class="panel-footer">
+                <h2 class="text-center">Budgeted Tags</h2>
+                  <div id="morris-pie-chart-tags-budget.id" class="text-center" />
+              </div>
+              <div v-if="!budget.expired" class="panel-footer">
+                  <a class="btn btn-info" href="#" :data-budget-id ="budget.id" data-show-modal="#editModal" data-toggle="modal" data-target="#editBudget" >Edit</a>
+                  <a class="btn btn-danger" href="#" :data-budget-delete ="budget.id">Delete</a>
+              </div>
+          </div>
+          <!-- /.panel -->
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-}
+  import { mapState } from 'vuex'
+  import {axios,apis,utils,filters} from '@/hooks'
+  export default {
+    beforeRouteEnter (to, from, next) {
+      let year = to.params.year;
+      let month = to.params.month;
+      next(vm => {
+        vm.updatePage(year,month);
+        vm.$store.dispatch('updatePage',"budgets");
+      });
+
+    },
+    watch:{
+        $route:function () {
+          let vm = this;
+          let params = vm.$route.params;
+          let year = params.year;
+          let month = params.month;
+          vm.updatePage(year,month);
+        }
+    },
+    data: function () {
+      return {
+        showAddButton: false,
+        budgets:[]
+      }
+    },
+    computed:{
+      showAddButton: function () {
+        let vm = this;
+        let params = vm.$route.params;
+        let year = params.year;
+        let month = params.month;
+        if (_.isNil(year) || _.isNil(month)) {
+          return true;
+        }
+        let current_period = moment().format('M-YYYY');
+        let nav_period = `${month}-${year}`;
+        return current_period == nav_period;
+      }
+    }
+    filters,
+    methods:{
+      addBudget(){
+
+      },
+      updatePage(year,month){
+        let vm = this;
+        vm.$store.dispatch('loading');
+        axios.get(apis.budgets(year,month)).then(response => {
+          vm.budgets = response.data;
+          vm.$store.dispatch('done');
+        }).catch((error)=>{
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
+        });
+        vm.$store.dispatch('updateNav',{
+          year,
+          month,
+          day:null
+        });
+      }
+    }
+  }
 </script>
 
 <style lang="css">

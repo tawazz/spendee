@@ -10,7 +10,9 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand brand-font" href=""><img src="../../images/navicon.png" alt="S" style="max-width:40px; margin-top: -7px;">pendee</a>
+            <router-link class="navbar-brand brand-font" :to="{ path: '/expenses'}">
+              <img src="../../images/navicon.png" alt="S" style="max-width:40px; margin-top: -7px;">pendee
+            </router-link>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
@@ -21,9 +23,9 @@
               <li><router-link :to="{ path: '/budgets' }">Budgets</router-link></li>
               <li><router-link :to="{ path: '/overview' }">Overview</router-link></li>
               <li class="dropdown">
-                <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">Settings</span></a>
+                <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">user.username</span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="">Account</a></li>
+                    <router-link :to="{ path: '/settings' }">Settings</router-link></li>
                     <li class="divider"></li>
                     <li><a href="/logout">Logout</a></li>
                 </ul>
@@ -35,3 +37,12 @@
   </div>
 
 </template>
+<script type="text/javascript">
+  export default {
+    data: function () {
+      return {
+        user: Window.user
+      }
+    }
+  }
+</script>

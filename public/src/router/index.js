@@ -76,6 +76,17 @@ export default new Router({
             }
           ]
 
+        },{
+          path: 'settings',
+          component: () => import('@/layouts/default'),
+          children: [
+            {
+              path: '',
+              name: 'Settings',
+              component: () => import('@/containers/settings')
+            }
+          ]
+
         }
       ]
     }

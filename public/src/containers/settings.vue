@@ -11,18 +11,18 @@
                 <span class="input-group-addon">
                   <i class="mdi mdi-face"></i>
                 </span>
-                <div class="form-group label-floating is-empty">
+                <div class="form-group label-floating">
                   <label class="control-label">Username</label>
-                  <input type="text" name="username" class="form-control" autocomplete="off" v-model="user.name" style="cursor: auto;" disabled>
+                  <input type="text" name="username" class="form-control" autocomplete="off" v-model="user.username" style="cursor: auto;" disabled>
                   <span class="material-input"></span></div>
               </div>
               <div class="input-group">
                 <span class="input-group-addon">
                   <i class="mdi mdi-email"></i>
                 </span>
-                <div class="form-group label-floating is-empty">
+                <div class="form-group label-floating">
                   <label class="control-label">Email</label>
-                  <input type="text" class="form-control" autocomplete="off" style="cursor: auto;" v-model="user.email"  placeholder="{{user.email}}" name="email">
+                  <input type="text" class="form-control" autocomplete="off" style="cursor: auto;" v-model="user.email" name="email">
                   <span class="material-input"></span></div>
               </div>
                 <csrf />
@@ -41,7 +41,7 @@
                       </span>
                       <div class="form-group label-floating is-empty">
                         <label class="control-label">Current Password</label>
-                        <input type="password" name="old_password" class="form-control" style="cursor: auto;" disabled>
+                        <input type="password" name="old_password" class="form-control" style="cursor: auto;">
                         <span class="material-input"></span></div>
                     </div>
                     <div class="input-group">
@@ -50,7 +50,7 @@
                       </span>
                       <div class="form-group label-floating is-empty">
                         <label class="control-label">New Password</label>
-                        <input type="password" name="new_password" class="form-control" style="cursor: auto;" disabled>
+                        <input type="password" name="new_password" class="form-control" style="cursor: auto;">
                         <span class="material-input"></span></div>
                     </div>
                     <div class="input-group">
@@ -59,7 +59,7 @@
                       </span>
                       <div class="form-group label-floating is-empty">
                         <label class="control-label">Re-Enter Password</label>
-                        <input type="password"  name="repeat_password" class="form-control" style="cursor: auto;" disabled>
+                        <input type="password"  name="repeat_password" class="form-control" style="cursor: auto;">
                         <span class="material-input"></span></div>
                     </div>
                     <csrf />
@@ -79,7 +79,7 @@
       return {
         user: Window.user
       }
-    }
+    },
     components:{
       csrf
     }

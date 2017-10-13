@@ -78,7 +78,7 @@ export default new Router({
 
         },{
           path: 'settings',
-          component: () => import('@/layouts/default'),
+          component: () => import('@/layouts/nav-only'),
           children: [
             {
               path: '',

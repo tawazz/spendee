@@ -41,6 +41,12 @@ export default {
     },
     budgets:function (year,month) {
       return getUrl('budgets',year,month,null);
+    },
+    budget:function (id = null) {
+      if (id) {
+        return `/api/budget/${id}`
+      }
+      return `/api/budget`
     }
 }
 function getUrl(page,year,month,day){

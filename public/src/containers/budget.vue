@@ -107,23 +107,26 @@
                   <pie-chart :id="`morris-pie-chart-tags-${budget.id}`" :options="budget_tags[`_${budget.id}`]"/>
               </div>
               <div v-if="!budget.expired" class="panel-footer">
-                  <a class="btn btn-info" href="#" :data-budget-id ="budget.id" data-show-modal="#editModal" data-toggle="modal" data-target="#editBudget" >Edit</a>
+                  <a class="btn btn-info" href="#" @click.prevent="edit(budget.id)" >Edit</a>
                   <a class="btn btn-danger" href="#" :data-budget-delete ="budget.id">Delete</a>
               </div>
           </div>
           <!-- /.panel -->
         </div>
     </div>
+    <add-budget :show="showAddModal" :save="saveBudget" :close="closeAddModal" :selected_budget="selected_budget"/>
   </div>
 </template>
 
 <script>
   import PieChart from "@/components/graphs/pie"
+  import addBudgetModal from "@/components/budgets/add"
   import { mapState } from 'vuex'
   import {axios,apis,utils,filters,randomColor} from '@/hooks'
   export default {
     components:{
-      'pie-chart': PieChart
+      'pie-chart': PieChart,
+      'add-budget': addBudgetModal
     },
     beforeRouteEnter (to, from, next) {
       let year = to.params.year;
@@ -152,7 +155,9 @@
     data: function () {
       return {
         budgets:[],
-        budget_tags:{}
+        budget_tags:{},
+        showAddModal:false,
+        selected_budget: null
       }
     },
     computed:{
@@ -172,7 +177,13 @@
     filters,
     methods:{
       addBudget(){
-
+          this.showAddModal = true;
+      },
+      closeAddModal(){
+        this.showAddModal = false;
+      },
+      saveBudget(){
+        this.closeAddModal();
       },
       chartOptions(budget){
         let vm = this;
@@ -199,6 +210,18 @@
         }else{
           vm.budget_tags[`_${budget.id}`]={data:[]};
         }
+      },
+      edit(id){
+        let vm = this;
+        vm.$store.dispatch('loading');
+        axios.get(apis.budget(id)).then(response => {
+          vm.selected_budget = response.data;
+          vm.showAddModal= true;
+          vm.$store.dispatch('done');
+        }).catch(error => {
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
+        });
       },
       updatePage(year,month){
         let vm = this;

@@ -18,38 +18,29 @@
             <span class="input-group-addon">
               <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-currency-usd"></i></button>
             </span>
-            <div class="form-group label-floating" :class="{'is-empty':(budget.cost == '')}">
+            <div class="form-group label-floating" :class="{'is-empty':(budget.amount == '')}">
               <label class="control-label">Amount</label>
-              <input type="text" class="form-control money" v-model="budget.cost" name="cost" @blur="updateCost">
+              <input type="text" class="form-control money" v-model="budget.amount" name="cost" @blur="updateCost">
             </div>
           </div>
         </div>
       </div>
       <div class="input-group">
-        <span class="input-group-addon">
-          <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-calendar"></i></button>
+        <span class="input-group-addon" style="padding-top:30px;">
+          <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-tag-multiple"></i></button>
         </span>
-        <div class="form-group label-floating" :class="{'is-empty':(budget.date == '')}">
-          <label class="control-label">Date</label>
-          <input type="text" class="form-control" name="date" ref="datepicker">
-        </div>
+        <label for="tags" class="control-label" >Tags</label>
+        <multiselect class="" v-model="selectedTags" :options="tags" :multiple="true" track-by="id" :searchable="true" :custom-label="searchTags" :hide-selected="true"  placeholder="Select Tag">
+          <template slot="tag" scope="props">
+            <ul class="tags">
+              <li><a href="#" class="tag" @click.prevent="props.remove(props.option)">{{ props.option.name }}</a></li>
+            </ul>
+          </template>
+          <template slot="option" scope="props">
+            {{ props.option.name}}
+          </template>
+        </multiselect>
       </div>
-        <div class="input-group">
-          <span class="input-group-addon" style="padding-top:30px;">
-            <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-tag-multiple"></i></button>
-          </span>
-          <label for="tags" class="control-label" >Tags</label>
-          <multiselect class="" v-model="selectedTags" :options="tags" :multiple="true" track-by="id" :searchable="true" :custom-label="searchTags" :hide-selected="true"  placeholder="Select Tag">
-            <template slot="tag" scope="props">
-              <ul class="tags">
-                <li><a href="#" class="tag" @click.prevent="props.remove(props.option)">{{ props.option.name }}</a></li>
-              </ul>
-            </template>
-            <template slot="option" scope="props">
-              {{ props.option.name}}
-            </template>
-          </multiselect>
-        </div>
       </form>
       <div slot="footer">
           <button type="button" :disabled="busy" class="btn btn-info" @click="addBudget">{{okText}}</button>
@@ -95,7 +86,7 @@ export default {
     return{
       budget:{
         name:"",
-        cost:"",
+        amount:"",
         date:"",
         tags:[]
       },
@@ -112,7 +103,6 @@ export default {
     selected_budget:function () {
       if (!_.isNil(this.selected_budget)) {
         this.budget = this.selected_budget;
-        this.datepicker.setDate(this.budget.date,true,'Y-m-d');
         this.mapTagsToSelected();
       }
 
@@ -126,7 +116,8 @@ export default {
       return this.budget.id;
     },
     ...mapState({
-        busy: state => state.busy > 0
+        busy: state => state.busy > 0,
+        current_period: state => `${state.nav.current.year}-${state.nav.current.month}-1`
     })
   },
   methods:{
@@ -158,19 +149,24 @@ export default {
     },
     mapTagsToSelected(){
       let vm =this;
-      if (vm.budget.budget_tags) {
-        $.each(vm.budget.budget_tags,(i,budget) => {
-          vm.tags.map( t => {
-            if (t.id == budget.tags.id) {
-              vm.selectedTags.push(t);
-            }
+      if (vm.budget.tags) {
+        if(vm.budget.tags.length == 36){
+          vm.selectedTags.push(vm.tags[0]);
+        }else{
+          $.each(vm.budget.tags,(budget) => {
+            vm.tags.map( t => {
+              if (t.id == budget) {
+                vm.selectedTags.push(t);
+              }
+            });
           });
-        });
+        }
       }
     },
     addBudget:function (e) {
       let vm =this;
-      vm.$store.dispatch('loading');
+      vm.$store.dispatch('loading')
+      vm.budget.date = vm.current_period;
       let data = {...vm.budget};
       if (vm.budget.id) {
         vm.$http.put(apis.budget(vm.budget.id),data).then((response)=>{
@@ -227,7 +223,7 @@ export default {
   beforeMount:function () {
     let vm =this;
     vm.$http.get(apis.tags).then((response) => {
-      vm.tags = response.data;
+      vm.tags = [{id:0,name:'All'},...response.data];
     })
   },
   mounted:function () {
@@ -249,7 +245,7 @@ export default {
   #addForm > div:nth-child(1) > div:nth-child(2) > div > span > button
   #addForm .btn-fab:disabled,#addForm .btn-fab[disabled][disabled],
   #addForm .btn-fab:disabled:hover,#addForm .btn-fab[disabled][disabled]:hover{
-    background-color:#04a00c;
+    background-color:#03a9f4;
     color: #fff;
     cursor: default;
   }

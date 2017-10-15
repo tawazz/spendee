@@ -1,5 +1,6 @@
 <?php
     namespace HTTP\Controllers\API;
+    use \HTTP\Helpers\Utils;
 
     /**
      *
@@ -13,7 +14,7 @@
 
         public function retrieve($req, $resp,$args)
         {
-
+          return $resp->withJson($this->Budget->get($args['id']));
         }
 
         public function get($req, $resp, $args)
@@ -40,15 +41,16 @@
         public function create($req, $resp,$args)
         {
           $app = $this->container;
+          $body = json_decode($req->getBody()->getContents());
           $data = [
-            "name"       => $_POST['name'],
-            "amount"     => str_replace( ',', '',$_POST['amount'] ),
-            "start_date" => $_POST['date'],
-            "id"    => $app->auth->id
+            "name"       => $body->name,
+            "amount"     => Utils::fixMoneyInput($body->cost),
+            "start_date" => $body->date,
+            "user_id"    => $app->auth->id
           ];
           $bud_id = $app->Budget->save($data);
 
-          if(in_array(0,$_POST['tags'])){
+          if(in_array(0,$body->tags)){
             $tags = $app->Tags->find('all');
             foreach ($tags as $tag) {
               $data = [

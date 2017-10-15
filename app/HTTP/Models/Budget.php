@@ -10,12 +10,27 @@ class Budget extends BaseTable
 {
   protected $table='budgets';
   protected $primary_key ='id';
+  protected $hasMany =[
+    ['class' => \HTTP\Models\BudgetTag::class, 'id' => 'bud_id']
+  ];
 
+  public function get($id,$field=[]){
+    $result = parent::get($id,$field=[]);
+    $tags = [];
+    if (sizeof($result->budget_tags) > 0) {
+      foreach ($result->budget_tags as $bud) {
+        array_push($tags,$bud->tag_id);
+      }
+    }
+    $result->tags = $tags;
+    unset($result->budget_tags);
+    return $result;
+  }
   public function getBudgetData($app,$year=2016,$month=8)
   {
       $startDate = $year."-".$month."-1";
       $endDate = $year."-".($month+1)."-1";
-      $sql = $this->qb->table($this->table)->where("start_date",">=",$startDate)->andWhere("start_date","<",$endDate)->andWhere("user_id","=",$app->auth->id)->get();
+      $sql = $this->qb->table($this->table)->where("date",">=",$startDate)->andWhere("date","<",$endDate)->andWhere("user_id","=",$app->auth->id)->get();
       $budgets = $this->db->query($sql)->result();
       foreach ($budgets as $budget) {
         $budgetTags = $app->BudgetTag->find('all',[
@@ -39,7 +54,7 @@ class Budget extends BaseTable
             }
           }
         }
-        $budgetDate = new Carbon($budget->start_date,'Australia/Perth'); //perth time zone
+        $budgetDate = new Carbon($budget->date,'Australia/Perth'); //perth time zone
         $budget->tags = $exptags;
         $budget->spent = $spent;
         $budget->spentPercentage = number_format( ($spent/$budget->amount)*100,2,'.',',');

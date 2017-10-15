@@ -45,7 +45,7 @@
           $data = [
             "name"       => $body->name,
             "amount"     => Utils::fixMoneyInput($body->cost),
-            "start_date" => $body->date,
+            "date" => $body->date,
             "user_id"    => $app->auth->id
           ];
           $bud_id = $app->Budget->save($data);
@@ -74,16 +74,17 @@
         }
         public function update($req, $resp,$args)
         {
-          $app = $this;
+          $app = $this->container;
+          $body = json_decode($req->getBody()->getContents());
           $bud_id= $args['id'];
           $app->Budget->read($bud_id)->set([
-            "name"       => $_POST['name'],
-            "amount"     => str_replace( ',', '',$_POST['amount'] ),
+            "name"       => $body->name,
+            "amount"     => Utils::fixMoneyInput($body->cost),
           ]);
 
           $app->BudgetTag->deleteTagsFromBudget($bud_id);
 
-          if(in_array(0,$_POST['tags'])){
+          if(in_array(0,$body->tags)){
             $tags = $app->Tags->find('all');
             foreach ($tags as $tag) {
               $data = [

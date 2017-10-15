@@ -20,7 +20,7 @@
             </span>
             <div class="form-group label-floating" :class="{'is-empty':(budget.amount == '')}">
               <label class="control-label">Amount</label>
-              <input type="text" class="form-control money" v-model="budget.amount" name="cost" @blur="updateCost">
+              <input type="text" class="form-control money" v-model="budget.amount" name="amount" @blur="updateCost">
             </div>
           </div>
         </div>
@@ -138,7 +138,7 @@ export default {
     },
     updateCost(e){
       let vm = this;
-      vm.budget.cost = e.target.value;
+      vm.budget.amount = e.target.value;
     },
     selectTag(value){
       let vm = this;
@@ -201,7 +201,7 @@ export default {
     resetBudget:function () {
       this.budget = {
         name:"",
-        cost:"",
+        amount:"",
         date:"",
         tags:[]
       };

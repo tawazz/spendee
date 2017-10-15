@@ -13,7 +13,7 @@ class BudgetTag extends BaseTable
 
   public function deleteTagsFromBudget($bud_id)
   {
-    $this->db->query("delete from bud_tags where bud_id = ?",[$bud_id]);
+    $this->db->query("delete from {$this->table} where bud_id = ?",[$bud_id]);
   }
 }
 

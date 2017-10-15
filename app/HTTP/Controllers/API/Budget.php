@@ -44,7 +44,7 @@
           $body = json_decode($req->getBody()->getContents());
           $data = [
             "name"       => $body->name,
-            "amount"     => Utils::fixMoneyInput($body->cost),
+            "amount"     => Utils::fixMoneyInput($body->amount),
             "date" => $body->date,
             "user_id"    => $app->auth->id
           ];
@@ -62,7 +62,7 @@
           }
           else
           {
-            foreach ($_POST['tags'] as $tag_id) {
+            foreach ($body->tags as $tag_id) {
               $data = [
                 "tag_id"     => $tag_id,
                 "bud_id"     => $bud_id
@@ -79,7 +79,7 @@
           $bud_id= $args['id'];
           $app->Budget->read($bud_id)->set([
             "name"       => $body->name,
-            "amount"     => Utils::fixMoneyInput($body->cost),
+            "amount"     => Utils::fixMoneyInput($body->amount),
           ]);
 
           $app->BudgetTag->deleteTagsFromBudget($bud_id);
@@ -96,7 +96,7 @@
           }
           else
           {
-            foreach ($_POST['tags'] as $tag_id) {
+            foreach ($body->tags as $tag_id) {
               $data = [
                 "tag_id"     => $tag_id,
                 "bud_id"     => $bud_id

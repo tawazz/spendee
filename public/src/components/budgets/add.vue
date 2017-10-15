@@ -153,7 +153,7 @@ export default {
         if(vm.budget.tags.length == 36){
           vm.selectedTags.push(vm.tags[0]);
         }else{
-          $.each(vm.budget.tags,(budget) => {
+          $.each(vm.budget.tags,(i,budget) => {
             vm.tags.map( t => {
               if (t.id == budget) {
                 vm.selectedTags.push(t);

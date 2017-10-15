@@ -108,7 +108,7 @@
               </div>
               <div v-if="!budget.expired" class="panel-footer">
                   <a class="btn btn-info" href="#" @click.prevent="edit(budget.id)" >Edit</a>
-                  <a class="btn btn-danger" href="#" :data-budget-delete ="budget.id">Delete</a>
+                  <a class="btn btn-danger" href="#" @click.prevent="deleteBudget(budget.id)">Delete</a>
               </div>
           </div>
           <!-- /.panel -->
@@ -184,6 +184,7 @@
       },
       saveBudget(){
         this.closeAddModal();
+        this.updatePage();
       },
       chartOptions(budget){
         let vm = this;
@@ -223,8 +224,25 @@
           vm.$store.dispatch('done');
         });
       },
-      updatePage(year,month){
+      deleteBudget(id){
         let vm = this;
+        vm.$store.dispatch('loading');
+        axios.delete(apis.budget(id)).then(response => {
+          vm.updatePage();
+          vm.$store.dispatch('done');
+        }).catch(error => {
+          utils.error_handler(vm,error);
+          vm.$store.dispatch('done');
+        });
+      },
+      updatePage(year = null,month = null){
+        let vm = this;
+
+        if (_.isNil(year) && _.isNil(month)) {
+          let params = vm.$route.params;
+          let year = params.year;
+          let month = params.month;
+        }
         vm.$store.dispatch('loading');
         axios.get(apis.budgets(year,month)).then(response => {
           vm.budgets = response.data;

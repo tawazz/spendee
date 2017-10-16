@@ -1569,6 +1569,10 @@ bootstrap-material-design@^0.5.10:
     bootstrap ">=3.0"
     jquery ">=1.9.1"
 
+"bootstrap-notify@https://github.com/mouse0270/bootstrap-notify.git":
+  version "3.1.7"
+  resolved "https://github.com/mouse0270/bootstrap-notify.git#6a83ec48aa26dbc08454a45d87b14d9d9271210d"
+
 bootstrap@>=3.0, bootstrap@^3.3, bootstrap@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
@@ -4871,10 +4875,6 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
-"notify@https://github.com/mouse0270/bootstrap-notify/#3.1.3":
-  version "3.1.3"
-  resolved "https://github.com/mouse0270/bootstrap-notify/#c6a3e3acafda0815cce3703103499b6262500cd7"
-
 now-and-later@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/now-and-later/-/now-and-later-0.0.6.tgz#18a14dc3fc495dc06cfbe028f00be16ddac4faea"
@@ -7050,9 +7050,9 @@ vue-style-loader@^3.0.0, vue-style-loader@^3.0.1:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.3.3:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.3.4.tgz#5a88ac2c5e4d5d6218e6aa80e7e221fb7e67894c"
+vue-template-compiler@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.2.tgz#6f198ebc677b8f804315cd33b91e849315ae7177"
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
@@ -7065,9 +7065,9 @@ vue@^2.3.3:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.2.tgz#a9855261f191c978cc0dc1150531b8d08149b58c"
 
-vue@^2.3.4:
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.3.4.tgz#5ec3b87a191da8090bbef56b7cfabd4158038171"
+vue@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.2.tgz#fd367a87bae7535e47f9dc5c9ec3b496e5feb5a4"
 
 vuex@^2.3.1:
   version "2.3.1"

@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import notify from 'notify'
+import notify from 'bootstrap-notify'
 const defaults = {
    icon:'mdi mdi-bell',
    type:'info',

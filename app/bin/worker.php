@@ -28,10 +28,11 @@ while (true) {
           sleep(5);
         }
     } catch (\Pheanstalk\Exception\ConnectionException $e) {
-      echo $e->__toString();
-      sleep(5);
+      $app['log']->error($e->getMessage(),$e->getTrace());
+      sleep(120);
     } catch (Exception $e) {
       echo $e->__toString();
+      $app['log']->error($e->getMessage(),$e->getTrace());
       $job->release(60);
       sleep(5);
     } catch (Throwable $e) {

@@ -2,6 +2,7 @@
 namespace HTTP\Helpers;
 use League\Csv\Reader;
 use League\Csv\Writer;
+use \Symfony\Component\Filesystem\Filesystem;
 date_default_timezone_set('Australia/Perth');
 
 const CLIENT_ID = "0JOOESNULVBUOHVDNPVU5OMQG1JF0FLSFTOLTLHE3NAED3YZ";
@@ -11,6 +12,18 @@ const CLIENT_SECRET= "JLQV5FM2KKDGYFJJA5FOT11YNY1T15MGJ2AXMW5YVLN15R5Y";
 */
 class Utils
 {
+  public static function cacheClear($container){
+    $cache = $container->cache;
+    $cache->clear();
+    $filesystem = new Filesystem();
+    $views_cache ='/app/app/views/cache';
+
+    if ($filesystem->exists($views_cache)) {
+        $filesystem->remove($views_cache);
+        $container->log->debug('View Cache Cleared');
+    }
+    $container->log->debug('Cache Cleared');
+  }
 
   public static function clearExpRouteCache($app,$date){
     // clear cache
@@ -509,6 +522,22 @@ class Utils
       $container->log->debug($e->getMessage(),$e->getTrace());
       throw new \Exception($e->getMessage(), 1);
     }
+  }
+
+  public static function nomalize($container, $data = [])
+  {
+      $data = [
+        "user_id"   => $container->auth->id,
+        "nomalize"  => [
+          'coles'   => 'coles',
+          'petrol'  => 'petrol',
+          'nandos'  => 'nandos',
+          'puma'    => 'petrol',
+          'parking' => 'parking'
+
+        ]
+      ];
+      $container->queue->push(\HTTP\Jobs\Handlers\NomalizeHandler::class,$data);
   }
 }
 

@@ -1,0 +1,314 @@
+@import "../node_modules/bootstrap-material-design/less/bootstrap-material-design.less";
+@import "../node_modules/bootstrap-material-design/less/ripples.less";
+// Typography elements
+@mdb-font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@mdb-text-color-light:  ~"rgba(@{rgb-white}, 0.84)";
+@mdb-text-color-light-hex: @white; // for contrast function in inverse
+@mdb-text-color-primary: ~"rgba(@{rgb-black}, 0.87)";
+@mdb-text-color-primary-hex: @black; // for contrast function in inverse
+@icon-color: rgba(0,0,0,0.5);
+
+
+@mdb-label-color: ~"rgba(@{rgb-black}, 0.26)";
+@mdb-label-color-toggle-focus: ~"rgba(@{rgb-black}, .54)";
+
+// Bootstrap brand color customization
+@brand-primary: @blue;
+@brand-success: #4caf50;
+@brand-danger: #eb4744;
+@brand-warning: @deep-orange;
+@brand-info: @light-blue;
+
+@border-radius-base: 2px;
+@border-radius-small: 1px;
+
+// Typography
+@font-family-sans-serif: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+@headings-font-weight: 300;
+
+@body-bg: #EEEEEE;
+
+// Bootstrap Material Design variables start with mdb-
+@mdb-brand-inverse: @indigo;
+
+
+/* ANIMATION */
+@mdb-animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1);
+@mdb-animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1);
+@mdb-animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1);
+@mdb-animation-curve-default: @mdb-animation-curve-fast-out-slow-in;
+
+
+//---
+// FIXME: Similar but not quite the same as Bootstrap variables
+// FIXME: these need to either a) be converted to @mdb- or b) converted to bs variables
+@contrast-factor: 40%;
+//---
+
+
+
+
+// --------------------
+// inputs
+@mdb-input-placeholder-color: #BDBDBD;
+@mdb-input-underline-color: #D2D2D2;
+@mdb-label-static-size-ratio: 75 / 100;
+@mdb-help-block-size-ratio: 75 / 100;
+
+@mdb-input-font-size-base: 16px;
+@mdb-input-font-size-large: ceil((@font-size-base * 1.25)); // ~20px
+@mdb-input-font-size-small: ceil((@font-size-base * 0.75)); // ~12px
+
+// FIXME: with #733 customization of bootstrap, consider how these could be based on the original bs customized variables
+//** Unit-less `line-height` for use in components like buttons.
+@mdb-input-line-height-base:        @line-height-base; //1.428571429; // 20/14
+//** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+@mdb-input-line-height-computed:    floor((@mdb-input-font-size-base * @mdb-input-line-height-base)); // ~20px
+@mdb-input-line-height-large:         1.3333333; // extra decimals for Win 8.1 Chrome
+@mdb-input-line-height-small:         1.5;
+
+//## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
+@mdb-input-padding-base-vertical:     8px - 1px; // was 6.
+@mdb-input-padding-base-horizontal:   0; // was 12.
+@mdb-label-as-placeholder-shim-base:  0; // manual adjustment of label top when positioned as placeholder
+@mdb-label-top-margin-base:           16px;
+
+@mdb-input-padding-large-vertical:    10px - 1px; // 10
+@mdb-input-padding-large-horizontal:  0;  // 16
+@mdb-label-as-placeholder-shim-large: -4px; // manual adjustment of label top when positioned as placeholder
+@mdb-label-top-margin-large:          16px;
+
+@mdb-input-padding-small-vertical:    4px - 1px; // 5
+@mdb-input-padding-small-horizontal:  0; // 10
+@mdb-label-as-placeholder-shim-small: 8px; // manual adjustment of label top when positioned as placeholder
+@mdb-label-top-margin-small:          12px;
+
+@mdb-input-padding-xs-vertical:       2px; // 1
+@mdb-input-padding-xs-horizontal:     0; // 5
+
+@mdb-input-border-radius-base:        0;
+@mdb-input-border-radius-large:       0;
+@mdb-input-border-radius-small:       0;
+
+
+//** Default `.form-control` height
+@mdb-input-height-base:              (@mdb-input-line-height-computed + (@mdb-input-padding-base-vertical * 2) + 2);
+//** Large `.form-control` height
+@mdb-input-height-large:             (ceil(@mdb-input-font-size-large * @mdb-input-line-height-large) + (@mdb-input-padding-large-vertical * 2) + 2);
+//** Small `.form-control` height
+@mdb-input-height-small:             (floor(@mdb-input-font-size-small * @mdb-input-line-height-small) + (@mdb-input-padding-small-vertical * 2) + 2);
+
+
+
+
+// Card
+@mdb-card-body-text: @mdb-text-color-primary;
+@mdb-card-body-background: #fff;
+@mdb-card-image-headline: #fff;
+
+@text-disabled: #a8a8a8;
+@background-disabled: #eaeaea;
+
+// Checkboxes
+@mdb-checkbox-size: 20px;
+@mdb-checkbox-animation-ripple: 500ms;
+@mdb-checkbox-animation-check: 0.3s;
+@mdb-checkbox-checked-color: @brand-primary;
+
+@mdb-checkbox-border-size: 2px;
+@mdb-checkbox-label-color: @mdb-label-color;
+@mdb-checkbox-border-color: @mdb-label-color-toggle-focus;
+
+// Popovers and Popups
+@mdb-popover-background: rgba(101, 101, 101, 0.9);
+@mdb-popover-color: #ececec;
+
+// Dropdown Menu
+@mdb-dropdown-font-size: 16px;
+
+// Toggle
+@mdb-toggle-label-color: @mdb-label-color;
+
+// Radio:
+@mdb-radio-label-color: @mdb-label-color;
+@mdb-radio-color-off: @mdb-label-color-toggle-focus;
+@mdb-radio-color-on: @brand-primary;
+
+// Buttons:
+@mdb-btn-font-size-base: 14px;
+@mdb-btn-font-size-lg: 16px;
+@mdb-btn-font-size-sm: 12px;
+@mdb-btn-font-size-xs: 10px;
+
+
+@mdb-btn-background-color: @body-bg; //transparent;
+@mdb-btn-background-color-text: @mdb-text-color-primary;
+
+
+@mdl-btn-border-radus: 2px;
+//@mdb-btn-primary-color: ~"rgba(@{rgb-grey-500}, 0.20)";
+
+@mdb-btn-fab-size: 56px;
+@mdb-btn-fab-size-mini: 40px;
+@mdb-btn-fab-font-size: 24px;
+
+@mdb-btn-icon-size: 32px;
+@mdb-btn-icon-size-mini: 24px;
+
+/* SHADOWS */
+@mdb-shadow-key-umbra-opacity: 0.2;
+@mdb-shadow-key-penumbra-opacity: 0.14;
+@mdb-shadow-ambient-shadow-opacity: 0.12;
+
+/* Tags */
+
+.tags {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.tags li {
+  float: right;
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-right: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: @brand-danger;
+  color: white;
+  cursor: pointer;
+}
+
+.tags a:hover{
+  text-decoration: none;
+}
+
+.tag:hover::after {
+  border-right-color: @brand-danger;
+}
+
+/* modal */
+
+#spinnerLoader .modal-dialog{
+  top: 30%;
+}
+
+.navbar, .navbar.navbar-default{
+  background: @brand-danger;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(244, 67, 54, 0.4);
+  color: #fff;
+}
+.navbar-default .navbar-brand{
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a {
+  color: #FFF;
+}
+.navbar .navbar-nav > li > a{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #CCC;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+color: #fff;
+background: @brand-danger;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    background-color: transparent;
+    color: #CCC;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    text-decoration: none;
+    color: #ffffff;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    color: #CCC;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu > li > a{
+  color:@brand-danger;
+}
+
+.navbar-nav > li > a:hover{
+  border: 0;
+}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
+  border:0;
+}
+@media (max-width: 767px){
+  .navbar .navbar-nav .dropdown .dropdown-toggle:after {
+      font: normal normal normal 14px/1 FontAwesome;
+      content: '\f0d7';
+      font-size: 1.5em;
+      float: right;
+  }
+  .navbar .navbar-nav .dropdown.open .dropdown-menu > li > a,.navbar .navbar-nav .dropdown.open .dropdown-menu > li > a:hover{
+    color: #fff;
+  }
+  .navbar .navbar-nav .dropdown.open .dropdown-menu .divider {
+    border-bottom: 1px solid #fff;
+    opacity: 1;
+}
+  .navbar .navbar-nav .dropdown.open .dropdown-toggle:after {
+    content: '\f0d8';
+  }
+}
+
+.dropdown-menu{
+  color: @brand-danger;
+}
+.mdi {
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }

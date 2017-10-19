@@ -2,7 +2,7 @@
   $GLOBALS['config'] = [
 
       'debug'        => false,
-      'mysql'        => [
+      'db'        => [
           'driver'   => 'mysql',
           'host'     => '127.0.0.1',
           'username' => 'root',
@@ -16,6 +16,33 @@
           "address"  => "Perth<br> Australia",
           "phone"    => "+61 401 234 567",
           "email"    => "admin@tawazz.net",
+      ],
+      'views'        => [
+        'cache'      => 'app/views/cache',
+        'dir'        => 'app/views',
+        'vue'        => 'templates/vue.php'
+      ],
+      'jobs'         => [
+        'driver'     => 'beanstalkd',
+        'host'       => '127.0.0.1',
+        'queue'      => 'default',
+      ],
+      'email'        => [
+          'host'     => 'smtp.zoho.com',
+          'port'     => '587',
+          'user'     => 'tawazz@tawazz.net',
+          'password' => 'password',
+          'secure'   => 'tls',
+          'auth'     => true
+      ],
+      'pushbullet'   => [
+        'token'=> 'token'
+      ],
+      'google'       => [
+          'key'      => 'key',
+          'secret'   => 'secret',
+          'callback' => 'http://spendee.dev/login/google'
       ]
+
   ];
  ?>

@@ -10,9 +10,9 @@
             <span class="icon-bar"></span>
           </button>
           {%if not auth %}
-          <a class="navbar-brand brand-font" href="{{urlFor("home")}}"><img src="{{ baseUrl() }}/images/navicon.png" alt="logo" style=" max-width:40px;margin-top: -7px;">pendee</a>
+          <a class="navbar-brand brand-font" href="{{urlFor("home")}}"><img src="/images/navicon.png" alt="logo" style=" max-width:40px;margin-top: -7px;">pendee</a>
           {%else%}
-          <a class="navbar-brand brand-font" href="{{urlFor("expenses")}}"><img src="{{ baseUrl() }}/images/navicon.png" alt="logo" style="max-width:40px; margin-top: -7px;">pendee</a>
+          <a class="navbar-brand brand-font" href="{{urlFor("expenses")}}"><img src="/images/navicon.png" alt="logo" style="max-width:40px; margin-top: -7px;">pendee</a>
           {%endif%}
         </div>
 
@@ -33,7 +33,7 @@
             {%else%}
             <li><a href="{{urlFor('expenses')}}">Expenses</a></li>
             <li><a href="{{urlFor('incomes')}}">Incomes</a></li>
-            <li><a href="{{urlFor('budget.home')}}">Budgets</a></li>
+            <li><a href="{{urlFor('budgets')}}">Budgets</a></li>
             <li><a href="{{urlFor('overview')}}">Overview</a></li>
             <li class="dropdown">
             <a href="{{urlFor('account')}}" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">{{auth.username}}</span></a>

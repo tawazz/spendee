@@ -5,7 +5,7 @@
   <div class="container">
       <div class="header-content">
           <div class="header-content-inner">
-              <img src="{{baseUrl()}}/images/icon.png" height="100" alt="logo" />
+              <img src="/images/icon.png" height="100" alt="logo" />
               <h1 class="brand-font">Spendee</h1>
               <p>Track your spending and other aspects of your finances effortlessly.</p>
               <a href="{{urlFor('login')}}" class="btn btn-info btn-raised btn-xl">Login</a>

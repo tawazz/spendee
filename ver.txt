@@ -1,3 +1,10 @@
+Spendee v2.7.3 22/05/2017
+change log
+- prevent update ,delete of past budgets.
+- prevent adding past budgets.
+- fix mysql groupby bug
+- implement Docker support
+
 Spendee v2.7.1 29/08/2016
 change log
 - ability to create, update ,delete budgets.

@@ -145,7 +145,7 @@
         <h4 class="modal-title text-capitalize">Add Budget </h4>
       </div>
       <div class="modal-body">
-          <form name="addForm" id="addForm" method="post" action="{{ urlFor('budget.add') }}">
+          <form name="addForm" id="addForm" method="post" action="{{ urlFor('budget.create') }}">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Budget Name">
             </div>
@@ -182,7 +182,7 @@
         <h4 class="modal-title text-capitalize">Edit Budget </h4>
       </div>
       <div class="modal-body">
-          <form name="editForm" id="editForm" method="post" action="{{ urlFor('budget.edit') }}">
+          <form name="editForm" id="editForm" method="post" action="{{ urlFor('budget.update',{'id':'__URL__'}) }}">
             <div class="form-group">
                 <input type="text" class="form-control" name="name" placeholder="Budget Name">
             </div>
@@ -267,7 +267,7 @@ $(document).ready(function(){
     event.preventDefault();
     var budgetId = $(this).attr('data-budget-id');
     var modal = $(this).attr('data-show-modal');
-    var url = "{{ urlFor('budget.data',{'id':'__URL__'}) }}";
+    var url = "{{ urlFor('budget.retrieve',{'id':'__URL__'}) }}";
     url = url.replace('__URL__',budgetId);
     $.ajax({
       method: "GET",

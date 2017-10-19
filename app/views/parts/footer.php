@@ -30,12 +30,12 @@
                             <h3>Site Links</h3>
                             <ul style="list-style-type: none;">
                               {% if auth %}
-                                <li><a href="{{ baseUrl() }}/">Home</a></li>
-                                <li><a href="{{ baseUrl() }}/expenses">Expenses</a></li>
-                                <li><a href="{{ baseUrl() }}/incomes">Incomes</a></li>
-                                <li><a href="{{urlFor('budget.home')}}">Budgets</a></li>
-                                <li><a href="{{ baseUrl() }}/overview">Overview</a></li>
-                                <li><a href="{{ baseUrl() }}/account">Account</a></li>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/expenses">Expenses</a></li>
+                                <li><a href="/incomes">Incomes</a></li>
+                                <li><a href="{{urlFor('budgets')}}">Budgets</a></li>
+                                <li><a href="/overview">Overview</a></li>
+                                <li><a href="/account">Account</a></li>
                               {% else %}
                                 <li><a href="{{ urlFor('home')}}">Home</a></li>
                                 <li><a href="{{ urlFor('login')}}">Login</a></li>

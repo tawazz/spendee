@@ -1,21 +1,38 @@
 {
-    "require": {
-        "slim/slim": "2.*",
-        "slim/slim-skeleton": "2.1",
-        "slim/views": "0.1.*",
-        "symfony/var-dumper": "^3.2",
-        "nesbot/carbon": "^1.20",
-        "illuminate/database": "^5.3",
-        "illuminate/events": "^5.3",
-        "robmorgan/phinx": "^0.6.4",
-        "fzaninotto/faker": "^1.6"
-    },
-    "autoload": {
-        "classmap": [
-            "app/Models"
-        ],
-        "psr-4": {
-            "HTTP\\": "app/HTTP"
-        }
+  "require": {
+    "slim/slim": "3.*",
+    "slim/slim-skeleton": "3.*",
+    "slim/twig-view": "2.*",
+    "slim/csrf": "0.8.*",
+    "symfony/var-dumper": "^3.2",
+    "nesbot/carbon": "^1.20",
+    "illuminate/database": "^5.3",
+    "illuminate/events": "^5.3",
+    "robmorgan/phinx": "^0.6.4",
+    "fzaninotto/faker": "^1.6",
+    "dflydev/fig-cookies": "^1.0",
+    "slim/flash": "^0.2.0",
+    "doctrine/dbal": "^2.5",
+    "phpmailer/phpmailer": "^5.2",
+    "illuminate/queue": "^5.4",
+    "pda/pheanstalk": "^3.1",
+    "illuminate/encryption": "^5.4",
+    "lavary/crunz": "^1.4",
+    "symfony/cache": "^3.3",
+    "ivkos/pushbullet": "^3.3",
+    "tazzy/helpers": "dev-master",
+    "php-middleware/php-debug-bar": "^1.4",
+    "psy/psysh": "@stable",
+    "league/csv": "^9.0",
+    "lusitanian/oauth": "^0.8.10"
+  },
+  "autoload": {
+    "psr-4": {
+      "HTTP\\": "app/HTTP"
     }
+  },
+  "repositories": [{
+    "type": "vcs",
+    "url": "https://github.com/tawazz/Tazzy-Helpers"
+  }]
 }

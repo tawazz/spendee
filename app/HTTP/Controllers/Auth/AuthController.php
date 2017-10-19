@@ -69,20 +69,21 @@
       $user = $app->User;
       if ($user->validate($_POST)) {
         $data = [
-          "email" => $app->request->post('email'),
-          "username"=> $app->request->post('username'),
-          "password"=> $app->hash->make($app->request->post('password'),$app->request->post('username')),
+          "email" => $req->getParam('email'),
+          "username"=> $req->getParam('username'),
+          "password"=> $app->hash->make($req->getParam('password'),$req->getParam('username')),
           'firstname'=>$app->request->post('firstname'),
-          'lastname'=>$app->request->post('lastname'),
-          'email'=>strtolower($app->request->post('email'))
+          'lastname'=>$req->getParam('lastname'),
+          'email'=>strtolower($req->getParam('email'))
         ];
 
-        $id =$user->save($data);
-          $app->flash("global","you registered succesfully");
-          $app->response->redirect($app->urlFor('login'));
+        $user->create($data);
+        $user->save();
+        $app->flash("global","you registered succesfully");
+        $app->response->redirect($app->urlFor('login'));
 
       }else{
-        $app->render('auth/register.php',['errors'=>$user->errors(),'values'=>$_POST]);
+        $this->view->render($resp,'auth/register.php',['errors'=>$user->errors(),'values'=>$_POST]);
       }
         $this->view->render($resp,'auth/register.php');
     }

@@ -66,25 +66,25 @@
 
     public function register($req, $resp,$args)
     {
-      $user = $app->User;
+      $user = $this->User;
       if ($user->validate($_POST)) {
         $data = [
-          "email" => $app->request->post('email'),
-          "username"=> $app->request->post('username'),
-          "password"=> $app->hash->make($app->request->post('password'),$app->request->post('username')),
-          'firstname'=>$app->request->post('firstname'),
-          'lastname'=>$app->request->post('lastname'),
-          'email'=>strtolower($app->request->post('email'))
+          "email" => $req->getParam('email'),
+          "username"=> $req->getParam('username'),
+          "password"=> $this->hash->make($req->getParam('password'),$req->getParam('username')),
+          'firstname'=>$req->getParam('firstname'),
+          'lastname'=>$req->getParam('lastname'),
+          'email'=>strtolower($req->getParam('email'))
         ];
 
-        $id =$user->save($data);
-          $app->flash("global","you registered succesfully");
-          $app->response->redirect($app->urlFor('login'));
+        $user->create($data);
+        $this->flash->addMessage("global","you registered succesfully. Log in below");
+        return $this->redirect($resp,$this->urlFor('login'));
 
       }else{
-        $app->render('auth/register.php',['errors'=>$user->errors(),'values'=>$_POST]);
+        return $this->view->render($resp,'auth/register.php',['errors'=>$user->errors(),'values'=>$_POST]);
       }
-        $this->view->render($resp,'auth/register.php');
+      return $this->view->render($resp,'auth/register.php');
     }
 
     public function logout($req,$resp,$args)

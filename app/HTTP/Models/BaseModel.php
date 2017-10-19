@@ -51,6 +51,10 @@ use \Tazzy\Utils\Validate;
       }
       return false;
     }
+
+    public function errors(){
+      return $this->errors;
+    }
   }
 
  ?>

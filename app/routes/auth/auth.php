@@ -6,12 +6,14 @@
   $auth = AuthController::class;
 
   $app->group('',function() use($auth) {
-      $this->get('/login',$auth.':loginView')->setName('login');
+      $this->get('/login',\HTTP\Controllers\VueController::class)->setName('login');
       $this->post('/login',$auth.':login')->setName('post.login');
       $this->get('/register',$auth.':registerView')->setName('register');
       $this->post('/register',$auth.':register')->setName('post.register');
       $this->get('/logout',$auth.':logout')->setName('logout');
       $this->get('/login/google',GoogleAuthController::class);
+      $this->get('/forgot-password',$auth.':forgotView');
+      $this->get('/reset-password',$auth.':resetView');
   })->add(new Guest($container))->add($container->csrf);
 
 $app->post('/update/user', function() use($app){

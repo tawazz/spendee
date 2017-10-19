@@ -63,7 +63,14 @@
     {
         $this->view->render($resp,'auth/register.php');
     }
-
+    public function resetView($req, $resp,$args)
+    {
+        $this->view->render($resp,'auth/reset.php');
+    }
+    public function forgotView($req, $resp,$args)
+    {
+        $this->view->render($resp,'auth/forgot.php');
+    }
     public function register($req, $resp,$args)
     {
       $user = $this->User;

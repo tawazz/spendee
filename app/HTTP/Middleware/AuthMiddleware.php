@@ -8,7 +8,7 @@ use GuzzleHttp\Exception\RequestException;
 class AuthMiddleware extends \HTTP\Middleware\BaseMiddleware {
   protected $is_api = false;
   public function __invoke($req,$resp,$next){
-    $this->is_api = ($req->isXhr()) ? true : (strpos($req->getUri()->getPath(), 'api') !== false);
+    $this->is_api = strpos($req->getUri()->getPath(), 'api') !== false;
     $resp = $this->run($req,$resp);
     if($resp->getStatusCode() > 400){
       return $resp;

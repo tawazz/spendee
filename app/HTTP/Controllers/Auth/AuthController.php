@@ -59,6 +59,24 @@
       }
     }
 
+    public function activate($req, $resp, $args)
+    {
+      $email = $req->getParam('email');
+      $active_hash = $req->getParam('active_hash');
+
+      $user = $this->User->where('email',$email)
+                   ->where('active',false)
+                   ->first();
+      if (!$user || !$user->active_hash == $active_hash) {
+        $this->flash->addMessage("global","There was a problem activating your account");
+        return $this->redirect($resp,$this->urlFor('login'));
+      } else {
+        $user->activateAccount();
+        $this->flash->addMessage("global","Account Activated. login below");
+        return $this->redirect($resp,$this->urlFor('login'));
+      }
+    }
+
     public function registerView($req, $resp,$args)
     {
         $this->view->render($resp,'auth/register.php');
@@ -75,16 +93,23 @@
     {
       $user = $this->User;
       if ($user->validate($_POST)) {
+        $active_hash = $this->hash->unique();
         $data = [
           "email" => $req->getParam('email'),
           "username"=> $req->getParam('username'),
           "password"=> $this->hash->make($req->getParam('password'),$req->getParam('username')),
           'firstname'=>$req->getParam('firstname'),
           'lastname'=>$req->getParam('lastname'),
-          'email'=>strtolower($req->getParam('email'))
+          'email'=>strtolower($req->getParam('email')),
+          'active_hash' => $active_hash
         ];
 
         $user->create($data);
+        $this->queue->push(HTTP\Jobs\Handlers\RegestrationEmailHandler::class,[
+          'to' => $data['email'],
+          'username' => $data['username'],
+          'active_hash' => $data['active_hash']
+        ]);
         $this->flash->addMessage("global","you registered succesfully. Log in below");
         return $this->redirect($resp,$this->urlFor('login'));
 

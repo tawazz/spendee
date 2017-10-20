@@ -70,6 +70,14 @@
     {
       $this->find('max','user_id');
     }
+
+    public function activateAccount()
+    {
+      $this->update([
+        'active' => true,
+        'active_hash'=> null
+      ]);
+    }
   }
 
  ?>

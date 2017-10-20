@@ -6,7 +6,7 @@
   $auth = AuthController::class;
 
   $app->group('',function() use($auth) {
-      $this->get('/login',\HTTP\Controllers\VueController::class)->setName('login');
+      $this->get('/login',$auth)->setName('login');
       $this->post('/login',$auth.':login')->setName('post.login');
       $this->get('/register',$auth.':registerView')->setName('register');
       $this->post('/register',$auth.':register')->setName('post.register');
@@ -14,6 +14,7 @@
       $this->get('/login/google',GoogleAuthController::class);
       $this->get('/forgot-password',$auth.':forgotView');
       $this->get('/reset-password',$auth.':resetView');
+      $this->get('/activate',$auth.':activate');
   })->add(new Guest($container))->add($container->csrf);
 
 $app->post('/update/user', function() use($app){

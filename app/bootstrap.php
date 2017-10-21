@@ -19,7 +19,7 @@
   //Middleware
   $app->add(new Dump($container));
   $app->add(new Error($container));
-  #$app->add($container->csrf);
+  $app->add($container->csrf);
   if ($container->Config->get('debug')) {
     #$app->add($container->debugbar_middleware);
   }

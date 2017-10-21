@@ -5,7 +5,7 @@
   {
     protected $table = 'users';
     protected $guarded = [];
-    protected $validate = [
+    protected $validation_rules = [
       'firstname'=> array(
           'min'=> 2,
           'max'=>30

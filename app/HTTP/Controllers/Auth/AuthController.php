@@ -35,6 +35,10 @@
         $exists = $user->exist($_POST);
         $remember = $req->getParam('remember');
         if($exists){
+          if (!$exists->active) {
+            $this->flash->addMessage("global","Check your email to activate your account");
+            return $this->redirect($resp,$this->urlFor('login'));
+          }
           if($exists && $this->container->hash->make($req->getParam('password'),$req->getParam('username')) == $exists->password ){
             $this->session->put('id',$exists->id);
             if ($remember == 'on') {
@@ -108,7 +112,8 @@
         $this->queue->push(\HTTP\Jobs\Handlers\RegestrationEmailHandler::class,[
           'to' => $data['email'],
           'username' => $data['username'],
-          'active_hash' => $data['active_hash']
+          'active_hash' => $data['active_hash'],
+          'heading' => 'Welcome to Spendee'
         ]);
         $this->flash->addMessage("global","you registered succesfully. Check your email to activate your account.");
         return $this->redirect($resp,$this->urlFor('login'));
@@ -130,6 +135,36 @@
       $app->session->delete('id');
       $app->auth = false;
       return $this->redirect($resp,$this->urlFor('login'));
+    }
+
+    public function resetPassword($req,$resp,$args)
+    {
+      if ($this->hash->make($req->getParam('old_password'),$this->auth->username) == $this->auth->password) {
+        $new_pass= $req->getParam('new_password');
+        $rep_pass= $req->getParam('repeat_password');
+        $validate = [
+          "new_password" => $this->User->validation_rules['password'],
+          "repeat_password" =>$this->User->validation_rules['password_again']
+        ];
+        if($this->User->validate($_POST,$validate)){
+          $this->User->find($this->auth->id)->update([
+            'password' => $this->hash->make($new_pass,$this->auth->username)
+          ]);
+          $this->queue->push(\HTTP\Jobs\Handlers\PasswordChangedEmailHandler::class,[
+            'to' => $this->auth->email,
+            'username' => $this->auth->username,
+            'heading' => "Password Changed"
+          ]);
+          $this->flash->addMessage("global","password changed");
+          return $this->redirect($resp,'/settings');
+        } else {
+          $this->flash->addMessage("global","passwords dont match");
+          return $this->redirect($resp,'/settings');
+        }
+      }else{
+        $this->flash->addMessage("global","old passwords dont match");
+        return $this->redirect($resp,'/settings');
+      }
     }
 
   }

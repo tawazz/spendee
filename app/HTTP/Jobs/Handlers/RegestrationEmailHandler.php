@@ -3,17 +3,17 @@
   use HTTP\Jobs\Handlers\BaseHandler;
 
   /**
-   * EmailHandler
+   * RegestrationEmailHandler
    */
-  class EmailHandler extends BaseHandler
+  class RegestrationEmailHandler extends BaseHandler
   {
     public function fire($job, $data)
     {
       $mailer = $this->container['mailer'];
-      $sent = $mailer->send('emails/regester.php',$data,function($message) use($data){
+      $sent = $mailer->send('emails/regester.twig',$data,function($message) use($data){
         echo "Sending email...\n";
         $message->to($data['to']);
-        $message->subject($data['subject']);
+        $message->subject("Activate Spendee Account");
       });
       if(!$sent){
         throw new \Exception($mailer->errors, 1);

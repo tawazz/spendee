@@ -105,12 +105,12 @@
         ];
 
         $user->create($data);
-        $this->queue->push(HTTP\Jobs\Handlers\RegestrationEmailHandler::class,[
+        $this->queue->push(\HTTP\Jobs\Handlers\RegestrationEmailHandler::class,[
           'to' => $data['email'],
           'username' => $data['username'],
           'active_hash' => $data['active_hash']
         ]);
-        $this->flash->addMessage("global","you registered succesfully. Log in below");
+        $this->flash->addMessage("global","you registered succesfully. Check your email to activate your account.");
         return $this->redirect($resp,$this->urlFor('login'));
 
       }else{

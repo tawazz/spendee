@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="card-content">
-        <form action="{{urlFor('post.register')}}" method="post" name="reg">
+        <form action="{{urlFor('post.forgot-password')}}" method="post" name="reg">
            <div class="form-group{%if errors.email%} has-error{%endif%}">
               <input type="email" name="email" class="form-control" placeholder="Email*" value="{{values.email}}" >{{errors.email}}
            </div>

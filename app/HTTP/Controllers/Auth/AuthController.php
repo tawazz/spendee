@@ -167,6 +167,26 @@
       }
     }
 
+    public function forgotPassword($req,$resp,$args)
+    {
+      $email = $req->getParam('email');
+      $user = $this->User->where('email',$email)->first();
+      if (isset($user)) {
+        $recover_hash = $this->hash->unique();
+        $user->recover_hash = $recover_hash;
+        $user->save();
+        $this->queue->push(\HTTP\Jobs\Handlers\ResetPasswordEmailHandler::class,[
+          'to' => $user->email,
+          'username' => $user->username,
+          'recover_hash' => $recover_hash,
+          'heading' => 'Reset Password'
+        ]);
+
+      }
+      $this->flash->addMessage("global","check your email for password reset instructions");
+      return $this->redirect($resp,$this->urlFor('login'));
+    }
+
   }
 
  ?>

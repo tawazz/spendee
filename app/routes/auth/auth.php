@@ -16,6 +16,7 @@
       $this->get('/forgot-password',$auth.':forgotView');
       $this->get('/reset-password',$auth.':resetView');
       $this->get('/activate',$auth.':activate');
+      $this->post('/forgot-password',$auth.':forgotPassword')->setName('post.forgot-password');
   })->add(new Guest($container))->add($container->csrf);
 
   $app->group('',function() use($auth) {

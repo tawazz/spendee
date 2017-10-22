@@ -11,7 +11,7 @@
     private $keys;
     public function __construct($guard)
     {
-      $this->guard = $guard;;
+      $this->guard = $guard;
     }
 
     public function getFunctions()

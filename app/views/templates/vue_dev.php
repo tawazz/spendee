@@ -17,6 +17,7 @@
   </head>
   <body>
     <div id="app"></div>
+    {% include "parts/flash.php" %}
     {% block content %}{% endblock %}
     {% block js %}{% endblock %}
     <script type="text/javascript">

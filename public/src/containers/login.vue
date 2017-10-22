@@ -40,6 +40,9 @@
                      <span class="checkbox-material"><span class="check"></span></span> Remember Me
                    </label>
                  </div>
+                 <div style="padding:17px;">
+                   <a href="/forgot-password">forgot password</a>
+                 </div>
                 <csrf />
                 </div>
                 <div class="footer text-center">

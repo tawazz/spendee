@@ -8,14 +8,11 @@
         <div class="text-center img-responsive"><img src="/images/icon.png" alt="logo" style="width:auto; height:70px;"/></div>
         <h3 class="brand-font text-center">Spendee</h3>
         <div class="page-header text-center">
-          <h2>Register Your Details </h2>
+          <h2>Reset Password</h2>
         </div>
       </div>
       <div class="card-content">
         <form action="{{urlFor('post.register')}}" method="post" name="reg">
-          <div class="form-group{%if errors.username%} has-error{%endif%}">
-              <input type="text" name="username" placeholder="Username*" class="form-control" value="{{values.username}}">{{errors.username}}
-           </div>
           <div class="form-group{%if errors.password%} has-error{%endif%}">
               <input type="password" name="password" placeholder="Password*" class="form-control" >{{errors.password}}
            </div>

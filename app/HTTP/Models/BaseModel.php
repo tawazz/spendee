@@ -11,7 +11,8 @@ use \Tazzy\Utils\Validate;
   {
     protected $guarded = array();
     protected $primary_key ='id';
-    protected $validate;
+    protected $validation_rules;
+    protected $is_valid = false;
     public $errors = null;
 
     public static function getPossbileEnumValues($name){
@@ -50,6 +51,10 @@ use \Tazzy\Utils\Validate;
         }
       }
       return false;
+    }
+
+    public function errors(){
+      return $this->errors;
     }
   }
 

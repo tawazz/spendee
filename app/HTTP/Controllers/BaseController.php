@@ -28,6 +28,11 @@
         }
     }
 
+    public function baseUrl($req)
+    {
+      return $req->getUri()->getBaseUrl();
+    }
+
     public function redirect($resp,$url,$status=302)
     {
       return $resp->withStatus($status)->withHeader('Location', $url);

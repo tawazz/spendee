@@ -31,12 +31,12 @@
         </span>
         <label for="tags" class="control-label" >Tags</label>
         <multiselect class="" v-model="selectedTags" :options="tags" :multiple="true" track-by="id" :searchable="true" :custom-label="searchTags" :hide-selected="true"  placeholder="Select Tag">
-          <template slot="tag" scope="props">
+          <template slot="tag" slot-scope="props">
             <ul class="tags">
               <li><a href="#" class="tag" @click.prevent="props.remove(props.option)">{{ props.option.name }}</a></li>
             </ul>
           </template>
-          <template slot="option" scope="props">
+          <template slot="option" slot-scope="props">
             {{ props.option.name}}
           </template>
         </multiselect>

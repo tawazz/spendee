@@ -5,7 +5,7 @@
   {
     protected $table = 'users';
     protected $guarded = [];
-    protected $validate = [
+    public $validation_rules = [
       'firstname'=> array(
           'min'=> 2,
           'max'=>30
@@ -69,6 +69,14 @@
     public function max()
     {
       $this->find('max','user_id');
+    }
+
+    public function activateAccount()
+    {
+      $this->update([
+        'active' => true,
+        'active_hash'=> null
+      ]);
     }
   }
 

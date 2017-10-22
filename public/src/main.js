@@ -10,6 +10,26 @@ import $ from 'jquery'
 import material from 'material'
 require('./hooks-css')
 
+axios.interceptors.request.use(function (config) {
+  if (config.method != 'get') {
+    config.data = {
+      ...config.data,
+      "csrf_name" : Window.csrf.name,
+      "csrf_value": Window.csrf.value
+    };
+  }
+    return config;
+  }, function (error) {
+    if (error.hasOwnProperty("response")) {
+      if (error.response.status == 401) {
+        document.location.assign('/login');
+      }
+    } else {
+      console.error(error);
+    }
+    return Promise.reject(error);
+  });
+
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 $.material.init();

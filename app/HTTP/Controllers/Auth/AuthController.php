@@ -175,16 +175,62 @@
         $recover_hash = $this->hash->unique();
         $user->recover_hash = $recover_hash;
         $user->save();
+        $recover_link = "{$this->baseUrl($req)}/recover-password?email={$user->email}&recover_hash={$recover_hash}";
         $this->queue->push(\HTTP\Jobs\Handlers\ResetPasswordEmailHandler::class,[
           'to' => $user->email,
           'username' => $user->username,
-          'recover_hash' => $recover_hash,
+          'recover_link' => $recover_link,
           'heading' => 'Reset Password'
         ]);
 
       }
       $this->flash->addMessage("global","check your email for password reset instructions");
       return $this->redirect($resp,$this->urlFor('login'));
+    }
+
+    public function recoverPassword($req,$resp,$args)
+    {
+      $email = $req->getParam('email');
+      $recover_hash = $req->getParam('recover_hash');
+
+      $user = $this->User->where('email', $email)->where('recover_hash',$recover_hash)->first();
+      if (isset($user)) {
+        return $this->view->render($resp,'auth/change_password.php',['user' => $user]);
+      } else {
+        $this->flash->addMessage("global","There was a problem reseting your password");
+        return $this->redirect($resp,$this->urlFor('login'));
+      }
+    }
+
+    public function changePassword($req,$resp,$args)
+    {
+      $email = $req->getParam('email');
+      $recover_hash = $req->getParam('recover_hash');
+      $user = $this->User->where('email', $email)->where('recover_hash',$recover_hash)->first();
+      if (isset($user)) {
+        $new_pass= $req->getParam('password');
+        $rep_pass= $req->getParam('password_again');
+        $rules= [
+          "password" => $this->User->validation_rules['password'],
+          "password_again" =>$this->User->validation_rules['password_again']
+        ];
+
+        if($user->validate($_POST,$rules)){
+          $user->password = $this->hash->make($new_pass,$user->username);
+          $user->recover_hash = null;
+          $user->save();
+          $this->flash->addMessage("global","Password changed succesfully.");
+          return $this->redirect($resp,$this->urlFor('login'));
+        } else {
+          return $this->view->render($resp,'auth/change_password.php',['user' => $user,'errors'=>$user->errors(),'values'=>$_POST]);
+        }
+
+        return $this->view->render($resp,'auth/change_password.php',['user' => $user]);
+      } else {
+        $this->flash->addMessage("global","There was a problem reseting your password");
+        return $this->redirect($resp,$this->urlFor('login'));
+      }
+
     }
 
   }

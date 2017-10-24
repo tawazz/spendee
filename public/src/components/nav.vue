@@ -11,7 +11,7 @@
               <span class="icon-bar"></span>
             </button>
             <router-link class="navbar-brand brand-font" :to="{ path: '/expenses'}">
-              <img src="../../images/navicon.png" alt="S" style="max-width:40px; margin-top: -7px;">pendee
+              <img src="../../../images/navicon.png" alt="S" style="max-width:40px; margin-top: -7px;">pendee
             </router-link>
           </div>
 

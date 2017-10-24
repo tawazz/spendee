@@ -32,6 +32,7 @@ class ForgotPassword extends Migration
         $table->string('active_hash')->nullable();
         $table->string('recover_hash')->nullable();
       });
+      $this->execute("UPDATE users set active = 1");
     }
 
     public function down()

@@ -11,7 +11,7 @@
             </div>
             <div class="card-content">
                 <h4 class="card-title capitalize">Daily {{type}}s for {{ nav.display }}</h4>
-                <p class="category">
+                <p class="category" v-if="false">
                     <span class="text-danger"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in spending</p>
             </div>
         </div>
@@ -75,6 +75,20 @@
             cost += parseFloat(v.cost);
           });
           vm.line_data.push({day: i, value: cost});
+        });
+        vm.line_data.sort((a,b) => {
+          if (moment(a.day).isAfter(moment(b.day))){
+            return 1;
+          }
+          if (moment(a.day).isBefore(moment(b.day))){
+            return -1;
+          }
+          return 0;
+        });
+        var cost = 0;
+        vm.line_data = vm.line_data.map(line => {
+          cost += line.value;
+          return {day: line.day, value: cost};
         });
 
         $('#morris-line-chart').empty();

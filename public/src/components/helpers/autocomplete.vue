@@ -1,5 +1,5 @@
 <template lang="html">
-  <input type="text" v-model='value'  @input="onInput" ref="autocomplete">
+  <input type="text" :value='value'  @input="onInput" ref="autocomplete">
 </template>
 
 <script>

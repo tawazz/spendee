@@ -1,29 +1,5 @@
 <?php
 require 'json_const.php';
-$app->post('/api/auth',function() use($app){
-    $body = $app->request->getBody();
-    $body = json_decode($body);
-
-    $user = $app->User;
-    $fetch_user = $user->find('first',[
-      'where'=>['username','=',$body->auth->username],
-    ]);
-
-    if($fetch_user && $app->hash->make($body->auth->password,$body->auth->username) == $fetch_user->password ){
-      $response = [
-        $app->JSON_AUTH =>true,
-        "user"=>$fetch_user
-      ];
-    }else{
-      $response = [
-        $app->JSON_AUTH=>false
-      ];
-      $app->response->setStatus(403);
-    }
-
-    $app->response->headers->set('Content-Type', 'application/json');
-    $app->response->setBody(json_encode($response));
-});
 
 $app->get('/api/data/:user(/:year(/:month(/:day)))',function($user_id,$year = NULL,$month = NULL,$day=NULL) use($app){
 

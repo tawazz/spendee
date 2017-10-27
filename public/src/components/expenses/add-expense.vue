@@ -393,7 +393,7 @@ export default {
   },
   beforeMount:function () {
     let vm =this;
-    vm.$http.get(apis.tags).then((response) => {
+    vm.$http.get(apis.tags('expense')).then((response) => {
       vm.tags = response.data;
     })
   },

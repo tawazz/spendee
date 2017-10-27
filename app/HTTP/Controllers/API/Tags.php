@@ -20,10 +20,15 @@
         {
             $app = $this->container;
             $cache = $app->cache;
-            $cache_key = 'api.get.tags';
+            $type = $req->getParam('type');
+            $cache_key = isset($type) ? 'api.get.tags'.$type : 'api.get.tags' ;
 
             if (!$cache->has($cache_key)) {
-              $data = $app->Tags->find('all');
+              if (isset($type)) {
+                $data = $app->Tags->getTags($type);
+              } else {
+                $data = $app->Tags->find('all');
+              }
               $cache->set($cache_key,$data);
             } else {
               $data = $cache->get($cache_key);

@@ -195,17 +195,25 @@ export default {
         total += vm.overviewData.tags[tag];
       });
       Object.keys(vm.overviewData.tags).map(tag =>{
+        var backgroundColor = randomColor({
+           luminosity: 'light',
+           hue:"#ff6384",
+           format: 'rgba'
+        });
+        var r = Math.round((vm.overviewData.tags[tag]/total )*100)*5
         data.push({
             label:tag,
             data: [{
                 x: i,
                 y: vm.overviewData.tags[tag],
-                r: Math.round((vm.overviewData.tags[tag]/total )*100)*5
+                r
             }],
-            backgroundColor: "#ff6384",
-            hoverBackgroundColor: "#ff6384"
+            backgroundColor,
+            borderColor: backgroundColor,
+            hoverBackgroundColor: "transparent",
+            borderWidth: 8,
         });
-        i+=1;
+        i+=(1+r*2);
       });
       vm.bubble_chartData = data;
     }

@@ -374,7 +374,7 @@ export default {
         }
       });
       if (!found) {
-        vm.expense.location.name = name.trim();
+        vm.expense.location.name = name;
         vm.expense.location.lat = "";
         vm.expense.location.long = "";
       }

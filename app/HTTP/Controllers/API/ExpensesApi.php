@@ -100,6 +100,21 @@
           }
           return $resp->withStatus(400);
         }
+
+        public function autoTag($req,$resp, $args)
+        {
+          try {
+            $Carbon = $this->container->Carbon;
+            $date = ($req->getParam('date') != null) ? $req->getParam('date').'-1' : $Carbon->now()->month(1)->day(1)->toDateString();
+            $date = $Carbon->createFromFormat('Y-m-d',$date);
+            $start = $date->toDateString();
+            $end = $Carbon->now()->toDateString();
+            \HTTP\Helpers\Utils::relatedTags($this->container,$start,$end);
+            return $resp->withJson(["success" => true]);
+          } catch (Exception $e) {
+            return $resp->withStatus(400)->withJson(["error" => $e->getMessage()]);
+          }
+        }
     }
 
  ?>

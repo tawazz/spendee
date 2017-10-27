@@ -400,8 +400,13 @@ class Utils
     }
   }
 
-  public static function relatedTags($app,$start="2017-09-1",$end="2017-09-30")
+  public static function relatedTags($app,$start=null,$end=null)
   {
+    if (!isset($start) && !isset($end)) {
+      $start = $Carbon->now()->month(1)->day(1)->toDateString();
+      $end = $Carbon->now()->toDateString();
+    }
+
     $db = \Tazzy\Database\DB::connect();
     $qb = new \Tazzy\Database\QueryBuilder();
     $sql = $qb->fields('expenses',['id','name','user_id','date'])

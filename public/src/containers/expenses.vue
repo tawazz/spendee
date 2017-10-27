@@ -8,28 +8,24 @@
         <exp-graphs :data="expenses" :tagChart="tagData" :type="type" :color="color" />
       </div>
       <div class="btn-group dropup btn-add">
-        <button
-          type="button"
-          class="btn btn-danger btn-fab btn-raised dropdown-toggle"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          data-tooltip="tooltip" data-placement="left" title="add expense"
-          @click.prevent="addButtonClick"
-          @mouseover="openFabMenu">
-          <i class="material-icons mdi mdi-plus"></i>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li
-            data-tooltip="tooltip"
-            data-placement="left"
-            title="import csv">
-            <a href="#" @click.prevent="showImportModal=true"
-              class="btn btn-danger btn-fab btn-raised">
-              <i class="material-icons mdi mdi-file-excel"></i>
-            </a>
-          </li>
-        </ul>
+        <div class="dropdown pull-left">
+            <button type="button" class="btn btn-danger btn-fab btn-raised dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <i class="mdi mdi-dots-vertical"></i>
+            <div class="ripple-container"></div></button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              <li>
+                  <a href="#" @click.prevent="autoTag">Auto Tag</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                  <a href="#" @click.prevent="showImportModal=true">Import Csv</a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                  <a href="#" @click.prevent="addButtonClick">Add Expense</a>
+              </li>
+            </ul>
+        </div>
       </div>
     </div>
     <add-exp :show="showAddModal" :save="addExpense" :close="closeModal" :selected_exp="selected_exp"/>
@@ -175,6 +171,19 @@
           utils.error_handler(vm,error);
           vm.$store.dispatch('done');
         });
+      },
+      autoTag(){
+        let vm = this;
+        vm.$store.dispatch('loading');
+        let params = vm.$route.params;
+        let year = params.year;
+        let month = params.month;
+        axios.get(`/api/autotag/expenses`).then((response)=>{
+          vm.$store.dispatch('done');
+          vm.updatePage();
+        }).catch((error)=>{
+          vm.$store.dispatch('done');
+        });
       }
     },
     mounted:function () {
@@ -192,13 +201,8 @@
     margin-bottom: 50px;
     z-index: 4;
   }
-  .btn-add>ul.dropdown-menu {
-    box-shadow: none;
-    border: 0;
-    min-width:0;
-    background:transparent
-  }
-  .btn-add>ul.nav li.dropdown:hover > ul.dropdown-menu {
-    display: block;
-  }
+  .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    text-decoration: none;
+    color: #2196f3;
+}
 </style>

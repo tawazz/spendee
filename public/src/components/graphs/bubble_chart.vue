@@ -5,7 +5,9 @@
       </div>
       <div class="card-content">
           <h4 class="card-title">{{ title }}</h4>
-          <canvas class="ct-chart" ref="bubble_chart"></canvas>
+          <div class="col-md-8 col-md-offset-2">
+            <canvas class="ct-chart" ref="bubble_chart"></canvas>
+          </div>
       </div>
   </div>
 </template>
@@ -43,6 +45,16 @@ export default {
               legend: {
                   display: false
               },
+              tooltips:{
+                callbacks: {
+                  label:function (item, data) {
+                    var dataset = data.datasets[item.datasetIndex];
+                    var label = dataset.label;
+                    var amount = item.yLabel;
+                    return `${label} $ ${filters.formatMoney(amount)}`;
+                  }
+                }
+              },
               scales: {
                   xAxes: [{
                       display: false,
@@ -60,7 +72,8 @@ export default {
                           display: false
                       },
                       ticks: {
-                          min: 0
+                          min: 0,
+                          max: 10000
                       }
                   }]
               }

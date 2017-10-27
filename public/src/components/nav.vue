@@ -25,7 +25,7 @@
               <li class="dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown"><span class="text-capitalize">{{user.username}}</span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><router-link :to="{ path: '/settings' }">Settings</router-link></li>
+                    <li><router-link :to="{ path: '/settings' }">Profile</router-link></li>
                     <li class="divider"></li>
                     <li><a href="/logout">Logout</a></li>
                 </ul>

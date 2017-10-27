@@ -1,3 +1,23 @@
+Spendee v3.0.0 1/11/2017
+- Upgrade to Slim 3
+- Move to eloquent models
+- Move to Vue front end
+- Cleaner material design updates with cards
+- Add locations to expenses
+- Add recurring expenses
+- Pushbullet notifications
+- SSO with google
+- Detailed info by tags
+- Forget password functionality
+- Net balance graph
+- Predictive auto tagging
+- Disable submit button when adding items
+- New Tag bubble chart
+
+Spendee v2.7.4 5/09/2017
+- budgets bug fixes
+- fix homepage display issues
+
 Spendee v2.7.3 22/05/2017
 change log
 - prevent update ,delete of past budgets.
@@ -16,9 +36,9 @@ change log
 
 Spendee v2.7 29/07/2016
 change log
--update to new material theme
--rename dashboard to overview
--bug fixes
+- update to new material theme
+- rename dashboard to overview
+- bug fixes
 
 Spendee v2.6.2 18/07/2016
 change log
@@ -42,51 +62,51 @@ change log
    - new site map links
 - update to new app logo
 - updated login and registration pages
--bug fixes
+- bug fixes
     - fix remember me bug
 
 Spendee v2.5 12/06/2016
 change log
 
--Includes Api to support android app
+- Includes Api to support android app
 
 Spendee v2.4.2 03/06/2016
 change log
 
--bug fix display correct tags values
+- bug fix display correct tags values
 
 Spendee v2.4 28/03/2016
 change log
 
--introduce expenses tag cloud
+- introduce expenses tag cloud
 
 Spendee v2.3 20/01/2016
 change log
 
--several ui fixes
--introduces tags
+- several ui fixes
+- introduces tags
 
 Spendee v2.2 22/11/2015
 change log
 
--knob values centerd and fixed to 2 deceimal places
--items table list now centered
--add income and add expense buttons now aligned with other elements
--removes big unnecessary space on dashboard.
--staterd keeping track of change log
+- knob values centerd and fixed to 2 deceimal places
+- items table list now centered
+- add income and add expense buttons now aligned with other elements
+- removes big unnecessary space on dashboard.
+- started keeping track of change log
 
 Spendee v2.1 08/11/2015
 change log
 
--orange nav bar
--android web app compability
--removes mobile keyboard for date inputs
+- orange nav bar
+- android web app compability
+- removes mobile keyboard for date inputs
 
 Spendee v2.0 17/09/2015
 change log
 
--complete rewrite of original spendee
--now uses slim framework
--new bootstrap theme
--new graphs on both expense and income pages
--brand new dash board
+- complete rewrite of original spendee
+- now uses slim framework
+- new bootstrap theme
+- new graphs on both expense and income pages
+- brand new dash board

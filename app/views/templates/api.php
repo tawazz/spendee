@@ -8,14 +8,14 @@
         <meta name="author" content="">
         <meta name="description" content="personal money management webapp"/>
         <meta name="msapplication-navbutton-color" content="#ec5959"/>
-        <title></title>
-        {% include "parts/css.php" %}
-        {% include "parts/scripts.php" %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     </head>
     <body style="padding-top:0px">
       <div class="container-fluid">
         {% block content %}{% endblock %}
       </div>
-
     </body>
 </html>

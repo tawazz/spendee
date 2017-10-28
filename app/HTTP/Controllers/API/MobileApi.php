@@ -152,7 +152,7 @@
           ];
           return $resp->withJson($response);
         }
-        
+
         public function addIncome($req,$resp,$args)
         {
           $app = $this->container;
@@ -176,46 +176,101 @@
           ];
           return $resp->withJson($response);
         }
-        public function update($req, $resp,$args)
+        public function updateIncome($req,$resp,$args)
         {
           $app = $this->container;
           $body = json_decode($req->getBody()->getContents());
-          $bud_id= $args['id'];
-          $app->Budget->read($bud_id)->set([
-            "name"       => $body->name,
-            "amount"     => Utils::fixMoneyInput($body->amount),
-          ]);
-
-          $app->BudgetTag->deleteTagsFromBudget($bud_id);
-
-          if(in_array(0,$body->tags)){
-            $tags = $app->Tags->find('all');
-            foreach ($tags as $tag) {
-              $data = [
-                "tag_id"     => $tag->id,
-                "bud_id"     => $bud_id
-              ];
-              $app->BudgetTag->save($data);
-            }
+          $updated = Utils::updateExpense($app,$body);
+          if ($updated) {
+            return $resp->withJson($updated,200);
           }
-          else
-          {
-            foreach ($body->tags as $tag_id) {
-              $data = [
-                "tag_id"     => $tag_id,
-                "bud_id"     => $bud_id
-              ];
-              $app->BudgetTag->save($data);
-            }
-          }
-          return $resp->withJson($app->Budget->get($bud_id));
+          return $resp->withJson(['Error'=> "Failed to update"],400);
         }
-        public function delete($req, $resp,$args)
+        public function updateExpense($req, $resp,$args)
+        {
+          $app = $this->container;
+          $body = json_decode($req->getBody()->getContents());
+          $updated = Utils::updateExpense($app,$body);
+          if ($updated) {
+            return $resp->withJson($updated,200);
+          }
+          return $resp->withJson(['Error'=> "Failed to update"],400);
+        }
+        public function deleteExpense($req, $resp,$args)
         {
           $app = $this->container;
           $id = $args['id'];
-          $app->Budget->read($id)->delete();
+          $app->Exp->read($id)->delete();
           return $resp->withJson(['success' => true]);
+        }
+        public function deleteIncome($req, $resp,$args)
+        {
+          $app = $this->container;
+          $id = $args['id'];
+          $app->Inc->read($id)->delete();
+          return $resp->withJson(['success' => true]);
+        }
+
+        public function graph($req, $resp, $args)
+        {
+          $app = $this->container;
+          $year = isset($args['year']) ? $args['year'] : Null;
+          $month = isset($args['month']) ? $args['month'] : Null;
+          $day = isset($args['day']) ? $args['day'] : Null;
+          $user_id = isset($args['user']) ? $args['user'] : Null;
+          $type = isset($args['type']) ? $args['type'] : Null;
+
+          if(!isset($year)){
+            $year = $year= date('Y');
+          }
+          $totalexp = $app->Exp->read($user_id)->totalExp($year."-"."1"."-1",($year+1)."-1-1");
+          $totalinc = $app->Inc->read($user_id)->totalInc($year."-"."1"."-1",($year+1)."-1-1");
+          $allIncomes = $app->Inc->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
+          $allExpenses = $app->Exp->read($user_id)->allActivity($year."-"."1"."-1",($year+1)."-1-1");
+
+          $earned=[];
+          $itemSpent =[];
+          for($i=1;$i<=12;$i++){
+            $earned[$i] = $app->Inc->read($user_id)->totalInc($year."-".$i."-1",$year."-".($i+1)."-1");
+            $itemSpent[$i] = $app->Exp->read($user_id)->totalExp($year."-".$i."-1",$year."-".($i+1)."-1");
+          }
+
+          $exptags = $app->ExpTags->tagData($user_id,false,0,$year."-"."1"."-1",($year+1)."-1-1");
+          $date = new \DateTime($year."-1-1");
+          $date = $date->format('Y');
+
+          $response = [
+            'totalExp'=>$totalexp,
+            'totalInc'=>$totalinc,
+            'date'=>$date,
+            'allIncomes'=>$allIncomes,
+            'allExpenses'=>$allExpenses,
+            'earned'=>$earned,
+            'spent'=>$itemSpent,
+            'exptags'=>$exptags
+          ];
+
+          switch ($type) {
+            case "line":
+                  $this->view->render($resp,'api/yearLineGraph.php',$response);
+              break;
+            case "bar":
+                $this->view->render($resp,'api/yearBarGraph.php',$response);
+              break;
+            case "incomes":
+                $this->view->render($resp,'api/yearIncomesGraph.php',$response);
+              break;
+            case "expenses":
+                $this->view->render($resp,'api/yearExpensesGraph.php',$response);
+              break;
+            case "tags":
+                $this->view->render($resp,'api/yearTagsGraph.php',$response);
+              break;
+
+            default:
+              # code...
+              break;
+          }
         }
     }
 

@@ -21,14 +21,14 @@
     {
        $this->capsule = new Capsule;
        $this->capsule->addConnection([
-           'driver'    => \Settings::get('mysql.driver'),
-           'host'      => \Settings::get('mysql.host'),
-           'database'  => \Settings::get('mysql.db'),
-           'username'  => \Settings::get('mysql.username'),
-           'password'  => \Settings::get('mysql.password'),
+           'driver'    => \Settings::get('db.driver'),
+           'host'      => \Settings::get('db.host'),
+           'database'  => \Settings::get('db.db'),
+           'username'  => \Settings::get('db.username'),
+           'password'  => \Settings::get('db.password'),
            'charset'   => 'utf8',
            'collation' => 'utf8_unicode_ci',
-           'prefix'    => \Settings::get('mysql.prefix'),
+           'prefix'    => \Settings::get('db.prefix'),
        ]);
 
        $this->capsule->setEventDispatcher(new Dispatcher(new Container));

@@ -1,0 +1,3 @@
+<template id="footer">
+
+</template>

@@ -1,0 +1,1 @@
+* * * * * root /app/vendor/bin/crunz schedule:run >> /app/logs/cron.log 2>&1

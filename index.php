@@ -29,5 +29,5 @@ function fatal_handler() {
   }
 }
 
-  require 'app/config/start.php';
+  require 'app/bootstrap.php';
 ?>

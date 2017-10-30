@@ -1,36 +1,10 @@
 <?php
-  $app->get('/',function() use ($app){
-    if($app->auth){
-      $app->response->redirect($app->urlFor('expenses'));
-      return 0;
-    }
-    $app->render('home/about.php');
-  })->name('home');
+  use \HTTP\Controllers\Home\HomeController;
 
-  $app->get('/about',function() use ($app){
-    $app->render('home/about.php');
-  })->name('about');
-
-  $app->get('/contact',function() use ($app){
-    $app->render('home/contact.php');
-  })->name('contact');
-
-  $app->get('/help',function() use ($app){
-    $app->render('home/help.php');
-  })->name('help');
-
-  $app->post('/contact', function() use ($app){
-    if( isset($_POST['name']) && isset($_POST['email']) && isset($_POST['phone']) ){
-     $name = $_POST['name'];
-     $email = $_POST['email'];
-     $phone = $_POST['phone'];
-     $msg = $_POST['msg'];
-
-     $M= "Name : {$name}". "Email: {$email} Phone : {$phone} "."Message : {$msg}";
-     mail("tawanda.nyakudjga@gmail.com","tawazz.net/me",$M);
-    }
-      $app->flash("global","your message was sent");
-      $app->response->redirect($app->urlFor('contact'));
-  })->name('post.contact');
+  $this->get('/',HomeController::class)->setName('home');
+  $this->get('/about',HomeController::class.':aboutView')->setName('about');
+  $this->get('/contact',HomeController::class.':contactView')->setName('contact');
+  $this->get('/help',HomeController::class.':helpView')->setName('help');
+  $this->post('/contact',HomeController::class.':contact')->setName('post.contact');
 
  ?>

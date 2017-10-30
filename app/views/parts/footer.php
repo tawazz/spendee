@@ -33,7 +33,7 @@
                                 <li><a href="/">Home</a></li>
                                 <li><a href="/expenses">Expenses</a></li>
                                 <li><a href="/incomes">Incomes</a></li>
-                                <li><a href="{{urlFor('budget.home')}}">Budgets</a></li>
+                                <li><a href="{{urlFor('budgets')}}">Budgets</a></li>
                                 <li><a href="/overview">Overview</a></li>
                                 <li><a href="/account">Account</a></li>
                               {% else %}

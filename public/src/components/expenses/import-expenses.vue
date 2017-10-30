@@ -50,15 +50,19 @@ export default {
         if (file.type == 'text/csv') {
           vm.$store.dispatch('loading');
           data.append('expenses',file);
+          data.append('csrf_name',Window.csrf.name);
+          data.append('csrf_value',Window.csrf.value);
           var config = {
             onUploadProgress: function(progressEvent) {
               var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
             }
           };
-          axios.post(apis.import_exp,data,config).then((response) =>{
+          var inst = axios.create();;
+          inst.post(apis.import_exp,data,config).then((response) =>{
             vm.save();
             vm.$store.dispatch('done');
           }).catch((error) => {
+            console.error(error);
             notify.alert('Error! importing file',"",{
               type:"danger"
             });

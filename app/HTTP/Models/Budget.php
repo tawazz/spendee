@@ -58,8 +58,9 @@ class Budget extends BaseTable
         $budget->tags = $exptags;
         $budget->spent = $spent;
         $budget->spentPercentage = number_format( ($spent/$budget->amount)*100,2,'.',',');
-        $budget->future = Carbon::now('Australia/Perth')->hour(0)->minute(0)->second(0)->lte($budgetDate->copy()->addMonth());
-        $budget->spendingLeft = ($budget->future == true ) ? (($budget->amount - $spent)/ (cal_days_in_month(CAL_GREGORIAN,$month, $year)) ): number_format( ($budget->amount - $spent)/(cal_days_in_month(CAL_GREGORIAN,$month, $year)-(int)date('j')),2,'.',',' );
+        $budget->future = Carbon::now('Australia/Perth')->hour(0)->minute(0)->second(0)->lt($budgetDate->copy()->addMonth()->subDay());
+        $budget->spendingLeft = ($budget->future == false) ? (($budget->amount - $spent)/$budgetDate->daysInMonth) : ($budget->amount - $spent)/($budgetDate->daysInMonth - (int) date('j'));
+        $budget->spendingLeft = number_format($budget->spendingLeft,2,'.',',');
         $budget->expired = Carbon::now('Australia/Perth')->gt($budgetDate->addMonth());
         $budget->saved =  ($budget->amount - $spent > 0) ? $budget->amount - $spent : $spent - $budget->amount;
       }

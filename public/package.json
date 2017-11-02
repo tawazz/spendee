@@ -21,7 +21,7 @@
     "jquery": "^3.2.1",
     "jquery-validation": "^1.16.0",
     "jquery.easing": "^1.4.1",
-    "mdi": "^1.9.33",
+    "mdi": "^2.0.46",
     "moment": "^2.19.1",
     "morris.js": "https://github.com/tawazz/morris.js.git",
     "randomcolor": "^0.5.3",

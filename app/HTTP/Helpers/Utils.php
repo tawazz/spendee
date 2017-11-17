@@ -310,7 +310,7 @@ class Utils
       }
     }
   }
-  public static function readFile($app,$path="/app/assets/imports/transactions.csv"){
+  public static function readFile($app,$path){
     $reader = Reader::createFromPath($path);
     $reader->setHeaderOffset(0);
     $records = $reader->getRecords($reader->getHeader());

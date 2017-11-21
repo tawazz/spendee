@@ -134,6 +134,11 @@
         return $middleware;
       };
 
+      $container['http'] = function ($c) {
+        return new \GuzzleHttp\Client([
+          'timeout'  => 2.0,
+        ]);
+      };
     }
   }
 

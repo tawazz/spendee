@@ -7,7 +7,7 @@ RUN mkdir -p /app/logs
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y npm \
-supervisor cron  php7.0-gd  php-xdebug
+supervisor cron  php7.0-gd  php-xdebug mysql-client
 
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash && \
 . "/root/.nvm/nvm.sh" && nvm install --lts

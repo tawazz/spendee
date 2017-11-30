@@ -5,9 +5,8 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8002:80"
+      - "8006:80"
     networks:
       - webnet
 networks:
   webnet:
-    driver: overlay

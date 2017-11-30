@@ -24,7 +24,8 @@
     "php-middleware/php-debug-bar": "^1.4",
     "psy/psysh": "@stable",
     "league/csv": "^9.0",
-    "lusitanian/oauth": "^0.8.10"
+    "lusitanian/oauth": "^0.8.10",
+    "guzzlehttp/guzzle": "^6.3"
   },
   "autoload": {
     "psr-4": {

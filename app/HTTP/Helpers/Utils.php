@@ -313,13 +313,7 @@ class Utils
   public static function readFile($app,$path){
     $reader = Reader::createFromPath($path);
     $reader->setHeaderOffset(0);
-    // TODO: check if correct format
-    # ING Format for now
-    $ing = ["Date","Description","Credit","Debit","Balance"];
-    if ($ing !== $reader->getHeader()) {
-      throw new \Exception("Error Processing csv, only Ing Bank format allowed at the moment.", 1);
-    }
-    $records = $reader->getRecords($ing);
+    $records = $reader->getRecords($reader->getHeader());
     $expenses = [];
     foreach ($records as $offset => $record) {
       $record = (object) $record;
@@ -328,7 +322,7 @@ class Utils
         $data = [
           "name" => ucwords(strtolower(trim($description[0]))),
           "date" => $app->Carbon->createFromFormat('d/m/Y',trim($record->Date))->toDateString(),
-          "cost" => floatval($record->Debit) * - 1,
+          "cost" => floatval($record->Debit) * -1,
           "user_id" => $app->auth->id
         ];
         array_push($expenses,$data);

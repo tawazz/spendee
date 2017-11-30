@@ -42,6 +42,22 @@
           'key'      => 'key',
           'secret'   => 'secret',
           'callback' => 'http://spendee.dev/login/google'
+      ],
+      'storage'      => [
+        'local'      => [
+            'type'   => 'Local',
+            'root'   => '/',
+         ],
+        's3'         => [
+            'type'   => 'AwsS3',
+            'key'    => '',
+            'secret' => '',
+            'region' => '',
+            'version'=> 'latest',
+            'bucket' => 'spendee',
+            'root'   => '',
+            'endpoint'=> ''
+        ]
       ]
 
   ];

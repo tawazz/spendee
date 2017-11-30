@@ -4,13 +4,18 @@
       'debug'        => false,
       'db'        => [
           'driver'   => 'mysql',
+          'type'     => 'mysql',
           'host'     => '127.0.0.1',
+          'port'     => '3306',
           'username' => 'root',
-          'password' => 'password',
-          'db'       => 'spendee_database',
+          'user'     => 'root',
+          'password' => 'admin123',
+          'pass' => 'admin123',
+          'db'       => 'spendee',
+          'database'       => 'spendee',
           'prefix'   => ''
       ],
-      'ver'          => 'v2.7.3',
+      'ver'          => 'v3.0.1',
       'locale'       => [
           "brand"    => "tawazz.net",
           "address"  => "Perth<br> Australia",

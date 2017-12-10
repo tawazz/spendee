@@ -1,24 +1,13 @@
 <?php
   require_once __DIR__.'/shell.php';
-  echo "normalize parking\n";
-  $query = "update expenses set name = 'parking' where LOWER(name) like '%parking%'";
-  \Tazzy\Database\DB::connect()->query($query);
 
-  echo "normalize coles\n";
-  $query = "update expenses set name = 'coles' where LOWER(name) like '%coles%'";
-  \Tazzy\Database\DB::connect()->query($query);
+  $normalize = ['coles' => 'coles', 'mcdonalds' => 'mcdonalds','nandos' => 'nandos', 'car' => 'st george'];
 
-  echo "normalize mcdonalds\n";
-  $query = "update expenses set name = 'mcdonalds' where LOWER(name) like '%mcdonalds%'";
-  \Tazzy\Database\DB::connect()->query($query);
-
-  echo "normalize nandos\n";
-  $query = "update expenses set name = 'nandos' where LOWER(name) like '%nandos%'";
-  \Tazzy\Database\DB::connect()->query($query);
-
-  echo "normalize car finance\n";
-  $query = "update expenses set name = 'car' where LOWER(name) like '%st george%'";
-  \Tazzy\Database\DB::connect()->query($query);
+  foreach ($normalize as $key => $value) {
+    echo "normalize {$key}\n";
+    $query = "update expenses set name = '?' where LOWER(name) like '%?%'";
+    \Tazzy\Database\DB::connect()->query($query,[$value,$key]);
+  }
 
   //inteligent tagging
   $Carbon = $container->Carbon;

@@ -3,7 +3,7 @@ require_once __DIR__.'/settings.php';
 return [
    'paths' => [
       'migrations' => __DIR__.'/../../migrations',
-      'seeds' => __DIR__.'/../../seeds'
+      'seeds' => __DIR__.'/../../seed'
    ],
   'migration_base_class' => '\HTTP\Migrations\Migration',
   'environments' => [

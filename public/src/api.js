@@ -58,7 +58,8 @@ export default {
             return `/api/budget/${id}`
         }
         return `/api/budget`
-    }
+    },
+    nomalize:"/api/nomalize/expenses"
 }
 
 function getUrl(page, year, month, day) {

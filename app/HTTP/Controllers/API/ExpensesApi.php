@@ -115,6 +115,16 @@
             return $resp->withStatus(400)->withJson(["error" => $e->getMessage()]);
           }
         }
+        
+        public function nomalize($req,$resp, $args)
+        {
+          try {
+            \HTTP\Helpers\Utils::nomalize($this->container);
+            return $resp->withJson(["success" => true]);
+          } catch (Exception $e) {
+            return $resp->withStatus(400)->withJson(["error" => $e->getMessage()]);
+          }
+        }
     }
 
  ?>

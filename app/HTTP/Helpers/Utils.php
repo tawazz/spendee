@@ -527,16 +527,15 @@ class Utils
   {
     $nomalize = $container->Nomalize->where('user_id',$container->auth->id)->get();
     foreach ($nomalize as $nom) {
-      $query = "update expenses set name = '?' where LOWER(name) like '%?%'";
-      \Tazzy\Database\DB::connect()->query($query,[$nom->value,$nom->key]);
+      $query = "update expenses set name='{$nom->value}' where LOWER(name) like '%{$nom->key}%'";
+      \Tazzy\Database\DB::connect()->query($query);
     }
-
     //inteligent tagging
     $Carbon = $container->Carbon;
     $start = $Carbon->now()->month(1)->day(1)->toDateString();
     $end = $Carbon->now()->toDateString();
-    $container->auth = $container->User->find(7);
     self::relatedTags($container,$start,$end);
+    $container->cache->clear();
   }
 }
 

@@ -28,7 +28,7 @@
       ];
       \HTTP\Helpers\Utils::addExpense($container,(object) $data);
     }
-    \HTTP\Helpers\Utils::nomalize($container)
+    \HTTP\Helpers\Utils::nomalize($container);
     $pb->allDevices()->pushNote("Spendee - import completed",sizeof($expenses) . " expenses imported");
     $container->log->debug('expenses import',["success" => true]);
 

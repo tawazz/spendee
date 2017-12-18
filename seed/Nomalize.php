@@ -15,7 +15,16 @@ class Nomalize extends Seed
      */
     public function run()
     {
-      $normalize = ['coles' => 'coles', 'mcdonalds' => 'mcdonalds','nandos' => 'nandos', 'car' => 'st george'];
+      $normalize = [
+        'coles' => 'coles',
+        'mcdonalds' => 'mcdonalds',
+        'nandos' => 'nandos',
+        'car' => 'st george',
+        'kfc' => 'kfc',
+        'subway' => 'subway',
+        'target' => 'target',
+        'kmart' => 'kmart'
+    ];
 
       foreach ($normalize as $key => $value) {
         $N = new NomalizeExpenses();

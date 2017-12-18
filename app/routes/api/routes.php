@@ -16,6 +16,7 @@
     $this->get('/options/expenses/repeat',ExpensesApi::class.':repeatOptions')->setName('api.expense.repeat');
     $this->post('/import/expenses',ExpensesApi::class.':import')->setName('api.expense.import');
     $this->get('/autotag/expenses',ExpensesApi::class.':autoTag')->setName('api.expense.autoTag');
+    $this->get('/nomalize/expenses',ExpensesApi::class.':nomalize')->setName('api.expense.nomalize');
 
     $this->get('/incomes[/{year}[/{month}[/{day}]]]',IncomesApi::class)->setName('api.incomes');
     $this->get('/income/{id}',IncomesApi::class.':retrieve')->setName('api.income.retrieve');

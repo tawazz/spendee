@@ -14,6 +14,10 @@
             <div class="ripple-container"></div></button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
               <li>
+                  <a href="#" @click.prevent="nomalizeExpenses">Nomalize Expenses</a>
+              </li>
+              <li class="divider"></li>
+              <li>
                   <a href="#" @click.prevent="autoTag">Auto Tag</a>
               </li>
               <li class="divider"></li>
@@ -175,13 +179,21 @@
       autoTag(){
         let vm = this;
         vm.$store.dispatch('loading');
-        let params = vm.$route.params;
-        let year = params.year;
-        let month = params.month;
         axios.get(`/api/autotag/expenses`).then((response)=>{
           vm.$store.dispatch('done');
           vm.updatePage();
         }).catch((error)=>{
+          vm.$store.dispatch('done');
+        });
+      },
+      nomalizeExpenses(){
+        let vm = this;
+        vm.$store.dispatch('loading');
+        axios.get(apis.nomalize).then((response)=>{
+          vm.$store.dispatch('done');
+          vm.updatePage();
+        }).catch((error)=>{
+          utils.error_handler(vm,error);
           vm.$store.dispatch('done');
         });
       }

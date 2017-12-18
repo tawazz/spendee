@@ -49,6 +49,9 @@ class ModelService implements ServiceProviderInterface
     $container['ExpensesAndTags'] = $container->factory(function($c) {
         return new \HTTP\Models\ExpensesAndTags();
     });
+    $container['Nomalize'] = $container->factory(function($c) {
+        return new \HTTP\Models\Nomalize();
+    });
 
   }
 }

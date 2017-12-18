@@ -397,8 +397,8 @@ class Utils
   public static function relatedTags($app,$start=null,$end=null)
   {
     if (!isset($start) && !isset($end)) {
-      $start = $Carbon->now()->month(1)->day(1)->toDateString();
-      $end = $Carbon->now()->toDateString();
+      $start = $app->Carbon->now()->month(1)->day(1)->toDateString();
+      $end = $app->Carbon->now()->toDateString();
     }
 
     $db = \Tazzy\Database\DB::connect();
@@ -523,20 +523,19 @@ class Utils
     }
   }
 
-  public static function nomalize($container, $data = [])
+  public static function nomalize($container)
   {
-      $data = [
-        "user_id"   => $container->auth->id,
-        "nomalize"  => [
-          'coles'   => 'coles',
-          'petrol'  => 'petrol',
-          'nandos'  => 'nandos',
-          'puma'    => 'petrol',
-          'parking' => 'parking'
-
-        ]
-      ];
-      $container->queue->push(\HTTP\Jobs\Handlers\NomalizeHandler::class,$data);
+    $nomalize = $container->Nomalize->where('user_id',$container->auth->id)->get();
+    foreach ($nomalize as $nom) {
+      $query = "update expenses set name='{$nom->value}' where LOWER(name) like '%{$nom->key}%'";
+      \Tazzy\Database\DB::connect()->query($query);
+    }
+    //inteligent tagging
+    $Carbon = $container->Carbon;
+    $start = $Carbon->now()->month(1)->day(1)->toDateString();
+    $end = $Carbon->now()->toDateString();
+    self::relatedTags($container,$start,$end);
+    $container->cache->clear();
   }
 }
 

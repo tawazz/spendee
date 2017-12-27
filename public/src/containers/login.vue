@@ -6,8 +6,8 @@
           <div class="card card-login">
             <div class="card-header text-center" data-background-color="rose">
               <div class="text-center img-responsive"><img src="/images/icon.png" alt="logo" style="width:auto; height:70px;"/></div>
-              <div class="text-center"><h3 class="brand-font">Spendee here</h3></div>
-              <h4 class="card-title">Login</h4>
+              <div class="text-center"><h3 class="brand-font">Spendee</h3></div>
+              <h4 class="card-title">Login here</h4>
               <div class="social-line">
                 <a href="/login/google?go=google" class="btn btn-lg btn-raised btn-warning">
                   <i class="fa fa-google"></i>

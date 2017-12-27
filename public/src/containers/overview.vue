@@ -110,10 +110,17 @@ export default {
           }else{
             bal = `$${filters.formatMoney(0)}`
           }
-          content = `<div class="morris-hover-row-label">${filters.monthYear(row.date)}</div><div class='morris-hover-point' style='color: #03a9f4'>
-          Balance:${bal}
-
-          </div>`;
+          content = `<div class="morris-hover-row-label">${row.date}</div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Incomes: ${row.inc}
+          </div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Expenses: ${row.exp}
+          </div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Balance: ${bal}
+          </div>
+          `;
           return content;
         },
         goalLineColors:['#d9edf7'],

@@ -397,7 +397,7 @@ class Utils
   public static function relatedTags($app,$start=null,$end=null)
   {
     if (!isset($start) && !isset($end)) {
-      $start = $app->Carbon->now()->month(1)->day(1)->toDateString();
+      $start = $app->Carbon->now()->subMonths(12)->day(1)->toDateString();
       $end = $app->Carbon->now()->toDateString();
     }
 
@@ -531,10 +531,7 @@ class Utils
       \Tazzy\Database\DB::connect()->query($query);
     }
     //inteligent tagging
-    $Carbon = $container->Carbon;
-    $start = $Carbon->now()->month(1)->day(1)->toDateString();
-    $end = $Carbon->now()->toDateString();
-    self::relatedTags($container,$start,$end);
+    self::relatedTags($container);
     $container->cache->clear();
   }
 }

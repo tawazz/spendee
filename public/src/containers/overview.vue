@@ -110,10 +110,17 @@ export default {
           }else{
             bal = `$${filters.formatMoney(0)}`
           }
-          content = `<div class="morris-hover-row-label">${filters.monthYear(row.date)}</div><div class='morris-hover-point' style='color: #03a9f4'>
-          Balance:${bal}
-
-          </div>`;
+          content = `<div class="morris-hover-row-label">${row.date}</div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Incomes: ${row.inc}
+          </div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Expenses: ${row.exp}
+          </div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Balance: ${bal}
+          </div>
+          `;
           return content;
         },
         goalLineColors:['#d9edf7'],
@@ -133,7 +140,7 @@ export default {
         var bal = inc - exp;
         var pos = (bal >= 0 )? bal : 0;
         var neg = (bal < 0 )? bal : 0;
-        bars[i-1] = {date,pos,neg}
+        bars[i-1] = {date,pos,neg,exp,inc}
       }
 
       vm.barChartOptions = {
@@ -153,10 +160,17 @@ export default {
           }else{
             bal = `$${filters.formatMoney(0)}`
           }
-          content = `<div class="morris-hover-row-label">${row.date}</div><div class='morris-hover-point' style='color: #03a9f4'>
-          Balance: ${bal}
-
-          </div>`;
+          content = `<div class="morris-hover-row-label">${row.date}</div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Incomes: ${bars[index].inc}
+          </div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Expenses: ${bars[index].exp}
+          </div>
+          <div class='morris-hover-point' style='color: #03a9f4'>
+            Balance: ${bal}
+          </div>
+          `;
           return content;
         },
         resize:true

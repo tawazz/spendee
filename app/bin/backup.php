@@ -26,7 +26,7 @@ try {
   $manager =  new Manager($filesystems, $databases, $compressors);
   $manager->makeBackup()->run('dev', [
     new Destination('local', 'backup.sql'),
-    new Destination('s3', "database/spendee_prod_{$dt->toDateTimeString()}.sql")
+    new Destination('s3', "database/{$container->Config->get('backup.name')}{$dt->toDateTimeString()}.sql")
   ], 'gzip');
   unlink('/backup.sql.gz');
   $pb->allDevices()->pushNote("Spendee - backup completed","");

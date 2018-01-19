@@ -24,6 +24,6 @@
       Window.csrf = {{ csrf|json_encode()|raw }};
       Window.user = {{ auth|json_encode()|raw }};
     </script>
-    <script type="text/javascript" src="//10.0.0.3:3001/app.js"></script>
+    <script type="text/javascript" src="//{{vue_dev_server}}/app.js"></script>
   </body>
 </html>

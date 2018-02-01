@@ -4,7 +4,6 @@ services:
     build: .
     volumes:
       - .:/app
-      - ./logs/sys_log:/var/log
     ports:
       - "8006:80"
     networks:

@@ -68,7 +68,7 @@
       ],
       'vue'          => [
           'dev'      => [
-              'server => '10.0.0.3:3001'
+              'server' => '10.0.0.3:3001'
           ],
           'views'    => 'templates/vue.php'
       ]

@@ -6,11 +6,10 @@ RUN mkdir -p /app
 RUN mkdir -p /app/logs
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y npm \
-supervisor cron  php7.0-gd  php-xdebug mysql-client
+RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh && bash nodesource_setup.sh
 
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash && \
-. "/root/.nvm/nvm.sh" && nvm install --lts
+RUN apt-get update && apt-get install -y  \
+    supervisor cron  php7.0-gd  php-xdebug mysql-client beanstalkd nodejs
 
 RUN npm install -g yarn
 
@@ -20,7 +19,6 @@ COPY docker/php.ini /etc/php/7.0/apache2/php.ini
 
 RUN touch /app/logs/cron.log
 RUN chmod 0644 /etc/cron.d/tasks
-RUN cp /usr/bin/nodejs /usr/bin/node
 
 WORKDIR /app
 

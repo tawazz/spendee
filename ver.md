@@ -1,8 +1,17 @@
-Spendee 3.0.3 2/01/2017
+Spendee 3.0.4 2/02/2018
+- config updates
+  - new development server configs
+  - backupfile config
+- docker image updates
+  - includes local beanstalkd
+  - updated nodejs
+  
+Spendee 3.0.3 2/01/2018
 - bug fixes
   - fix login text
   - show exp and inc balances on overview barchart
   - fix time issues
+  
 Spendee v3.0.0 1/11/2017
 - Upgrade to Slim 3
 - Move to eloquent models

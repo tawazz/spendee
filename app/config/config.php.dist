@@ -24,8 +24,7 @@
       ],
       'views'        => [
         'cache'      => 'app/views/cache',
-        'dir'        => 'app/views',
-        'vue'        => 'templates/vue.php'
+        'dir'        => 'app/views'
       ],
       'jobs'         => [
         'driver'     => 'beanstalkd',
@@ -63,6 +62,15 @@
             'root'   => '',
             'endpoint'=> ''
         ]
+      ],
+      'backup'       => [
+          'name'     => 'spendee_prod'
+      ],
+      'vue'          => [
+          'dev'      => [
+              'server' => '10.0.0.3:3001'
+          ],
+          'views'    => 'templates/vue.php'
       ]
 
   ];

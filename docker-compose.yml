@@ -8,5 +8,6 @@ services:
       - "8006:80"
     networks:
       - webnet
+    restart: always
 networks:
   webnet:

@@ -29,6 +29,7 @@
     "select2": "^4.0.3",
     "select2-bootstrap-theme": "0.1.0-beta.10",
     "snackbar": "^1.0.2",
+    "sw-precache-webpack-plugin": "^0.11.5",
     "sweetalert2": "^6.6.5",
     "tether": "^1.4.0",
     "update": "^0.7.4",

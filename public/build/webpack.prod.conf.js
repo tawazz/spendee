@@ -8,6 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 var env = config.build.env
 
@@ -70,7 +71,29 @@ var webpackConfig = merge(baseWebpackConfig, {
         to: path.resolve(__dirname, '../../assets/css'),
         ignore: ['.*']
       }
-  ])
+    ]),
+    // service worker caching
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'spendee',
+      filename: 'service-worker.js',
+      staticFileGlobs: ['../assets/**/*.{js,html,css,png,jpg,svg}','../images/*.{png,jpg,jpeg,svg}'],
+      stripPrefix: '..',
+      minify: false,
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/fonts\.googleapis\.com\//,
+          handler: 'cacheFirst'
+        },
+        {
+          urlPattern: /^https:\/\/spendee\.tawazz\.net\/*/,
+          handler: 'cacheFirst'
+        },
+        {
+          urlPattern: /^http:\/\/localhost:8006\/*/,
+          handler: 'cacheFirst'
+        }
+      ]
+    })
   ]
 })
 

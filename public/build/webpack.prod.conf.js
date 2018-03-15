@@ -89,6 +89,10 @@ var webpackConfig = merge(baseWebpackConfig, {
           handler: 'cacheFirst'
         },
         {
+          urlPattern: /^https:\/\/spendee-dev\.tawazz\.net\/*/,
+          handler: 'cacheFirst'
+        },
+        {
           urlPattern: /^http:\/\/localhost:8006\/*/,
           handler: 'cacheFirst'
         }

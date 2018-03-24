@@ -103,19 +103,17 @@ export default {
         preUnits:'$',
         hoverCallback: function (index, options, content, row) {
           let bal = 0;
-          if (row.bal > 0) {
-            bal = `$${filters.formatMoney(row.bal)}`
-          }else if(row.bal < 0) {
-            bal = `-$${filters.formatMoney(row.bal * -1)}`
-          }else{
-            bal = `$${filters.formatMoney(0)}`
+          if (row.bal !== 0) {
+            bal = filters.formatMoney(row.bal);
+          } else {
+            bal = filters.formatMoney(0);
           }
-          content = `<div class="morris-hover-row-label">${row.date}</div>
+          content = `<div class="morris-hover-row-label">${moment(row.date).format('MMM YYYY')}</div>
           <div class='morris-hover-point' style='color: #03a9f4'>
-            Incomes: ${row.inc}
+            Incomes: ${filters.formatMoney(row.inc)}
           </div>
           <div class='morris-hover-point' style='color: #03a9f4'>
-            Expenses: ${row.exp}
+            Expenses: ${filters.formatMoney(row.exp)}
           </div>
           <div class='morris-hover-point' style='color: #03a9f4'>
             Balance: ${bal}
@@ -154,18 +152,18 @@ export default {
         hoverCallback: function (index, options, content, row) {
           let bal = 0;
           if (row.pos > 0) {
-            bal = `$${filters.formatMoney(row.pos)}`
+            bal = filters.formatMoney(row.pos);
           }else if(row.neg < 0) {
-            bal = `-$${filters.formatMoney(row.neg * -1)}`
+            bal = filters.formatMoney(row.neg);
           }else{
-            bal = `$${filters.formatMoney(0)}`
+            bal = filters.formatMoney(0)
           }
           content = `<div class="morris-hover-row-label">${row.date}</div>
           <div class='morris-hover-point' style='color: #03a9f4'>
-            Incomes: ${bars[index].inc}
+            Incomes: ${filters.formatMoney(bars[index].inc)}
           </div>
           <div class='morris-hover-point' style='color: #03a9f4'>
-            Expenses: ${bars[index].exp}
+            Expenses: ${filters.formatMoney(bars[index].exp)}
           </div>
           <div class='morris-hover-point' style='color: #03a9f4'>
             Balance: ${bal}
@@ -193,7 +191,7 @@ export default {
         preUnits:'$',
         hoverCallback: function (index, options, content, row) {
           content = `<div class="morris-hover-row-label">${row.name}</div><div class='morris-hover-point' style='color: #03a9f4'>
-          $${filters.formatMoney(row.cost)}
+          ${filters.formatMoney(row.cost)}
           </div>`;
           return content;
         },

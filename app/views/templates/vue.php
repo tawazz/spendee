@@ -15,6 +15,13 @@
     <link href='//fonts.googleapis.com/css?family=Lobster+Two:400,200italic,700' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
     <link href='/assets/css/app.css' rel='stylesheet' type='text/css'>
+    <script>
+      (function() {
+        if('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/assets/js/service-worker.js');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="app"></div>

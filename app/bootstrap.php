@@ -1,4 +1,5 @@
 <?php
+  session_cache_limiter('private_no_expire:');
   session_start();
   date_default_timezone_set('Australia/Perth');
   require 'vendor/autoload.php';

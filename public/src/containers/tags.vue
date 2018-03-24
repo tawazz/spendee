@@ -28,7 +28,7 @@
                     <tbody v-for="(value,key) in tagData">
                       <tr v-for="(cost,exp) in value.spent">
                         <td class="text-capitalize"> {{ exp }}</td>
-                        <td> $ {{ cost|formatMoney }}</td>
+                        <td> {{ cost|formatMoney }}</td>
                         <td> {{ (cost/value.amount) * 100|round }}%</td>
                       </tr>
                     </tbody>
@@ -143,7 +143,7 @@ export default {
           new Morris.Donut({
             element: 'morris-pie-chart',
             data: vm.pie_data,
-            formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
+            formatter:function (y, data) { return filters.formatMoney(y); } ,
             colors,
             resize:true
           });

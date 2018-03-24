@@ -135,7 +135,7 @@
             hoverCallback: function (index, options, content, row) {
               content = `<div class="morris-hover-row-label">${filters.date(row.day)}</div><div class='morris-hover-point' style='color: #03a9f4'>
               Spent:
-              $ ${filters.formatMoney(row.value)}
+              ${filters.formatMoney(row.value)}
               </div>`;
               return content;
             }
@@ -154,7 +154,7 @@
           new Morris.Donut({
             element: 'morris-pie-chart',
             data: vm.pie_data,
-            formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
+            formatter:function (y, data) { return filters.formatMoney(y); } ,
             colors,
             resize:true
           });

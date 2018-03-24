@@ -51,7 +51,7 @@ export default {
                     var dataset = data.datasets[item.datasetIndex];
                     var label = dataset.label;
                     var amount = item.yLabel;
-                    return `${label} $ ${filters.formatMoney(amount)}`;
+                    return `${label} ${filters.formatMoney(amount)}`;
                   }
                 }
               },

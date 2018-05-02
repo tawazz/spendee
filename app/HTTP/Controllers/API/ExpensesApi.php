@@ -1,11 +1,8 @@
 <?php
     namespace HTTP\Controllers\API;
-    use \HTTP\Helpers\Utils;
+    use \HTTP\Helpers\{Utils,INGImporter,AmexImporter};
     use \Tazzy\Utils\File;
 
-    /**
-     *
-     */
     class ExpensesApi extends \HTTP\Controllers\BaseController
     {
         public function __invoke($req, $resp,$args)
@@ -78,6 +75,7 @@
         public function import($req, $resp,$args)
         {
           try {
+            $bank = $req->getParam('bank');
             $file = new File($_FILES['expenses']);
             $file->allowed = ['csv'];
             if (!$file->error() && $file->isAllowed()) {
@@ -88,11 +86,20 @@
               }
               $path = '/app/assets/imports/'.$hash.'.csv';
               $file->move($path);
-              $data = [
-                "path" => $path,
-                "user_id" => $this->auth->id
-              ];
-              $this->queue->push(\HTTP\Jobs\Handlers\ImportHandler::class,$data);
+              switch ($bank) {
+                case 'ing':
+                    $ing_importer = new INGImporter($this->container,$path);
+                    $ing_importer->import();
+                  break;
+                case 'amex':
+                    $amex_importer = new AmexImporter($this->container,$path);
+                    $amex_importer->import();
+                  break;
+                default:
+                    $ing_importer = new INGImporter($this->container,$path);
+                    $ing_importer->import();
+                  break;
+              }
               return $resp->withJson(["success" => true]);
             }
           } catch (Exception $e) {
@@ -115,7 +122,7 @@
             return $resp->withStatus(400)->withJson(["error" => $e->getMessage()]);
           }
         }
-        
+
         public function nomalize($req,$resp, $args)
         {
           try {

@@ -330,6 +330,7 @@ class Utils
     }
     return $expenses;
   }
+  // deprecated importing csv for ing
   public static function addFromCsv($app,$path)
   {
     $expenses = self::readFile($app,$path);

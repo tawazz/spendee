@@ -52,6 +52,7 @@ export default {
           data.append('expenses',file);
           data.append('csrf_name',Window.csrf.name);
           data.append('csrf_value',Window.csrf.value);
+          data.append('bank', 'amex');
           var config = {
             onUploadProgress: function(progressEvent) {
               var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );

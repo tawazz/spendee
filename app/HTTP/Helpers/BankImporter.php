@@ -32,10 +32,9 @@ abstract class BankImporter
     if ($filesystem->exists($this->path)) {
       $expenses = $this->generateExpenses();
       foreach ($expenses as $exp) {
-        # Utils::addExpense($this->container,(object) $exp);
+        Utils::addExpense($this->container,(object) $exp);
       }
       $this->container['log']->debug("imported",$expenses);
-      dump($expenses);
     }
     $this->container['log']->debug("bank import: file does not exist.");
   }

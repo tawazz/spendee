@@ -13,6 +13,19 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-12">
+          <div class="input-group">
+            <span class="input-group-addon">
+              <button disabled class="btn btn-fab-mini btn-info btn-fab"><i class="mdi mdi-bank"></i></button>
+            </span>
+            <div class="form-group is-empty">
+              <select class="form-control" name="bank" v-model="bank">
+                <option value="ing">ING</option>
+                <option value="amex">Amex</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </modal>
@@ -23,6 +36,11 @@ import modal from '@/components/helpers/modal'
 import notify from '@/components/helpers/notify'
 import { apis,axios } from '@/hooks'
 export default {
+  data: function () {
+    return {
+      bank: 'ing'
+    }
+  },
   props:{
     show:{
       type:Boolean,
@@ -42,7 +60,7 @@ export default {
   },
   methods:{
     uploadFile(){
-      var vm = this;
+      const vm = this;
       var data = new FormData();
       var file = $(vm.$refs.csv).prop('files');
       if (file.length > 0) {
@@ -52,7 +70,7 @@ export default {
           data.append('expenses',file);
           data.append('csrf_name',Window.csrf.name);
           data.append('csrf_value',Window.csrf.value);
-          data.append('bank', 'amex');
+          data.append('bank', vm.bank);
           var config = {
             onUploadProgress: function(progressEvent) {
               var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );

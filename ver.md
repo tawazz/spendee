@@ -1,3 +1,7 @@
+Spendee 3.0.6 8/05/2018
+- docker-compose automate building the app
+- add bank importers (ing and amex)
+- bug fixes
 Spendee 3.0.5 24/03/2018
 - caching
   - service worker

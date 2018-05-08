@@ -28,7 +28,7 @@ export default {
                 return "/api/tags";
         }
     },
-    "tag": function(id) {
+    tag: function(id) {
         return `/api/tag/${id}`;
     },
     expense: function(id = null) {

@@ -15,7 +15,7 @@
           'database'       => 'spendee',
           'prefix'   => ''
       ],
-      'ver'          => 'v3.0.1',
+      'ver'          => 'v3.0.6',
       'locale'       => [
           "brand"    => "tawazz.net",
           "address"  => "Perth<br> Australia",

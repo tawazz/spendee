@@ -28,7 +28,7 @@ jobs:
       - run: curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh && bash nodesource_setup.sh
       - run: apt-get update && apt-get install -y php7.0-gd mysql-client nodejs
       # - run: composer install
-      - run: cd public && npm run build
+      - run: cd public && npm install && npm run build
 
       - save_cache:
           paths:

@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.1.5-browsers
+      - image: tawazz/php7
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -27,7 +27,7 @@ jobs:
           - v1-dependencies-
       - run: curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh && bash nodesource_setup.sh
       - run: apt-get update && apt-get install -y php7.0-gd mysql-client nodejs
-      - run: composer install -n --prefer-dist
+      # - run: composer install
       - run: cd public && npm run build
 
       - save_cache:

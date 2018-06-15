@@ -149,6 +149,11 @@
       return $expenses;
     }
 
+    public function isUniqueHash($hash) {
+      return ($this->find('count', [
+        'where' => ['hash','=', $hash]
+      ]) == 0);
+    }
     private function repeatOptions($value)
     {
       switch ($value) {

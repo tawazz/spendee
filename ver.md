@@ -1,3 +1,6 @@
+Spendee 3.0.7 15/06/2018
+- add importer webhook
+- disable importer script
 Spendee 3.0.6 8/05/2018
 - docker-compose automate building the app
 - add bank importers (ing and amex)

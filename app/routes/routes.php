@@ -1,7 +1,7 @@
 <?php
   use HTTP\Middleware\AuthMiddleware;
   use \HTTP\Middleware\Guest;
-
+  use \HTTP\Controllers\WebHooks\WebHooksController as WebHooks;
   // Vissible by guest users
   $app->group('',function(){
       require 'home/home.php';
@@ -19,6 +19,10 @@
 
   $app->group('/api',function(){
       require 'mobile/routes.php';
+  });
+
+  $app->group('/webhooks',function(){
+    $this->post('/import', WebHooks::class.':import')->setName('webhooks.import');
   });
   //Vissible by all users
   require 'auth/auth.php';

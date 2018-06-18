@@ -239,13 +239,14 @@ class Utils
     } else {
       $end_repeat = null;
     }
-
+    
     $exp_data = [
       'name'=> $data->name,
       'cost'=> self::fixMoneyInput($data->cost),
       'date'=> $data->date,
       'user_id'=> $app->auth->id,
-      'is_recurring'=>$isRecurring ? 1 : 0
+      'is_recurring'=>$isRecurring ? 1 : 0,
+      'hash' => isset($data->hash) ? $data->hash : null
     ];
     $exp_id = $app->Exp->save($exp_data);
 

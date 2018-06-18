@@ -39,6 +39,13 @@
         {
           $app = $this;
           $body = json_decode($req->getBody()->getContents());
+          $hash = $app->hash->make(serialize([
+            "name" => $body->name,
+            "date" => $body->date,
+            "cost" => $body->cost,
+            "user_id" => $app->auth->id
+          ]));
+          $body->hash = $hash;
           try{
             $exp = \HTTP\Helpers\Utils::addExpense($app,$body);
             return $resp->withJson($exp,200);

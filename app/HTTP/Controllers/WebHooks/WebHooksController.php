@@ -40,6 +40,7 @@ class WebHooksController extends \HTTP\Controllers\BaseController
           }
         }
       if(sizeof($response) > 0) {
+        \HTTP\Helpers\Utils::nomalize($container);
         $pb->allDevices()->pushNote("Spendee - import completed",sizeof($response)." expenses imported");
         $container->log->debug('expenses imported', $response);
       }

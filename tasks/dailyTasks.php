@@ -9,9 +9,6 @@
   $schedule->run('php /app/app/bin/notifications.php')
     ->dailyAt('06:00')
     ->timezone('Australia/Perth');
-  $schedule->run('php /app/app/bin/importer.php')
-    ->dailyAt('05:00')
-    ->timezone('Australia/Perth');
   $schedule->run('php /app/app/bin/backup.php')
     ->dailyAt('02:00')
     ->timezone('Australia/Perth');

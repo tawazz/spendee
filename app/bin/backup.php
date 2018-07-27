@@ -31,6 +31,7 @@ try {
   unlink('/backup.sql.gz');
   $pb->allDevices()->pushNote("Spendee - backup completed","");
 } catch (\Exception $e) {
+  unlink('/backup.sql.gz');
   $container->log->error($e->getMessage(),$e->getTrace());
 }
 

@@ -30,11 +30,11 @@
                 <div class="row">
                   <div class="col-xs-6">
                     <h4>Spent</h4>
-                    <p>${{budget.spent|formatMoney}}</p>
+                    <p>{{budget.spent|formatMoney}}</p>
                   </div>
                   <div class="col-xs-6">
                     <h4>Budgeted</h4>
-                    <p>${{budget.amount|formatMoney}}</p>
+                    <p>{{budget.amount|formatMoney}}</p>
                   </div>
                 </div>
               </div>
@@ -46,7 +46,7 @@
                       You Saved
                     </p>
                     <p class="fa-2x text-success">
-                      ${{budget.saved|formatMoney}}
+                      {{budget.saved|formatMoney}}
                     </p>
                     <p>
                       this month!
@@ -60,7 +60,7 @@
                       You over spent by
                     </p>
                     <p class="fa-2x text-danger">
-                      ${{budget.saved|formatMoney}}
+                      {{budget.saved|formatMoney}}
                     </p>
                     <p>
                       this month!
@@ -76,7 +76,7 @@
                       You can keep spending
                     </p>
                     <p class="fa-2x text-success">
-                      ${{budget.spendingLeft|formatMoney}}
+                      {{budget.spendingLeft|formatMoney}}
                     </p>
                     <p>
                       each day!
@@ -90,7 +90,7 @@
                       Opps! you went over budget by
                     </p>
                     <p class="fa-2x text-danger">
-                      ${{(budget.spent - budget.amount)|formatMoney}}
+                      {{(budget.spent - budget.amount)|formatMoney}}
                     </p>
                     <p>
                       spend carefully!!!
@@ -204,7 +204,7 @@
           vm.budget_tags[`_${budget.id}`]={
             element: `morris-pie-chart-tags-${budget.id}`,
             data,
-            formatter:function (y, data) { return '$'+filters.formatMoney(y); } ,
+            formatter:function (y, data) { return filters.formatMoney(y); } ,
             colors,
             resize:true
           };

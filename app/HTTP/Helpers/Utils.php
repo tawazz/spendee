@@ -245,9 +245,21 @@ class Utils
       'cost'=> self::fixMoneyInput($data->cost),
       'date'=> $data->date,
       'user_id'=> $app->auth->id,
-      'is_recurring'=>$isRecurring ? 1 : 0,
-      'hash' => isset($data->hash) ? $data->hash : null
+      'is_recurring'=>$isRecurring ? 1 : 0
     ];
+
+    if (isset($data->hash)) {
+       $exp_data['hash'] = $data->hash;
+    } else {
+      $hash = $app->hash->make(serialize( (array) $data));
+       if ($app->Exp->isUniqueHash($hash)){
+              $exp_data['hash'] = $hash;
+       } else {
+         return;
+       }
+    }
+    
+           
     $exp_id = $app->Exp->save($exp_data);
 
     if (isset($recurring)) {

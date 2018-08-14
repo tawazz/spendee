@@ -27,17 +27,38 @@ and PHP and MySQL with Json REST API for webservices at the backend.
  ```
  * edit your ServerAlias to match your domain name
 
-
-# Build image
-
-```
- docker build -t spendee_app .
-```
-
 # Run app
+```
+docker-compose up -d
+```
+
+visit http://localhost:8006
+
+# App Console
 
 ```
-docker run -d -p 8080:80 spendee_app
+docker-compose exec web bash
+
+php console.php
+```
+
+Access Models, Services and Helpers through the application container
+
+```
+$container
+```
+
+#Debugging
+interactive session
+
+```
+eval(\Psy\sh());
+```
+
+dump variable
+
+```
+dump(var)
 ```
 
 # Migrations commands

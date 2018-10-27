@@ -1,8 +1,16 @@
 <template >
   <div class="container">
+    <div class="row" style="margin-bottom:20px;">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="form-group">
+            <label class="control-label">Search</label>
+            <input type="text" class="form-control" v-model="search">
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-6">
-        <item-list :data="expenses" :color="color" :type="type" :editCallback="editExp"/>
+        <item-list :data="(search.length > 0)? filtered:expenses" :color="color" :type="type" :editCallback="editExp"/>
       </div>
       <div class="col-md-6">
         <exp-graphs :data="expenses" :tagChart="tagData" :type="type" :color="color" />
@@ -53,7 +61,10 @@
         type:"expense",
         showAddModal:false,
         showImportModal:false,
-        selected_exp:null
+        selected_exp:null,
+        topTags:null,
+        filtered: [],
+        search: ''
       };
     },
     components:{
@@ -97,6 +108,27 @@
     watch:{
         $route:function () {
             this.updatePage();
+        },
+        tagData: function () {
+            this.topTags =  Object.keys(this.tagData).sort((a,b) => {
+              return this.tagData[b] - this.tagData[a]
+            });
+        },
+        search: function () {
+          let vm = this;
+          if (vm.search) {
+            let filtered = Object.values(vm.expenses).flat()
+            .filter(exp => exp.name.toLocaleLowerCase().includes(vm.search.toLocaleLowerCase()));
+            let expenses = {};
+            filtered.forEach(e => {
+              if (expenses[e.date]) {
+                expenses[e.date].push(e);
+              } else {
+                expenses[e.date] = [e];
+              }
+            });
+            vm.filtered = expenses;
+          }
         }
     },
     methods:{

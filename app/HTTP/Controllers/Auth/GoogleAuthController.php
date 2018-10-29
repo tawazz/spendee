@@ -11,23 +11,23 @@ class GoogleAuthController extends \HTTP\Controllers\BaseController
       // retrieve the CSRF state parameter
       $state = $req->getParam('state') !==null ? $req->getParam('state') : null;
       try {
-      // This was a callback request from google, get the token
-      $googleService->requestAccessToken($_GET['code'], $state);
-      // Send a request with it
-      $result = json_decode($googleService->request('userinfo'), true);
-      if ($this->authenticate($result['email'],$resp)) {
-        return $this->redirect($resp,$this->urlFor('expenses'));
+        // This was a callback request from google, get the token
+        $googleService->requestAccessToken($_GET['code'], $state);
+        // Send a request with it
+        $result = json_decode($googleService->request('userinfo'), true);
+        if ($this->authenticate($result['email'],$resp)) {
+          return $this->redirect($resp,$this->urlFor('expenses'));
+        }
+      } catch (\Exception $e) {
+          return $this->redirect($resp,'/login/google?go=google');
       }
-    } catch (\Exception $e) {
-        return $this->redirect($resp,'/login/google?go=google');
-    }
       $this->flash->addMessage("global","Google Account not regestered");
       return $this->redirect($resp,$this->urlFor('login'));
     } elseif (!empty($req->getParam('go')) && $req->getParam('go') === 'google') {
       $url = $googleService->getAuthorizationUri()->getAbsoluteUri();
       return $this->redirect($resp,$url);
     } else {
-      return $this->redirect($this->urlFor('login'));
+      return $this->redirect($resp, $this->urlFor('login'));
     }
   }
 

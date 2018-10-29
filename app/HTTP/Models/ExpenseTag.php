@@ -54,6 +54,7 @@
           }
         }
       }
+      arsort($exptags);
       return $exptags;
     }
 

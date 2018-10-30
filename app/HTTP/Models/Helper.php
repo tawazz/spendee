@@ -56,13 +56,13 @@ class Helper
         $month=12;
         $year -=1;
       }
-      $exptags = getExpenseTagsBetweenDates($app,$user_id,$year."-".$month."-1",$year."-".($month+1)."-1", $id, $with_detail);
+      $exptags = self::getExpenseTagsBetweenDates($app,$user_id,$year."-".$month."-1",$year."-".($month+1)."-1", $id, $with_detail);
     }else if(isset($year)){
-      $exptags = getExpenseTagsBetweenDates($app,$user_id,$year."-"."1"."-1",($year+1)."-1-1", $id, $with_detail);
+      $exptags = self::getExpenseTagsBetweenDates($app,$user_id,$year."-"."1"."-1",($year+1)."-1-1", $id, $with_detail);
     }else{
       $month= date('m');
       $year= date('Y');
-      $exptags = getExpenseTagsBetweenDates($app,$user_id,$year."-".$month."-1", $year."-".($month+1)."-1", $id, $with_detail);
+      $exptags = self::getExpenseTagsBetweenDates($app,$user_id,$year."-".$month."-1", $year."-".($month+1)."-1", $id, $with_detail);
     }
     return $exptags;
   }

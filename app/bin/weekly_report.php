@@ -4,11 +4,12 @@ require_once __DIR__.'/shell.php';
 $queue = $container['queue'];
 
 $users = $container->User->all();
-
+$end_date = $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->subWeek()->toDateString();
+$start_date = $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->toDateString();
 foreach($users as $user) {
-    $totalexp = $container->Exp->read($user->id)->totalExp("2018-1-1", "2018-10-31");
-    $totalinc = $container->Inc->read($user->id)->totalInc("2018-1-1", "2018-10-31");
-    $tags = $container->Helper->getExpenseTagsBetweenDates($container,$user->id,"2018-1-1", "2018-10-31");
+    $totalexp = $container->Exp->read($user->id)->totalExp($start_date, $end_date);
+    $totalinc = $container->Inc->read($user->id)->totalInc($start_date, $end_date);
+    $tags = $container->Helper->getExpenseTagsBetweenDates($container,$user->id,$start_date, $end_date);
     if(sizeof($tags) > 0) {
         $data = [
             'name'    => "$user->firstname $user->lastname",

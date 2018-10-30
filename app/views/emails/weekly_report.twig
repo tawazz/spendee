@@ -1,17 +1,52 @@
-{% extends 'templates/email.php' %}
+{% extends 'templates/email.twig' %}
 
-
+{% block message %}
+<h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 18px; line-height: 1.2em; color: #111111; font-weight: 200;padding: 0;">
+Your Week in Review
+</h2>
+ Here is an update of your last week's spending, bills and income.
+{% endblock %}
 {% block content %}
-<h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 18px; line-height: 1.2em; color: #111111; font-weight: 200; margin: 40px 0 5px; padding: 0;">Contact Details</h2>
-<address class="">
-    Name  : {{name}} <br />
-    Email : {{email}} <br />
-    Phone : {{phone}} <br />
-</address>
-<h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 18px; line-height: 1.2em; color: #111111; font-weight: 200; margin: 40px 0 5px; padding: 0;">Message</h2>
- <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6em; font-weight: normal; margin: 0 0 10px; padding: 0;">
-   {{ body }}
- </p>
-
+ <table class="spacer" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
+  <tbody>
+    <tr style="padding:0;text-align:left;vertical-align:top">
+      <td height="16px" style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:16px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">&#xA0;</td>
+    </tr>
+  </tbody>
+</table>
+<center data-parsed="" style="min-width:532px;width:100%">
+    <table class="button large float-center" style="Margin:0 0 16px 0;border-collapse:collapse;border-spacing:0;float:none;margin:0 0 16px 0;padding:0;text-align:center;vertical-align:top;width:auto">
+      <tr style="padding:0;text-align:left;vertical-align:top">
+        <td style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">
+          <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
+            <tr style="padding:0;text-align:left;vertical-align:top">
+              <td style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;background:#2199e8;border:2px solid #2199e8;border-collapse:collapse!important;color:#fefefe;font-family:Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-height:1.3;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">
+              <a href="#" style="Margin:0;border:0 solid #2199e8;border-radius:3px;color:#fefefe;display:inline-block;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;line-height:1.3;margin:0;padding:10px 20px 10px 20px;text-align:left;text-decoration:none">
+                View your spending details
+              </a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </center>
+<table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:middle;width:100%">
+  <tr style="padding:0;text-align:center;vertical-align:middle">
+    <th style="background:red; color:#fff;">
+      <h2> Total Spending </h2>
+    </th>
+    <th style="background:#2199e8; color:#fff;">
+      <h2> Total Income </h2>
+    </th>
+  </tr>
+  <tr style="
+    padding: 20px 0px;
+    text-align: center;
+    vertical-align: middle;">
+    <td style="background:red; color:#fff;"> <h4>${{ totalExp }} </h4> </td>
+    <td style="background:#2199e8; color:#fff;"> <h4>${{ totalInc }} </h4></td>
+  </tr>
+</table>
 
 {% endblock %}

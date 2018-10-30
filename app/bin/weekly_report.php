@@ -4,8 +4,8 @@ require_once __DIR__.'/shell.php';
 $queue = $container['queue'];
 
 $users = $container->User->all();
-$end_date = $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->subWeek()->toDateString();
-$start_date = $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->toDateString();
+$start_date = $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->subWeek()->toDateString();
+$end_date = $container->Carbon->now(new \DateTimeZone('Australia/Perth'))->toDateString();
 foreach($users as $user) {
     $totalexp = $container->Exp->read($user->id)->totalExp($start_date, $end_date);
     $totalinc = $container->Inc->read($user->id)->totalInc($start_date, $end_date);

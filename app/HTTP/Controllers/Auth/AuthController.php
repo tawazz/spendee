@@ -233,6 +233,20 @@
 
     }
 
+    public function updateUser($req,$resp,$args) {
+      $email = $req->getParam('email');
+      if (empty($email)) {
+        $this->flash->addMessage("global","fill in all details");
+        return $this->redirect($resp, $this->urlFor('account'));
+      }else{
+        $this->User->find($this->auth->id)->update([
+          'email' => $email
+        ]);
+        $this->flash->addMessage("global","user details updated");
+        return $this->redirect($resp, '/settings');
+      }
+    }
+
   }
 
  ?>

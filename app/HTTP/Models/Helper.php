@@ -56,22 +56,22 @@ class Helper
         $month=12;
         $year -=1;
       }
-
-      $exptags = $app->ExpTags->tagData($user_id,$with_detail,$id,$year."-".$month."-1",$year."-".($month+1)."-1");
-
+      $exptags = self::getExpenseTagsBetweenDates($app,$user_id,$year."-".$month."-1",$year."-".($month+1)."-1", $id, $with_detail);
     }else if(isset($year)){
-      $exptags = $app->ExpTags->tagData($user_id,$with_detail,$id,$year."-"."1"."-1",($year+1)."-1-1");
-
+      $exptags = self::getExpenseTagsBetweenDates($app,$user_id,$year."-"."1"."-1",($year+1)."-1-1", $id, $with_detail);
     }else{
-
       $month= date('m');
       $year= date('Y');
-      $exptags = $app->ExpTags->tagData($user_id,$with_detail,$id,$year."-".$month."-1",$year."-".($month+1)."-1");
-
+      $exptags = self::getExpenseTagsBetweenDates($app,$user_id,$year."-".$month."-1", $year."-".($month+1)."-1", $id, $with_detail);
     }
     return $exptags;
   }
 
+  public static function getExpenseTagsBetweenDates($app,$user_id,$start,$end,$id=null, $with_detail=false){
+
+    return $app->ExpTags->tagData($user_id,$with_detail,$id,$start,$end);
+
+  }
   public static function getData($app,$user_id,$year=null,$month=null,$day=null){
 
     if(isset($year)&& isset($month) && isset($day) ){

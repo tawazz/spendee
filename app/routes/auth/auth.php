@@ -23,16 +23,7 @@
 
   $app->group('',function() use($auth) {
     $this->post('/update/password', $auth.':resetPassword');
+    $this->post('/update/user', $auth.':updateUser');
   })->add(new AuthMiddleware($container));
-$app->post('/update/user', function() use($app){
-    if (empty($_POST['email'])) {
-      $app->flash("global","fill in all details");
-      $app->response->redirect($app->urlFor('account'));
-    }else{
-      $app->User->read($app->auth->user_id)->set('email',$_POST['email']);
-      $app->flash("global","user details updated");
-      $app->response->redirect($app->urlFor('account'));
-    }
-});
 
  ?>

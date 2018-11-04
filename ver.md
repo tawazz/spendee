@@ -1,3 +1,11 @@
+Spendee 3.1 4/11/2018
+- weekly update email
+- search expenses
+- bug fix google auth
+- order tags by most spent
+Spendee 3.0.8 15/08/2018
+- bugfix budget sum
+- hash all expenses
 Spendee 3.0.7 15/06/2018
 - add importer webhook
 - disable importer script

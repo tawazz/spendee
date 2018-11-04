@@ -5,7 +5,7 @@
 
     protected $guarded = [];
     public $timestamps = false;
-    protected $table = "locations";
+    public $table = "locations";
 
 
   }

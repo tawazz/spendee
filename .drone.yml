@@ -6,4 +6,4 @@ steps:
   image: node
   commands:
   - cd public && npm install
-  - npm build
+  - npm run build

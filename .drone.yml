@@ -1,0 +1,9 @@
+kind: pipeline
+name: default
+
+steps:
+- name: frontend
+  image: node
+  commands:
+  - cd public && npm install
+  - cd public && npm build

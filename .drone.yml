@@ -16,9 +16,12 @@ steps:
 - name: deploy
   image: appleboy/drone-ssh
   pull: true
-  host: ${HOST}
-  user: ${USER}
-  password: ${PASSWORD}
+  host:
+    from_secret: HOST
+  user:
+    from_secret: USER
+  password:
+    from_secret: PASSWORD
   port: 22
   command_timeout: 180
   script:

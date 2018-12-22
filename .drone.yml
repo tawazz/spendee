@@ -7,3 +7,24 @@ steps:
   commands:
   - cd public && npm install
   - npm run build
+
+- name: install
+  image: composer
+  commands:
+  - composer install
+
+- name: deploy
+  image: appleboy/drone-ssh
+  pull: true
+  host: ${HOST}
+  user: ${USER}
+  password: ${PASSWORD}
+  port: 22
+  command_timeout: 180
+  script:
+    - cd /deploy/spendee  # or whereever you put your `deploy.sh`
+    - sh deploy.sh
+  when:
+    branch:
+      - master
+    event: [push, tag, deployment]

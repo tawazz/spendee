@@ -5,5 +5,4 @@
   require 'dashboard/routes.php';
   require 'budget/routes.php';
   $this->get('/settings',VueController::class);
-
  ?>

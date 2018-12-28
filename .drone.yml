@@ -8,11 +8,6 @@ steps:
   - cd public && npm install
   - npm run build
 
-- name: install
-  image: composer
-  commands:
-  - composer install
-
 - name: deploy
   image: appleboy/drone-ssh
   pull: true

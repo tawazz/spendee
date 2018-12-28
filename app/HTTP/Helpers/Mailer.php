@@ -17,6 +17,8 @@
         $this->errors = $this->mailer->ErrorInfo;
         return FALSE;
       }else{
+        $this->mailer->ClearAllRecipients();
+        $this->mailer->ClearAttachments();
         return TRUE;
       }
     }

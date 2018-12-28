@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "58a76e4cf85108f9b084051b81052e06",
@@ -2461,16 +2461,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.1.0",
+            "version": "v4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "d0230c5c77a7e3cfa69446febf340978540958c0"
+                "reference": "8aae5b59b83bb4d0dbf07b0a835f2680a658f610"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/d0230c5c77a7e3cfa69446febf340978540958c0",
-                "reference": "d0230c5c77a7e3cfa69446febf340978540958c0",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8aae5b59b83bb4d0dbf07b0a835f2680a658f610",
+                "reference": "8aae5b59b83bb4d0dbf07b0a835f2680a658f610",
                 "shasum": ""
             },
             "require": {
@@ -2508,7 +2508,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-10-10T09:24:14+00:00"
+            "time": "2018-12-26T11:32:39+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -4822,12 +4822,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tawazz/Tazzy-Helpers.git",
-                "reference": "87a8c99893450859ef510d81eac1e91624d9737e"
+                "reference": "f7b91abda6fc1ff28b56f0bbaf41c9b62a97ca0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tawazz/Tazzy-Helpers/zipball/87a8c99893450859ef510d81eac1e91624d9737e",
-                "reference": "87a8c99893450859ef510d81eac1e91624d9737e",
+                "url": "https://api.github.com/repos/tawazz/Tazzy-Helpers/zipball/f7b91abda6fc1ff28b56f0bbaf41c9b62a97ca0b",
+                "reference": "f7b91abda6fc1ff28b56f0bbaf41c9b62a97ca0b",
                 "shasum": ""
             },
             "require": {
@@ -4860,7 +4860,7 @@
                 "source": "https://github.com/tawazz/Tazzy-Helpers/tree/master",
                 "issues": "https://github.com/tawazz/Tazzy-Helpers/issues"
             },
-            "time": "2017-10-17T07:57:12+00:00"
+            "time": "2018-12-28 00:31:13"
         },
         {
             "name": "twig/twig",

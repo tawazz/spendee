@@ -51,7 +51,16 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
   && php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
+COPY . /app
 WORKDIR /app
+
+RUN composer install
+RUN npm install
+RUN php vendor/bin/phinx migrate -c app/config/config-phinix.php
+RUN cd public \
+	&& npm install -g yarn \
+	&& yarn install && yarn run build \
+RUN cd /app && chown -R www-data:www-data .
 
 EXPOSE 80
 CMD ["/bin/bash", "boot.sh"]

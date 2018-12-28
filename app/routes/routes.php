@@ -27,4 +27,5 @@
   //Vissible by all users
   require 'auth/auth.php';
   require 'errors/errors.php';
+  $app->get('/eoy',\HTTP\Controllers\VueController::class.':eoy');
  ?>

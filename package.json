@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "php runtime dependances",
+  "main": "index.js",
+  "dependencies": {
+    "@nesk/puphpeteer": "^1.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tawazz/spendee.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tawazz/spendee/issues"
+  },
+  "homepage": "https://github.com/tawazz/spendee#readme"
+}

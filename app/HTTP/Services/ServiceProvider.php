@@ -91,8 +91,7 @@
           $mailer->SMTPAuth = $app['Config']->get('email.auth');
           $mailer->SMTPDebug = 0;
         }
-        $mailer = new \Tazzy\Utils\Mailer($app['view'],$mailer);
-        return $mailer;
+        return new \HTTP\Helpers\Mailer($app['view'],$mailer);
       };
 
       $container['Carbon'] = function ($app){

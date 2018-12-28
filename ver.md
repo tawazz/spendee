@@ -1,3 +1,6 @@
+Spendee 3.1.1 29/12/2018
+- end of year review email
+- automated deploys
 Spendee 3.1 4/11/2018
 - weekly update email
 - search expenses

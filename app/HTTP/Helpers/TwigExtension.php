@@ -1,6 +1,6 @@
 <?php
   namespace HTTP\Helpers;
-
+  use \Twig\TwigFilter;
   /**
    * TwigExtension
    */
@@ -18,11 +18,25 @@
             new \Twig_SimpleFunction('flashMsg', array($this, 'flash')),
         ];
     }
+
+    public function getFilters()
+    {
+        return array(
+            new TwigFilter('base64', array($this, 'base64')),
+        );
+    }
+
     public static function dump($var)
     {
       dump($var);
     }
-
+    public function base64($img)
+    {
+      $type = pathinfo($img, PATHINFO_EXTENSION);
+      $data = file_get_contents($img);
+      $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+      return $base64;
+    }
     public function getAssetsPath($path,$host = false)
     {
       if(substr($path,-1)==='/')

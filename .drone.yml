@@ -3,15 +3,10 @@ name: default
 
 steps:
 - name: frontend
-  image: node
+  image: node:8
   commands:
   - cd public && npm install
   - npm run build
-
-- name: install
-  image: composer
-  commands:
-  - composer install
 
 - name: deploy
   image: appleboy/drone-ssh
@@ -31,4 +26,4 @@ steps:
   when:
     branch:
       - master
-    event: [push, tag, deployment]
+    event: [push, tag, deployment, pull_request]

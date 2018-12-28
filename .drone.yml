@@ -26,4 +26,4 @@ steps:
   when:
     branch:
       - master
-    event: [push, tag, deployment]
+    event: [push, tag, deployment, pull_request]

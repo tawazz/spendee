@@ -18,5 +18,9 @@
     ->at('06:00')
     ->timezone('Australia/Perth');
 
+    $schedule->run('php /app/app/bin/eoy.php')
+      ->on('06:00 2018-12-31')
+      ->timezone('Australia/Perth');
+
   return $schedule;
  ?>

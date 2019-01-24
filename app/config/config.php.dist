@@ -32,9 +32,9 @@
         'queue'      => 'default',
       ],
       'email'        => [
-          'host'     => 'smtp.zoho.com',
+          'host'     => 'smtp.google.com',
           'port'     => '587',
-          'user'     => 'tawazz@tawazz.net',
+          'user'     => 'tawazz@example.com',
           'password' => 'password',
           'secure'   => 'tls',
           'auth'     => true

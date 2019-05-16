@@ -15,7 +15,7 @@ RUN apt-get update \
     libxi6 libgconf-2-4 supervisor cron mysql-client beanstalkd
 
 RUN a2dismod mpm_event && a2enmod mpm_prefork && a2enmod rewrite && a2enmod php7.3 \
-&& a2enmod proxy_fcgi setenvif && a2enconf php7.3-fpm && a2dismod php7.3
+&& a2enmod proxy_fcgi setenvif && a2enconf php7.3-fpm
 
 RUN mkdir -p /app
 WORKDIR /app

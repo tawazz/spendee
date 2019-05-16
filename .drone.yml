@@ -28,6 +28,8 @@ steps:
   - image: plugins/docker
     name: docker
     settings:
+      auto_tag: "true"
+      force_tag: "true"
       password:
         from_secret: hub_password
       registry: hub.tich.us
@@ -41,7 +43,7 @@ steps:
     name: deploy
     pull: true
     settings:
-      command_timeout: 600
+      command_timeout: 10m
       host:
         from_secret: host
       password:

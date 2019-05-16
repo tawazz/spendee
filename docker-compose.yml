@@ -1,11 +1,11 @@
 version: "3"
 services:
   web:
-    build: .
+    image: hub.tich.us/tawazz/spendee:latest
     volumes:
       - .:/app
     ports:
-      - "8006:80"
+      - "8001:80"
     networks:
       - webnet
     restart: always

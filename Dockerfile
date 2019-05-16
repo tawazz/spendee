@@ -1,5 +1,4 @@
-FROM ubuntu:18.04
-
+FROM ubuntu:18.04 as app
 ENV TZ=Australia/Perth
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update
@@ -13,31 +12,15 @@ RUN apt-get update \
     php7.3-common php7.3-json php7.3-intl php7.3-exif php7.3-tokenizer\
     libcurl4-openssl-dev libedit-dev git \
     libsodium-dev libsqlite3-dev libssl-dev libxml2-dev zlib1g-dev curl libapache2-mod-php \
-    libxi6 libgconf-2-4
+    libxi6 libgconf-2-4 supervisor cron mysql-client beanstalkd
 
 RUN a2dismod mpm_event && a2enmod mpm_prefork && a2enmod rewrite && a2enmod php7.3 \
-&& a2enmod proxy_fcgi setenvif && a2enconf php7.3-fpm && a2dismod php7.2
-COPY docker/config.conf /etc/apache2/sites-enabled/
+&& a2enmod proxy_fcgi setenvif && a2enconf php7.3-fpm
 
 RUN mkdir -p /app
-RUN mkdir -p /app/logs
 WORKDIR /app
-
-#node
-
-RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh && bash nodesource_setup.sh
-
-RUN apt-get update && apt-get install -y  \
-    supervisor cron mysql-client beanstalkd nodejs \
-    fontconfig libxrender1 xfonts-75dpi xfonts-base libjpeg-turbo8-dev
-
-# puppeteer
-RUN apt-get install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 \
-  libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 \
-  libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 \
-  libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 \
-   libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation \
-  libappindicator1 libnss3 lsb-release xdg-utils
+COPY . .
+RUN mkdir -p /app/logs
 
 COPY docker/services /etc/supervisor/conf.d
 COPY docker/tasks /etc/cron.d/tasks
@@ -46,21 +29,9 @@ COPY docker/php.ini /etc/php/7.3/apache2/php.ini
 RUN touch /app/logs/cron.log
 RUN chmod 0644 /etc/cron.d/tasks
 RUN rm /etc/apache2/sites-enabled/000-default.conf
+COPY docker/config.conf.dist /etc/apache2/sites-enabled/spendee.conf
 
-# composer
-RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
-  && php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-
-COPY . /app
-WORKDIR /app
-
-RUN composer install
-RUN npm install
-RUN php vendor/bin/phinx migrate -c app/config/config-phinix.php
-RUN cd public \
-	&& npm install -g yarn \
-	&& yarn install && yarn run build \
-RUN cd /app && chown -R www-data:www-data .
+RUN chown -R www-data:www-data .
 
 EXPOSE 80
 CMD ["/bin/bash", "boot.sh"]

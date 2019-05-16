@@ -1,29 +1,62 @@
 kind: pipeline
 name: default
-
 steps:
-- name: frontend
-  image: node:8
-  commands:
-  - cd public && npm install
-  - npm run build
-
-- name: deploy
-  image: appleboy/drone-ssh
-  pull: true
-  settings:
-    host:
-      from_secret: host
-    user:
-      from_secret: ssh_username
-    password:
-      from_secret: ssh_password
-    port: 22
-    command_timeout: 600
-    script:
-      - cd /deploy/spendee  # or whereever you put your `deploy.sh`
-      - sh deploy.sh
-  when:
-    branch:
-      - master
-    event: [push, tag, deployment, pull_request]
+  - name: download
+    image: plugins/download
+    settings:
+      source:
+          from_secret: spendee_config
+      destination: app/config/config.php
+    when:
+      event:
+        - push
+  - commands:
+      - composer install --ignore-platform-reqs --no-scripts --no-interaction --prefer-dist --optimize-autoloader --no-dev
+    image: composer
+    name: composer
+    when:
+      event:
+        - push
+  - commands:
+      - cd public && npm install
+      - npm run build
+    image: 'node:10'
+    name: frontend
+    when:
+      event:
+        - push
+  - image: plugins/docker
+    name: docker
+    settings:
+      password:
+        from_secret: hub_password
+      registry: hub.tich.us
+      repo: hub.tich.us/tawazz/spendee
+      username:
+        from_secret: hub_username
+    when:
+      event:
+        - push
+  - image: appleboy/drone-ssh
+    name: deploy
+    pull: true
+    settings:
+      command_timeout: 600
+      host:
+        from_secret: host
+      password:
+        from_secret: ssh_password
+      port: 22
+      script:
+        - cd /deploy/spendee
+        - sh deploy.sh
+      user:
+        from_secret: ssh_username
+    when:
+      branch:
+        - master
+      event:
+        - push
+        - tag
+        - deployment
+        - pull_request

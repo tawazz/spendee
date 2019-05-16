@@ -29,6 +29,7 @@ COPY docker/php.ini /etc/php/7.3/apache2/php.ini
 RUN touch /app/logs/cron.log
 RUN chmod 0644 /etc/cron.d/tasks
 RUN rm /etc/apache2/sites-enabled/000-default.conf
+COPY docker/config.conf.dist /etc/apache2/sites-enabled/spendee.conf
 
 RUN chown -R www-data:www-data .
 

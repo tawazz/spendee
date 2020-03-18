@@ -10,9 +10,14 @@
     ];
 
     public function totalInc($startDate,$endDate){
-        $sql = $this->qb->sum($this->table,'cost')->where('user_id','=',$this->active_record)->andWhere("date",">=",$startDate)->andWhere("date","<",$endDate)->get();
-        $result =  $this->db->query($sql)->first();
-        return isset($result->sum) ? $result->sum : 0;
+      $sql = $this->qb
+            ->sum($this->table,'cost')
+            ->where('user_id','=',$this->active_record)
+            ->andWhere("date",">=",$startDate)
+            ->andWhere("date","<",$endDate)
+            ->get();
+      $result =  $this->db->query($sql)->first();
+      return isset($result->sum) ? $result->sum : 0;
     }
 
      // get total cost of an expense/income between 2 dates

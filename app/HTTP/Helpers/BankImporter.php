@@ -15,11 +15,15 @@ abstract class BankImporter
   protected $records;
   abstract protected function generateExpenses(); //returns array of expenses
 
-  public function __construct($container,$path)
+  public function __construct($container,$path, $has_offset = false)
   {
     $this->path = $path;
     $this->container = $container;
     $this->reader = Reader::createFromPath($path);
+    if($has_offset) {
+      $this->reader->setHeaderOffset(0);
+      $this->headers = $this->reader->getHeader();
+    }
     if (isset($this->headers)) {
       $this->records = $this->reader->getRecords($this->headers);
     }

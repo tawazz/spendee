@@ -1,6 +1,6 @@
 <?php
     namespace HTTP\Controllers\API;
-    use \HTTP\Helpers\{Utils,INGImporter,AmexImporter};
+    use \HTTP\Helpers\{Utils,INGImporter,AmexImporter, UpImporter};
     use \Tazzy\Utils\File;
 
     class ExpensesApi extends \HTTP\Controllers\BaseController
@@ -101,6 +101,10 @@
                 case 'amex':
                     $amex_importer = new AmexImporter($this->container,$path);
                     $amex_importer->import();
+                  break;
+                case 'up':
+                    $up_importer = new UpImporter($this->container,$path, true);
+                    $up_importer->import();
                   break;
                 default:
                     $ing_importer = new INGImporter($this->container,$path);

@@ -22,6 +22,7 @@
               <select class="form-control" name="bank" v-model="bank">
                 <option value="ing">ING</option>
                 <option value="amex">Amex</option>
+                <option value="up">UP</option>
               </select>
             </div>
           </div>

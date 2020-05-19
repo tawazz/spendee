@@ -1,3 +1,5 @@
+Spendee 3.1.2 19 /05/2020
+- add UP Bank support
 Spendee 3.1.1 29/12/2018
 - end of year review email
 - automated deploys
